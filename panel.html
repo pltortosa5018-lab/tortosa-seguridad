@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel Policía Local Tortosa</title>
+<style>
+:root{--bg:#F2F3F7;--card:#fff;--ink:#05254E;--navy:#05254E;--red:#E0342B;--ok:#2E9E5B}
+@media (prefers-color-scheme:dark){:root{--bg:#060F1E;--card:#10213A;--ink:#E8EEFA;--navy:#1E4A8C}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif}
+header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center}
+main{max-width:900px;margin:0 auto;padding:18px}
+h2{margin:26px 0 10px}.card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.card.nueva{border-left:6px solid var(--red)}.card.atendida{border-left:6px solid var(--ok);opacity:.7}
+button,input{font:inherit}button{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:9px 14px;cursor:pointer}
+input{padding:10px;border:1px solid #9994;border-radius:8px;background:var(--card);color:var(--ink)}
+a{color:inherit}small{opacity:.7}#login{max-width:340px;margin:60px auto;display:grid;gap:10px}#err{color:var(--red)}
+</style>
+</head>
+<body>
+<header><b>Policía Local de Tortosa · Panel</b><button id="out" hidden>Salir</button></header>
+<main>
+<div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
+<div id="panel" hidden>
+<h2>Avisos recibidos</h2><div id="al"></div>
+<h2>Registros pendientes de validar</h2><div id="pe"></div>
+<h2>Publicar notificación</h2>
+<div class="card"><input id="at" placeholder="Título del aviso" style="flex:1"><input id="ac" placeholder="Categoría" value="General"><button id="ap">Publicar</button></div>
+</div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+// === CONFIGURA ESTOS DOS VALORES (los mismos que en index.html) ===
+const SUPABASE_URL = "https://gaaaxoccsewsqghiutrq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_HkxGy62A8XhCUr04YoPeGA_RBQY2xaF";
+// ==================================================================
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = i => document.getElementById(i);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+$("go").onclick = async () => {
+  const {error} = await db.auth.signInWithPassword({email:$("em").value.trim(), password:$("pw").value});
+  if (error) return $("err").textContent = error.message; start();
+};
+$("out").onclick = async () => { await db.auth.signOut(); location.reload(); };
+
+async function start() {
+  const {data:{user}} = await db.auth.getUser(); if (!user) return;
+  const {data:p} = await db.from("profiles").select("rol").eq("id", user.id).single();
+  if (!p || p.rol !== "agente") { await db.auth.signOut(); return $("err").textContent = "Esta cuenta no es de agente."; }
+  $("login").hidden = true; $("panel").hidden = false; $("out").hidden = false;
+  load();
+  db.channel("rt").on("postgres_changes", {event:"*", schema:"public", table:"alertas"}, () => { load(); try { new Audio("data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=").play(); } catch(e) {} })
+    .on("postgres_changes", {event:"*", schema:"public", table:"profiles"}, load).subscribe();
+}
+async function load() {
+  const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo)").order("created_at", {ascending:false}).limit(50);
+  $("al").innerHTML = (a.data || []).map(x => { const p = x.profiles || {};
+    const map = x.lat ? `<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${x.lat}&mlon=${x.lng}#map=18/${x.lat}/${x.lng}">Ver ubicación</a>` : "<small>Sin ubicación</small>";
+    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small></div><div>${map} ${x.estado == "nueva" ? `<button data-a="${x.id}">Atendida</button>` : ""}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
+  const v = await db.from("profiles").select("id,nombre,apellidos,telefono,direccion").eq("validado", false).eq("rol", "ciudadano");
+  $("pe").innerHTML = (v.data || []).map(u => `<div class="card"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b><br><small>${esc(u.telefono)} · ${esc(u.direccion)}</small></div><button data-v="${u.id}">Validar</button></div>`).join("") || "<p>Ninguno.</p>";
+}
+document.addEventListener("click", async e => {
+  if (e.target.dataset.a) { await db.from("alertas").update({estado:"atendida"}).eq("id", e.target.dataset.a); load(); }
+  if (e.target.dataset.v) { await db.rpc("validar_usuario", {uid:e.target.dataset.v}); load(); }
+});
+$("ap").onclick = async () => { if (!$("at").value.trim()) return;
+  const {error} = await db.from("avisos").insert({titulo:$("at").value.trim(), categoria:$("ac").value.trim() || "General"});
+  if (!error) $("at").value = ""; else alert(error.message); };
+db.auth.getSession().then(({data}) => { if (data.session) start(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Seguridad Ciudadana Tortosa</title>
+<style>
+:root{--bg:#fff;--ink:#05254E;--navy:#05254E;--lime:#D4DD2B;--surf:#F2F3F7;--red:#FF3B30}
+@media (prefers-color-scheme:dark){:root{--bg:#060F1E;--ink:#E8EEFA;--navy:#1E4A8C;--surf:#10213A}}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif;display:flex;justify-content:center}
+#app{position:relative;width:100%;max-width:430px;height:100%;overflow:hidden;padding-top:env(safe-area-inset-top)}
+.scr{position:absolute;inset:0;display:none;flex-direction:column;padding-top:env(safe-area-inset-top)}.scr.on{display:flex}
+button,input,select{font:inherit}
+.btn{border:0;border-radius:30px;background:var(--navy);color:#fff;font-weight:700;padding:15px;cursor:pointer;width:100%}
+.btn.o{background:none;color:var(--ink);border:2px solid var(--navy);margin-top:10px}
+#auth{padding:28px 22px;overflow:auto}#auth h1{font-size:28px;margin:10px 0 18px}
+input,select{width:100%;padding:13px;margin-bottom:10px;border:2px solid var(--surf);border-radius:12px;background:var(--surf);color:var(--ink)}
+#err{color:var(--red);min-height:22px;font-size:14px}
+.logo{aspect-ratio:1;border-radius:50%;background:var(--navy);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;container-type:inline-size;line-height:1}
+.logo b{font-size:17cqw}.logo i{font-size:14cqw;color:var(--lime);font-style:normal;margin-top:3cqw}
+.top{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 18px 0}.top .logo{width:36%}
+.rb{width:46px;height:46px;border-radius:50%;background:var(--navy);color:#fff;border:0;font-size:20px;cursor:pointer}
+#orb{position:relative;width:min(92%,340px);aspect-ratio:1;margin:auto}
+.ring{position:absolute;inset:10%;border:2px dotted var(--ink);border-radius:50%;opacity:.7}
+#orb>.logo{position:absolute;width:40%;left:30%;top:30%}
+.nd{position:absolute;width:19%;aspect-ratio:1;border-radius:50%;border:0;font-size:28px;touch-action:none;cursor:grab;transform:translate(-50%,-50%);transition:transform .25s;user-select:none}
+.bn{margin:0 18px 14px;border:0;border-radius:10px;background:var(--red);color:#fff;font-size:21px;font-weight:700;padding:28px 10px;cursor:pointer}.bn.ok{background:#2E9E5B}
+#ov{position:absolute;inset:0;background:rgba(0,0,0,.5);display:none;align-items:flex-end}#ov.on{display:flex}
+.sh{background:var(--bg);width:100%;max-height:92%;overflow:auto;border-radius:24px 24px 0 0;padding:18px 22px 28px}
+.x{width:42px;height:42px;border-radius:50%;border:0;background:var(--surf);color:var(--ink);cursor:pointer}
+.sh h1{font-size:28px;margin:18px 0 10px}.note{font-size:13px;opacity:.7}
+.nt{border-left:5px solid #FFCD00;background:var(--surf);border-radius:10px;padding:10px 14px;margin-bottom:8px}.nt span{display:block;font-size:12px;opacity:.7}
+</style>
+</head>
+<body>
+<div id="app">
+<section class="scr on" id="auth">
+<div class="logo" style="width:130px"><b>POLICIA</b><i>Tortosa</i></div>
+<h1>Seguridad Ciudadana</h1>
+<input id="em" type="email" placeholder="Correo electrónico" autocomplete="email">
+<input id="pw" type="password" placeholder="Contraseña (mín. 6)" autocomplete="current-password">
+<input class="r" id="nm" placeholder="Nombre" hidden><input class="r" id="ap" placeholder="Apellidos" hidden>
+<input class="r" id="te" type="tel" placeholder="Teléfono" hidden><input class="r" id="di" placeholder="Dirección de residencia" hidden>
+<select class="r" id="gr" hidden><option>Ciudadanía</option><option>Establecimiento</option></select>
+<div id="err"></div>
+<button class="btn" id="go">Entrar</button><button class="btn o" id="tg">Crear una cuenta nueva</button>
+<p class="note">Al registrarte aceptas el tratamiento de tus datos para gestionar avisos de seguridad. Texto legal pendiente del Ayuntamiento.</p>
+</section>
+
+<section class="scr" id="home">
+<div class="top"><button class="rb" id="inf">i</button><div class="logo"><b>POLICIA</b><i>Tortosa</i></div><button class="rb" id="cfg">⚙</button></div>
+<div id="orb"><div class="ring"></div><div class="logo"><b>POLICIA</b><i>Tortosa</i></div></div>
+<button class="bn" id="bn"></button>
+</section>
+<div id="ov"><div class="sh"><button class="x" id="cl">✕</button><div id="shb"></div></div></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+// === CONFIGURA ESTOS DOS VALORES (Supabase > Project Settings > API) ===
+const SUPABASE_URL = "https://gaaaxoccsewsqghiutrq.supabase.co";
+const SUPABASE_KEY = "sb_publishable_HkxGy62A8XhCUr04YoPeGA_RBQY2xaF";
+// ========================================================================
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = i => document.getElementById(i);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const show = n => document.querySelectorAll(".scr").forEach(s => s.classList.toggle("on", s.id == n));
+const sheet = h => { $("shb").innerHTML = h; $("ov").classList.add("on"); };
+$("cl").onclick = () => $("ov").classList.remove("on");
+let me = null, perfil = null, reg = false;
+
+const nodes = [
+ {id:"not",a:-50, bg:"#FFCD00",ic:"✉️",t:"Notificaciones"},
+ {id:"rob",a:50,  bg:"#FF8A80",ic:"🥷",t:"Robo"},
+ {id:"sen",a:-105,bg:"#05254E",ic:"🌙",t:"Aviso de sereno"},
+ {id:"lgb",a:105, bg:"#F8F1E9",ic:"🌈",t:"Violencia contra el colectivo LGTBI+"},
+ {id:"gen",a:180, bg:"#F2E6FA",ic:"✋",t:"Violencia de género"}];
+
+// --- acceso y registro ---
+$("tg").onclick = () => { reg = !reg; document.querySelectorAll(".r").forEach(e => e.hidden = !reg);
+  $("go").textContent = reg ? "Crear cuenta" : "Entrar"; $("tg").textContent = reg ? "Ya tengo cuenta" : "Crear una cuenta nueva"; };
+$("go").onclick = async () => {
+  $("err").textContent = ""; const email = $("em").value.trim(), password = $("pw").value;
+  const r = reg
+    ? await db.auth.signUp({email, password, options:{data:{nombre:$("nm").value, apellidos:$("ap").value, telefono:$("te").value, direccion:$("di").value, grupo:$("gr").value}}})
+    : await db.auth.signInWithPassword({email, password});
+  if (r.error) return $("err").textContent = r.error.message;
+  if (!r.data.session) return $("err").textContent = "Revisa tu correo para confirmar la cuenta.";
+  enter(r.data.user);
+};
+async function enter(u) {
+  me = u; const {data} = await db.from("profiles").select("*").eq("id", u.id).single(); perfil = data;
+  const v = perfil && perfil.validado; $("bn").textContent = v ? "Registro validado" : "Registro pendiente de validar (toca para comprobar)";
+  $("bn").classList.toggle("ok", !!v); show("home");
+}
+$("bn").onclick = () => enter(me);
+(async () => { const {data:{session}} = await db.auth.getSession(); if (session) enter(session.user); })();
+
+// --- bolas arrastrables ---
+const orb = $("orb");
+nodes.forEach(n => {
+  const b = document.createElement("button"); b.className = "nd"; b.style.background = n.bg; b.textContent = n.ic; b.setAttribute("aria-label", n.t);
+  const r = n.a * Math.PI / 180; b.style.left = (50 + 40 * Math.sin(r)) + "%"; b.style.top = (50 - 40 * Math.cos(r)) + "%";
+  let sx, sy, drag = false;
+  const hit = () => { const o = orb.getBoundingClientRect(), q = b.getBoundingClientRect();
+    return Math.hypot(q.left + q.width/2 - (o.left + o.width/2), q.top + q.height/2 - (o.top + o.height/2)) < o.width * .2; };
+  b.onpointerdown = e => { drag = true; sx = e.clientX; sy = e.clientY; b.setPointerCapture(e.pointerId); b.style.transition = "none"; };
+  b.onpointermove = e => { if (drag) b.style.transform = `translate(calc(-50% + ${e.clientX-sx}px),calc(-50% + ${e.clientY-sy}px))`; };
+  b.onpointerup = () => { if (!drag) return; drag = false; const h = hit(); b.style.transition = "transform .25s"; b.style.transform = "translate(-50%,-50%)"; if (h) send(n); };
+  orb.appendChild(b);
+});
+
+// --- acciones ---
+async function send(n) {
+  if (n.id == "not") return avisos();
+  if (!perfil || !perfil.validado) return sheet("<h1>Registro pendiente</h1><p>Podrás enviar avisos cuando la Policía Local valide tu registro.</p>");
+  navigator.geolocation.getCurrentPosition(p => post(n, p.coords.latitude, p.coords.longitude), () => post(n, null, null), {enableHighAccuracy:true, timeout:8000});
+}
+async function post(n, lat, lng) {
+  const {error} = await db.from("alertas").insert({user_id: me.id, tipo: n.t, lat, lng});
+  sheet(error ? `<h1>No se pudo enviar</h1><p>${esc(error.message)}</p><p><b>Si es urgente, llama al 112.</b></p>`
+    : `<h1>Aviso enviado</h1><p><b>${esc(n.t)}</b></p><p>La Policía Local ha recibido tu aviso${lat ? " y tu ubicación" : " (sin ubicación: activa el GPS)"}.</p><p class="note">En una emergencia llama siempre al 112.</p>`);
+}
+async function avisos() {
+  const {data} = await db.from("avisos").select("*").order("created_at", {ascending:false}).limit(20);
+  sheet("<h1>Notificaciones</h1>" + (data || []).map(a => `<div class="nt"><b>${esc(a.titulo)}</b><span>${esc(a.categoria)} · ${new Date(a.created_at).toLocaleString("es-ES")}</span></div>`).join("") || "<p>No hay avisos.</p>");
+}
+$("inf").onclick = () => sheet("<h1>Secciones</h1>" + nodes.map(n => `<p>${n.ic} <b>${esc(n.t)}</b></p>`).join("") + "<p class='note'>Arrastra la bola al icono central para enviar el aviso.</p>");
+$("cfg").onclick = () => { sheet(`<h1>Configuración</h1><p>${esc(perfil?.nombre)} ${esc(perfil?.apellidos)}<br>${esc(me?.email)}</p><button class="btn" id="out">Cerrar sesión</button>`);
+  $("out").onclick = async () => { await db.auth.signOut(); $("ov").classList.remove("on"); show("auth"); }; };
+</script>
+</body>
+</html>

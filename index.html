@@ -88,6 +88,11 @@ html[data-t=minimal] input{border-color:#DDD}html[data-t=minimal] .nd{background
 #home .rb{box-shadow:0 0 0 2px rgba(255,255,255,.35)}
 .nd img.car,.li .c img.car{width:82%;display:block;pointer-events:none}
 .nd img.full,.li .c img.full{width:100%;height:100%;border-radius:50%;display:block;pointer-events:none}
+.tr{margin:0 16px 12px;display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.16);color:#fff;border-radius:16px;padding:14px;font-weight:600;cursor:pointer;backdrop-filter:blur(6px)}
+.tr svg{width:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.sh .fh{font-size:17px;margin:20px 0 8px}.sh .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sh .chk{display:flex;align-items:center;gap:8px;margin:6px 16px 6px 0;font-weight:500}.sh .chk input{width:22px;height:22px;margin:0;padding:0;box-shadow:none}
+.sh .row2{display:flex;flex-wrap:wrap;align-items:center}
 </style>
 </head>
 <body>
@@ -111,6 +116,7 @@ html[data-t=minimal] input{border-color:#DDD}html[data-t=minimal] .nd{background
 <div class="top"><button class="rb" id="inf" aria-label="Secciones">i</button><div class="tt"><b>Policía Local</b><span>Tortosa</span></div><button class="rb" id="cfg" aria-label="Configuración"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
 <div id="lbl">Arrastra una bola al círculo central</div>
 <div id="orb"><div class="ring"></div><img class="shield" id="ctr" alt="Escudo Policía Local de Tortosa"></div>
+<button class="tr" id="ocu"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg>Solicitar ocupación de vía pública</button>
 <button class="bn" id="bn"></button>
 </section>
 <div id="ov"><div class="sh"><button class="x" id="cl" aria-label="Cerrar">✕</button><div id="shb"></div></div></div>
@@ -213,6 +219,49 @@ async function avisos() {
   const {data} = await db.from("avisos").select("*").order("created_at", {ascending:false}).limit(20);
   sheet("<h1>Notificaciones</h1>" + ((data || []).map(a => `<div class="nt"><b>${esc(a.titulo)}</b><span>${esc(a.categoria)} · ${new Date(a.created_at).toLocaleString("es-ES")}</span></div>`).join("") || "<p>No hay avisos.</p>"));
 }
+$("ocu").onclick = () => {
+  if (!perfil || !perfil.validado) return sheet("<h1>Registro pendiente</h1><p>Podrás enviar solicitudes cuando la Policía Local valide tu registro.</p>");
+  const p = perfil;
+  const radio = n => `<div class="row2"><label class="chk"><input type="radio" name="${n}" value="si">Sí</label><label class="chk"><input type="radio" name="${n}" value="no" checked>No</label></div>`;
+  const doc = t => `<label class="chk"><input type="checkbox" class="o_doc" value="${t}">${t}</label>`;
+  sheet(`<h1>Ocupación de vía pública</h1><p class="note">Solicitud de autorización de reserva de espacio ocasional en la vía pública. Llegará a la Policía Local de Tortosa.</p>
+  <h2 class="fh">Solicitante</h2>
+  <input id="o_nom" placeholder="Nombre y apellidos" value="${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}">
+  <input id="o_nif" placeholder="NIF / NIE" autocapitalize="characters">
+  <input id="o_mail" type="email" placeholder="Correo electrónico" value="${esc(me?.email)}">
+  <input id="o_tel" type="tel" placeholder="Teléfono" value="${esc(p.telefono)}">
+  <input id="o_dom" placeholder="Domicilio" value="${esc(p.direccion)}">
+  <div class="two"><input id="o_mun" placeholder="Municipio" value="Tortosa"><input id="o_cp" placeholder="Código postal" inputmode="numeric"></div>
+  <h2 class="fh">Representante (si lo hay)</h2>
+  <input id="o_rnom" placeholder="Nombre y apellidos"><input id="o_rnif" placeholder="NIF">
+  <h2 class="fh">Actividad que quiere realizar</h2>
+  <input id="o_desc" placeholder="Descripción (mudanza, carga y descarga, obra…)">
+  <input id="o_emp" placeholder="Emplazamiento (calle y número)">
+  <input id="o_dias" placeholder="Día/s (ej. 12 y 13 de diciembre)">
+  <input id="o_horas" placeholder="Horas (ej. de 8:00 a 14:00)">
+  <input id="o_ap" placeholder="A partir de (hora de inicio)">
+  <input id="o_long" type="number" min="0" step="0.5" inputmode="decimal" placeholder="Longitud (metros lineales)">
+  <p><b>¿Necesita que se corte la calle?</b></p>${radio("o_corte")}
+  <p><b>¿Afecta a Zona Blava (aparcamiento regulado)?</b></p>${radio("o_zb")}
+  <input id="o_plz" type="number" min="0" inputmode="numeric" placeholder="Plazas afectadas (si es zona Blava)">
+  <h2 class="fh">Documentos que aportará</h2>${doc("Fotocopia NIF/NIE")}${doc("Plano de situación")}${doc("Hoja de pago de la reserva")}
+  <p class="note">Los documentos se entregan o envían a la Policía Local por separado.</p>
+  <div id="o_err" style="color:var(--red);min-height:20px"></div><button class="btn" id="o_go">Enviar solicitud</button>`);
+  $("o_go").onclick = async () => {
+    const g = i => $(i).value.trim(), si = n => document.querySelector(`input[name=${n}]:checked`)?.value === "si";
+    const falta = [["o_nom", "nombre"], ["o_nif", "NIF/NIE"], ["o_desc", "descripción"], ["o_emp", "emplazamiento"], ["o_dias", "día/s"]].filter(x => !g(x[0]));
+    if (falta.length) return $("o_err").textContent = "Falta: " + falta.map(x => x[1]).join(", ") + ".";
+    if (!g("o_tel") && !g("o_mail")) return $("o_err").textContent = "Indica un teléfono o un correo de contacto.";
+    const emp = g("o_emp"); $("o_go").disabled = true;
+    const {error} = await db.from("ocupaciones").insert({user_id: me.id, nombre: g("o_nom"), nif: g("o_nif").toUpperCase(), email: g("o_mail") || null, telefono: g("o_tel") || null,
+      domicilio: g("o_dom") || null, municipio: g("o_mun") || null, cp: g("o_cp") || null, rep_nombre: g("o_rnom") || null, rep_nif: g("o_rnif") || null,
+      descripcion: g("o_desc"), emplazamiento: emp, dias: g("o_dias"), horas: g("o_horas") || null, a_partir_de: g("o_ap") || null,
+      longitud: g("o_long") ? +g("o_long") : null, cortar_calle: si("o_corte"), zona_blava: si("o_zb"), plazas: g("o_plz") ? +g("o_plz") : null,
+      documentos: [...document.querySelectorAll(".o_doc:checked")].map(i => i.value)});
+    if (error) { $("o_go").disabled = false; return $("o_err").textContent = "No se pudo enviar: " + error.message; }
+    sheet(`<div class="ctr"><div class="okc"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>Solicitud enviada</h1><p>La Policía Local ha recibido tu solicitud de ocupación en <b>${esc(emp)}</b>.</p><p class="note">Recuerda entregar o enviar a la Policía Local los documentos indicados.</p></div>`);
+  };
+};
 $("inf").onclick = () => sheet("<h1>Secciones disponibles</h1><p>Arrastra la bola al círculo central para enviar el aviso.</p>" +
   nodes.map(n => `<div class="li"><div class="c" style="background:${n.bg}">${n.ic}</div><div><b>${esc(n.t)}</b><span class="note">${esc(n.d)}</span></div></div>`).join(""));
 $("cfg").onclick = () => { sheet(`<h1>Configuración</h1><p><b>${esc(perfil?.nombre)} ${esc(perfil?.apellidos)}</b><br>${esc(me?.email)}</p><h2 style="font-size:18px;margin:18px 0 8px">Mi vehículo (opcional)</h2><input id="cm" placeholder="Matrícula" autocapitalize="characters" value="${esc(perfil?.matricula)}"><input id="ca" placeholder="Aseguradora" value="${esc(perfil?.aseguradora)}"><button class="btn" id="gv">Guardar vehículo</button><p class="note" id="gvm"></p><button class="btn o" id="dsg2" style="margin-top:14px">Cambiar diseño</button><button class="btn" id="out" style="margin-top:10px">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:16px">Fondo: <a href="https://www.vecteezy.com" target="_blank" rel="noopener" style="color:inherit">Vecteezy.com</a></p>`);

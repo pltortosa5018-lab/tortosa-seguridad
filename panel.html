@@ -32,6 +32,9 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 <div id="alarm"></div>
 <div class="bar"><b>Esta unidad:</b><input id="unit" placeholder="Ej. Comisaría, Patrulla 1" size="22"><small>Se guarda en este dispositivo. Los avisos que asignes aquí llevarán este nombre.</small></div>
 <h2 style="margin-top:6px">Avisos recibidos</h2><div id="al"></div>
+<h2>Solicitudes de ocupación de vía pública <small id="ocn"></small></h2>
+<div class="bar"><b>Correo de la Policía:</b><input id="dest" type="email" placeholder="correo@ejemplo.cat" size="30"><small>Se guarda en este dispositivo. Al pulsar «Enviar por correo» se abre tu programa de correo con todos los datos.</small></div>
+<div id="oc"></div>
 <h2>Registros pendientes de validar</h2><div id="pe"></div>
 <h2>Publicar notificación</h2>
 <div class="card"><input id="at" placeholder="Título del aviso" style="flex:1"><input id="ac" placeholder="Categoría" value="General"><button id="ap">Publicar</button></div>
@@ -51,6 +54,8 @@ const unidad = () => $("unit").value.trim() || "Sin nombre";
 try { $("unit").value = localStorage.getItem("unidad") || "Comisaría"; } catch (e) { $("unit").value = "Comisaría"; }
 $("unit").oninput = () => { try { localStorage.setItem("unidad", $("unit").value); } catch (e) {} };
 
+try { $("dest").value = localStorage.getItem("destino") || ""; } catch (e) {}
+$("dest").oninput = () => { try { localStorage.setItem("destino", $("dest").value); } catch (e) {} };
 /* ---- sonido de alarma, parpadeo y pantalla encendida ---- */
 let ctx = null, muted = false, timer = null, tt = null, wl = null;
 function unlock() { try { ctx = ctx || new (window.AudioContext || window.webkitAudioContext)(); if (ctx.state === "suspended") ctx.resume(); } catch (e) {}
@@ -82,11 +87,12 @@ async function start() {
   if (!p || p.rol !== "agente") { await db.auth.signOut(); return $("err").textContent = "Esta cuenta no es de agente."; }
   $("login").hidden = true; $("panel").hidden = false; $("out").hidden = false; unlock(); lock(); load();
   db.channel("rt").on("postgres_changes", {event:"*", schema:"public", table:"alertas"}, load)
-    .on("postgres_changes", {event:"*", schema:"public", table:"profiles"}, load).subscribe();
+    .on("postgres_changes", {event:"*", schema:"public", table:"profiles"}, load)
+    .on("postgres_changes", {event:"*", schema:"public", table:"ocupaciones"}, load).subscribe();
 }
 
 /* ---- datos ---- */
-async function load() { cargaCodigos();
+async function load() { cargaCodigos(); cargaOcupaciones();
   const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo,matricula,aseguradora)").order("created_at", {ascending:false}).limit(50);
   const lista = a.data || [];
   setAlarm(lista.filter(x => x.estado == "nueva").length);
@@ -107,6 +113,9 @@ document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
   if (d.a) upd(d.a, {estado:"atendida"}, false);
   if (d.cp) copia(d.cp);
+  if (d.ocm) { const o = OC[d.ocm]; location.href = "mailto:" + encodeURIComponent($("dest").value.trim()) + "?subject=" + encodeURIComponent("Solicitud de ocupación de vía pública: " + o.emplazamiento) + "&body=" + encodeURIComponent(textoOcupacion(o)); }
+  if (d.ocp) imprimeOcupacion(OC[d.ocp]);
+  if (d.ocr) { await db.from("ocupaciones").update({estado:"revisada"}).eq("id", d.ocr); cargaOcupaciones(); }
   if (d.x) { await db.from("codigos").update({activo:false}).eq("codigo", d.x); cargaCodigos(); }
   if (d.v) { await db.rpc("validar_usuario", {uid:d.v}); load(); } });
 $("ap").onclick = async () => { if (!$("at").value.trim()) return;
@@ -124,6 +133,37 @@ $("gc").onclick = async () => {
   const {data, error} = await db.rpc("crear_codigo", {p_usos: +$("cu").value || 1, p_dias: +$("cd").value || 7, p_nota: $("cn").value.trim() || null});
   if (error) return alert(error.message + "\n(¿Has ejecutado el SQL de códigos?)");
   $("cn").value = ""; cargaCodigos(); copia(data); };
+const OC = {};
+const si = b => b ? "Sí" : "No";
+function textoOcupacion(o) {
+  return ["SOLICITUD DE OCUPACIÓN DE VÍA PÚBLICA", "",
+    "Solicitante: " + o.nombre, "NIF/NIE: " + o.nif, "Correo: " + (o.email || "-"), "Teléfono: " + (o.telefono || "-"),
+    "Domicilio: " + [o.domicilio, o.cp, o.municipio].filter(Boolean).join(", "),
+    "Representante: " + (o.rep_nombre ? o.rep_nombre + " (NIF " + (o.rep_nif || "-") + ")" : "-"), "",
+    "Descripción: " + o.descripcion, "Emplazamiento: " + o.emplazamiento, "Día/s: " + o.dias, "Horas: " + (o.horas || "-"), "A partir de: " + (o.a_partir_de || "-"),
+    "Longitud: " + (o.longitud ?? "-") + " metros lineales", "Necesita cortar la calle: " + si(o.cortar_calle),
+    "Zona Blava: " + si(o.zona_blava) + (o.zona_blava && o.plazas != null ? " (" + o.plazas + " plazas)" : ""),
+    "Documentos que aportará: " + ((o.documentos || []).join(", ") || "-"), "",
+    "Solicitud recibida el " + new Date(o.created_at).toLocaleString("es-ES")].join("\n");
+}
+async function cargaOcupaciones() {
+  const r = await db.from("ocupaciones").select("*").order("created_at", {ascending:false}).limit(40);
+  const l = r.data || []; l.forEach(o => OC[o.id] = o);
+  const n = l.filter(o => o.estado == "pendiente").length; $("ocn").textContent = n ? "(" + n + " pendientes)" : "";
+  $("oc").innerHTML = l.map(o => `<div class="card ${o.estado == "pendiente" ? "asignada" : "atendida"}"><div><b>${esc(o.emplazamiento)}</b> <small>${new Date(o.created_at).toLocaleString("es-ES")}</small><br>${esc(o.descripcion)}<br>Día/s: ${esc(o.dias)} · Horas: ${esc(o.horas || "-")} · ${esc(o.longitud ?? "-")} m<br>Corte de calle: ${si(o.cortar_calle)} · Zona Blava: ${si(o.zona_blava)}${o.zona_blava && o.plazas != null ? " (" + esc(o.plazas) + " plazas)" : ""}<br><small>${esc(o.nombre)} · NIF ${esc(o.nif)} · ${esc(o.telefono || "")} · ${esc(o.email || "")}</small></div><div><button data-ocm="${o.id}">Enviar por correo</button> <button data-ocp="${o.id}">Imprimir</button> ${o.estado == "pendiente" ? `<button class="k" data-ocr="${o.id}">Revisada</button>` : ""}</div></div>`).join("") || "<p>Sin solicitudes.</p>";
+}
+function imprimeOcupacion(o) {
+  const f = (k, v) => `<div class="f"><small>${k}</small><b>${esc(v || "")}</b></div>`;
+  const w = window.open("", "_blank"); if (!w) return alert("Permite las ventanas emergentes para imprimir.");
+  w.document.write(`<!DOCTYPE html><meta charset="utf-8"><title>Ocupació via pública</title><style>body{font:14px system-ui,sans-serif;margin:30px;color:#000}h1{font-size:17px;text-align:center}h2{font-size:14px;border-bottom:2px solid #000;margin:18px 0 8px}.f{border-bottom:1px solid #999;padding:5px 0}.f small{display:block;color:#555;font-size:11px}.g{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}</style>
+  <b>Ajuntament de Tortosa · Policia Local</b><h1>AUTORITZACIÓ DE RESERVES D'ESPAIS OCASIONALS A LA VIA PÚBLICA</h1>
+  <h2>Sol·licitant</h2><div class="g">${f("Nom i cognoms", o.nombre)}${f("NIF/NIE", o.nif)}${f("Correu electrònic", o.email)}${f("Telèfon", o.telefono)}${f("Domicili", o.domicilio)}${f("Municipi / Codi Postal", [o.municipio, o.cp].filter(Boolean).join(" · "))}</div>
+  <h2>Representant</h2><div class="g">${f("Nom i cognoms", o.rep_nombre)}${f("NIF", o.rep_nif)}</div>
+  <h2>Exposo — Que vol realitzar la següent activitat</h2>${f("Descripció", o.descripcion)}${f("Emplaçament", o.emplazamiento)}${f("Dia/dies", o.dias)}${f("Hores", o.horas)}${f("A partir de", o.a_partir_de)}${f("Longitud (metres lineals)", o.longitud)}${f("Que necessita que es talli el carrer", si(o.cortar_calle))}${f("Zona Blava", si(o.zona_blava) + (o.plazas != null ? " · Places: " + o.plazas : ""))}
+  <h2>Documents aportats</h2>${f("", (o.documentos || []).join(" · "))}
+  <p style="margin-top:30px">Data de la sol·licitud: ${new Date(o.created_at).toLocaleString("ca-ES")}</p><p>Signatura:</p><p style="margin-top:50px">ALCALDIA, AJUNTAMENT DE TORTOSA</p>`);
+  w.document.close(); w.focus(); setTimeout(() => w.print(), 300);
+}
 db.auth.getSession().then(({data}) => { if (data.session) start(); });
 </script>
 </body>

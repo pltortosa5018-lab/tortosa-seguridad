@@ -97,7 +97,7 @@ html[data-t=minimal] input{border-color:#DDD}html[data-t=minimal] .nd{background
 <div class="form">
 <input id="em" type="email" placeholder="Correo electrónico" autocomplete="email">
 <input id="pw" type="password" placeholder="Contraseña (mín. 6)" autocomplete="current-password">
-<input class="r" id="nm" placeholder="Nombre" hidden><input class="r" id="ap" placeholder="Apellidos" hidden>
+<input class="r" id="co" placeholder="Código de invitación" autocapitalize="characters" autocomplete="off" hidden><input class="r" id="nm" placeholder="Nombre" hidden><input class="r" id="ap" placeholder="Apellidos" hidden>
 <input class="r" id="te" type="tel" placeholder="Teléfono" hidden><input class="r" id="di" placeholder="Dirección de residencia" hidden>
 <input class="r" id="ma" placeholder="Matrícula del vehículo (opcional)" autocapitalize="characters" hidden><input class="r" id="as" placeholder="Aseguradora (opcional)" hidden><p class="note r" hidden>La matrícula y la aseguradora son opcionales y solo se usarán para gestionar un accidente de tráfico.</p>
 <select class="r" id="gr" hidden><option>Ciudadanía</option><option>Establecimiento</option></select>
@@ -149,12 +149,15 @@ const nodes = [
 
 $("tg").onclick = () => { reg = !reg; document.querySelectorAll(".r").forEach(e => e.hidden = !reg);
   $("go").textContent = reg ? "Crear cuenta" : "Entrar"; $("tg").textContent = reg ? "Ya tengo cuenta" : "Crear una cuenta nueva"; };
+const normCod = v => v.toUpperCase().replace(/[^A-Z0-9]/g, "");
+const pc = new URLSearchParams(location.search).get("codigo"); if (pc) { $("co").value = pc; $("tg").click(); }
 $("go").onclick = async () => {
   $("err").textContent = ""; const email = $("em").value.trim(), password = $("pw").value;
+  if (reg) { const v = await db.rpc("codigo_valido", {p_codigo: normCod($("co").value)}); if (!v.data) return $("err").textContent = "Código de invitación no válido, caducado o ya usado."; }
   const r = reg
-    ? await db.auth.signUp({email, password, options:{data:{nombre:$("nm").value, apellidos:$("ap").value, telefono:$("te").value, direccion:$("di").value, grupo:$("gr").value, matricula:normMat($("ma").value), aseguradora:$("as").value.trim()}}})
+    ? await db.auth.signUp({email, password, options:{data:{nombre:$("nm").value, apellidos:$("ap").value, telefono:$("te").value, direccion:$("di").value, grupo:$("gr").value, matricula:normMat($("ma").value), aseguradora:$("as").value.trim(), codigo:normCod($("co").value)}}})
     : await db.auth.signInWithPassword({email, password});
-  if (r.error) return $("err").textContent = r.error.message;
+  if (r.error) return $("err").textContent = /Database error/i.test(r.error.message) ? "No se pudo crear la cuenta: revisa el código de invitación." : r.error.message;
   if (!r.data.session) return $("err").textContent = "Revisa tu correo para confirmar la cuenta.";
   enter(r.data.user);
 };

@@ -35,6 +35,9 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 <h2>Registros pendientes de validar</h2><div id="pe"></div>
 <h2>Publicar notificación</h2>
 <div class="card"><input id="at" placeholder="Título del aviso" style="flex:1"><input id="ac" placeholder="Categoría" value="General"><button id="ap">Publicar</button></div>
+<h2>Códigos de invitación</h2>
+<div class="bar"><label>Usos <input id="cu" type="number" min="1" value="1" style="width:70px"></label><label>Días <input id="cd" type="number" min="1" value="7" style="width:70px"></label><input id="cn" placeholder="Nota (ej. Agentes turno noche)" size="26"><button id="gc">Generar código</button></div>
+<div id="cl"></div>
 </div>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
@@ -83,7 +86,7 @@ async function start() {
 }
 
 /* ---- datos ---- */
-async function load() {
+async function load() { cargaCodigos();
   const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo,matricula,aseguradora)").order("created_at", {ascending:false}).limit(50);
   const lista = a.data || [];
   setAlarm(lista.filter(x => x.estado == "nueva").length);
@@ -103,10 +106,24 @@ document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.m) upd(d.m, {estado:"asignada", patrulla:unidad()}, true);
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
   if (d.a) upd(d.a, {estado:"atendida"}, false);
+  if (d.cp) copia(d.cp);
+  if (d.x) { await db.from("codigos").update({activo:false}).eq("codigo", d.x); cargaCodigos(); }
   if (d.v) { await db.rpc("validar_usuario", {uid:d.v}); load(); } });
 $("ap").onclick = async () => { if (!$("at").value.trim()) return;
   const {error} = await db.from("avisos").insert({titulo:$("at").value.trim(), categoria:$("ac").value.trim() || "General"});
   if (!error) $("at").value = ""; else alert(error.message); };
+const fmt = c => c.length == 8 ? c.slice(0, 4) + "-" + c.slice(4) : c;
+const enlace = c => location.href.replace(/panel\.html.*$/, "") + "?codigo=" + c;
+async function copia(c) { const t = enlace(c); try { await navigator.clipboard.writeText(t); alert("Enlace copiado:\n" + t); } catch (e) { prompt("Copia este enlace:", t); } }
+async function cargaCodigos() {
+  const r = await db.from("codigos").select("*").order("created_at", {ascending:false}).limit(30);
+  $("cl").innerHTML = (r.data || []).map(c => { const vivo = c.activo && c.usos < c.usos_max && (!c.caduca || new Date(c.caduca) > new Date());
+    return `<div class="card"><div><b>${esc(fmt(c.codigo))}</b> <small>${vivo ? "(activo)" : "(no válido)"}</small><br><small>Usos ${c.usos}/${c.usos_max} · caduca ${c.caduca ? new Date(c.caduca).toLocaleDateString("es-ES") : "nunca"}${c.nota ? " · " + esc(c.nota) : ""}</small></div><div>${vivo ? `<button data-cp="${esc(c.codigo)}">Copiar enlace</button> <button class="r" data-x="${esc(c.codigo)}">Desactivar</button>` : ""}</div></div>`; }).join("") || "<p>Aún no hay códigos.</p>";
+}
+$("gc").onclick = async () => {
+  const {data, error} = await db.rpc("crear_codigo", {p_usos: +$("cu").value || 1, p_dias: +$("cd").value || 7, p_nota: $("cn").value.trim() || null});
+  if (error) return alert(error.message + "\n(¿Has ejecutado el SQL de códigos?)");
+  $("cn").value = ""; cargaCodigos(); copia(data); };
 db.auth.getSession().then(({data}) => { if (data.session) start(); });
 </script>
 </body>

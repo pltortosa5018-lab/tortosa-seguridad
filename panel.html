@@ -54,10 +54,10 @@ async function start() {
     .on("postgres_changes", {event:"*", schema:"public", table:"profiles"}, load).subscribe();
 }
 async function load() {
-  const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo)").order("created_at", {ascending:false}).limit(50);
+  const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo,matricula,aseguradora)").order("created_at", {ascending:false}).limit(50);
   $("al").innerHTML = (a.data || []).map(x => { const p = x.profiles || {};
     const map = x.lat ? `<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${x.lat}&mlon=${x.lng}#map=18/${x.lat}/${x.lng}">Ver ubicación</a>` : "<small>Sin ubicación</small>";
-    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small></div><div>${map} ${x.estado == "nueva" ? `<button data-a="${x.id}">Atendida</button>` : ""}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
+    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${p.matricula ? `<br><b>Matrícula: ${esc(p.matricula)}</b> <small>(declarada, sin verificar)${p.aseguradora ? " · Aseguradora: " + esc(p.aseguradora) : ""}</small>` : ""}</div><div>${map} ${x.estado == "nueva" ? `<button data-a="${x.id}">Atendida</button>` : ""}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
   const v = await db.from("profiles").select("id,nombre,apellidos,telefono,direccion").eq("validado", false).eq("rol", "ciudadano");
   $("pe").innerHTML = (v.data || []).map(u => `<div class="card"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b><br><small>${esc(u.telefono)} · ${esc(u.direccion)}</small></div><button data-v="${u.id}">Validar</button></div>`).join("") || "<p>Ninguno.</p>";
 }

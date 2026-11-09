@@ -98,6 +98,7 @@ html[data-t=minimal] input{border-color:#DDD}html[data-t=minimal] .nd{background
 <input id="pw" type="password" placeholder="Contraseña (mín. 6)" autocomplete="current-password">
 <input class="r" id="nm" placeholder="Nombre" hidden><input class="r" id="ap" placeholder="Apellidos" hidden>
 <input class="r" id="te" type="tel" placeholder="Teléfono" hidden><input class="r" id="di" placeholder="Dirección de residencia" hidden>
+<input class="r" id="ma" placeholder="Matrícula del vehículo (opcional)" autocapitalize="characters" hidden><input class="r" id="as" placeholder="Aseguradora (opcional)" hidden><p class="note r" hidden>La matrícula y la aseguradora son opcionales y solo se usarán para gestionar un accidente de tráfico.</p>
 <select class="r" id="gr" hidden><option>Ciudadanía</option><option>Establecimiento</option></select>
 <div id="err"></div>
 <button class="btn" id="go">Entrar</button><button class="btn o" id="tg">Crear una cuenta nueva</button>
@@ -121,6 +122,7 @@ const SUPABASE_KEY = "sb_publishable_HkxGy62A8XhCUr04YoPeGA_RBQY2xaF";
 const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = i => document.getElementById(i);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const normMat = v => v.toUpperCase().replace(/[\s.-]/g, "");
 const show = n => document.querySelectorAll(".scr").forEach(s => s.classList.toggle("on", s.id == n));
 const sheet = h => { $("shb").innerHTML = h; $("ov").classList.add("on"); };
 $("cl").onclick = () => $("ov").classList.remove("on");
@@ -148,7 +150,7 @@ $("tg").onclick = () => { reg = !reg; document.querySelectorAll(".r").forEach(e 
 $("go").onclick = async () => {
   $("err").textContent = ""; const email = $("em").value.trim(), password = $("pw").value;
   const r = reg
-    ? await db.auth.signUp({email, password, options:{data:{nombre:$("nm").value, apellidos:$("ap").value, telefono:$("te").value, direccion:$("di").value, grupo:$("gr").value}}})
+    ? await db.auth.signUp({email, password, options:{data:{nombre:$("nm").value, apellidos:$("ap").value, telefono:$("te").value, direccion:$("di").value, grupo:$("gr").value, matricula:normMat($("ma").value), aseguradora:$("as").value.trim()}}})
     : await db.auth.signInWithPassword({email, password});
   if (r.error) return $("err").textContent = r.error.message;
   if (!r.data.session) return $("err").textContent = "Revisa tu correo para confirmar la cuenta.";
@@ -208,7 +210,13 @@ async function avisos() {
 }
 $("inf").onclick = () => sheet("<h1>Secciones disponibles</h1><p>Arrastra la bola al círculo central para enviar el aviso.</p>" +
   nodes.map(n => `<div class="li"><div class="c" style="background:${n.bg}">${n.ic}</div><div><b>${esc(n.t)}</b><span class="note">${esc(n.d)}</span></div></div>`).join(""));
-$("cfg").onclick = () => { sheet(`<h1>Configuración</h1><p><b>${esc(perfil?.nombre)} ${esc(perfil?.apellidos)}</b><br>${esc(me?.email)}</p><button class="btn o" id="dsg2" style="margin-top:14px">Cambiar diseño</button><button class="btn" id="out" style="margin-top:10px">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:16px">Fondo: <a href="https://www.vecteezy.com" target="_blank" rel="noopener" style="color:inherit">Vecteezy.com</a></p>`);
+$("cfg").onclick = () => { sheet(`<h1>Configuración</h1><p><b>${esc(perfil?.nombre)} ${esc(perfil?.apellidos)}</b><br>${esc(me?.email)}</p><h2 style="font-size:18px;margin:18px 0 8px">Mi vehículo (opcional)</h2><input id="cm" placeholder="Matrícula" autocapitalize="characters" value="${esc(perfil?.matricula)}"><input id="ca" placeholder="Aseguradora" value="${esc(perfil?.aseguradora)}"><button class="btn" id="gv">Guardar vehículo</button><p class="note" id="gvm"></p><button class="btn o" id="dsg2" style="margin-top:14px">Cambiar diseño</button><button class="btn" id="out" style="margin-top:10px">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:16px">Fondo: <a href="https://www.vecteezy.com" target="_blank" rel="noopener" style="color:inherit">Vecteezy.com</a></p>`);
+  $("gv").onclick = async () => {
+    const matricula = normMat($("cm").value) || null, aseguradora = $("ca").value.trim() || null;
+    const {error} = await db.from("profiles").update({matricula, aseguradora}).eq("id", me.id);
+    if (!error) { perfil = {...perfil, matricula, aseguradora}; }
+    $("gvm").textContent = error ? "No se pudo guardar: " + error.message : "Guardado.";
+  };
   $("dsg2").onclick = openThemes;
   $("out").onclick = async () => { await db.auth.signOut(); $("ov").classList.remove("on"); show("auth"); }; };
 </script>

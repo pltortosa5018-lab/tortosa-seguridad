@@ -93,6 +93,8 @@ html[data-t=minimal] input{border-color:#DDD}html[data-t=minimal] .nd{background
 .sh .fh{font-size:17px;margin:20px 0 8px}.sh .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .sh .chk{display:flex;align-items:center;gap:8px;margin:6px 16px 6px 0;font-weight:500}.sh .chk input{width:22px;height:22px;margin:0;padding:0;box-shadow:none}
 .sh .row2{display:flex;flex-wrap:wrap;align-items:center}
+.nd.sm{width:16%}
+.sh textarea{width:100%;min-height:110px;padding:14px;border:2px solid transparent;border-radius:14px;background:var(--card);color:var(--ink);font:inherit;box-shadow:0 1px 3px rgba(5,37,78,.08)}
 </style>
 </head>
 <body>
@@ -114,7 +116,7 @@ html[data-t=minimal] input{border-color:#DDD}html[data-t=minimal] .nd{background
 
 <section class="scr" id="home">
 <div class="top"><button class="rb" id="inf" aria-label="Secciones">i</button><div class="tt"><b>Policía Local</b><span>Tortosa</span></div><button class="rb" id="cfg" aria-label="Configuración"><svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button></div>
-<div id="lbl">Arrastra una bola al círculo central</div>
+<div id="lbl">Arrastra una bola al escudo central</div>
 <div id="orb"><div class="ring"></div><img class="shield" id="ctr" alt="Escudo Policía Local de Tortosa"></div>
 <button class="tr" id="ocu"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg>Solicitar ocupación de vía pública</button>
 <button class="bn" id="bn"></button>
@@ -141,6 +143,10 @@ const ROB="data:image/webp;base64,UklGRmQeAABXRUJQVlA4WAoAAAAQAAAA3wAA3wAAQUxQSH
 const I = {
  mail:'<svg viewBox="0 0 24 24" stroke="#3A3000"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></svg>',
  bag:'<svg viewBox="0 0 24 24" stroke="#5A1410"><path d="M5.5 8.5h13l-1 11.5h-11z"/><path d="M9 8.5a3 3 0 016 0"/></svg>',
+ fire:'<svg viewBox="0 0 24 24" stroke="#5A1A00"><path d="M12 3c1 3 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z"/></svg>',
+ paw:'<svg viewBox="0 0 24 24" stroke="#4A2E10"><circle cx="6" cy="10" r="1.8"/><circle cx="10" cy="6" r="1.8"/><circle cx="14" cy="6" r="1.8"/><circle cx="18" cy="10" r="1.8"/><path d="M12 12c-3 0-5 3-5 5 0 2 2 2.5 5 2.5s5-.5 5-2.5c0-2-2-5-5-5z"/></svg>',
+ old:'<svg viewBox="0 0 24 24" stroke="#1D3A5F"><circle cx="9" cy="5" r="2"/><path d="M9 8v6l-2 6M9 14l3 6M9 9.5l3 2M15 12a2 2 0 014 0v8"/></svg>',
+ dots:'<svg viewBox="0 0 24 24" stroke="#fff"><circle cx="6" cy="12" r=".6"/><circle cx="12" cy="12" r=".6"/><circle cx="18" cy="12" r=".6"/></svg>',
  note:'<svg viewBox="0 0 24 24" stroke="#fff"><path d="M9 18V5l11-2v13"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="17.5" cy="16" r="2.5"/></svg>',
  moon:'<svg viewBox="0 0 24 24" stroke="#fff"><path d="M20 14.5A8 8 0 019.5 4a8 8 0 1010.5 10.5z"/></svg>',
  rain:'<svg viewBox="0 0 24 24"><path d="M3.5 18a8.5 8.5 0 0117 0" stroke="#E5392F"/><path d="M6.5 18a5.5 5.5 0 0111 0" stroke="#F2B705"/><path d="M9.5 18a2.5 2.5 0 015 0" stroke="#2F6FDB"/></svg>',
@@ -151,7 +157,11 @@ const nodes = [
  {id:"rob",a:60,  bg:"#A3D5E0",ic:'<img class="full" alt="" src="'+ROB+'">', t:"Robo",d:"Actívalo solo en caso de robo"},
  {id:"rui",a:-120,bg:"#05254E",ic:I.note,t:"Ruidos y molestias",d:"Avisa de música alta, fiestas u otros ruidos que molestan"},
  {id:"lgb",a:120, bg:"#F8F1E9",ic:I.rain,t:"Violencia contra el colectivo LGTBI+",d:"Solo en caso de violencia contra el colectivo LGTBI+"},
- {id:"gen",a:180, bg:"#F2E6FA",ic:I.hand,t:"Violencia de género",d:"Solo en caso de violencia de género"}];
+ {id:"gen",a:180, bg:"#F2E6FA",ic:I.hand,t:"Violencia de género",d:"Solo en caso de violencia de género"},
+ {id:"inc",x:8, y:10,bg:"#FFB36B",ic:I.fire,t:"Incendios",d:"Avisa de un incendio. Si hay peligro, llama también al 112."},
+ {id:"ani",x:92,y:10,bg:"#E9D3B4",ic:I.paw, t:"Intervenciones con animales",d:"Animales sueltos, heridos o peligrosos"},
+ {id:"may",x:8, y:90,bg:"#CFE3F7",ic:I.old, t:"Personas mayores",d:"Persona mayor que necesita ayuda o está desorientada"},
+ {id:"otr",x:92,y:90,bg:"#6B7A99",ic:I.dots,t:"Otros",d:"Cualquier otra incidencia que no esté en la lista. Pedirá que la describas."}];
 
 $("tg").onclick = () => { reg = !reg; document.querySelectorAll(".r").forEach(e => e.hidden = !reg);
   $("go").textContent = reg ? "Crear cuenta" : "Entrar"; $("tg").textContent = reg ? "Ya tengo cuenta" : "Crear una cuenta nueva"; };
@@ -190,9 +200,11 @@ function openThemes(){const cur=document.documentElement.dataset.t||"";
  document.querySelectorAll(".th").forEach(b=>b.onclick=()=>{setTheme(b.dataset.k);openThemes()})}
 $("dsg").onclick=openThemes;
 const orb = $("orb"), ctr = $("ctr"), lbl = $("lbl");
+orb.insertAdjacentHTML("afterbegin", '<svg viewBox="0 0 100 100" style="position:absolute;inset:0;width:100%;height:100%;pointer-events:none;color:rgba(255,255,255,.8)">' + nodes.filter(n => n.x != null).map(n => { const dx = n.x - 50, dy = n.y - 50, L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+  return `<line x1="${50 + ux * 40}" y1="${50 + uy * 40}" x2="${n.x - ux * 9}" y2="${n.y - uy * 9}" stroke="currentColor" stroke-width=".8" stroke-dasharray="2 2" stroke-linecap="round"/>`; }).join("") + "</svg>");
 nodes.forEach(n => {
   const b = document.createElement("button"); b.className = "nd"; b.style.background = n.bg; b.innerHTML = n.ic; b.setAttribute("aria-label", n.t);
-  const r = n.a * Math.PI / 180; b.style.left = (50 + 40 * Math.sin(r)) + "%"; b.style.top = (50 - 40 * Math.cos(r)) + "%";
+  if (n.x != null) { b.classList.add("sm"); b.style.left = n.x + "%"; b.style.top = n.y + "%"; } else { const r = n.a * Math.PI / 180; b.style.left = (50 + 40 * Math.sin(r)) + "%"; b.style.top = (50 - 40 * Math.cos(r)) + "%"; }
   let sx, sy, drag = false, was = false;
   const hit = () => { const o = orb.getBoundingClientRect(), q = b.getBoundingClientRect();
     return Math.hypot(q.left + q.width/2 - (o.left + o.width/2), q.top + q.height/2 - (o.top + o.height/2)) < o.width * .2; };
@@ -200,14 +212,20 @@ nodes.forEach(n => {
   b.onpointermove = e => { if (!drag) return; b.style.transform = `translate(calc(-50% + ${e.clientX-sx}px),calc(-50% + ${e.clientY-sy}px)) scale(1.12)`;
     const h = hit(); ctr.classList.toggle("hot", h); if (h && !was && navigator.vibrate) navigator.vibrate(25); was = h; };
   b.onpointerup = () => { if (!drag) return; drag = false; const h = hit(); was = false; ctr.classList.remove("hot"); b.style.zIndex = "";
-    b.style.transition = "transform .25s"; b.style.transform = "translate(-50%,-50%)"; lbl.textContent = "Arrastra una bola al círculo central"; lbl.classList.remove("on"); if (h) send(n); };
+    b.style.transition = "transform .25s"; b.style.transform = "translate(-50%,-50%)"; lbl.textContent = "Arrastra una bola al escudo central"; lbl.classList.remove("on"); if (h) send(n); };
   orb.appendChild(b);
 });
 
 async function send(n) {
   if (n.id == "not") return avisos();
   if (!perfil || !perfil.validado) return sheet("<h1>Registro pendiente</h1><p>Podrás enviar avisos cuando la Policía Local valide tu registro.</p>");
-  navigator.geolocation.getCurrentPosition(p => post(n, p.coords.latitude, p.coords.longitude), () => post(n, null, null), {enableHighAccuracy:true, timeout:8000});
+  if (n.id == "otr") return pedirOtros(n);
+  enviar(n);
+}
+function enviar(n) { navigator.geolocation.getCurrentPosition(p => post(n, p.coords.latitude, p.coords.longitude), () => post(n, null, null), {enableHighAccuracy:true, timeout:8000}); }
+function pedirOtros(n) {
+  sheet('<h1>Otros</h1><p>Cuéntanos qué ocurre, en pocas palabras.</p><textarea id="ot" maxlength="200" placeholder="Ej. Farola caída en la calle…"></textarea><div id="ote" style="color:var(--red);min-height:20px"></div><button class="btn" id="otg">Enviar aviso</button>');
+  $("otg").onclick = () => { const t = $("ot").value.trim(); if (!t) return $("ote").textContent = "Escribe una breve descripción."; enviar({...n, t: "Otros: " + t}); };
 }
 async function post(n, lat, lng) {
   const {error} = await db.from("alertas").insert({user_id: me.id, tipo: n.t, lat, lng});
@@ -262,7 +280,7 @@ $("ocu").onclick = () => {
     sheet(`<div class="ctr"><div class="okc"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1>Solicitud enviada</h1><p>La Policía Local ha recibido tu solicitud de ocupación en <b>${esc(emp)}</b>.</p><p class="note">Recuerda entregar o enviar a la Policía Local los documentos indicados.</p></div>`);
   };
 };
-$("inf").onclick = () => sheet("<h1>Secciones disponibles</h1><p>Arrastra la bola al círculo central para enviar el aviso.</p>" +
+$("inf").onclick = () => sheet("<h1>Secciones disponibles</h1><p>Arrastra la bola al escudo central para enviar el aviso.</p>" +
   nodes.map(n => `<div class="li"><div class="c" style="background:${n.bg}">${n.ic}</div><div><b>${esc(n.t)}</b><span class="note">${esc(n.d)}</span></div></div>`).join(""));
 $("cfg").onclick = () => { sheet(`<h1>Configuración</h1><p><b>${esc(perfil?.nombre)} ${esc(perfil?.apellidos)}</b><br>${esc(me?.email)}</p><h2 style="font-size:18px;margin:18px 0 8px">Mi vehículo (opcional)</h2><input id="cm" placeholder="Matrícula" autocapitalize="characters" value="${esc(perfil?.matricula)}"><input id="ca" placeholder="Aseguradora" value="${esc(perfil?.aseguradora)}"><button class="btn" id="gv">Guardar vehículo</button><p class="note" id="gvm"></p><button class="btn o" id="dsg2" style="margin-top:14px">Cambiar diseño</button><button class="btn" id="out" style="margin-top:10px">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:16px">Fondo: <a href="https://www.vecteezy.com" target="_blank" rel="noopener" style="color:inherit">Vecteezy.com</a></p>`);
   $("gv").onclick = async () => {

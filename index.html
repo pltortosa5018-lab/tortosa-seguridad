@@ -37,6 +37,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .tl{display:flex;flex-direction:column;gap:12px;margin:14px 0 0;text-align:left}.st{display:flex;align-items:center;gap:12px;color:var(--mute)}.st i{width:28px;height:28px;flex:none;box-sizing:border-box;border-radius:50%;border:2px solid #8AA09D;background:#fff;display:grid;place-items:center}.st i svg{width:16px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;display:none}
 .st.done{color:var(--ink)}.st.done i{background:var(--acc);border-color:var(--acc)}.st.done i svg{display:block}.st b{display:block;font-size:14px}.st small{font-size:12px;color:var(--mute)}
 .eta{margin:12px 0 0;padding:12px 14px;border-radius:14px;background:var(--tint);font:700 18px "Space Grotesk",sans-serif;color:var(--acc)}
+.eta .bar{margin-top:10px;height:10px;border-radius:5px;background:#BFD6D4;overflow:hidden}.eta .bar i{display:block;height:100%;width:0;background:var(--acc);border-radius:5px;transition:width 1s linear}
 .okbig{width:84px;height:84px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:0 auto}.okbig svg{width:44px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .more{margin-top:18px;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:left}.more label{font-weight:600;font-size:14px;display:block;margin-bottom:8px}
 .card2{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;margin-bottom:12px}.card2 span{font-size:14px;color:var(--mute)}
@@ -71,7 +72,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 <section class="scr" id="s-env"><div class="body center">
 <div id="e-wait" hidden><p class="sub" style="margin-top:40px">Se enviará el aviso en…</p><div class="count" id="cnt">3</div><button class="btn o2" id="e-cancel">Cancelar aviso</button></div>
 <div id="e-err" hidden><h1 class="h1">No se pudo enviar</h1><p id="e-em" class="err"></p><p><b>Si es urgente, llama al 112.</b></p><a class="call" href="tel:112"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>Llamar al 112</a><button class="btn o2" id="e-h2" style="margin-top:12px">Volver</button></div>
-<div id="e-ok" hidden><div style="margin-top:20px" class="okbig"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1 class="h1" id="e-h">Aviso enviado</h1><p class="sub" id="e-sub"></p><div class="eta" id="e-eta" hidden></div>
+<div id="e-ok" hidden><div style="margin-top:20px" class="okbig"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div><h1 class="h1" id="e-h">Aviso enviado</h1><p class="sub" id="e-sub"></p><div class="eta" id="e-eta" hidden><span id="e-et"></span><div class="bar" id="e-pb" role="progressbar" aria-label="Progreso hasta la llegada de la patrulla" aria-valuemin="0" aria-valuemax="100"><i id="e-bar"></i></div></div>
 <div class="tl"><div class="st done" id="t1"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><div><b>Recibido por la Policía Local</b><small id="t1s">Con tu ubicación</small></div></div><div class="st" id="t2"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><div><b>Asignado a una unidad</b><small id="t2s">pendiente</small></div></div><div class="st" id="t3"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><div><b>En camino</b><small id="t3s">pendiente</small></div></div><div class="st" id="t4"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></i><div><b>Atendido</b><small id="t4s">pendiente</small></div></div></div>
 <div class="more" id="e-more"><label for="dt">¿Quieres añadir más información? (opcional)</label><textarea id="dt" maxlength="500" placeholder="Qué ha pasado, cuántas personas, hacia dónde han ido…"></textarea><input id="df" type="file" accept="image/*"><div id="dm" class="err"></div><button class="btn" id="dg">Enviar información</button></div>
 <a class="call" href="tel:112" style="justify-content:center;margin-top:18px"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>Si hay peligro inmediato, llama al 112</a><button class="btn o2" id="e-home" style="margin-top:12px">Volver al inicio</button></div></div></section>
@@ -193,22 +194,30 @@ async function enviar() {
   $("e-h").textContent = "Aviso enviado"; mostrarOk(tipo, "nueva", null, true);
   if (f || (extra && cur.id != "otr")) subirExtra(extra, f).catch(() => {});
 }
-function mostrarOk(tipo, est, pat, extras, eta) {
-  panes(0, 1, 0); $("e-sub").textContent = tipo; $("e-ok").dataset.est = est; tl(est, pat, eta); $("e-more").hidden = !extras;
+function mostrarOk(tipo, est, pat, extras, eta, emin) {
+  panes(0, 1, 0); $("e-sub").textContent = tipo; $("e-ok").dataset.est = est; tl(est, pat, eta, emin); $("e-more").hidden = !extras;
   $("dt").value = ""; $("df").value = ""; $("dm").textContent = ""; $("dg").disabled = false; $("dg").hidden = false;
   clearInterval(poll); if (est != "atendida") seguir();
 }
-function verAviso(x) { alertId = x.id; show("s-env"); $("e-h").textContent = "Estado del aviso"; mostrarOk(x.tipo, x.estado, x.patrulla, Date.now() - new Date(x.created_at) < 3600e3, x.eta_llegada); }
+function verAviso(x) { alertId = x.id; show("s-env"); $("e-h").textContent = "Estado del aviso"; mostrarOk(x.tipo, x.estado, x.patrulla, Date.now() - new Date(x.created_at) < 3600e3, x.eta_llegada, x.eta_min); }
+let ETA = null;   // llegada estimada: la barra se rellena con el paso del tiempo
+function tick() {
+  if (!ETA) return; const left = ETA.fin - Date.now(), tot = ETA.min ? ETA.min * 60000 : Math.max(60000, ETA.fin - ETA.ini);
+  const p = Math.max(0, Math.min(1, 1 - left / tot)), m = Math.ceil(left / 60000);
+  const txt = left > 60000 ? "Llega en unos " + m + " min" : (left > 0 ? "Está a punto de llegar" : "Debería estar llegando");
+  $("e-et").textContent = txt; $("e-bar").style.width = (p * 100) + "%"; $("e-pb").setAttribute("aria-valuenow", Math.round(p * 100)); $("t3s").textContent = txt;
+}
+setInterval(tick, 1000);
 const ORD = {nueva:1, asignada:2, en_camino:3, atendida:4};
-function tl(est, pat, eta) {
+function tl(est, pat, eta, emin) {
   const n = ORD[est] || 1; [1, 2, 3, 4].forEach(i => $("t" + i).classList.toggle("done", i <= n));
-  $("t2s").textContent = n >= 2 ? (pat ? "Unidad: " + pat : "Ya tiene una unidad") : "pendiente"; $("t3s").textContent = n >= 3 ? "La patrulla va hacia ti" : "pendiente"; const eb = $("e-eta"); if (n == 3 && eta) { const m = Math.ceil((new Date(eta) - Date.now()) / 60000); eb.textContent = m > 1 ? "Llega en unos " + m + " min" : "Está a punto de llegar"; eb.hidden = false; $("t3s").textContent = eb.textContent; } else eb.hidden = true; $("t4s").textContent = n >= 4 ? "Aviso atendido" : "pendiente";
+  $("t2s").textContent = n >= 2 ? (pat ? "Unidad: " + pat : "Ya tiene una unidad") : "pendiente"; $("t3s").textContent = n >= 3 ? "La patrulla va hacia ti" : "pendiente"; const eb = $("e-eta"); if (n == 3 && eta) { const fin = new Date(eta).getTime(); if (!ETA || ETA.fin != fin) ETA = {fin, min: emin, ini: Date.now()}; eb.hidden = false; tick(); } else { ETA = null; eb.hidden = true; } $("t4s").textContent = n >= 4 ? "Aviso atendido" : "pendiente";
 }
 function seguir() {
   poll = setInterval(async () => {
     const {data} = await db.from("alertas").select("*").eq("id", alertId).single(); if (!data) return;
     const ant = $("e-ok").dataset.est; if (ant && ant != data.estado && navigator.vibrate) navigator.vibrate([120, 60, 120]);
-    $("e-ok").dataset.est = data.estado; tl(data.estado, data.patrulla, data.eta_llegada); if (data.estado == "atendida") clearInterval(poll);
+    $("e-ok").dataset.est = data.estado; tl(data.estado, data.patrulla, data.eta_llegada, data.eta_min); if (data.estado == "atendida") clearInterval(poll);
   }, 5000);
 }
 $("e-home").onclick = $("e-h2").onclick = () => { clearInterval(poll); clearInterval(tmr); show("main"); tab("av"); };

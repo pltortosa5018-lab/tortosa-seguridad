@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0E5A5A"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Seguridad Ciudadana">
-<title>Seguridad Ciudadana</title>
+<meta name="theme-color" content="#0E5A5A"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="PolAssist">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="apple-touch-icon.png"><link rel="icon" href="icon-192.png">
+<title>PolAssist</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#F3F6F5;--ink:#12211F;--mute:#4A5A58;--acc:#0E5A5A;--tint:#DCEBEA;--red:#C93A1F;--line:#D3DEDC;--amb:#FFF1D6;--ok:#2E7D5B}
@@ -17,9 +18,9 @@ input,select,textarea{width:100%;padding:14px;margin:0 0 10px;border:1px solid v
 .btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:50px;border:0;border-radius:14px;background:var(--acc);color:#fff;font-weight:600;padding:0 16px}
 .btn.o{background:#fff;color:var(--ink);border:1px solid var(--line)}.btn.o2{background:none;color:var(--acc);border:2px solid var(--acc)}.btn:disabled{opacity:.6}
 .emb{width:44px;height:52px;object-fit:contain;flex:none}.emb.big{width:84px;height:100px}
-.hero{background:var(--acc);color:#fff;padding:calc(30px + env(safe-area-inset-top)) 24px 30px;border-radius:0 0 32px 32px;text-align:center}.hero img{margin:0 auto 10px;display:block}.hero h1{font-size:26px}.hero p{margin:4px 0 0;opacity:.9}
+.hero{background:var(--acc);color:#fff;padding:calc(30px + env(safe-area-inset-top)) 24px 30px;border-radius:0 0 32px 32px;text-align:center}.hero img{margin:0 auto 10px;display:block}.hero h1{font-size:36px}.hero .wmk i{color:#fff}.hero .wmk em{color:#8FE0D4}.hero .hl2{margin-bottom:8px;display:flex;justify-content:center}.emb.sm{width:34px;height:40px;margin:12px auto 0!important}.hero p{margin:4px 0 0;opacity:.9}
 .form{padding:22px 22px calc(26px + env(safe-area-inset-bottom))}
-.top{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 20px 0}.who{display:flex;align-items:center;gap:12px;line-height:1.15}.who small{display:block;font-size:13px;color:var(--mute)}.who b{font:700 22px "Space Grotesk",sans-serif}
+.top{display:flex;align-items:center;justify-content:space-between;padding:calc(14px + env(safe-area-inset-top)) 20px 0}.who{display:flex;align-items:center;gap:12px;line-height:1.15}.who small{display:block;font-size:13px;color:var(--mute)}.wmk{font:700 22px/1 "Space Grotesk",sans-serif}.wmk i{font-style:normal;color:var(--ink)}.wmk em{font-style:normal;color:var(--acc);font-weight:500}.who svg{flex:none}.who small{margin-top:3px}
 .rb{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:#fff;display:grid;place-items:center;padding:0}.rb svg{width:22px;fill:none;stroke:var(--ink);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 svg{display:block}.views{flex:1;overflow:auto;padding:0 20px 16px;-webkit-overflow-scrolling:touch}.view{display:none}.view.on{display:block}
 .banner{display:block;width:100%;margin-top:14px;text-align:left;border:1px solid #E8A33D;border-radius:14px;background:var(--amb);padding:12px 14px}.banner.ok{background:var(--tint);border-color:var(--acc)}.banner b{display:block}.banner span{font-size:13px;color:var(--mute)}
@@ -50,7 +51,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .fh{font-size:17px;margin:20px 0 8px}.chk{display:flex;align-items:center;gap:8px;margin:6px 16px 6px 0;font-weight:500}.chk input{width:22px;height:22px;margin:0;padding:0}.row2{display:flex;flex-wrap:wrap;align-items:center}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ctr{text-align:center}.okc{width:76px;height:76px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:10px auto}.okc svg{width:40px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 </style></head><body><div id="app">
-<section class="scr on" id="auth" style="overflow:auto"><div class="hero"><img class="emb big" alt=""><h1 id="a-t"></h1><p id="a-s"></p></div>
+<section class="scr on" id="auth" style="overflow:auto"><div class="hero"><div class="hl2"><svg viewBox="0 0 96 96" width="88" height="88" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#fff"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#0E5A5A" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#F2A541" stroke="#0E5A5A" stroke-width="4"/></svg></div><h1 class="wmk"><i>Pol</i><em>Assist</em></h1><p id="a-s"></p><img class="emb sm" alt=""></div>
 <div class="form"><input id="em" type="email" placeholder="Correo electrónico" autocomplete="email"><input id="pw" type="password" placeholder="Contraseña (mín. 6)" autocomplete="current-password">
 <input class="r" id="co" placeholder="Código de invitación" autocapitalize="characters" autocomplete="off" hidden>
 <select class="r" id="gr" hidden><option value="Ciudadanía">Soy particular</option><option value="Establecimiento">Soy comerciante (establecimiento)</option></select>
@@ -58,7 +59,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 <input class="r m" id="ma" placeholder="Matrícula del vehículo (opcional)" autocapitalize="characters" hidden><input class="r m" id="as" placeholder="Aseguradora (opcional)" hidden><p class="note r m" hidden>La matrícula y la aseguradora son opcionales y solo se usarán para gestionar un accidente de tráfico.</p>
 <div id="cf" hidden></div><div id="err" class="err"></div><button class="btn" id="go">Entrar</button><button class="btn o2" id="tg" style="margin-top:10px">Crear una cuenta nueva</button>
 <p class="note" style="margin-top:16px">Al registrarte aceptas el tratamiento de tus datos para gestionar avisos de seguridad. Texto legal pendiente del Ayuntamiento.</p></div></section>
-<section class="scr" id="main"><header class="top"><div class="who"><img class="emb" alt=""><div><small id="m-c"></small><b id="m-m"></b></div></div><button class="rb" id="pbtn" aria-label="Mi perfil"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-5.5 7-5.5s6 1.5 7 5.5"/></svg></button></header>
+<section class="scr" id="main"><header class="top"><div class="who"><svg viewBox="0 0 96 96" width="42" height="42" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#0E5A5A"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#C93A1F" stroke="#fff" stroke-width="4"/></svg><div><span class="wmk"><i>Pol</i><em>Assist</em></span><small id="m-c"></small></div></div><button class="rb" id="pbtn" aria-label="Mi perfil"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-5.5 7-5.5s6 1.5 7 5.5"/></svg></button></header>
 <div class="views"><div class="view on" id="v-av"><button class="banner" id="bn" hidden></button><h1 class="h1">¿Qué ocurre?</h1><p class="sub">Toca una opción y confirma. El aviso se envía con tu ubicación.</p>
 <a class="call" href="tel:112"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>Emergencia vital: llama al 112</a><div class="grid" id="grid"></div></div>
 <div class="view" id="v-ns"><h1 class="h1">Avisos</h1><div id="ns-l"></div></div>
@@ -96,7 +97,7 @@ const show = n => document.querySelectorAll(".scr").forEach(s => s.classList.tog
 const sheet = h => { $("shb").innerHTML = h; $("ov").classList.add("on"); };
 $("cl").onclick = () => $("ov").classList.remove("on"); $("ov").onclick = e => { if (e.target == $("ov")) $("ov").classList.remove("on"); };
 document.querySelectorAll(".emb").forEach(i => { if (CFG.escudo) i.src = ESC; else i.remove(); });
-$("a-t").textContent = "Seguridad Ciudadana"; $("a-s").textContent = CFG.cuerpo + " de " + CFG.municipio; $("m-c").textContent = CFG.cuerpo; $("m-m").textContent = CFG.municipio; document.title = "Seguridad Ciudadana · " + CFG.municipio;
+$("a-s").textContent = CFG.cuerpo + " de " + CFG.municipio; $("m-c").textContent = CFG.cuerpo + " · " + CFG.municipio; document.title = "PolAssist · " + CFG.municipio;
 const CATS = [
  {id:"rob", l:"Robo", t:"Robo", k:"bag"}, {id:"acc", l:"Accidente de tráfico", t:"Accidente de tráfico", k:"car", q:[{id:"amb", t:"¿Necesitas una ambulancia?", si:"Necesita ambulancia", no:"Ambulancia: no"}]},
  {id:"inc", l:"Incendio", t:"Incendios", k:"fire", q:[{id:"bom", t:"¿Necesitas bomberos?", si:"Necesita bomberos", no:"Bomberos: no"}, {id:"amb", t:"¿Necesitas una ambulancia?", si:"Necesita ambulancia", no:"Ambulancia: no"}]}, {id:"rui", l:"Ruidos y molestias", t:"Ruidos y molestias", k:"note"},

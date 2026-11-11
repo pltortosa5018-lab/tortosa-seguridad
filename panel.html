@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Panel Policía Local Tortosa</title>
+<title>PolAssist · Panel</title>
 <style>
 :root{--bg:#F2F3F7;--card:#fff;--ink:#05254E;--navy:#05254E;--red:#E0342B;--amb:#E8A33D;--ok:#2E9E5B}
 @media (prefers-color-scheme:dark){:root{--bg:#060F1E;--card:#10213A;--ink:#E8EEFA;--navy:#1E4A8C}}
@@ -25,7 +25,7 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 </style>
 </head>
 <body>
-<header><b>Policía Local de Tortosa · Panel</b> <small style="opacity:.7">v24</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
+<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v25</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
 <div id="panel" hidden>
@@ -75,8 +75,8 @@ function beep() { if (!ctx || muted || ctx.state !== "running") return; const t 
 function setAlarm(n) {
   document.body.classList.toggle("alarma", n > 0);
   $("alarm").style.display = n > 0 ? "block" : "none"; $("alarm").textContent = "🚨 " + n + (n == 1 ? " aviso sin atender" : " avisos sin atender");
-  if (n > 0 && !timer) { beep(); timer = setInterval(beep, 4000); tt = setInterval(() => { document.title = document.title.startsWith("🚨") ? "Panel Policía Local" : "🚨 AVISO NUEVO"; }, 1000); }
-  if (n == 0 && timer) { clearInterval(timer); clearInterval(tt); timer = tt = null; document.title = "Panel Policía Local Tortosa"; }
+  if (n > 0 && !timer) { beep(); timer = setInterval(beep, 4000); tt = setInterval(() => { document.title = document.title.startsWith("🚨") ? "PolAssist · Panel" : "🚨 AVISO NUEVO"; }, 1000); }
+  if (n == 0 && timer) { clearInterval(timer); clearInterval(tt); timer = tt = null; document.title = "PolAssist · Panel"; }
 }
 $("mute").onclick = () => { muted = !muted; $("mute").textContent = muted ? "🔕 Sonido: no" : "🔔 Sonido: sí"; };
 async function lock() { try { wl = await navigator.wakeLock.request("screen"); } catch (e) {} }

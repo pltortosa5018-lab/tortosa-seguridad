@@ -12,7 +12,7 @@ header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;justify-
 main{max-width:960px;margin:0 auto;padding:16px}
 h2{margin:26px 0 10px}
 .card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap}
-.card.nueva{border-left:8px solid var(--red)}.card.asignada{border-left:8px solid var(--amb)}.card.atendida{border-left:8px solid var(--ok);opacity:.65}
+.card.nueva{border-left:8px solid var(--red)}.card.asignada{border-left:8px solid var(--amb)}.card.en_camino{border-left:8px solid var(--amb)}.card.atendida{border-left:8px solid var(--ok);opacity:.65}
 button,input{font:inherit}button{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:10px 14px;cursor:pointer}
 button.g{background:#0000;color:#fff;border:1px solid #fff8}button.r{background:var(--red)}button.a{background:var(--amb);color:#201400}button.k{background:var(--ok)}
 input{padding:10px;border:1px solid #9994;border-radius:8px;background:var(--card);color:var(--ink)}
@@ -106,8 +106,9 @@ async function load() { cargaCodigos(); cargaOcupaciones();
     const com = cm ? `<details style="margin-top:6px"><summary>🏪 ${esc(cm.nombre)}${cm.actividad ? " · " + esc(cm.actividad) : ""}</summary><small>Dirección: ${esc(cm.direccion)} · Tel: ${esc(cm.telefono)}${cm.horario ? " · Horario: " + esc(cm.horario) : ""}<br>Quien avisa: ${esc(cm.relacion)}${cm.contacto_urgente ? " · Contacto urgente: " + esc(cm.contacto_urgente) : ""}<br>Alarma: ${cm.alarma ? "Sí — " + esc(cm.alarma_compania) + " " + esc(cm.alarma_telefono) : "No"}<br>Cámaras: ${cm.camaras ? "Sí (" + esc(cm.camaras_num ?? "?") + ")" + (cm.camaras_dias ? ", se conservan " + esc(cm.camaras_dias) + " días" : "") + (cm.camaras_notas ? " — " + esc(cm.camaras_notas) : "") : "No"}${(cm.trabajadores || []).length ? "<br>Otras personas: " + cm.trabajadores.map(t => esc(t.nombre) + (t.puesto ? " (" + esc(t.puesto) + ")" : "") + " " + esc(t.telefono)).join("; ") : ""}</small></details>` : "";
     const asig = x.patrulla ? `<br><b>→ ${esc(x.patrulla)}</b>` : "";
     const btns = x.estado == "nueva" ? `<button class="r" data-m="${x.id}">Voy yo (${esc(unidad())})</button> <button class="a" data-o="${x.id}">Asignar a…</button> ` : "";
+    const cam = x.estado == "asignada" ? `<button class="a" data-c="${x.id}">En camino</button> ` : "";
     const fin = x.estado != "atendida" ? `<button class="k" data-a="${x.id}">Atendida</button>` : "";
-    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${mat}${com}${asig}${det}</div><div>${map} ${btns}${fin}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
+    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${mat}${com}${asig}${x.estado == "en_camino" ? "<br><b>En camino</b>" : ""}${det}</div><div>${map} ${btns}${cam}${fin}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
   const v = await db.from("profiles").select("id,nombre,apellidos,telefono,direccion,grupo,comercios(nombre,actividad,direccion)").eq("validado", false).eq("rol", "ciudadano");
   $("pe").innerHTML = (v.data || []).map(u => `<div class="card"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b><br><small>${esc(u.telefono)} · ${esc(u.direccion)}</small>${(() => { const cm = Array.isArray(u.comercios) ? u.comercios[0] : u.comercios; return cm ? `<br>🏪 <b>${esc(cm.nombre)}</b> <small>${esc(cm.actividad || "")} · ${esc(cm.direccion || "")}</small>` : (u.grupo == "Establecimiento" ? "<br>🏪 Comerciante" : ""); })()}</div><button data-v="${u.id}">Validar</button></div>`).join("") || "<p>Ninguno.</p>";
 }
@@ -116,6 +117,7 @@ async function upd(id, campos, soloNueva) { let q = db.from("alertas").update(ca
 document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.m) upd(d.m, {estado:"asignada", patrulla:unidad()}, true);
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
+  if (d.c) upd(d.c, {estado:"en_camino"}, false);
   if (d.a) upd(d.a, {estado:"atendida"}, false);
   if (d.cp) copia(d.cp);
   if (d.ocm) { const o = OC[d.ocm]; location.href = "mailto:" + encodeURIComponent($("dest").value.trim()) + "?subject=" + encodeURIComponent("Solicitud de ocupación de vía pública: " + o.emplazamiento) + "&body=" + encodeURIComponent(textoOcupacion(o)); }

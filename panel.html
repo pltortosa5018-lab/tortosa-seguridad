@@ -97,7 +97,7 @@ async function start() {
 /* ---- respaldo: comprueba los avisos cada 5 s y recarga solo si ha cambiado algo ---- */
 let sigA = "";
 async function vigila() {
-  const r = await db.from("alertas").select("id,estado,patrulla,detalle,foto").order("created_at", {ascending:false}).limit(50);
+  const r = await db.from("alertas").select("id,estado,patrulla,detalle,foto,eta_llegada").order("created_at", {ascending:false}).limit(50);
   if (!r.data) return; const sg = JSON.stringify(r.data); if (sg != sigA) { sigA = sg; load(); }
 }
 /* ---- datos ---- */
@@ -115,9 +115,9 @@ async function load() { cargaCodigos(); cargaOcupaciones();
     const com = cm ? `<details style="margin-top:6px"><summary>🏪 ${esc(cm.nombre)}${cm.actividad ? " · " + esc(cm.actividad) : ""}</summary><small>Dirección: ${esc(cm.direccion)} · Tel: ${esc(cm.telefono)}${cm.horario ? " · Horario: " + esc(cm.horario) : ""}<br>Quien avisa: ${esc(cm.relacion)}${cm.contacto_urgente ? " · Contacto urgente: " + esc(cm.contacto_urgente) : ""}<br>Alarma: ${cm.alarma ? "Sí — " + esc(cm.alarma_compania) + " " + esc(cm.alarma_telefono) : "No"}<br>Cámaras: ${cm.camaras ? "Sí (" + esc(cm.camaras_num ?? "?") + ")" + (cm.camaras_dias ? ", se conservan " + esc(cm.camaras_dias) + " días" : "") + (cm.camaras_notas ? " — " + esc(cm.camaras_notas) : "") : "No"}${(cm.trabajadores || []).length ? "<br>Otras personas: " + cm.trabajadores.map(t => esc(t.nombre) + (t.puesto ? " (" + esc(t.puesto) + ")" : "") + " " + esc(t.telefono)).join("; ") : ""}</small></details>` : "";
     const asig = x.patrulla ? `<br><b>→ ${esc(x.patrulla)}</b>` : "";
     const btns = x.estado == "nueva" ? `<button class="r" data-m="${x.id}">Voy yo (${esc(unidad())})</button> <button class="a" data-o="${x.id}">Asignar a…</button> ` : "";
-    const cam = x.estado == "asignada" ? `<button class="a" data-c="${x.id}">En camino</button> ` : "";
+    const cam = x.estado == "asignada" ? `<button class="a" data-c="${x.id}">En camino</button> ` : (x.estado == "en_camino" ? `<button class="a" data-e="${x.id}">Cambiar tiempo</button> ` : "");
     const fin = x.estado != "atendida" ? `<button class="k" data-a="${x.id}">Atendida</button>` : "";
-    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${mat}${com}${asig}${x.estado == "en_camino" ? "<br><b>En camino</b>" : ""}${det}</div><div>${map} ${btns}${cam}${fin}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
+    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${mat}${com}${asig}${x.estado == "en_camino" ? "<br><b>En camino" + (x.eta_llegada ? " · llegada hacia las " + new Date(x.eta_llegada).toLocaleTimeString("es-ES", {hour:"2-digit", minute:"2-digit"}) : "") + "</b>" : ""}${det}</div><div>${map} ${btns}${cam}${fin}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
   const v = await db.from("profiles").select("id,nombre,apellidos,telefono,direccion,grupo,comercios(nombre,actividad,direccion)").eq("validado", false).eq("rol", "ciudadano");
   $("pe").innerHTML = (v.data || []).map(u => `<div class="card"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b><br><small>${esc(u.telefono)} · ${esc(u.direccion)}</small>${(() => { const cm = Array.isArray(u.comercios) ? u.comercios[0] : u.comercios; return cm ? `<br>🏪 <b>${esc(cm.nombre)}</b> <small>${esc(cm.actividad || "")} · ${esc(cm.direccion || "")}</small>` : (u.grupo == "Establecimiento" ? "<br>🏪 Comerciante" : ""); })()}</div><button data-v="${u.id}">Validar</button></div>`).join("") || "<p>Ninguno.</p>";
 }
@@ -126,7 +126,8 @@ async function upd(id, campos, soloNueva) { let q = db.from("alertas").update(ca
 document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.m) upd(d.m, {estado:"asignada", patrulla:unidad()}, true);
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
-  if (d.c) upd(d.c, {estado:"en_camino"}, false);
+  if (d.c || d.e) { const r = prompt("¿En cuántos minutos llegáis, aproximadamente? (déjalo vacío si no lo sabes)", "5"); if (r === null) return;
+    const m = parseInt(r); upd(d.c || d.e, m > 0 ? {estado:"en_camino", eta_min:m, eta_llegada:new Date(Date.now() + m * 60000).toISOString()} : {estado:"en_camino"}, false); }
   if (d.a) upd(d.a, {estado:"atendida"}, false);
   if (d.cp) copia(d.cp);
   if (d.ocm) { const o = OC[d.ocm]; location.href = "mailto:" + encodeURIComponent($("dest").value.trim()) + "?subject=" + encodeURIComponent("Solicitud de ocupación de vía pública: " + o.emplazamiento) + "&body=" + encodeURIComponent(textoOcupacion(o)); }

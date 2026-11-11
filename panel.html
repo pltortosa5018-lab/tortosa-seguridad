@@ -24,7 +24,7 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 </style>
 </head>
 <body>
-<header><b>Policía Local de Tortosa · Panel</b><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
+<header><b>Policía Local de Tortosa · Panel</b> <small style="opacity:.7">v22</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
 <div id="panel" hidden>
@@ -43,6 +43,11 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 <div id="cl"></div>
 </div>
 </main>
+<div id="etm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:380px;width:92%">
+<h3 style="margin:0 0 12px">¿En cuántos minutos llegáis?</h3>
+<div style="display:flex;gap:8px;flex-wrap:wrap"><button data-min="2">2 min</button><button data-min="5">5 min</button><button data-min="10">10 min</button><button data-min="15">15 min</button><button data-min="20">20 min</button><button data-min="30">30 min</button></div>
+<div style="display:flex;gap:8px;margin-top:12px"><input id="etn" type="number" min="1" placeholder="Otro (minutos)" style="flex:1"><button id="etok">Aceptar</button></div>
+<div style="display:flex;gap:8px;margin-top:12px"><button id="etsin" style="background:none;color:inherit;border:1px solid #9996">No lo sé</button><button id="etno" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script>
 const SUPABASE_URL = "https://gaaaxoccsewsqghiutrq.supabase.co";
@@ -94,6 +99,13 @@ async function start() {
   setInterval(vigila, 5000);   // respaldo: si el tiempo real falla, se refresca solo cada 5 s
 }
 
+/* ---- tiempo estimado de llegada (ventana propia, sin depender de prompt) ---- */
+let etId = null;
+function pedirEta(id) { etId = id; $("etn").value = ""; $("etm").style.display = "flex"; }
+function cierraEta(min) { $("etm").style.display = "none"; if (min === undefined) return; const m = parseInt(min);
+  upd(etId, m > 0 ? {estado:"en_camino", eta_min:m, eta_llegada:new Date(Date.now() + m * 60000).toISOString()} : {estado:"en_camino"}, false); }
+$("etm").addEventListener("click", e => { const d = e.target.dataset;
+  if (e.target.id == "etm" || e.target.id == "etno") cierraEta(); else if (d.min) cierraEta(d.min); else if (e.target.id == "etok") cierraEta($("etn").value); else if (e.target.id == "etsin") cierraEta(""); });
 /* ---- respaldo: comprueba los avisos cada 5 s y recarga solo si ha cambiado algo ---- */
 let sigA = "";
 async function vigila() {
@@ -126,8 +138,7 @@ async function upd(id, campos, soloNueva) { let q = db.from("alertas").update(ca
 document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.m) upd(d.m, {estado:"asignada", patrulla:unidad()}, true);
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
-  if (d.c || d.e) { const r = prompt("¿En cuántos minutos llegáis, aproximadamente? (déjalo vacío si no lo sabes)", "5"); if (r === null) return;
-    const m = parseInt(r); upd(d.c || d.e, m > 0 ? {estado:"en_camino", eta_min:m, eta_llegada:new Date(Date.now() + m * 60000).toISOString()} : {estado:"en_camino"}, false); }
+  if (d.c || d.e) pedirEta(d.c || d.e);
   if (d.a) upd(d.a, {estado:"atendida"}, false);
   if (d.cp) copia(d.cp);
   if (d.ocm) { const o = OC[d.ocm]; location.href = "mailto:" + encodeURIComponent($("dest").value.trim()) + "?subject=" + encodeURIComponent("Solicitud de ocupación de vía pública: " + o.emplazamiento) + "&body=" + encodeURIComponent(textoOcupacion(o)); }

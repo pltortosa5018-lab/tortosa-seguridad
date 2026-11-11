@@ -86,11 +86,20 @@ async function start() {
   const {data:p} = await db.from("profiles").select("rol").eq("id", user.id).single();
   if (!p || p.rol !== "agente") { await db.auth.signOut(); return $("err").textContent = "Esta cuenta no es de agente."; }
   $("login").hidden = true; $("panel").hidden = false; $("out").hidden = false; unlock(); lock(); load();
+  const ses = (await db.auth.getSession()).data.session; if (ses) db.realtime.setAuth(ses.access_token);
+  db.auth.onAuthStateChange((ev, s2) => { if (s2) db.realtime.setAuth(s2.access_token); });
   db.channel("rt").on("postgres_changes", {event:"*", schema:"public", table:"alertas"}, load)
     .on("postgres_changes", {event:"*", schema:"public", table:"profiles"}, load)
     .on("postgres_changes", {event:"*", schema:"public", table:"ocupaciones"}, load).subscribe();
+  setInterval(vigila, 5000);   // respaldo: si el tiempo real falla, se refresca solo cada 5 s
 }
 
+/* ---- respaldo: comprueba los avisos cada 5 s y recarga solo si ha cambiado algo ---- */
+let sigA = "";
+async function vigila() {
+  const r = await db.from("alertas").select("id,estado,patrulla,detalle,foto").order("created_at", {ascending:false}).limit(50);
+  if (!r.data) return; const sg = JSON.stringify(r.data); if (sg != sigA) { sigA = sg; load(); }
+}
 /* ---- datos ---- */
 async function load() { cargaCodigos(); cargaOcupaciones();
   const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo,matricula,aseguradora,comercios(*))").order("created_at", {ascending:false}).limit(50);

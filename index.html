@@ -184,8 +184,11 @@ $("go").onclick = async () => {
 async function enter(u) {
   me = u; const {data} = await db.from("profiles").select("*").eq("id", u.id).single(); perfil = data;
   const v = !!(perfil && perfil.validado);
+  let ver = true;  // el aviso verde se muestra una sola vez; en las siguientes entradas desaparece
+  if (v) { try { const k = "val_" + u.id; ver = !localStorage.getItem(k); localStorage.setItem(k, "1"); } catch (e) {} }
+  $("bn").style.display = (v && !ver) ? "none" : "";
   $("bn").classList.toggle("ok", v);
-  $("bn").innerHTML = v ? '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg><div><b>Registro validado</b><span>Ya puedes enviar avisos</span></div>'
+  $("bn").innerHTML = v ? '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l3 3 5-6"/></svg><div><b>Registro validado</b><span>Ya puedes enviar avisos. Toca para cerrar este aviso.</span></div>'
     : '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><b>Registro pendiente de validar</b><span>Toca para comprobar</span></div>';
   show("home");
 }

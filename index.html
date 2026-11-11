@@ -38,6 +38,8 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .st.done{color:var(--ink)}.st.done i{background:var(--acc);border-color:var(--acc)}.st.done i svg{display:block}.st b{display:block;font-size:14px}.st small{font-size:12px;color:var(--mute)}
 .eta{margin:12px 0 0;padding:12px 14px;border-radius:14px;background:var(--tint);font:700 18px "Space Grotesk",sans-serif;color:var(--acc)}
 .eta .bar{margin-top:10px;height:10px;border-radius:5px;background:#BFD6D4;overflow:hidden}.eta .bar i{display:block;height:100%;width:0;background:var(--acc);border-radius:5px;transition:width 1s linear}
+.qs{margin-top:14px;display:flex;flex-direction:column;gap:10px}.qrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:15px}
+.seg{display:flex;gap:8px;flex:none}.seg button{min-width:64px;min-height:44px;border-radius:12px;border:2px solid var(--acc);background:#fff;color:var(--acc);font-weight:700}.seg button.on{background:var(--acc);color:#fff}.seg button[data-v=si].on{background:var(--red);border-color:var(--red)}
 .okbig{width:84px;height:84px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:0 auto}.okbig svg{width:44px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .more{margin-top:18px;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:left}.more label{font-weight:600;font-size:14px;display:block;margin-bottom:8px}
 .card2{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;margin-bottom:12px}.card2 span{font-size:14px;color:var(--mute)}
@@ -65,7 +67,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 <nav id="nav"><button class="on" data-t="av"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Avisar</button><button data-t="ns"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 004 0"/></svg>Avisos</button><button data-t="tr"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h5M10 16h5"/></svg>Trámites</button><button data-t="pf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-5.5 7-5.5s6 1.5 7 5.5"/></svg>Perfil</button></nav></section>
 <section class="scr" id="s-conf"><div class="bar"><button class="rb" id="c-back" aria-label="Volver"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><h2>Confirmar aviso</h2></div>
 <div class="body"><div class="cat"><span class="ib big" id="cf-ic"></span><div><h2 id="cf-t"></h2><p class="sub">Avisarás a la Policía Local.</p></div></div>
-<div class="holdw"><button id="hold" aria-label="Mantén pulsado dos segundos para enviar el aviso"><svg class="r" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="108" fill="none" stroke="#DCEBEA" stroke-width="12"/><circle id="rg" cx="120" cy="120" r="108" fill="none" stroke="#C93A1F" stroke-width="12" stroke-linecap="round" stroke-dasharray="679" stroke-dashoffset="679" transform="rotate(-90 120 120)"/><circle cx="120" cy="120" r="88" fill="#C93A1F"/></svg><span class="hl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><b>Mantén pulsado</b><span>para enviar</span></span></button></div>
+<div id="qs" class="qs" hidden></div><div class="holdw"><button id="hold" aria-label="Mantén pulsado dos segundos para enviar el aviso"><svg class="r" viewBox="0 0 240 240" aria-hidden="true"><circle cx="120" cy="120" r="108" fill="none" stroke="#DCEBEA" stroke-width="12"/><circle id="rg" cx="120" cy="120" r="108" fill="none" stroke="#C93A1F" stroke-width="12" stroke-linecap="round" stroke-dasharray="679" stroke-dashoffset="679" transform="rotate(-90 120 120)"/><circle cx="120" cy="120" r="88" fill="#C93A1F"/></svg><span class="hl"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><b>Mantén pulsado</b><span>para enviar</span></span></button></div>
 <div class="locb"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><b id="loc"></b></div><p class="sub c">Tendrás 3 segundos para cancelar antes de que se envíe.</p>
 <button class="btn o" id="xtog"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>Añadir texto o foto (opcional)</button><div id="xbox" hidden style="margin-top:10px"><textarea id="xt" maxlength="200" placeholder="Cuéntanos qué ocurre…"></textarea><input id="xf" type="file" accept="image/*"><div id="xerr" class="err"></div></div></div>
 <div class="foot"><button class="btn o2" id="c-cancel">Cancelar</button></div></section>
@@ -87,7 +89,7 @@ const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = i => document.getElementById(i);
 const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const normMat = v => v.toUpperCase().replace(/[\s.-]/g, ""), normCod = v => v.toUpperCase().replace(/[^A-Z0-9]/g, "");
-let me = null, perfil = null, reg = false, cur = null, pos = null, alertId = null, poll = null, tmr = null, MIS = [];
+let ans = {}, me = null, perfil = null, reg = false, cur = null, pos = null, alertId = null, poll = null, tmr = null, MIS = [];
 const I = {"bag": "<path d=\"M5.5 8.5h13l-1 11.5h-11z\"/><path d=\"M9 8.5a3 3 0 016 0\"/>", "car": "<path d=\"M4 16v-4l2-5h12l2 5v4M4 16h16M7 16v2M17 16v2M6 12h12\"/>", "fire": "<path d=\"M12 3c1 3 5 5 5 10a5 5 0 01-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-6 1-9z\"/>", "note": "<path d=\"M9 18V5l11-2v13\"/><circle cx=\"6.5\" cy=\"18\" r=\"2.5\"/><circle cx=\"17.5\" cy=\"16\" r=\"2.5\"/>", "paw": "<circle cx=\"6\" cy=\"10\" r=\"1.8\"/><circle cx=\"10\" cy=\"6\" r=\"1.8\"/><circle cx=\"14\" cy=\"6\" r=\"1.8\"/><circle cx=\"18\" cy=\"10\" r=\"1.8\"/><path d=\"M12 12c-3 0-5 3-5 5 0 2 2 2.5 5 2.5s5-.5 5-2.5c0-2-2-5-5-5z\"/>", "old": "<circle cx=\"9\" cy=\"5\" r=\"2\"/><path d=\"M9 8v6l-2 6M9 14l3 6M9 9.5l3 2M15 12a2 2 0 014 0v8\"/>", "hand": "<path d=\"M7 12V6.5M10 11V4M13 11V4.5M16 12V7\"/><path d=\"M7 12c0 5 2 8 5 8s5-3 5-6v-2\"/>", "rain": "<path d=\"M3.5 18a8.5 8.5 0 0117 0\"/><path d=\"M6.5 18a5.5 5.5 0 0111 0\"/><path d=\"M9.5 18a2.5 2.5 0 015 0\"/>", "dots": "<path d=\"M6 12h.01M12 12h.01M18 12h.01\"/>", "shield": "<path d=\"M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z\"/>", "bell": "<path d=\"M6 8a6 6 0 0112 0c0 7 3 8 3 8H3s3-1 3-8M10 20a2 2 0 004 0\"/>", "doc": "<path d=\"M7 3h7l4 4v14H7z\"/><path d=\"M14 3v4h4M10 12h5M10 16h5\"/>", "user": "<circle cx=\"12\" cy=\"8\" r=\"3.5\"/><path d=\"M5 20c1-4 4-5.5 7-5.5s6 1.5 7 5.5\"/>", "pin": "<path d=\"M12 21s7-6 7-11a7 7 0 10-14 0c0 5 7 11 7 11z\"/><circle cx=\"12\" cy=\"10\" r=\"2.5\"/>", "check": "<path d=\"M5 12.5l4.5 4.5L19 7.5\"/>", "cam": "<path d=\"M4 8h3l2-3h6l2 3h3v11H4z\"/><circle cx=\"12\" cy=\"13\" r=\"3.5\"/>", "phone": "<path d=\"M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z\"/>", "back": "<path d=\"M15 5l-7 7 7 7\"/>", "shop": "<path d=\"M4 9l1.5-5h13L20 9M4 9v11h16V9M4 9a2.7 2.7 0 005.3 0 2.7 2.7 0 005.4 0A2.7 2.7 0 0020 9M10 20v-5h4v5\"/>"};
 const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
 const show = n => document.querySelectorAll(".scr").forEach(s => s.classList.toggle("on", s.id == n));
@@ -96,8 +98,8 @@ $("cl").onclick = () => $("ov").classList.remove("on"); $("ov").onclick = e => {
 document.querySelectorAll(".emb").forEach(i => { if (CFG.escudo) i.src = ESC; else i.remove(); });
 $("a-t").textContent = "Seguridad Ciudadana"; $("a-s").textContent = CFG.cuerpo + " de " + CFG.municipio; $("m-c").textContent = CFG.cuerpo; $("m-m").textContent = CFG.municipio; document.title = "Seguridad Ciudadana · " + CFG.municipio;
 const CATS = [
- {id:"rob", l:"Robo", t:"Robo", k:"bag"}, {id:"acc", l:"Accidente de tráfico", t:"Accidente de tráfico", k:"car"},
- {id:"inc", l:"Incendio", t:"Incendios", k:"fire"}, {id:"rui", l:"Ruidos y molestias", t:"Ruidos y molestias", k:"note"},
+ {id:"rob", l:"Robo", t:"Robo", k:"bag"}, {id:"acc", l:"Accidente de tráfico", t:"Accidente de tráfico", k:"car", q:[{id:"amb", t:"¿Necesitas una ambulancia?", si:"Necesita ambulancia", no:"Ambulancia: no"}]},
+ {id:"inc", l:"Incendio", t:"Incendios", k:"fire", q:[{id:"bom", t:"¿Necesitas bomberos?", si:"Necesita bomberos", no:"Bomberos: no"}, {id:"amb", t:"¿Necesitas una ambulancia?", si:"Necesita ambulancia", no:"Ambulancia: no"}]}, {id:"rui", l:"Ruidos y molestias", t:"Ruidos y molestias", k:"note"},
  {id:"ani", l:"Animales", t:"Intervenciones con animales", k:"paw"}, {id:"may", l:"Personas mayores", t:"Personas mayores", k:"old"},
  {id:"gen", l:"Violencia de género", t:"Violencia de género", k:"hand"}, {id:"lgb", l:"Violencia LGTBI+", t:"Violencia contra el colectivo LGTBI+", k:"rain"},
  {id:"otr", l:"Otros: cuéntanos qué pasa", t:"Otros", k:"dots", wide:1}];
@@ -160,11 +162,13 @@ function abrirVehiculo() {
 /* ---- aviso: confirmar (mantener pulsado) ---- */
 function abrir(c) {
   if (!perfil || !perfil.validado) return sheet("<h1>Registro pendiente</h1><p>Podrás enviar avisos cuando la Policía Local valide tu registro.</p>");
-  cur = c; pos = null; $("cf-ic").innerHTML = svg(c.k); $("cf-t").textContent = c.t; $("xt").value = ""; $("xf").value = ""; $("xerr").textContent = ""; $("xbox").hidden = c.id != "otr";
+  cur = c; pos = null; ans = {}; $("cf-ic").innerHTML = svg(c.k);
+  $("qs").innerHTML = (c.q || []).map(q => `<div class="qrow"><span>${q.t}</span><div class="seg" data-q="${q.id}"><button data-v="si" aria-pressed="false">Sí</button><button data-v="no" aria-pressed="false">No</button></div></div>`).join(""); $("qs").hidden = !c.q; $("cf-t").textContent = c.t; $("xt").value = ""; $("xf").value = ""; $("xerr").textContent = ""; $("xbox").hidden = c.id != "otr";
   $("loc").textContent = "Buscando tu ubicación…";
   if (navigator.geolocation) navigator.geolocation.getCurrentPosition(p => { pos = p.coords; $("loc").textContent = "Ubicación precisa activada"; }, () => { $("loc").textContent = "Sin ubicación: activa el GPS para que te encuentren"; }, {enableHighAccuracy:true, timeout:8000});
   ring(0); show("s-conf");
 }
+$("qs").onclick = e => { const b = e.target.closest("button"); if (!b) return; const g = b.parentElement; ans[g.dataset.q] = b.dataset.v; g.querySelectorAll("button").forEach(x => { x.classList.toggle("on", x == b); x.setAttribute("aria-pressed", x == b); }); };
 $("xtog").onclick = () => { $("xbox").hidden = !$("xbox").hidden; }; $("c-back").onclick = $("c-cancel").onclick = () => show("main");
 const hold = $("hold"); let hs = 0, hr = 0;
 const ring = p => { $("rg").style.strokeDashoffset = 679 * (1 - p); };
@@ -187,7 +191,7 @@ function empezarEnvio() {
 }
 $("e-cancel").onclick = () => { clearInterval(tmr); show("main"); };
 async function enviar() {
-  const extra = $("xt").value.trim(), f = $("xf").files[0], tipo = cur.id == "otr" ? ("Otros: " + extra).slice(0, 220) : cur.t;
+  const extra = $("xt").value.trim(), f = $("xf").files[0], tipo = (cur.id == "otr" ? ("Otros: " + extra).slice(0, 220) : cur.t) + (cur.q || []).map(q => ans[q.id] ? " · " + (ans[q.id] == "si" ? q.si : q.no) : "").join("");
   const {data, error} = await db.from("alertas").insert({user_id: me.id, tipo, lat: pos ? pos.latitude : null, lng: pos ? pos.longitude : null}).select("id").single();
   if (error) { panes(0, 0, 1); $("e-em").textContent = error.message; return; }
   alertId = data.id; if (navigator.vibrate) navigator.vibrate([60, 40, 60]);

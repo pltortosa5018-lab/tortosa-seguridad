@@ -21,10 +21,11 @@ a{color:inherit}small{opacity:.75}#login{max-width:340px;margin:60px auto;displa
 #snd{display:none;width:100%;background:var(--amb);color:#201400;font-weight:700;border-radius:12px;padding:14px;margin-bottom:10px}
 #alarm{display:none;background:var(--red);color:#fff;font-weight:700;border-radius:12px;padding:14px;margin-bottom:10px;font-size:18px}
 body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{background:var(--red)}}
+.bdg{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:8px;background:#9993;font-size:13px;font-weight:600}.bdg.rojo{background:var(--red);color:#fff}
 </style>
 </head>
 <body>
-<header><b>Policía Local de Tortosa · Panel</b> <small style="opacity:.7">v22</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
+<header><b>Policía Local de Tortosa · Panel</b> <small style="opacity:.7">v24</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
 <div id="panel" hidden>
@@ -112,6 +113,7 @@ async function vigila() {
   const r = await db.from("alertas").select("id,estado,patrulla,detalle,foto,eta_llegada").order("created_at", {ascending:false}).limit(50);
   if (!r.data) return; const sg = JSON.stringify(r.data); if (sg != sigA) { sigA = sg; load(); }
 }
+const tipoHtml = t => { const [a, ...r] = String(t || "").split(" · "); return `<b>${esc(a)}</b>` + r.map(e => `<span class="bdg${e.startsWith("Necesita") ? " rojo" : ""}">${esc(e)}</span>`).join(""); };
 /* ---- datos ---- */
 async function load() { cargaCodigos(); cargaOcupaciones();
   const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo,matricula,aseguradora,comercios(*))").order("created_at", {ascending:false}).limit(50);
@@ -129,7 +131,7 @@ async function load() { cargaCodigos(); cargaOcupaciones();
     const btns = x.estado == "nueva" ? `<button class="r" data-m="${x.id}">Voy yo (${esc(unidad())})</button> <button class="a" data-o="${x.id}">Asignar a…</button> ` : "";
     const cam = x.estado == "asignada" ? `<button class="a" data-c="${x.id}">En camino</button> ` : (x.estado == "en_camino" ? `<button class="a" data-e="${x.id}">Cambiar tiempo</button> ` : "");
     const fin = x.estado != "atendida" ? `<button class="k" data-a="${x.id}">Atendida</button>` : "";
-    return `<div class="card ${esc(x.estado)}"><div><b>${esc(x.tipo)}</b> <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${mat}${com}${asig}${x.estado == "en_camino" ? "<br><b>En camino" + (x.eta_llegada ? " · llegada hacia las " + new Date(x.eta_llegada).toLocaleTimeString("es-ES", {hour:"2-digit", minute:"2-digit"}) : "") + "</b>" : ""}${det}</div><div>${map} ${btns}${cam}${fin}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
+    return `<div class="card ${esc(x.estado)}"><div>${tipoHtml(x.tipo)} <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${mat}${com}${asig}${x.estado == "en_camino" ? "<br><b>En camino" + (x.eta_llegada ? " · llegada hacia las " + new Date(x.eta_llegada).toLocaleTimeString("es-ES", {hour:"2-digit", minute:"2-digit"}) : "") + "</b>" : ""}${det}</div><div>${map} ${btns}${cam}${fin}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
   const v = await db.from("profiles").select("id,nombre,apellidos,telefono,direccion,grupo,comercios(nombre,actividad,direccion)").eq("validado", false).eq("rol", "ciudadano");
   $("pe").innerHTML = (v.data || []).map(u => `<div class="card"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b><br><small>${esc(u.telefono)} · ${esc(u.direccion)}</small>${(() => { const cm = Array.isArray(u.comercios) ? u.comercios[0] : u.comercios; return cm ? `<br>🏪 <b>${esc(cm.nombre)}</b> <small>${esc(cm.actividad || "")} · ${esc(cm.direccion || "")}</small>` : (u.grupo == "Establecimiento" ? "<br>🏪 Comerciante" : ""); })()}</div><button data-v="${u.id}">Validar</button></div>`).join("") || "<p>Ninguno.</p>";
 }

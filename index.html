@@ -152,8 +152,9 @@ $("tr-l").onclick = e => { const b = e.target.closest("button"); if (b) ({oc:abr
 function renderPf() {
   const p = perfil || {}, v = !!p.validado;
   $("pf").innerHTML = `<div class="card2"><b>${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}</b><span>${esc(me && me.email)}</span><span>${p.grupo == "Establecimiento" ? "Comerciante" : "Particular"} · ${v ? "Registro validado" : "Registro pendiente de validar"}</span></div>
-  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><button class="btn o2" id="out">Cerrar sesión</button>`;
-  $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await db.auth.signOut(); show("auth"); };
+  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button>`;
+  $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await desactivarPush(); await db.auth.signOut(); show("auth"); };
+  pushUI();
 }
 function abrirVehiculo() {
   sheet(`<h1>Mi vehículo</h1><p class="note">Opcional. Se usa para gestionar accidentes de tráfico y para avisarte si tu vehículo debe retirarse de la vía o está en el depósito.</p><input id="cm" placeholder="Matrícula" autocapitalize="characters" value="${esc(perfil && perfil.matricula)}"><input id="ca" placeholder="Aseguradora" value="${esc(perfil && perfil.aseguradora)}"><button class="btn" id="gv">Guardar</button><p class="note" id="gvm"></p>`);
@@ -248,6 +249,34 @@ $("dg").onclick = async () => {
   catch (e) { $("dg").disabled = false; $("dm").style.color = "var(--red)"; $("dm").textContent = "No se pudo enviar: " + (e.message || e); }
 };
 
+/* ---- avisos en el móvil (notificaciones push) ---- */
+const VAPID = "BDx-VWK3Jyzg1C_4ToUkTPnQe7vM5VJmnuh8-v6NyVoEBAvpYducVyYB7GO-K0dAd7Wz-pit9ehl0Ygr8s3Cu2M";
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+const b64u = s => Uint8Array.from(atob((s + "=".repeat((4 - s.length % 4) % 4)).replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
+const msgP = t => `<div class="card2"><span>${t}</span></div>`;
+async function pushUI() {
+  const el = $("pushbox"); if (!el) return;
+  const ios = /iPad|iPhone|iPod/.test(navigator.userAgent), inst = window.matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  if (!("serviceWorker" in navigator && "PushManager" in window && "Notification" in window)) {
+    el.innerHTML = msgP(ios && !inst ? "<b>Avisos en el móvil.</b> Para recibirlos con la app cerrada, añade esta página a la pantalla de inicio (botón compartir → «Añadir a pantalla de inicio») y ábrela desde ahí. Necesita iOS 16.4 o superior." : "<b>Avisos en el móvil.</b> Este móvil o navegador no permite recibir avisos con la app cerrada."); return; }
+  if (Notification.permission === "denied") { el.innerHTML = msgP("<b>Avisos en el móvil bloqueados.</b> Actívalos en Ajustes del móvil → Notificaciones → PolAssist."); return; }
+  let sub = null; try { sub = await (await navigator.serviceWorker.ready).pushManager.getSubscription(); } catch (e) {}
+  el.innerHTML = sub ? msgP("<b>Avisos en el móvil: activados.</b> Recibirás los avisos de la Policía aunque la app esté cerrada.") + `<button class="btn o" id="pOff" style="margin-bottom:12px">Desactivar avisos en el móvil</button>`
+    : msgP("<b>Avisos en el móvil.</b> Actívalos para saber si tu vehículo debe retirarse o si te responden, aunque la app esté cerrada.") + `<button class="btn" id="pOn" style="margin-bottom:12px">Activar avisos en el móvil</button><p class="note" id="pMsg"></p>`;
+  if ($("pOn")) $("pOn").onclick = activarPush; if ($("pOff")) $("pOff").onclick = desactivarPush;
+}
+async function activarPush() {
+  try {
+    const perm = await Notification.requestPermission(); if (perm !== "granted") return pushUI();
+    const reg = await navigator.serviceWorker.ready, sub = await reg.pushManager.subscribe({userVisibleOnly: true, applicationServerKey: b64u(VAPID)}), j = sub.toJSON();
+    const {error} = await db.from("push_subs").upsert({user_id: me.id, endpoint: j.endpoint, p256dh: j.keys.p256dh, auth: j.keys.auth}, {onConflict: "endpoint"}); if (error) throw error;
+    pushUI();
+  } catch (e) { const m = $("pMsg"); if (m) m.textContent = "No se pudo activar: " + (e.message || e); }
+}
+async function desactivarPush() {
+  try { const reg = await navigator.serviceWorker.ready, s = await reg.pushManager.getSubscription(); if (s) { await db.from("push_subs").delete().eq("endpoint", s.endpoint); await s.unsubscribe(); } } catch (e) {}
+  pushUI();
+}
 /* ---- avisos de la Policía para tu vehículo ---- */
 let NOT = [];
 async function cargaNoti() {

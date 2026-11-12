@@ -148,7 +148,7 @@ async function cargaAvisos() {
   $("ns-l").innerHTML = "<p class='note'>Cargando…</p>"; await cargaNoti();
   const [a, m] = await Promise.all([db.from("avisos").select("*").order("created_at", {ascending:false}).limit(20), db.from("alertas").select("*").eq("user_id", me.id).order("created_at", {ascending:false}).limit(8)]);
   MIS = m.data || [];
-  $("ns-l").innerHTML = `${notiHtml()}<h3 class="h3" style="margin-top:6px">Avisos de la Policía</h3>` + ((a.data || []).map(x => `<div class="nt"><b>${esc(x.titulo)}</b><span>${esc(x.categoria)} · ${new Date(x.created_at).toLocaleString(LOC)}</span></div>`).join("") || "<p class='note'>No hay avisos.</p>")
+  $("ns-l").innerHTML = `${notiHtml()}<h3 class="h3" style="margin-top:6px">Avisos de la Policía</h3>` + ((a.data || []).map(x => `<div class="nt"${x.urgente ? ' style="border-left-color:#C93A1F"' : ""}><b>${esc(x.titulo)}</b>${x.texto ? `<span>${esc(x.texto)}</span>` : ""}<span>${esc(x.categoria)} · ${new Date(x.created_at).toLocaleString(LOC)}</span></div>`).join("") || "<p class='note'>No hay avisos.</p>")
     + `<h3 class="h3">Mis avisos</h3>` + (MIS.map((x, i) => `<button class="nt" data-i="${i}"><b>${esc(x.tipo)}</b><span>${ETQ[x.estado] || esc(x.estado)} · ${new Date(x.created_at).toLocaleString(LOC)}</span></button>`).join("") || "<p class='note'>Aún no has enviado avisos.</p>");
 }
 $("ns-l").onclick = e => { const n = e.target.closest("[data-n]"); if (n) return leerNoti(n.dataset.n); const b = e.target.closest("[data-i]"); if (b) verAviso(MIS[+b.dataset.i]); };
@@ -158,7 +158,7 @@ $("tr-l").onclick = e => { const b = e.target.closest("button"); if (b) ({oc:abr
 function renderPf() {
   const p = perfil || {}, v = !!p.validado;
   $("pf").innerHTML = `<div class="card2"><b>${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}</b><span>${esc(me && me.email)}</span><span>${p.grupo == "Establecimiento" ? "Comerciante" : "Particular"} · ${v ? "Registro validado" : "Registro pendiente de validar"}</span></div>
-  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px"><a href="privacidad.html" target="_blank">Política de privacidad</a> · <a href="condiciones.html" target="_blank">Condiciones de uso</a></p><p class="note" style="text-align:center;margin-top:4px">PolAssist · versión 37</p>`;
+  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px"><a href="privacidad.html" target="_blank">Política de privacidad</a> · <a href="condiciones.html" target="_blank">Condiciones de uso</a></p><p class="note" style="text-align:center;margin-top:4px">PolAssist · versión 38</p>`;
   $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await desactivarPush(); await db.auth.signOut(); show("auth"); };
   pushUI();
 }
@@ -530,7 +530,8 @@ Comerciante | Comerciant | Business owner | Commerçant
 Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar. | Consell: afegeix aquesta pàgina a la pantalla d'inici del teu mòbil (botó compartir → «Afegeix a la pantalla d'inici») per obrir-la com una app i no haver de tornar a entrar. | Tip: add this page to your phone's home screen (share button → “Add to Home Screen”) to open it like an app and avoid logging in again. | Conseil : ajoutez cette page à l'écran d'accueil de votre téléphone (bouton partager → « Sur l'écran d'accueil ») pour l'ouvrir comme une app et ne plus avoir à vous reconnecter.
 Cerrar sesión | Tanca la sessió | Log out | Se déconnecter
 Idioma | Idioma | Language | Langue
-PolAssist · versión 37 | PolAssist · versió 37 | PolAssist · version 37 | PolAssist · version 37
+PolAssist · versión 38 | PolAssist · versió 38 | PolAssist · version 38 | PolAssist · version 38
+Urgente | Urgent | Urgent | Urgent
 Condiciones de uso | Condicions d'ús | Terms of use | Conditions d'utilisation
 Texto completo: | Text complet: | Full text: | Texte complet :
 Avisos en el móvil. | Avisos al mòbil. | Mobile alerts. | Alertes sur mobile.

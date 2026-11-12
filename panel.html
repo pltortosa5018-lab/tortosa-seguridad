@@ -17,7 +17,7 @@ h3{margin:18px 0 6px;font-size:15px}.mp{background:#9993;color:inherit;padding:7
 .kpis{display:flex;gap:10px}.kpis div{flex:1;background:#9992;border-radius:10px;padding:10px;text-align:center}.kpis b{display:block;font-size:24px}
 .card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap}
 .card.nueva{border-left:8px solid var(--red)}.card.asignada{border-left:8px solid var(--amb)}.card.en_camino{border-left:8px solid var(--amb)}.card.atendida{border-left:8px solid var(--ok);opacity:.65}
-button,input,textarea{font:inherit}textarea{padding:10px;border:1px solid #9994;border-radius:8px;background:var(--card);color:var(--ink)}button{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:10px 14px;cursor:pointer}
+button,input,textarea,select{font:inherit}select{padding:10px;border:1px solid #9994;border-radius:8px;background:var(--card);color:var(--ink)}textarea{padding:10px;border:1px solid #9994;border-radius:8px;background:var(--card);color:var(--ink)}button{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:10px 14px;cursor:pointer}
 button.g{background:#0000;color:#fff;border:1px solid #fff8}button.r{background:var(--red)}button.a{background:var(--amb);color:#201400}button.k{background:var(--ok)}
 input{padding:10px;border:1px solid #9994;border-radius:8px;background:var(--card);color:var(--ink)}
 a{color:inherit}small{opacity:.75}#login{max-width:340px;margin:60px auto;display:grid;gap:10px}#err{color:var(--red)}
@@ -29,7 +29,7 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 </style>
 </head>
 <body>
-<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v29</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
+<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v30</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
 <div id="panel" hidden>
@@ -58,11 +58,19 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 <div class="card" style="display:block"><input id="us_q" placeholder="Buscar por nombre, teléfono o matrícula" style="width:100%"><div id="us_res" style="margin-top:10px"></div></div>
 <h2>Publicar notificación</h2>
 <div class="card"><input id="at" placeholder="Título del aviso" style="flex:1"><input id="ac" placeholder="Categoría" value="General"><button id="ap">Publicar</button></div>
+<h2>Aviso a los vecinos (con notificación al móvil)</h2>
+<div class="card" style="display:block"><input id="mv_t" placeholder="Título (ej. Corte de la calle Major)" style="width:100%">
+<textarea id="mv_x" rows="3" placeholder="Mensaje (opcional)" style="width:100%;margin-top:8px"></textarea>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><select id="mv_d"><option value="todos">A todos los vecinos</option><option value="zona">Solo a una calle o zona</option></select>
+<input id="mv_z" placeholder="Texto de la dirección (ej. Carrer Major)" style="flex:1;min-width:180px" hidden></div>
+<button id="mv_go" style="margin-top:10px">Revisar y enviar</button><div id="mv_res" style="margin-top:8px"></div>
+<small>Antes de enviar verás a cuántos vecinos llegará. «Una calle o zona» busca en la dirección de residencia que dio cada vecino.</small></div>
 <h2>Códigos de invitación</h2>
 <div class="bar"><label>Usos <input id="cu" type="number" min="1" value="1" style="width:70px"></label><label>Días <input id="cd" type="number" min="1" value="7" style="width:70px"></label><input id="cn" placeholder="Nota (ej. Agentes turno noche)" size="26"><button id="gc">Generar código</button></div>
 <div id="cl"></div>
 </div>
 </main>
+<div id="cfm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 id="cfm_t" style="margin:0 0 8px"></h3><p id="cfm_p" style="margin:0 0 12px"></p><div style="display:flex;gap:8px"><button class="k" id="cfm_ok">Confirmar y enviar</button><button id="cfm_no" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <div id="grm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 style="margin:0 0 8px">Responder a la consulta de grúa</h3><small>Información adicional para el ciudadano (dirección del depósito, horario, qué documentos llevar):</small><textarea id="grt" rows="3" style="width:100%;margin-top:6px"></textarea><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="k" id="gr_si">Sí, está en el depósito</button><button id="gr_no">No consta en el depósito</button></div><div style="margin-top:8px"><button id="gr_cl" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <div id="etm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:380px;width:92%">
 <h3 style="margin:0 0 12px">¿En cuántos minutos llegáis?</h3>
@@ -144,6 +152,31 @@ $("rv_go").onclick = async () => {
   if (error) return $("rv_res").textContent = "No se pudo enviar: " + error.message + " (¿has ejecutado el SQL de grúa?)";
   const a = data.avisadas || [], s = data.sin_propietario || [];
   $("rv_res").innerHTML = `<b>Avisadas (${a.length}):</b> ${esc(a.join(", ") || "ninguna")}<br><b>Sin propietario registrado en la app (${s.length}):</b> ${esc(s.join(", ") || "ninguna")}${s.length ? "<br><small>Estas habrá que retirarlas con la grúa.</small>" : ""}`;
+};
+/* ---- avisos a los vecinos (con notificación al móvil) ---- */
+$("mv_d").onchange = () => { $("mv_z").hidden = $("mv_d").value != "zona"; };
+let CFM = null;
+$("cfm_no").onclick = () => { $("cfm").style.display = "none"; CFM = null; };
+$("cfm_ok").onclick = async () => { $("cfm").style.display = "none"; const f = CFM; CFM = null; if (f) await f(); };
+$("mv_go").onclick = async () => {
+  const t = $("mv_t").value.trim(), x = $("mv_x").value.trim(), zona = $("mv_d").value == "zona", z = $("mv_z").value.trim();
+  if (!t) { $("mv_res").textContent = "Escribe un título."; return; }
+  if (zona && z.length < 3) { $("mv_res").textContent = "Escribe al menos 3 letras de la calle o zona."; return; }
+  const r = await db.rpc("resumen_destinatarios", {p_filtro: zona ? z : null});
+  if (r.error) { $("mv_res").textContent = "No se pudo comprobar: " + r.error.message + " (¿has ejecutado el SQL de avisos a vecinos?)"; return; }
+  const n = r.data.vecinos, m = r.data.con_movil;
+  if (!n) { $("mv_res").textContent = "No hay vecinos registrados que coincidan."; return; }
+  $("cfm_t").textContent = zona ? "Aviso a vecinos de «" + z + "»" : "Aviso a todos los vecinos";
+  $("cfm_p").textContent = "«" + t + "» llegará a " + n + " vecinos" + (m ? ", " + m + " con aviso en el móvil" : "") + ". No se puede deshacer.";
+  CFM = async () => {
+    $("mv_go").disabled = true;
+    const e = zona ? await db.rpc("avisar_vecinos_zona", {p_filtro: z, p_titulo: t, p_texto: x})
+                   : await db.from("avisos").insert({titulo: t, texto: x || null, categoria: "Urgente", urgente: true});
+    $("mv_go").disabled = false;
+    if (e.error) { $("mv_res").textContent = "No se pudo enviar: " + e.error.message; return; }
+    $("mv_res").textContent = "Enviado a " + n + " vecinos."; $("mv_t").value = ""; $("mv_x").value = "";
+  };
+  $("cfm").style.display = "flex";
 };
 /* ---- usuarios: buscar y bloquear ---- */
 let usT = null;

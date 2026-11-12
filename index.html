@@ -42,6 +42,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .qs{margin-top:14px;display:flex;flex-direction:column;gap:10px}.qrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:15px}
 .seg{display:flex;gap:8px;flex:none}.seg button{min-width:64px;min-height:44px;border-radius:12px;border:2px solid var(--acc);background:#fff;color:var(--acc);font-weight:700}.seg button.on{background:var(--acc);color:#fff}.seg button[data-v=si].on{background:var(--red);border-color:var(--red)}
 .banner.alert{background:#FDE9E5;border-color:var(--red)}.resp{margin-top:14px;padding:14px;border-radius:14px;background:var(--tint);text-align:left}.resp b{display:block;margin-bottom:4px}
+.hero{position:relative}.lang{position:absolute;top:calc(12px + env(safe-area-inset-top));right:14px;width:auto;margin:0;padding:7px 12px;border:0;border-radius:20px;background:rgba(255,255,255,.2);color:#fff;font-weight:600}.lang option{color:#12211F}
 .okbig{width:84px;height:84px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:0 auto}.okbig svg{width:44px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .more{margin-top:18px;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:left}.more label{font-weight:600;font-size:14px;display:block;margin-bottom:8px}
 .card2{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;margin-bottom:12px}.card2 span{font-size:14px;color:var(--mute)}
@@ -52,7 +53,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .fh{font-size:17px;margin:20px 0 8px}.chk{display:flex;align-items:center;gap:8px;margin:6px 16px 6px 0;font-weight:500}.chk input{width:22px;height:22px;margin:0;padding:0}.row2{display:flex;flex-wrap:wrap;align-items:center}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ctr{text-align:center}.okc{width:76px;height:76px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:10px auto}.okc svg{width:40px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 </style></head><body><div id="app">
-<section class="scr on" id="auth" style="overflow:auto"><div class="hero"><div class="hl2"><svg viewBox="0 0 96 96" width="88" height="88" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#fff"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#0E5A5A" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#F2A541" stroke="#0E5A5A" stroke-width="4"/></svg></div><h1 class="wmk"><i>Pol</i><em>Assist</em></h1><p id="a-s"></p><img class="emb sm" alt=""></div>
+<section class="scr on" id="auth" style="overflow:auto"><div class="hero"><select id="langA" data-notr class="lang" aria-label="Idioma / Language"><option value="es">Castellano</option><option value="ca">Català</option><option value="en">English</option><option value="fr">Français</option></select><div class="hl2"><svg viewBox="0 0 96 96" width="88" height="88" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#fff"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#0E5A5A" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#F2A541" stroke="#0E5A5A" stroke-width="4"/></svg></div><h1 class="wmk"><i>Pol</i><em>Assist</em></h1><p id="a-s"></p><img class="emb sm" alt=""></div>
 <div class="form"><input id="em" type="email" placeholder="Correo electrónico" autocomplete="email"><input id="pw" type="password" placeholder="Contraseña (mín. 6)" autocomplete="current-password">
 <input class="r" id="co" placeholder="Código de invitación" autocapitalize="characters" autocomplete="off" hidden>
 <select class="r" id="gr" hidden><option value="Ciudadanía">Soy particular</option><option value="Establecimiento">Soy comerciante (establecimiento)</option></select>
@@ -145,8 +146,8 @@ async function cargaAvisos() {
   $("ns-l").innerHTML = "<p class='note'>Cargando…</p>"; await cargaNoti();
   const [a, m] = await Promise.all([db.from("avisos").select("*").order("created_at", {ascending:false}).limit(20), db.from("alertas").select("*").eq("user_id", me.id).order("created_at", {ascending:false}).limit(8)]);
   MIS = m.data || [];
-  $("ns-l").innerHTML = `${notiHtml()}<h3 class="h3" style="margin-top:6px">Avisos de la Policía</h3>` + ((a.data || []).map(x => `<div class="nt"><b>${esc(x.titulo)}</b><span>${esc(x.categoria)} · ${new Date(x.created_at).toLocaleString("es-ES")}</span></div>`).join("") || "<p class='note'>No hay avisos.</p>")
-    + `<h3 class="h3">Mis avisos</h3>` + (MIS.map((x, i) => `<button class="nt" data-i="${i}"><b>${esc(x.tipo)}</b><span>${ETQ[x.estado] || esc(x.estado)} · ${new Date(x.created_at).toLocaleString("es-ES")}</span></button>`).join("") || "<p class='note'>Aún no has enviado avisos.</p>");
+  $("ns-l").innerHTML = `${notiHtml()}<h3 class="h3" style="margin-top:6px">Avisos de la Policía</h3>` + ((a.data || []).map(x => `<div class="nt"><b>${esc(x.titulo)}</b><span>${esc(x.categoria)} · ${new Date(x.created_at).toLocaleString(LOC)}</span></div>`).join("") || "<p class='note'>No hay avisos.</p>")
+    + `<h3 class="h3">Mis avisos</h3>` + (MIS.map((x, i) => `<button class="nt" data-i="${i}"><b>${esc(x.tipo)}</b><span>${ETQ[x.estado] || esc(x.estado)} · ${new Date(x.created_at).toLocaleString(LOC)}</span></button>`).join("") || "<p class='note'>Aún no has enviado avisos.</p>");
 }
 $("ns-l").onclick = e => { const n = e.target.closest("[data-n]"); if (n) return leerNoti(n.dataset.n); const b = e.target.closest("[data-i]"); if (b) verAviso(MIS[+b.dataset.i]); };
 const tcard = (k, t, d, id) => `<button class="trc" data-k="${id}"><span class="ib">${svg(k)}</span><span><b>${t}</b><span class="d">${d}</span></span></button>`;
@@ -155,8 +156,9 @@ $("tr-l").onclick = e => { const b = e.target.closest("button"); if (b) ({oc:abr
 function renderPf() {
   const p = perfil || {}, v = !!p.validado;
   $("pf").innerHTML = `<div class="card2"><b>${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}</b><span>${esc(me && me.email)}</span><span>${p.grupo == "Establecimiento" ? "Comerciante" : "Particular"} · ${v ? "Registro validado" : "Registro pendiente de validar"}</span></div>
-  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 33</p>`;
+  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><p class="note" style="margin:6px 0 4px">Idioma</p><select id="langP" data-notr>${LANGS.map(([c, n]) => `<option value="${c}"${c == LANG ? " selected" : ""}>${n}</option>`).join("")}</select><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 34</p>`;
   $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await desactivarPush(); await db.auth.signOut(); show("auth"); };
+  $("langP").onchange = e => setLang(e.target.value);
   pushUI();
 }
 function abrirVehiculo() {
@@ -289,10 +291,10 @@ async function cargaNoti() {
   b.hidden = !sin.length; b.innerHTML = sin.length ? `<b>Aviso de la Policía para tu vehículo${sin.length > 1 ? " (" + sin.length + ")" : ""}</b><span>Toca para leerlo.</span>` : "";
   if (sin.length > antes && navigator.vibrate) navigator.vibrate([200, 100, 200]);
 }
-const notiHtml = () => NOT.length ? `<h3 class="h3" style="margin-top:6px">Para ti</h3>` + NOT.map(n => `<button class="nt" data-n="${n.id}" style="border-left-color:${n.leida ? "#8AA09D" : "#C93A1F"}"><b>${esc(n.titulo)}</b><span>${esc(n.texto)}<br>${new Date(n.created_at).toLocaleString("es-ES")}${n.leida ? "" : " · nuevo"}</span></button>`).join("") : "";
+const notiHtml = () => NOT.length ? `<h3 class="h3" style="margin-top:6px">Para ti</h3>` + NOT.map(n => `<button class="nt" data-n="${n.id}" style="border-left-color:${n.leida ? "#8AA09D" : "#C93A1F"}"><b>${esc(n.titulo)}</b><span>${esc(n.texto)}<br>${new Date(n.created_at).toLocaleString(LOC)}${n.leida ? "" : " · nuevo"}</span></button>`).join("") : "";
 function leerNoti(id) {
   const n = NOT.find(x => x.id == id); if (!n) return;
-  sheet(`<h1>${esc(n.titulo)}</h1><p>${esc(n.texto)}</p><p class="note">${new Date(n.created_at).toLocaleString("es-ES")}</p>`);
+  sheet(`<h1>${esc(n.titulo)}</h1><p>${esc(n.texto)}</p><p class="note">${new Date(n.created_at).toLocaleString(LOC)}</p>`);
   if (!n.leida) db.from("notificaciones").update({leida:true}).eq("id", id).then(cargaNoti);
 }
 $("nbn").onclick = () => { const sin = NOT.filter(n => !n.leida); if (sin.length) leerNoti(sin[0].id); };
@@ -392,4 +394,261 @@ async function editarComercio() {
   };
 }
 
+/* ---- idiomas: castellano, català, English, français ---- */
+const LOCALES = {es:"es-ES", ca:"ca-ES", en:"en-GB", fr:"fr-FR"}, LANGS = [["es", "Castellano"], ["ca", "Català"], ["en", "English"], ["fr", "Français"]];
+let LANG = "es", LOC = "es-ES";
+try { LANG = localStorage.getItem("lang") || ""; } catch (e) {}
+if (!LOCALES[LANG]) { const n = (navigator.language || "es").slice(0, 2).toLowerCase(); LANG = LOCALES[n] ? n : "es"; }
+LOC = LOCALES[LANG];
+const TRX = {};
+`Correo electrónico | Correu electrònic | Email | E-mail
+Contraseña (mín. 6) | Contrasenya (mín. 6) | Password (min. 6) | Mot de passe (min. 6)
+Código de invitación | Codi d'invitació | Invitation code | Code d'invitation
+Soy particular | Sóc particular | I'm an individual | Je suis un particulier
+Soy comerciante (establecimiento) | Sóc comerciant (establiment) | I'm a business owner (shop) | Je suis commerçant (établissement)
+Nombre | Nom | First name | Prénom
+Apellidos | Cognoms | Surname | Nom de famille
+Teléfono | Telèfon | Phone | Téléphone
+Dirección de residencia | Adreça de residència | Home address | Adresse de résidence
+Matrícula del vehículo (opcional) | Matrícula del vehicle (opcional) | Vehicle plate (optional) | Plaque du véhicule (facultatif)
+Aseguradora (opcional) | Asseguradora (opcional) | Insurer (optional) | Assureur (facultatif)
+La matrícula y la aseguradora son opcionales. Se usarán para gestionar accidentes de tráfico y para avisarte si tu vehículo debe retirarse de la vía o está en el depósito de la grúa. | La matrícula i l'asseguradora són opcionals. S'usaran per gestionar accidents de trànsit i per avisar-te si el teu vehicle s'ha de retirar de la via o és al dipòsit de la grua. | The plate and insurer are optional. They will be used to handle traffic accidents and to notify you if your vehicle must be removed from the road or is at the tow yard. | La plaque et l'assureur sont facultatifs. Ils serviront à gérer les accidents de la route et à vous prévenir si votre véhicule doit être retiré de la voie publique ou se trouve à la fourrière.
+Entrar | Entra | Log in | Se connecter
+Crear una cuenta nueva | Crea un compte nou | Create a new account | Créer un nouveau compte
+Ya tengo cuenta | Ja tinc compte | I already have an account | J'ai déjà un compte
+Crear cuenta | Crea el compte | Create account | Créer le compte
+Al registrarte aceptas el tratamiento de tus datos para gestionar avisos de seguridad. Texto legal pendiente del Ayuntamiento. | En registrar-te acceptes el tractament de les teves dades per gestionar avisos de seguretat. Text legal pendent de l'Ajuntament. | By signing up you accept the processing of your data to manage safety alerts. Legal text pending from the City Council. | En vous inscrivant, vous acceptez le traitement de vos données pour gérer les alertes de sécurité. Texte juridique en attente de la mairie.
+Revisa tu correo para confirmar la cuenta. | Revisa el correu per confirmar el compte. | Check your email to confirm your account. | Vérifiez votre e-mail pour confirmer le compte.
+Código de invitación no válido, caducado o ya usado. | Codi d'invitació no vàlid, caducat o ja utilitzat. | Invitation code invalid, expired or already used. | Code d'invitation invalide, expiré ou déjà utilisé.
+Indica el nombre del establecimiento. | Indica el nom de l'establiment. | Enter the business name. | Indiquez le nom de l'établissement.
+No se pudo crear la cuenta: revisa el código de invitación. | No s'ha pogut crear el compte: revisa el codi d'invitació. | Could not create the account: check the invitation code. | Impossible de créer le compte : vérifiez le code d'invitation.
+Policía Local | Policia Local | Local Police | Police municipale
+Mi perfil | El meu perfil | My profile | Mon profil
+Registro pendiente de validar | Registre pendent de validar | Registration pending validation | Inscription en attente de validation
+Toca para comprobar. | Toca per comprovar-ho. | Tap to check. | Appuyez pour vérifier.
+Registro validado | Registre validat | Registration validated | Inscription validée
+Ya puedes enviar avisos. Toca para cerrar este aviso. | Ja pots enviar avisos. Toca per tancar aquest avís. | You can now send alerts. Tap to close this notice. | Vous pouvez envoyer des alertes. Appuyez pour fermer ce message.
+Conectando… | Connectant… | Connecting… | Connexion…
+Comprobando tu registro. | Comprovant el teu registre. | Checking your registration. | Vérification de votre inscription.
+¿Qué ocurre? | Què passa? | What's happening? | Que se passe-t-il ?
+Toca una opción y confirma. El aviso se envía con tu ubicación. | Toca una opció i confirma. L'avís s'envia amb la teva ubicació. | Tap an option and confirm. The alert is sent with your location. | Touchez une option et confirmez. L'alerte est envoyée avec votre position.
+Emergencia vital: llama al 112 | Emergència vital: truca al 112 | Life-threatening emergency: call 112 | Urgence vitale : appelez le 112
+Robo | Robatori | Theft | Vol
+Accidente de tráfico | Accident de trànsit | Traffic accident | Accident de la route
+Incendio | Incendi | Fire | Incendie
+Incendios | Incendis | Fire | Incendie
+Ruidos y molestias | Sorolls i molèsties | Noise and nuisances | Bruit et nuisances
+Animales | Animals | Animals | Animaux
+Intervenciones con animales | Intervencions amb animals | Animal incidents | Interventions avec des animaux
+Personas mayores | Gent gran | Elderly people | Personnes âgées
+Violencia de género | Violència de gènere | Gender-based violence | Violences sexistes
+Grúa de vehículo | Grua de vehicle | Vehicle tow truck | Remorquage de véhicule
+Otros: cuéntanos qué pasa | Altres: explica'ns què passa | Other: tell us what's happening | Autre : dites-nous ce qui se passe
+Otros | Altres | Other | Autre
+Avisar | Avisar | Alert | Alerter
+Avisos | Avisos | Notices | Avis
+Trámites | Tràmits | Services | Démarches
+Perfil | Perfil | Profile | Profil
+Cerrar | Tanca | Close | Fermer
+Volver | Torna | Back | Retour
+Confirmar aviso | Confirma l'avís | Confirm alert | Confirmer l'alerte
+Avisarás a la Policía Local. | Avisaràs la Policia Local. | You will alert the Local Police. | Vous alerterez la police municipale.
+Consultarás a la Policía Local si tu vehículo está en el depósito de la grúa. | Consultaràs a la Policia Local si el teu vehicle és al dipòsit de la grua. | You will ask the Local Police whether your vehicle is at the tow yard. | Vous demanderez à la police municipale si votre véhicule est à la fourrière.
+Mantén pulsado dos segundos para enviar el aviso | Mantén premut dos segons per enviar l'avís | Hold for two seconds to send the alert | Maintenez appuyé deux secondes pour envoyer l'alerte
+Mantén pulsado | Mantén premut | Hold | Maintenez appuyé
+para enviar | per enviar | to send | pour envoyer
+Buscando tu ubicación… | Cercant la teva ubicació… | Finding your location… | Recherche de votre position…
+Ubicación precisa activada | Ubicació precisa activada | Precise location on | Position précise activée
+Sin ubicación: activa el GPS para que te encuentren | Sense ubicació: activa el GPS perquè et trobin | No location: turn on GPS so they can find you | Pas de position : activez le GPS pour qu'on vous trouve
+Tendrás 3 segundos para cancelar antes de que se envíe. | Tindràs 3 segons per cancel·lar abans que s'enviï. | You will have 3 seconds to cancel before it is sent. | Vous aurez 3 secondes pour annuler avant l'envoi.
+Añadir texto o foto (opcional) | Afegeix text o foto (opcional) | Add text or photo (optional) | Ajouter du texte ou une photo (facultatif)
+Cuéntanos qué ocurre… | Explica'ns què passa… | Tell us what's happening… | Dites-nous ce qui se passe…
+Matrícula del vehículo | Matrícula del vehicle | Vehicle plate | Plaque du véhicule
+¿Dónde lo dejaste? Otros datos (opcional) | On el vas deixar? Altres dades (opcional) | Where did you leave it? Other details (optional) | Où l'avez-vous laissé ? Autres informations (facultatif)
+Cancelar | Cancel·la | Cancel | Annuler
+Describe qué ocurre antes de enviar. | Descriu què passa abans d'enviar. | Describe what's happening before sending. | Décrivez ce qui se passe avant d'envoyer.
+Indica la matrícula del vehículo que buscas. | Indica la matrícula del vehicle que busques. | Enter the plate of the vehicle you are looking for. | Indiquez la plaque du véhicule que vous cherchez.
+¿Necesitas una ambulancia? | Necessites una ambulància? | Do you need an ambulance? | Avez-vous besoin d'une ambulance ?
+¿Necesitas bomberos? | Necessites bombers? | Do you need firefighters? | Avez-vous besoin des pompiers ?
+Sí | Sí | Yes | Oui
+No | No | No | Non
+Necesita ambulancia | Necessita ambulància | Needs ambulance | Besoin d'une ambulance
+Ambulancia: no | Ambulància: no | Ambulance: no | Ambulance : non
+Necesita bomberos | Necessita bombers | Needs firefighters | Besoin des pompiers
+Bomberos: no | Bombers: no | Firefighters: no | Pompiers : non
+Busca su coche | Busca el seu cotxe | Looking for their car | Recherche son véhicule
+Se enviará el aviso en… | L'avís s'enviarà en… | The alert will be sent in… | L'alerte sera envoyée dans…
+Cancelar aviso | Cancel·la l'avís | Cancel alert | Annuler l'alerte
+No se pudo enviar | No s'ha pogut enviar | Could not send | Échec de l'envoi
+Si es urgente, llama al 112. | Si és urgent, truca al 112. | If it's urgent, call 112. | En cas d'urgence, appelez le 112.
+Llamar al 112 | Truca al 112 | Call 112 | Appeler le 112
+Volver al inicio | Torna a l'inici | Back to start | Retour à l'accueil
+Aviso enviado | Avís enviat | Alert sent | Alerte envoyée
+Consulta enviada | Consulta enviada | Query sent | Demande envoyée
+Respuesta recibida | Resposta rebuda | Reply received | Réponse reçue
+Estado del aviso | Estat de l'avís | Alert status | État de l'alerte
+Respuesta de la Policía Local | Resposta de la Policia Local | Reply from the Local Police | Réponse de la police municipale
+Hemos recibido tu consulta. Un agente te responderá aquí en cuanto la revise. | Hem rebut la teva consulta. Un agent et respondrà aquí quan la revisi. | We have received your query. An officer will reply here once they review it. | Nous avons reçu votre demande. Un agent vous répondra ici dès qu'il l'aura examinée.
+Recibido por la Policía Local | Rebut per la Policia Local | Received by the Local Police | Reçu par la police municipale
+Con tu ubicación | Amb la teva ubicació | With your location | Avec votre position
+Asignado a una unidad | Assignat a una unitat | Assigned to a unit | Affecté à une unité
+En camino | De camí | On the way | En route
+Atendido | Atès | Handled | Pris en charge
+Recibido | Rebut | Received | Reçu
+Asignado | Assignat | Assigned | Affecté
+pendiente | pendent | pending | en attente
+La patrulla va hacia ti | La patrulla va cap a tu | The patrol is heading to you | La patrouille se dirige vers vous
+Aviso atendido | Avís atès | Alert handled | Alerte traitée
+Ya tiene una unidad | Ja té una unitat | A unit is assigned | Une unité est affectée
+Está a punto de llegar | Està a punt d'arribar | About to arrive | Sur le point d'arriver
+Debería estar llegando | Hauria d'estar arribant | Should be arriving | Devrait arriver
+Progreso hasta la llegada de la patrulla | Progrés fins a l'arribada de la patrulla | Progress until the patrol arrives | Progression jusqu'à l'arrivée de la patrouille
+¿Quieres añadir más información? (opcional) | Vols afegir més informació? (opcional) | Want to add more information? (optional) | Voulez-vous ajouter des informations ? (facultatif)
+Qué ha pasado, cuántas personas, hacia dónde han ido… | Què ha passat, quantes persones, cap on han anat… | What happened, how many people, which way they went… | Ce qui s'est passé, combien de personnes, où elles sont allées…
+Enviar información | Envia la informació | Send information | Envoyer les informations
+Escribe algo o elige una foto. | Escriu alguna cosa o tria una foto. | Write something or choose a photo. | Écrivez quelque chose ou choisissez une photo.
+Información enviada. Gracias. | Informació enviada. Gràcies. | Information sent. Thank you. | Informations envoyées. Merci.
+Si hay peligro inmediato, llama al 112 | Si hi ha perill immediat, truca al 112 | If there is immediate danger, call 112 | En cas de danger immédiat, appelez le 112
+Imagen no válida | Imatge no vàlida | Invalid image | Image invalide
+No se pudo procesar la imagen | No s'ha pogut processar la imatge | Could not process the image | Impossible de traiter l'image
+Guardado. | Desat. | Saved. | Enregistré.
+Guardar | Desa | Save | Enregistrer
+Cargando… | Carregant… | Loading… | Chargement…
+Avisos de la Policía | Avisos de la Policia | Police notices | Avis de la police
+Mis avisos | Els meus avisos | My alerts | Mes alertes
+Para ti | Per a tu | For you | Pour vous
+No hay avisos. | No hi ha avisos. | No notices. | Aucun avis.
+Aún no has enviado avisos. | Encara no has enviat cap avís. | You haven't sent any alerts yet. | Vous n'avez pas encore envoyé d'alerte.
+Toca para leerlo. | Toca per llegir-lo. | Tap to read it. | Appuyez pour le lire.
+nuevo | nou | new | nouveau
+Particular | Particular | Individual | Particulier
+Comerciante | Comerciant | Business owner | Commerçant
+Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar. | Consell: afegeix aquesta pàgina a la pantalla d'inici del teu mòbil (botó compartir → «Afegeix a la pantalla d'inici») per obrir-la com una app i no haver de tornar a entrar. | Tip: add this page to your phone's home screen (share button → “Add to Home Screen”) to open it like an app and avoid logging in again. | Conseil : ajoutez cette page à l'écran d'accueil de votre téléphone (bouton partager → « Sur l'écran d'accueil ») pour l'ouvrir comme une app et ne plus avoir à vous reconnecter.
+Cerrar sesión | Tanca la sessió | Log out | Se déconnecter
+Idioma | Idioma | Language | Langue
+PolAssist · versión 34 | PolAssist · versió 34 | PolAssist · version 34 | PolAssist · version 34
+Avisos en el móvil. | Avisos al mòbil. | Mobile alerts. | Alertes sur mobile.
+Avisos en el móvil bloqueados. | Avisos al mòbil bloquejats. | Mobile alerts blocked. | Alertes sur mobile bloquées.
+Avisos en el móvil: activados. | Avisos al mòbil: activats. | Mobile alerts: on. | Alertes sur mobile : activées.
+Actívalos para saber si tu vehículo debe retirarse o si te responden, aunque la app esté cerrada. | Activa'ls per saber si el teu vehicle s'ha de retirar o si et responen, encara que l'app estigui tancada. | Turn them on to know if your vehicle must be removed or if you get a reply, even when the app is closed. | Activez-les pour savoir si votre véhicule doit être retiré ou si l'on vous répond, même application fermée.
+Recibirás los avisos de la Policía aunque la app esté cerrada. | Rebràs els avisos de la Policia encara que l'app estigui tancada. | You will receive Police alerts even when the app is closed. | Vous recevrez les alertes de la police même application fermée.
+Actívalos en Ajustes del móvil → Notificaciones → PolAssist. | Activa'ls a Ajustos del mòbil → Notificacions → PolAssist. | Turn them on in Settings → Notifications → PolAssist. | Activez-les dans Réglages → Notifications → PolAssist.
+Para recibirlos con la app cerrada, añade esta página a la pantalla de inicio (botón compartir → «Añadir a pantalla de inicio») y ábrela desde ahí. Necesita iOS 16.4 o superior. | Per rebre'ls amb l'app tancada, afegeix aquesta pàgina a la pantalla d'inici (botó compartir → «Afegeix a la pantalla d'inici») i obre-la des d'allà. Cal iOS 16.4 o superior. | To receive them with the app closed, add this page to your home screen (share button → “Add to Home Screen”) and open it from there. Requires iOS 16.4 or later. | Pour les recevoir application fermée, ajoutez cette page à l'écran d'accueil (bouton partager → « Sur l'écran d'accueil ») et ouvrez-la depuis là. Nécessite iOS 16.4 ou plus récent.
+Este móvil o navegador no permite recibir avisos con la app cerrada. | Aquest mòbil o navegador no permet rebre avisos amb l'app tancada. | This phone or browser can't receive alerts when the app is closed. | Ce téléphone ou navigateur ne permet pas de recevoir des alertes application fermée.
+Activar avisos en el móvil | Activa els avisos al mòbil | Turn on mobile alerts | Activer les alertes sur mobile
+Desactivar avisos en el móvil | Desactiva els avisos al mòbil | Turn off mobile alerts | Désactiver les alertes sur mobile
+Registro pendiente | Registre pendent | Registration pending | Inscription en attente
+Podrás enviar avisos cuando la Policía Local valide tu registro. | Podràs enviar avisos quan la Policia Local validi el teu registre. | You will be able to send alerts once the Local Police validate your registration. | Vous pourrez envoyer des alertes lorsque la police municipale aura validé votre inscription.
+Podrás enviar solicitudes cuando la Policía Local valide tu registro. | Podràs enviar sol·licituds quan la Policia Local validi el teu registre. | You will be able to send requests once the Local Police validate your registration. | Vous pourrez envoyer des demandes lorsque la police municipale aura validé votre inscription.
+Un momento | Un moment | One moment | Un instant
+Estamos comprobando tu registro. Inténtalo de nuevo en unos segundos. | Estem comprovant el teu registre. Torna-ho a provar d'aquí a uns segons. | We are checking your registration. Please try again in a few seconds. | Nous vérifions votre inscription. Réessayez dans quelques secondes.
+Mi vehículo | El meu vehicle | My vehicle | Mon véhicule
+Opcional. Se usa para gestionar accidentes de tráfico y para avisarte si tu vehículo debe retirarse de la vía o está en el depósito. | Opcional. S'usa per gestionar accidents de trànsit i per avisar-te si el teu vehicle s'ha de retirar de la via o és al dipòsit. | Optional. Used to handle traffic accidents and to notify you if your vehicle must be removed from the road or is at the tow yard. | Facultatif. Sert à gérer les accidents de la route et à vous prévenir si votre véhicule doit être retiré de la voie publique ou se trouve à la fourrière.
+Matrícula | Matrícula | Plate | Plaque
+Aseguradora | Asseguradora | Insurer | Assureur
+Matrícula y aseguradora (opcional). | Matrícula i asseguradora (opcional). | Plate and insurer (optional). | Plaque et assureur (facultatif).
+Gestiones con la Policía Local. | Gestions amb la Policia Local. | Dealings with the Local Police. | Démarches auprès de la police municipale.
+Ocupación de vía pública | Ocupació de via pública | Use of public road space | Occupation de la voie publique
+Solicita reservar un espacio en la calle. | Sol·licita reservar un espai al carrer. | Request to reserve a space on the street. | Demandez à réserver un emplacement dans la rue.
+Mi establecimiento | El meu establiment | My business | Mon établissement
+Datos del local, alarma y cámaras. | Dades del local, alarma i càmeres. | Premises details, alarm and cameras. | Données du local, alarme et caméras.
+Solicitud de autorización de reserva de espacio ocasional en la vía pública. Llegará a la Policía Local de Tortosa. | Sol·licitud d'autorització de reserva d'espai ocasional a la via pública. Arribarà a la Policia Local de Tortosa. | Request for authorisation to reserve occasional space on the public road. It will reach the Tortosa Local Police. | Demande d'autorisation de réservation ponctuelle d'espace sur la voie publique. Elle sera transmise à la police municipale de Tortosa.
+Solicitante | Sol·licitant | Applicant | Demandeur
+Nombre y apellidos | Nom i cognoms | Full name | Nom et prénom
+Domicilio | Domicili | Address | Adresse
+Municipio | Municipi | Town | Commune
+Código postal | Codi postal | Postcode | Code postal
+Representante (si lo hay) | Representant (si n'hi ha) | Representative (if any) | Représentant (le cas échéant)
+Actividad que quiere realizar | Activitat que vol realitzar | Activity you want to carry out | Activité que vous souhaitez réaliser
+Descripción (mudanza, carga y descarga, obra…) | Descripció (mudança, càrrega i descàrrega, obra…) | Description (house move, loading/unloading, works…) | Description (déménagement, chargement/déchargement, travaux…)
+Emplazamiento (calle y número) | Emplaçament (carrer i número) | Location (street and number) | Emplacement (rue et numéro)
+Día/s (ej. 12 y 13 de diciembre) | Dia/dies (p. ex. 12 i 13 de desembre) | Day(s) (e.g. 12 and 13 December) | Jour(s) (ex. 12 et 13 décembre)
+Horas (ej. de 8:00 a 14:00) | Hores (p. ex. de 8:00 a 14:00) | Hours (e.g. 8:00 to 14:00) | Heures (ex. de 8h00 à 14h00)
+A partir de (hora de inicio) | A partir de (hora d'inici) | From (start time) | À partir de (heure de début)
+Longitud (metros lineales) | Longitud (metres lineals) | Length (linear metres) | Longueur (mètres linéaires)
+¿Necesita que se corte la calle? | Necessita que es talli el carrer? | Does the street need to be closed? | La rue doit-elle être fermée ?
+¿Afecta a Zona Blava (aparcamiento regulado)? | Afecta la Zona Blava (aparcament regulat)? | Does it affect the Blue Zone (regulated parking)? | Cela concerne-t-il la Zone Bleue (stationnement réglementé) ?
+Plazas afectadas (si es zona Blava) | Places afectades (si és zona Blava) | Spaces affected (if Blue Zone) | Places concernées (si zone bleue)
+Documentos que aportará | Documents que aportarà | Documents you will provide | Documents que vous fournirez
+Fotocopia NIF/NIE | Fotocòpia NIF/NIE | Copy of ID (NIF/NIE) | Photocopie NIF/NIE
+Plano de situación | Plànol de situació | Location plan | Plan de situation
+Hoja de pago de la reserva | Full de pagament de la reserva | Reservation payment form | Fiche de paiement de la réservation
+Los documentos se entregan o envían a la Policía Local por separado. | Els documents es lliuren o s'envien a la Policia Local per separat. | Documents are handed in or sent to the Local Police separately. | Les documents sont remis ou envoyés séparément à la police municipale.
+Enviar solicitud | Envia la sol·licitud | Submit request | Envoyer la demande
+Indica un teléfono o un correo de contacto. | Indica un telèfon o un correu de contacte. | Provide a phone number or an email address. | Indiquez un téléphone ou une adresse e-mail de contact.
+Solicitud enviada | Sol·licitud enviada | Request sent | Demande envoyée
+La Policía Local ha recibido tu solicitud de ocupación en | La Policia Local ha rebut la teva sol·licitud d'ocupació a | The Local Police have received your request to use public space at | La police municipale a reçu votre demande d'occupation à
+Recuerda entregar o enviar a la Policía Local los documentos indicados. | Recorda lliurar o enviar a la Policia Local els documents indicats. | Remember to hand in or send the listed documents to the Local Police. | N'oubliez pas de remettre ou d'envoyer à la police municipale les documents indiqués.
+Datos del establecimiento | Dades de l'establiment | Business details | Données de l'établissement
+Nombre del establecimiento | Nom de l'establiment | Business name | Nom de l'établissement
+Tipo de actividad (bar, tienda de ropa, farmacia…) | Tipus d'activitat (bar, botiga de roba, farmàcia…) | Type of business (bar, clothes shop, pharmacy…) | Type d'activité (bar, magasin de vêtements, pharmacie…)
+Dirección del local | Adreça del local | Business address | Adresse du local
+Teléfono del local | Telèfon del local | Business phone | Téléphone du local
+Horario (ej. L-S 9:00-20:00) | Horari (p. ex. dl-ds 9:00-20:00) | Opening hours (e.g. Mon-Sat 9:00-20:00) | Horaires (ex. lun-sam 9h-20h)
+Teléfono de contacto urgente (fuera de horario) | Telèfon de contacte urgent (fora d'horari) | Urgent contact phone (outside hours) | Téléphone de contact urgent (hors horaires)
+Otras personas de contacto (trabajadores) | Altres persones de contacte (treballadors) | Other contact people (employees) | Autres personnes à contacter (employés)
+Puesto (ej. encargado, cajera) | Lloc (p. ex. encarregat, caixera) | Role (e.g. manager, cashier) | Poste (ex. responsable, caissière)
++ Añadir persona | + Afegeix una persona | + Add person | + Ajouter une personne
+¿Tiene alarma? | Té alarma? | Do you have an alarm? | Avez-vous une alarme ?
+Compañía de alarma | Companyia d'alarma | Alarm company | Société d'alarme
+Teléfono de la central | Telèfon de la central | Monitoring centre phone | Téléphone de la centrale
+¿Tiene cámaras de videovigilancia? | Té càmeres de videovigilància? | Do you have CCTV cameras? | Avez-vous des caméras de vidéosurveillance ?
+Número de cámaras | Nombre de càmeres | Number of cameras | Nombre de caméras
+Días que se conservan las grabaciones | Dies que es conserven els enregistraments | Days recordings are kept | Jours de conservation des enregistrements
+Qué zonas cubren (entrada, caja, calle…) | Quines zones cobreixen (entrada, caixa, carrer…) | Areas covered (entrance, till, street…) | Zones couvertes (entrée, caisse, rue…)
+Retirada de vehículo | Retirada de vehicle | Vehicle removal | Retrait de véhicule
+Sí, tu vehículo está en el depósito municipal. | Sí, el teu vehicle és al dipòsit municipal. | Yes, your vehicle is at the municipal tow yard. | Oui, votre véhicule est à la fourrière municipale.
+No consta tu vehículo en el depósito municipal. | No consta el teu vehicle al dipòsit municipal. | Your vehicle is not recorded at the municipal tow yard. | Votre véhicule ne figure pas à la fourrière municipale.
+Si crees que lo han robado, llama al 112 o presenta una denuncia. | Si creus que te l'han robat, truca al 112 o presenta una denúncia. | If you think it was stolen, call 112 or file a report. | Si vous pensez qu'il a été volé, appelez le 112 ou portez plainte.`.split("\n").forEach(l => { const p = l.split(" | "); if (p.length == 4) TRX[p[0]] = {ca: p[1], en: p[2], fr: p[3]}; });
+const FW = {"nombre": {ca: "nom", en: "name", fr: "nom"}, "NIF/NIE": {ca: "NIF/NIE", en: "NIF/NIE", fr: "NIF/NIE"}, "descripción": {ca: "descripció", en: "description", fr: "description"}, "emplazamiento": {ca: "emplaçament", en: "location", fr: "emplacement"}, "día/s": {ca: "dia/dies", en: "day(s)", fr: "jour(s)"}};
+const NOPUDO = {enviar: {ca: "No s'ha pogut enviar", en: "Could not send", fr: "Impossible d'envoyer"}, activar: {ca: "No s'ha pogut activar", en: "Could not turn on", fr: "Impossible d'activer"}, guardar: {ca: "No s'ha pogut desar", en: "Could not save", fr: "Impossible d'enregistrer"}};
+const SUFROBO = " Si crees que lo han robado, llama al 112 o presenta una denuncia.";
+const PAT = [
+ [/^Llega en unos (\d+) min$/, {ca: "Arriba en uns $1 min", en: "Arrives in about $1 min", fr: "Arrive dans environ $1 min"}],
+ [/^Aviso de la Policía para tu vehículo( \(\d+\))?$/, {ca: "Avís de la Policia per al teu vehicle$1", en: "Police notice about your vehicle$1", fr: "Avis de la police concernant votre véhicule$1"}],
+ [/^Unidad: (.+)$/, {ca: "Unitat: $1", en: "Unit: $1", fr: "Unité : $1"}],
+ [/^Matrícula (.+)$/, {ca: "Matrícula $1", en: "Plate $1", fr: "Plaque $1"}],
+ [/^Otros: (.+)$/, {ca: "Altres: $1", en: "Other: $1", fr: "Autre : $1"}],
+ [/^Policía Local de (.+)$/, {ca: "Policia Local de $1", en: "$1 Local Police", fr: "Police municipale de $1"}],
+ [/^Retirada de vehículo: (.+)$/, {ca: "Retirada de vehicle: $1", en: "Vehicle removal: $1", fr: "Retrait de véhicule : $1"}],
+ [/^No se pudo (enviar|activar|guardar):\s*(.*)$/, m => NOPUDO[m[1]][LANG] + (LANG == "fr" ? " : " : ": ") + m[2]],
+ [/^Falta: (.+)\.$/, m => ({ca: "Falta: ", en: "Missing: ", fr: "Manque : "})[LANG] + m[1].split(", ").map(w => (FW[w] && FW[w][LANG]) || w).join(", ") + "."],
+ [/^Tu vehículo \(matrícula (.+?)\) está estacionado en (.+?) y debe retirarse(?: antes de (.+?))?\. Si no se retira, podrá ser retirado por la grúa municipal\.(.*)$/, m => ({
+   ca: `El teu vehicle (matrícula ${m[1]}) està estacionat a ${m[2]} i s'ha de retirar${m[3] ? " abans de " + m[3] : ""}. Si no es retira, podrà ser retirat per la grua municipal.${m[4]}`,
+   en: `Your vehicle (plate ${m[1]}) is parked at ${m[2]} and must be removed${m[3] ? " before " + m[3] : ""}. If it is not removed, it may be towed by the municipal tow truck.${m[4]}`,
+   fr: `Votre véhicule (plaque ${m[1]}) est stationné à ${m[2]} et doit être retiré${m[3] ? " avant " + m[3] : ""}. S'il n'est pas retiré, il pourra être enlevé par la fourrière municipale.${m[4]}`})[LANG]],
+ [/^Sí, tu vehículo está en el depósito municipal\.(.*)$/, m => TRX["Sí, tu vehículo está en el depósito municipal."][LANG] + m[1]],
+ [/^No consta tu vehículo en el depósito municipal\.(.*)$/, m => TRX["No consta tu vehículo en el depósito municipal."][LANG] + (m[1] == SUFROBO ? " " + TRX[SUFROBO.trim()][LANG] : m[1])]
+];
+function trPat(k) { for (const [re, f] of PAT) { const m = k.match(re); if (m) { if (typeof f == "function") return f(m); const t = f[LANG]; return t ? t.replace(/\$(\d)/g, (_, i) => m[+i] || "") : null; } } return null; }
+function trStr(k) {
+  const d = TRX[k]; if (d && d[LANG]) return d[LANG];
+  const p = trPat(k); if (p) return p;
+  if (k.includes(" · ")) return k.split(" · ").map(x => { const d2 = TRX[x]; return (d2 && d2[LANG]) || trPat(x) || x; }).join(" · ");
+  return k;
+}
+function tr(s) { if (LANG == "es") return s; const k = s.trim(); if (!k) return s; const r = trStr(k); return r === k ? s : s.replace(k, () => r); }
+const ORIGT = new WeakMap(), LASTT = new WeakMap(), ORIGA = new WeakMap(), ATTRS = ["placeholder", "aria-label", "title", "alt"];
+const SKIP = "[data-notr],script,style";
+function trNode(n) { const cur = n.data, last = LASTT.get(n), orig = (last !== undefined && last === cur) ? ORIGT.get(n) : cur, out = tr(orig); ORIGT.set(n, orig); LASTT.set(n, out); if (out !== cur) n.data = out; }
+function trEl(el) {
+  if (!el.hasAttribute || (el.closest && el.closest(SKIP))) return;
+  for (const a of ATTRS) { if (!el.hasAttribute(a)) continue; const m = ORIGA.get(el) || {}, cur = el.getAttribute(a), rec = m[a], orig = (rec && rec.out === cur) ? rec.orig : cur, out = tr(orig); m[a] = {orig, out}; ORIGA.set(el, m); if (out !== cur) el.setAttribute(a, out); }
+}
+function trTree(root) {
+  if (root.nodeType == 3) { if (!(root.parentElement && root.parentElement.closest(SKIP))) trNode(root); return; }
+  if (root.nodeType != 1 || root.closest(SKIP)) return;
+  trEl(root); root.querySelectorAll("*").forEach(trEl);
+  const w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT); let n;
+  while ((n = w.nextNode())) { const p = n.parentElement; if (p && p.closest(SKIP)) continue; trNode(n); }
+}
+new MutationObserver(ms => { for (const m of ms) { if (m.type == "childList") m.addedNodes.forEach(trTree); else if (m.type == "characterData") trTree(m.target); else if (m.type == "attributes") trEl(m.target); } })
+  .observe($("app"), {childList: true, subtree: true, characterData: true, attributes: true, attributeFilter: ATTRS});
+function setLang(l) {
+  if (!LOCALES[l]) return; LANG = l; LOC = LOCALES[l]; try { localStorage.setItem("lang", l); } catch (e) {}
+  document.documentElement.lang = l; trTree($("app"));
+  document.querySelectorAll("#langA,#langP").forEach(s => s.value = l);
+}
+$("langA").onchange = e => setLang(e.target.value);
+setLang(LANG);
 </script></body></html>

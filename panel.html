@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PolAssist · Panel</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap">
 <style>
 :root{--bg:#F2F3F7;--card:#fff;--ink:#05254E;--navy:#05254E;--red:#E0342B;--amb:#E8A33D;--ok:#2E9E5B}
 @media (prefers-color-scheme:dark){:root{--bg:#060F1E;--card:#10213A;--ink:#E8EEFA;--navy:#1E4A8C}}
@@ -26,48 +27,73 @@ a{color:inherit}small{opacity:.75}#login{max-width:340px;margin:60px auto;displa
 #alarm{display:none;background:var(--red);color:#fff;font-weight:700;border-radius:12px;padding:14px;margin-bottom:10px;font-size:18px}
 body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{background:var(--red)}}
 .bdg{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:8px;background:#9993;font-size:13px;font-weight:600}.bdg.rojo{background:var(--red);color:#fff}
+
+/* ---- diseño nuevo: pestañas y acordeones ---- */
+[hidden]{display:none!important}
+:root{--bg:#F4F6F6;--card:#fff;--ink:#12211F;--navy:#0E5A5A;--red:#C93A1F;--amb:#E8A33D;--ok:#2E9E5B;--line:#D5E0DE;--tint:#DDEAE8}
+@media (prefers-color-scheme:dark){:root{--bg:#0E1A19;--card:#16282A;--ink:#E6EEEC;--navy:#1F7673;--line:#2A4144;--tint:#1E3A3B}}
+body{font-family:Inter,system-ui,-apple-system,sans-serif}main{max-width:1040px}
+header{position:sticky;top:0;z-index:30;display:block;padding:12px 16px 0;box-shadow:0 2px 10px #0003}
+.hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding-bottom:10px}
+.brand{display:flex;align-items:center;gap:12px}.brand svg{width:32px;height:38px;flex:none}.brand b{font-size:19px}.brand small{opacity:.8}
+#tabs{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px}
+.tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:96px;padding:10px 14px;border-radius:14px;background:rgba(255,255,255,.14);color:#fff;font-size:13px;font-weight:600;flex:none}
+.tab svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.tab.on{background:#fff;color:var(--navy)}
+.tb{position:absolute;top:-5px;right:-4px;min-width:20px;padding:0 6px;border-radius:10px;background:var(--red);color:#fff;font-size:12px;font-style:normal;font-weight:700;line-height:20px;text-align:center}.tb[hidden]{display:none}
+.view{display:none}.view.on{display:block}.vt{margin:6px 0 12px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}.chip{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-weight:600}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+#al[data-f="nueva"] .card:not(.nueva),#al[data-f="curso"] .card:not(.asignada):not(.en_camino),#al[data-f="atendida"] .card:not(.atendida){display:none}
+#al:empty::before{content:"Aún no hay avisos.";opacity:.6}
+.card{border-radius:16px;border:1px solid var(--line)}button{border-radius:12px}input,textarea,select{border-radius:12px;border:1px solid var(--line)}
+details.acc{background:var(--card);border:1px solid var(--line);border-radius:16px;margin-bottom:12px;overflow:hidden}
+details.acc>summary{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;font-weight:700;font-size:16px;cursor:pointer;list-style:none}
+details.acc>summary::-webkit-details-marker{display:none}details.acc>summary::after{content:"▾";font-size:18px;transition:transform .2s}details.acc[open]>summary::after{transform:rotate(180deg)}
+details.acc>.card,details.acc>.bar,details.acc>div{margin:0;border:0;border-top:1px solid var(--line);border-radius:0}
+details.acc>#pe{padding:10px 12px 2px}
 </style>
 </head>
 <body>
-<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v30</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
+<header>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v31</small></div></div>
+<span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
+<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
+</header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
 <div id="panel" hidden>
 <button id="snd">🔇 Toca aquí para activar el sonido de alarma</button>
 <div id="alarm"></div>
 <div class="bar"><b>Esta unidad:</b><input id="unit" placeholder="Ej. Comisaría, Patrulla 1" size="22"><small>Se guarda en este dispositivo. Los avisos que asignes aquí llevarán este nombre.</small></div>
-<h2 style="margin-top:6px">Avisos recibidos</h2><div id="al"></div>
-<h2>Mapa de avisos</h2>
-<div class="card" style="display:block"><div><button class="mp on" data-mm="act">Activos ahora</button><button class="mp" data-mm="h1">Últimas 24 h</button><button class="mp" data-mm="h7">7 días</button><button class="mp" data-mm="h30">30 días</button></div>
-<div id="mapa"></div><small id="mapn"></small></div>
-<h2>Estadísticas</h2>
-<div class="card" style="display:block"><div><button class="mp" data-sp="7">7 días</button><button class="mp on" data-sp="30">30 días</button><button class="mp" data-sp="365">12 meses</button><button class="mp" data-sp="0">Todo</button></div>
+
+<section class="view on" id="v-avisos"><div class="chips"><button class="chip on" data-f="todos">Todos</button><button class="chip" data-f="nueva">Nuevos <b id="c_n">0</b></button><button class="chip" data-f="curso">En curso <b id="c_c">0</b></button><button class="chip" data-f="atendida">Atendidos <b id="c_a">0</b></button></div><div id="al" data-f="todos"></div></section>
+<section class="view" id="v-mapa"><h2 class="vt">Mapa de avisos</h2><div class="card" style="display:block"><div><button class="mp on" data-mm="act">Activos ahora</button><button class="mp" data-mm="h1">Últimas 24 h</button><button class="mp" data-mm="h7">7 días</button><button class="mp" data-mm="h30">30 días</button></div>
+<div id="mapa"></div><small id="mapn"></small></div></section>
+<section class="view" id="v-stats"><h2 class="vt">Estadísticas</h2><div class="card" style="display:block"><div><button class="mp" data-sp="7">7 días</button><button class="mp on" data-sp="30">30 días</button><button class="mp" data-sp="365">12 meses</button><button class="mp" data-sp="0">Todo</button></div>
 <div id="st_res"></div>
-<button id="st_csv" style="margin-top:14px">Descargar Excel (CSV)</button> <small>El archivo no incluye nombres ni teléfonos, solo tipo, estado, hora y ubicación.</small></div>
-<h2>Solicitudes de ocupación de vía pública <small id="ocn"></small></h2>
-<div class="bar"><b>Correo de la Policía:</b><input id="dest" type="email" placeholder="correo@ejemplo.cat" size="30"><small>Se guarda en este dispositivo. Al pulsar «Enviar por correo» se abre tu programa de correo con todos los datos.</small></div>
-<div id="oc"></div>
-<h2>Retirada de vehículos: aviso a propietarios</h2>
-<div class="card" style="display:block"><p style="margin:0 0 8px"><small>Escribe las matrículas, una por línea o separadas por comas. Se avisará a quien las tenga registradas en la app.</small></p>
-<textarea id="rv_pl" rows="3" placeholder="1234ABC&#10;5678DEF" style="width:100%"></textarea>
-<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><input id="rv_lugar" placeholder="Calle o lugar" style="flex:2;min-width:160px"><input id="rv_hora" placeholder="Hora límite (ej. 6:00)" style="flex:1;min-width:120px"></div>
-<input id="rv_extra" placeholder="Mensaje adicional (opcional)" style="width:100%;margin-top:8px">
-<button id="rv_go" style="margin-top:10px">Enviar aviso a propietarios</button><div id="rv_res" style="margin-top:10px"></div></div>
-<h2>Registros pendientes de validar</h2><div id="pe"></div>
-<h2>Usuarios: buscar y bloquear</h2>
-<div class="card" style="display:block"><input id="us_q" placeholder="Buscar por nombre, teléfono o matrícula" style="width:100%"><div id="us_res" style="margin-top:10px"></div></div>
-<h2>Publicar notificación</h2>
-<div class="card"><input id="at" placeholder="Título del aviso" style="flex:1"><input id="ac" placeholder="Categoría" value="General"><button id="ap">Publicar</button></div>
-<h2>Aviso a los vecinos (con notificación al móvil)</h2>
-<div class="card" style="display:block"><input id="mv_t" placeholder="Título (ej. Corte de la calle Major)" style="width:100%">
+<button id="st_csv" style="margin-top:14px">Descargar Excel (CSV)</button> <small>El archivo no incluye nombres ni teléfonos, solo tipo, estado, hora y ubicación.</small></div></section>
+<section class="view" id="v-oc"><h2 class="vt">Solicitudes de ocupación de vía pública <small id="ocn"></small></h2><div class="bar"><b>Correo de la Policía:</b><input id="dest" type="email" placeholder="correo@ejemplo.cat" size="30"><small>Se guarda en este dispositivo. Al pulsar «Enviar por correo» se abre tu programa de correo con todos los datos.</small></div>
+<div id="oc"></div></section>
+<section class="view" id="v-vec">
+<details class="acc" open><summary>📣 Aviso urgente a los vecinos (con notificación al móvil)</summary><div class="card" style="display:block"><input id="mv_t" placeholder="Título (ej. Corte de la calle Major)" style="width:100%">
 <textarea id="mv_x" rows="3" placeholder="Mensaje (opcional)" style="width:100%;margin-top:8px"></textarea>
 <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><select id="mv_d"><option value="todos">A todos los vecinos</option><option value="zona">Solo a una calle o zona</option></select>
 <input id="mv_z" placeholder="Texto de la dirección (ej. Carrer Major)" style="flex:1;min-width:180px" hidden></div>
 <button id="mv_go" style="margin-top:10px">Revisar y enviar</button><div id="mv_res" style="margin-top:8px"></div>
-<small>Antes de enviar verás a cuántos vecinos llegará. «Una calle o zona» busca en la dirección de residencia que dio cada vecino.</small></div>
-<h2>Códigos de invitación</h2>
-<div class="bar"><label>Usos <input id="cu" type="number" min="1" value="1" style="width:70px"></label><label>Días <input id="cd" type="number" min="1" value="7" style="width:70px"></label><input id="cn" placeholder="Nota (ej. Agentes turno noche)" size="26"><button id="gc">Generar código</button></div>
-<div id="cl"></div>
+<small>Antes de enviar verás a cuántos vecinos llegará. «Una calle o zona» busca en la dirección de residencia que dio cada vecino.</small></div></details>
+<details class="acc"><summary>🚗 Retirada de vehículos: aviso a propietarios</summary><div class="card" style="display:block"><p style="margin:0 0 8px"><small>Escribe las matrículas, una por línea o separadas por comas. Se avisará a quien las tenga registradas en la app.</small></p>
+<textarea id="rv_pl" rows="3" placeholder="1234ABC&#10;5678DEF" style="width:100%"></textarea>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:8px"><input id="rv_lugar" placeholder="Calle o lugar" style="flex:2;min-width:160px"><input id="rv_hora" placeholder="Hora límite (ej. 6:00)" style="flex:1;min-width:120px"></div>
+<input id="rv_extra" placeholder="Mensaje adicional (opcional)" style="width:100%;margin-top:8px">
+<button id="rv_go" style="margin-top:10px">Enviar aviso a propietarios</button><div id="rv_res" style="margin-top:10px"></div></div></details>
+<details class="acc"><summary>📌 Publicar en el tablón de avisos</summary><div class="card"><input id="at" placeholder="Título del aviso" style="flex:1"><input id="ac" placeholder="Categoría" value="General"><button id="ap">Publicar</button></div></details>
+</section>
+<section class="view" id="v-usu">
+<details class="acc" open><summary>🕑 Registros pendientes de validar</summary><div id="pe"></div></details>
+<details class="acc"><summary>🔎 Buscar y bloquear usuarios</summary><div class="card" style="display:block"><input id="us_q" placeholder="Buscar por nombre, teléfono o matrícula" style="width:100%"><div id="us_res" style="margin-top:10px"></div></div></details>
+<details class="acc"><summary>🎟️ Códigos de invitación</summary><div class="bar"><label>Usos <input id="cu" type="number" min="1" value="1" style="width:70px"></label><label>Días <input id="cd" type="number" min="1" value="7" style="width:70px"></label><input id="cn" placeholder="Nota (ej. Agentes turno noche)" size="26"><button id="gc">Generar código</button></div>
+<div id="cl"></div></details>
+</section>
 </div>
 </main>
 <div id="cfm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 id="cfm_t" style="margin:0 0 8px"></h3><p id="cfm_p" style="margin:0 0 12px"></p><div style="display:flex;gap:8px"><button class="k" id="cfm_ok">Confirmar y enviar</button><button id="cfm_no" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
@@ -122,7 +148,7 @@ async function start() {
   const {data:{user}} = await db.auth.getUser(); if (!user) return;
   const {data:p} = await db.from("profiles").select("rol").eq("id", user.id).single();
   if (!p || p.rol !== "agente") { await db.auth.signOut(); return $("err").textContent = "Esta cuenta no es de agente."; }
-  $("login").hidden = true; $("panel").hidden = false; $("out").hidden = false; unlock(); lock(); load();
+  $("login").hidden = true; $("panel").hidden = false; $("out").hidden = false; $("tabs").hidden = false; unlock(); lock(); load();
   const ses = (await db.auth.getSession()).data.session; if (ses) db.realtime.setAuth(ses.access_token);
   db.auth.onAuthStateChange((ev, s2) => { if (s2) db.realtime.setAuth(s2.access_token); });
   db.channel("rt").on("postgres_changes", {event:"*", schema:"public", table:"alertas"}, load)
@@ -153,6 +179,22 @@ $("rv_go").onclick = async () => {
   const a = data.avisadas || [], s = data.sin_propietario || [];
   $("rv_res").innerHTML = `<b>Avisadas (${a.length}):</b> ${esc(a.join(", ") || "ninguna")}<br><b>Sin propietario registrado en la app (${s.length}):</b> ${esc(s.join(", ") || "ninguna")}${s.length ? "<br><small>Estas habrá que retirarlas con la grúa.</small>" : ""}`;
 };
+/* ---- pestañas del panel ---- */
+function ver(id) {
+  document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id == "v-" + id));
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.t == id));
+  if (id == "mapa") setTimeout(() => cargaMapa(), 60);
+  window.scrollTo(0, 0);
+}
+document.querySelectorAll(".tab").forEach(b => b.onclick = () => ver(b.dataset.t));
+document.querySelectorAll(".chip").forEach(b => b.onclick = () => { document.querySelectorAll(".chip").forEach(x => x.classList.toggle("on", x == b)); $("al").dataset.f = b.dataset.f; });
+$("alarm").addEventListener("click", () => ver("avisos"));
+function badges() {
+  const set = (k, n) => { const e = $("b_" + k); e.textContent = n; e.hidden = !n; }, q = c => document.querySelectorAll(c).length;
+  const nu = q("#al .card.nueva"); set("avisos", nu); set("oc", +(($("ocn").textContent.match(/\d+/) || [0])[0])); set("usu", q("#pe .card"));
+  $("c_n").textContent = nu; $("c_c").textContent = q("#al .card.asignada,#al .card.en_camino"); $("c_a").textContent = q("#al .card.atendida");
+}
+[["al", {childList: true, subtree: true}], ["pe", {childList: true}], ["ocn", {childList: true, characterData: true, subtree: true}]].forEach(([i, o]) => new MutationObserver(badges).observe($(i), o));
 /* ---- avisos a los vecinos (con notificación al móvil) ---- */
 $("mv_d").onchange = () => { $("mv_z").hidden = $("mv_d").value != "zona"; };
 let CFM = null;
@@ -209,7 +251,7 @@ function iniMapa() {
   CAPA = L.layerGroup().addTo(MAP);
 }
 async function cargaMapa(auto) {
-  if (auto && MM != "act") return;
+  if (auto && (MM != "act" || !$("v-mapa").classList.contains("on"))) return;
   if (typeof L === "undefined") { $("mapn").textContent = "No se pudo cargar el mapa (sin conexión con el servidor de mapas)."; return; }
   iniMapa(); setTimeout(() => MAP.invalidateSize(), 50);
   const dias = {act: 0, h1: 1, h7: 7, h30: 30}[MM], desde = dias ? new Date(Date.now() - dias * 86400000).toISOString() : null;

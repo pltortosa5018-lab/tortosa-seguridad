@@ -42,7 +42,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .qs{margin-top:14px;display:flex;flex-direction:column;gap:10px}.qrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border-radius:14px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:15px}
 .seg{display:flex;gap:8px;flex:none}.seg button{min-width:64px;min-height:44px;border-radius:12px;border:2px solid var(--acc);background:#fff;color:var(--acc);font-weight:700}.seg button.on{background:var(--acc);color:#fff}.seg button[data-v=si].on{background:var(--red);border-color:var(--red)}
 .banner.alert{background:#FDE9E5;border-color:var(--red)}.resp{margin-top:14px;padding:14px;border-radius:14px;background:var(--tint);text-align:left}.resp b{display:block;margin-bottom:4px}
-.hero{position:relative}.lang{position:absolute;top:calc(12px + env(safe-area-inset-top));right:14px;width:auto;margin:0;padding:7px 12px;border:0;border-radius:20px;background:rgba(255,255,255,.2);color:#fff;font-weight:600}.lang option{color:#12211F}
+.hero{position:relative}.tools{display:flex;gap:10px}.flagbtn svg{width:28px;height:28px;stroke:none;fill:none;border-radius:50%;display:block}.hero .flagbtn{position:absolute;top:calc(12px + env(safe-area-inset-top));right:14px;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.75);background:rgba(255,255,255,.2);display:grid;place-items:center;padding:0}.trc svg{width:34px;height:34px;stroke:none;border-radius:50%;flex:none}
 .okbig{width:84px;height:84px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:0 auto}.okbig svg{width:44px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .more{margin-top:18px;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:left}.more label{font-weight:600;font-size:14px;display:block;margin-bottom:8px}
 .card2{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;margin-bottom:12px}.card2 span{font-size:14px;color:var(--mute)}
@@ -53,7 +53,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .fh{font-size:17px;margin:20px 0 8px}.chk{display:flex;align-items:center;gap:8px;margin:6px 16px 6px 0;font-weight:500}.chk input{width:22px;height:22px;margin:0;padding:0}.row2{display:flex;flex-wrap:wrap;align-items:center}.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .ctr{text-align:center}.okc{width:76px;height:76px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:10px auto}.okc svg{width:40px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 </style></head><body><div id="app">
-<section class="scr on" id="auth" style="overflow:auto"><div class="hero"><select id="langA" data-notr class="lang" aria-label="Idioma / Language"><option value="es">Castellano</option><option value="ca">Català</option><option value="en">English</option><option value="fr">Français</option></select><div class="hl2"><svg viewBox="0 0 96 96" width="88" height="88" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#fff"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#0E5A5A" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#F2A541" stroke="#0E5A5A" stroke-width="4"/></svg></div><h1 class="wmk"><i>Pol</i><em>Assist</em></h1><p id="a-s"></p><img class="emb sm" alt=""></div>
+<section class="scr on" id="auth" style="overflow:auto"><div class="hero"><button id="lbtnA" class="flagbtn" type="button" aria-label="Idioma / Language"></button><div class="hl2"><svg viewBox="0 0 96 96" width="88" height="88" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#fff"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#0E5A5A" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#F2A541" stroke="#0E5A5A" stroke-width="4"/></svg></div><h1 class="wmk"><i>Pol</i><em>Assist</em></h1><p id="a-s"></p><img class="emb sm" alt=""></div>
 <div class="form"><input id="em" type="email" placeholder="Correo electrónico" autocomplete="email"><input id="pw" type="password" placeholder="Contraseña (mín. 6)" autocomplete="current-password">
 <input class="r" id="co" placeholder="Código de invitación" autocapitalize="characters" autocomplete="off" hidden>
 <select class="r" id="gr" hidden><option value="Ciudadanía">Soy particular</option><option value="Establecimiento">Soy comerciante (establecimiento)</option></select>
@@ -61,7 +61,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 <input class="r m" id="ma" placeholder="Matrícula del vehículo (opcional)" autocapitalize="characters" hidden><input class="r m" id="as" placeholder="Aseguradora (opcional)" hidden><p class="note r m" hidden>La matrícula y la aseguradora son opcionales. Se usarán para gestionar accidentes de tráfico y para avisarte si tu vehículo debe retirarse de la vía o está en el depósito de la grúa.</p>
 <div id="cf" hidden></div><div id="err" class="err"></div><button class="btn" id="go">Entrar</button><button class="btn o2" id="tg" style="margin-top:10px">Crear una cuenta nueva</button>
 <p class="note" style="margin-top:16px">Al registrarte aceptas el tratamiento de tus datos para gestionar avisos de seguridad. Texto legal pendiente del Ayuntamiento.</p></div></section>
-<section class="scr" id="main"><header class="top"><div class="who"><svg viewBox="0 0 96 96" width="42" height="42" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#0E5A5A"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#C93A1F" stroke="#fff" stroke-width="4"/></svg><div><span class="wmk"><i>Pol</i><em>Assist</em></span><small id="m-c"></small></div></div><button class="rb" id="pbtn" aria-label="Mi perfil"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-5.5 7-5.5s6 1.5 7 5.5"/></svg></button></header>
+<section class="scr" id="main"><header class="top"><div class="who"><svg viewBox="0 0 96 96" width="42" height="42" aria-hidden="true"><path d="M48 90S19 62 19 40a29 29 0 0158 0c0 22-29 50-29 50z" fill="#0E5A5A"/><path d="M41 58V27h10a10.5 10.5 0 010 21H41" fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="75" cy="19" r="10" fill="#C93A1F" stroke="#fff" stroke-width="4"/></svg><div><span class="wmk"><i>Pol</i><em>Assist</em></span><small id="m-c"></small></div></div><div class="tools"><button class="rb flagbtn" id="lbtn" type="button" aria-label="Idioma / Language"></button><button class="rb" id="pbtn" aria-label="Mi perfil"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M5 20c1-4 4-5.5 7-5.5s6 1.5 7 5.5"/></svg></button></div></header>
 <div class="views"><div class="view on" id="v-av"><button class="banner" id="bn" hidden></button><button class="banner alert" id="nbn" hidden></button><h1 class="h1">¿Qué ocurre?</h1><p class="sub">Toca una opción y confirma. El aviso se envía con tu ubicación.</p>
 <a class="call" href="tel:112"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2z"/></svg>Emergencia vital: llama al 112</a><div class="grid" id="grid"></div></div>
 <div class="view" id="v-ns"><h1 class="h1">Avisos</h1><div id="ns-l"></div></div>
@@ -156,9 +156,8 @@ $("tr-l").onclick = e => { const b = e.target.closest("button"); if (b) ({oc:abr
 function renderPf() {
   const p = perfil || {}, v = !!p.validado;
   $("pf").innerHTML = `<div class="card2"><b>${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}</b><span>${esc(me && me.email)}</span><span>${p.grupo == "Establecimiento" ? "Comerciante" : "Particular"} · ${v ? "Registro validado" : "Registro pendiente de validar"}</span></div>
-  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><p class="note" style="margin:6px 0 4px">Idioma</p><select id="langP" data-notr>${LANGS.map(([c, n]) => `<option value="${c}"${c == LANG ? " selected" : ""}>${n}</option>`).join("")}</select><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 34</p>`;
+  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 35</p>`;
   $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await desactivarPush(); await db.auth.signOut(); show("auth"); };
-  $("langP").onchange = e => setLang(e.target.value);
   pushUI();
 }
 function abrirVehiculo() {
@@ -526,7 +525,7 @@ Comerciante | Comerciant | Business owner | Commerçant
 Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar. | Consell: afegeix aquesta pàgina a la pantalla d'inici del teu mòbil (botó compartir → «Afegeix a la pantalla d'inici») per obrir-la com una app i no haver de tornar a entrar. | Tip: add this page to your phone's home screen (share button → “Add to Home Screen”) to open it like an app and avoid logging in again. | Conseil : ajoutez cette page à l'écran d'accueil de votre téléphone (bouton partager → « Sur l'écran d'accueil ») pour l'ouvrir comme une app et ne plus avoir à vous reconnecter.
 Cerrar sesión | Tanca la sessió | Log out | Se déconnecter
 Idioma | Idioma | Language | Langue
-PolAssist · versión 34 | PolAssist · versió 34 | PolAssist · version 34 | PolAssist · version 34
+PolAssist · versión 35 | PolAssist · versió 35 | PolAssist · version 35 | PolAssist · version 35
 Avisos en el móvil. | Avisos al mòbil. | Mobile alerts. | Alertes sur mobile.
 Avisos en el móvil bloqueados. | Avisos al mòbil bloquejats. | Mobile alerts blocked. | Alertes sur mobile bloquées.
 Avisos en el móvil: activados. | Avisos al mòbil: activats. | Mobile alerts: on. | Alertes sur mobile : activées.
@@ -647,8 +646,19 @@ new MutationObserver(ms => { for (const m of ms) { if (m.type == "childList") m.
 function setLang(l) {
   if (!LOCALES[l]) return; LANG = l; LOC = LOCALES[l]; try { localStorage.setItem("lang", l); } catch (e) {}
   document.documentElement.lang = l; trTree($("app"));
-  document.querySelectorAll("#langA,#langP").forEach(s => s.value = l);
+  document.querySelectorAll(".flagbtn").forEach(b => b.innerHTML = flagSvg(l));
 }
-$("langA").onchange = e => setLang(e.target.value);
+const FV = {es: "0 0 30 30", ca: "0 0 30 30", en: "15 0 30 30", fr: "0 0 30 30"};
+const FB = {
+ es: '<rect width="30" height="30" fill="#AA151B"/><rect y="7.5" width="30" height="15" fill="#F1BF00"/>',
+ ca: Array.from({length: 9}, (_, i) => `<rect y="${(i * 30 / 9).toFixed(2)}" width="30" height="3.4" fill="${i % 2 ? "#DA121A" : "#FCDD09"}"/>`).join(""),
+ en: '<rect width="60" height="30" fill="#012169"/><path d="M0 0L60 30M60 0L0 30" stroke="#fff" stroke-width="6" fill="none"/><path d="M0 0L60 30M60 0L0 30" stroke="#C8102E" stroke-width="2" fill="none"/><path d="M30 0V30M0 15H60" stroke="#fff" stroke-width="10" fill="none"/><path d="M30 0V30M0 15H60" stroke="#C8102E" stroke-width="6" fill="none"/>',
+ fr: '<rect width="10" height="30" fill="#0055A4"/><rect x="10" width="10" height="30" fill="#fff"/><rect x="20" width="10" height="30" fill="#EF4135"/>'};
+const flagSvg = l => `<svg viewBox="${FV[l]}" aria-hidden="true">${FB[l]}</svg>`;
+function openLang() {
+  sheet(`<h1>Idioma / Language</h1>` + LANGS.map(([c, n]) => `<button class="trc" data-l="${c}" style="margin-bottom:10px${c == LANG ? ";border:2px solid var(--acc)" : ""}">${flagSvg(c)}<b data-notr>${n}</b></button>`).join(""));
+  document.querySelectorAll("#shb [data-l]").forEach(b => b.onclick = () => { setLang(b.dataset.l); $("ov").classList.remove("on"); });
+}
+$("lbtn").onclick = $("lbtnA").onclick = openLang;
 setLang(LANG);
 </script></body></html>

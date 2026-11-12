@@ -123,13 +123,16 @@ $("go").onclick = async () => {
   if (!r.data.session) return $("err").textContent = "Revisa tu correo para confirmar la cuenta.";
   enter(r.data.user);
 };
-async function enter(u) {
-  me = u; const {data} = await db.from("profiles").select("*").eq("id", u.id).single(); perfil = data; cargaNoti();
+let TAB0 = new URLSearchParams(location.search).get("tab");
+async function enter(u, intento = 0) {
+  me = u; const {data} = await db.from("profiles").select("*").eq("id", u.id).single();
+  if (!data) { if (intento < 5) setTimeout(() => enter(u, intento + 1), 1500); $("bn").hidden = false; $("bn").className = "banner"; $("bn").innerHTML = "<b>Conectando…</b><span>Comprobando tu registro.</span>"; show("main"); tab("av"); return; }
+  perfil = data; cargaNoti();
   const v = !!(perfil && perfil.validado); let ver = true;
   if (v) { try { const k = "val_" + u.id; ver = !localStorage.getItem(k); localStorage.setItem(k, "1"); } catch (e) {} }
   const b = $("bn"); b.hidden = v && !ver; b.className = "banner" + (v ? " ok" : "");
   b.innerHTML = v ? "<b>Registro validado</b><span>Ya puedes enviar avisos. Toca para cerrar este aviso.</span>" : "<b>Registro pendiente de validar</b><span>Toca para comprobar.</span>";
-  show("main"); tab("av");
+  show("main"); tab(TAB0 || "av"); TAB0 = null;
 }
 $("bn").onclick = () => { if (perfil && perfil.validado) $("bn").hidden = true; else enter(me); };
 (async () => { const {data:{session}} = await db.auth.getSession(); if (session) enter(session.user); })();
@@ -152,7 +155,7 @@ $("tr-l").onclick = e => { const b = e.target.closest("button"); if (b) ({oc:abr
 function renderPf() {
   const p = perfil || {}, v = !!p.validado;
   $("pf").innerHTML = `<div class="card2"><b>${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}</b><span>${esc(me && me.email)}</span><span>${p.grupo == "Establecimiento" ? "Comerciante" : "Particular"} · ${v ? "Registro validado" : "Registro pendiente de validar"}</span></div>
-  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 32</p>`;
+  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 33</p>`;
   $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await desactivarPush(); await db.auth.signOut(); show("auth"); };
   pushUI();
 }
@@ -165,7 +168,8 @@ function abrirVehiculo() {
 
 /* ---- aviso: confirmar (mantener pulsado) ---- */
 function abrir(c) {
-  if (!perfil || !perfil.validado) return sheet("<h1>Registro pendiente</h1><p>Podrás enviar avisos cuando la Policía Local valide tu registro.</p>");
+  if (!perfil) { enter(me); return sheet("<h1>Un momento</h1><p>Estamos comprobando tu registro. Inténtalo de nuevo en unos segundos.</p>"); }
+  if (!perfil.validado) return sheet("<h1>Registro pendiente</h1><p>Podrás enviar avisos cuando la Policía Local valide tu registro.</p>");
   cur = c; pos = null; ans = {}; $("cf-ic").innerHTML = svg(c.k);
   $("qs").innerHTML = (c.q || []).map(q => `<div class="qrow"><span>${q.t}</span><div class="seg" data-q="${q.id}"><button data-v="si" aria-pressed="false">Sí</button><button data-v="no" aria-pressed="false">No</button></div></div>`).join(""); $("qs").hidden = !c.q; $("cf-t").textContent = c.t; $("xt").value = ""; $("xf").value = ""; $("xerr").textContent = ""; const gr = c.id == "gru"; $("xbox").hidden = !(c.id == "otr" || gr); $("gp").hidden = !gr; $("gp").value = gr ? ((perfil && perfil.matricula) || "") : "";
   $("xt").placeholder = gr ? "¿Dónde lo dejaste? Otros datos (opcional)" : "Cuéntanos qué ocurre…"; $("cf-s").textContent = gr ? "Consultarás a la Policía Local si tu vehículo está en el depósito de la grúa." : "Avisarás a la Policía Local.";
@@ -251,7 +255,7 @@ $("dg").onclick = async () => {
 
 /* ---- avisos en el móvil (notificaciones push) ---- */
 const VAPID = "BDx-VWK3Jyzg1C_4ToUkTPnQe7vM5VJmnuh8-v6NyVoEBAvpYducVyYB7GO-K0dAd7Wz-pit9ehl0Ygr8s3Cu2M";
-if ("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(() => {});
+if ("serviceWorker" in navigator) { navigator.serviceWorker.register("sw.js").catch(() => {}); navigator.serviceWorker.addEventListener("message", e => { if (e.data && e.data.tab && me) tab(e.data.tab); }); }
 const b64u = s => Uint8Array.from(atob((s + "=".repeat((4 - s.length % 4) % 4)).replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
 const msgP = t => `<div class="card2"><span>${t}</span></div>`;
 async function pushUI() {

@@ -11,6 +11,10 @@
 header{background:var(--navy);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 main{max-width:960px;margin:0 auto;padding:16px}
 h2{margin:26px 0 10px}
+h3{margin:18px 0 6px;font-size:15px}.mp{background:#9993;color:inherit;padding:7px 12px;margin:0 6px 6px 0}.mp.on{background:var(--navy);color:#fff}#mapa{position:relative;z-index:0;height:340px;border-radius:10px;margin-top:6px}
+.brow{display:flex;align-items:center;gap:8px;margin:5px 0;font-size:14px}.brow .l{width:46%;flex:none;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.brow .b{height:14px;background:var(--navy);border-radius:4px}.brow{}.brow .b{flex:none}
+.cols{display:flex;align-items:flex-end;gap:3px;height:90px}.cols i{flex:1;background:var(--navy);border-radius:3px 3px 0 0}.ejes{display:flex;justify-content:space-between;font-size:11px;opacity:.7;margin-top:2px}
+.kpis{display:flex;gap:10px}.kpis div{flex:1;background:#9992;border-radius:10px;padding:10px;text-align:center}.kpis b{display:block;font-size:24px}
 .card{background:var(--card);border-radius:12px;padding:14px;margin-bottom:10px;display:flex;gap:14px;justify-content:space-between;align-items:center;flex-wrap:wrap}
 .card.nueva{border-left:8px solid var(--red)}.card.asignada{border-left:8px solid var(--amb)}.card.en_camino{border-left:8px solid var(--amb)}.card.atendida{border-left:8px solid var(--ok);opacity:.65}
 button,input,textarea{font:inherit}textarea{padding:10px;border:1px solid #9994;border-radius:8px;background:var(--card);color:var(--ink)}button{border:0;border-radius:8px;background:var(--navy);color:#fff;padding:10px 14px;cursor:pointer}
@@ -25,7 +29,7 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 </style>
 </head>
 <body>
-<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v28</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
+<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v29</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
 <div id="panel" hidden>
@@ -33,6 +37,13 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 <div id="alarm"></div>
 <div class="bar"><b>Esta unidad:</b><input id="unit" placeholder="Ej. Comisaría, Patrulla 1" size="22"><small>Se guarda en este dispositivo. Los avisos que asignes aquí llevarán este nombre.</small></div>
 <h2 style="margin-top:6px">Avisos recibidos</h2><div id="al"></div>
+<h2>Mapa de avisos</h2>
+<div class="card" style="display:block"><div><button class="mp on" data-mm="act">Activos ahora</button><button class="mp" data-mm="h1">Últimas 24 h</button><button class="mp" data-mm="h7">7 días</button><button class="mp" data-mm="h30">30 días</button></div>
+<div id="mapa"></div><small id="mapn"></small></div>
+<h2>Estadísticas</h2>
+<div class="card" style="display:block"><div><button class="mp" data-sp="7">7 días</button><button class="mp on" data-sp="30">30 días</button><button class="mp" data-sp="365">12 meses</button><button class="mp" data-sp="0">Todo</button></div>
+<div id="st_res"></div>
+<button id="st_csv" style="margin-top:14px">Descargar Excel (CSV)</button> <small>El archivo no incluye nombres ni teléfonos, solo tipo, estado, hora y ubicación.</small></div>
 <h2>Solicitudes de ocupación de vía pública <small id="ocn"></small></h2>
 <div class="bar"><b>Correo de la Policía:</b><input id="dest" type="email" placeholder="correo@ejemplo.cat" size="30"><small>Se guarda en este dispositivo. Al pulsar «Enviar por correo» se abre tu programa de correo con todos los datos.</small></div>
 <div id="oc"></div>
@@ -59,6 +70,9 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 <div style="display:flex;gap:8px;margin-top:12px"><input id="etn" type="number" min="1" placeholder="Otro (minutos)" style="flex:1"><button id="etok">Aceptar</button></div>
 <div style="display:flex;gap:8px;margin-top:12px"><button id="etsin" style="background:none;color:inherit;border:1px solid #9996">No lo sé</button><button id="etno" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css">
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
 <script>
 const SUPABASE_URL = "https://gaaaxoccsewsqghiutrq.supabase.co";
 const SUPABASE_KEY = "sb_publishable_HkxGy62A8XhCUr04YoPeGA_RBQY2xaF";
@@ -141,6 +155,63 @@ async function buscaUsuarios() {
   if (error) { $("us_res").textContent = "No se pudo buscar: " + error.message + " (¿has ejecutado el SQL de seguridad?)"; return; }
   $("us_res").innerHTML = (data || []).map(u => `<div class="card" style="margin:6px 0"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b>${u.bloqueado ? " <b style='color:#C93A1F'>· BLOQUEADO</b>" : ""}<br><small>${esc(u.telefono)} · ${esc(u.matricula || "sin matrícula")} · ${esc(u.grupo)}</small></div><button class="${u.bloqueado ? "k" : "r"}" data-bl="${u.id}" data-v="${u.bloqueado ? 0 : 1}">${u.bloqueado ? "Desbloquear" : "Bloquear"}</button></div>`).join("") || "<small>Sin resultados.</small>";
 }
+/* ---- mapa y estadísticas ---- */
+let MAP = null, CAPA = null, MM = "act", SP = "30", ST_ROWS = [], lastN = -1;
+const TCOL = {nueva: "#E0342B", asignada: "#E8A33D", en_camino: "#2F6FDE"};
+const tipoBase = t => { const a = String(t || "").split(" · ")[0]; return a.startsWith("Otros") ? "Otros" : a; };
+async function traeAlertas(desde, soloActivas, max) {
+  const out = [];
+  for (let i = 0; i < max; i += 1000) {
+    let q = db.from("alertas").select("tipo,estado,created_at,lat,lng,patrulla").order("created_at", {ascending: false}).range(i, i + 999);
+    if (desde) q = q.gte("created_at", desde); if (soloActivas) q = q.neq("estado", "atendida");
+    const {data, error} = await q; if (error) return {error, data: out};
+    out.push(...(data || [])); if (!data || data.length < 1000) break;
+  }
+  return {data: out};
+}
+function iniMapa() {
+  if (MAP || typeof L === "undefined") return;
+  MAP = L.map("mapa").setView([40.8125, 0.5216], 14);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19, attribution: "© OpenStreetMap"}).addTo(MAP);
+  CAPA = L.layerGroup().addTo(MAP);
+}
+async function cargaMapa(auto) {
+  if (auto && MM != "act") return;
+  if (typeof L === "undefined") { $("mapn").textContent = "No se pudo cargar el mapa (sin conexión con el servidor de mapas)."; return; }
+  iniMapa(); setTimeout(() => MAP.invalidateSize(), 50);
+  const dias = {act: 0, h1: 1, h7: 7, h30: 30}[MM], desde = dias ? new Date(Date.now() - dias * 86400000).toISOString() : null;
+  const r = await traeAlertas(desde, MM == "act", 3000); if (r.error) { $("mapn").textContent = "No se pudo cargar el mapa: " + r.error.message; return; }
+  const pts = (r.data || []).filter(x => x.lat != null && x.lng != null);
+  CAPA.clearLayers();
+  if (MM == "act") pts.forEach(x => L.circleMarker([+x.lat, +x.lng], {radius: 11, color: "#fff", weight: 2, fillColor: TCOL[x.estado] || "#888", fillOpacity: .95}).bindPopup(`<b>${esc(tipoBase(x.tipo))}</b><br>${new Date(x.created_at).toLocaleString("es-ES")}<br>${esc(x.estado)}${x.patrulla ? " · " + esc(x.patrulla) : ""}`).addTo(CAPA));
+  else if (L.heatLayer) L.heatLayer(pts.map(x => [+x.lat, +x.lng, 1]), {radius: 24, blur: 18, maxZoom: 17}).addTo(CAPA);
+  else pts.forEach(x => L.circleMarker([+x.lat, +x.lng], {radius: 6, stroke: false, fillColor: "#E0342B", fillOpacity: .35}).addTo(CAPA));
+  $("mapn").textContent = MM == "act" ? pts.length + " avisos activos con ubicación. Rojo: nuevo · Naranja: asignado · Azul: en camino." : pts.length + " avisos con ubicación en el periodo (más intenso = más avisos).";
+  if (pts.length && (!auto || pts.length != lastN)) MAP.fitBounds(L.latLngBounds(pts.map(x => [+x.lat, +x.lng])), {padding: [30, 30], maxZoom: 17});
+  lastN = pts.length;
+}
+const barra = (n, max) => `<div class="b" style="width:${Math.max(2, Math.round(46 * n / max))}%"></div>`;
+const cols = (vals, labs) => { const m = Math.max(1, ...vals); return `<div class="cols">${vals.map((v, i) => `<i title="${esc(labs[i])}: ${v}" style="height:${Math.max(2, Math.round(100 * v / m))}%"></i>`).join("")}</div>`; };
+async function cargaStats() {
+  const dias = +SP, desde = dias ? new Date(Date.now() - dias * 86400000).toISOString() : null;
+  $("st_res").innerHTML = "<small>Calculando…</small>";
+  const r = await traeAlertas(desde, false, 10000); if (r.error) { $("st_res").textContent = "No se pudo cargar: " + r.error.message; return; }
+  const rows = ST_ROWS = r.data || [], tot = rows.length, aten = rows.filter(x => x.estado == "atendida").length, pt = {};
+  rows.forEach(x => { const t = tipoBase(x.tipo); pt[t] = (pt[t] || 0) + 1; });
+  const tipos = Object.entries(pt).sort((a, b) => b[1] - a[1]), mx = tipos.length ? tipos[0][1] : 1, hr = Array(24).fill(0), sem = Array(7).fill(0), dia = {};
+  rows.forEach(x => { const d = new Date(x.created_at); hr[d.getHours()]++; sem[(d.getDay() + 6) % 7]++; const k = dias && dias <= 60 ? d.toISOString().slice(0, 10) : d.toISOString().slice(0, 7); dia[k] = (dia[k] || 0) + 1; });
+  const ks = Object.keys(dia).sort();
+  $("st_res").innerHTML = `<div class="kpis"><div><b>${tot}</b><small>avisos</small></div><div><b>${aten}</b><small>atendidos</small></div><div><b>${tot - aten}</b><small>en curso</small></div></div>`
+   + `<h3>Por tipo</h3>` + (tipos.map(([t, n]) => `<div class="brow"><span class="l">${esc(t)}</span>${barra(n, mx)}<b>${n}</b></div>`).join("") || "<small>Sin avisos en este periodo.</small>")
+   + `<h3>Por hora del día</h3>${cols(hr, hr.map((_, i) => i + ":00"))}<div class="ejes"><span>0h</span><span>6h</span><span>12h</span><span>18h</span><span>23h</span></div>`
+   + `<h3>Por día de la semana</h3>${cols(sem, ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"])}<div class="ejes"><span>L</span><span>M</span><span>X</span><span>J</span><span>V</span><span>S</span><span>D</span></div>`
+   + (ks.length > 1 ? `<h3>Evolución</h3>${cols(ks.map(k => dia[k]), ks)}<div class="ejes"><span>${esc(ks[0])}</span><span>${esc(ks[ks.length - 1])}</span></div>` : "");
+}
+$("st_csv").onclick = () => {
+  const f = v => '"' + String(v ?? "").replace(/"/g, '""') + '"', c = v => v == null ? "" : String(v).replace(".", ",");
+  const l = ["fecha;hora;tipo;estado;unidad;lat;lng"].concat(ST_ROWS.map(x => { const d = new Date(x.created_at); return [d.toLocaleDateString("es-ES"), d.toLocaleTimeString("es-ES"), f(x.tipo), x.estado, f(x.patrulla), c(x.lat), c(x.lng)].join(";"); }));
+  const a = document.createElement("a"); a.href = URL.createObjectURL(new Blob(["\uFEFF" + l.join("\r\n")], {type: "text/csv;charset=utf-8"})); a.download = "avisos-polassist-" + new Date().toISOString().slice(0, 10) + ".csv"; a.click();
+};
 /* ---- respaldo: comprueba los avisos cada 5 s y recarga solo si ha cambiado algo ---- */
 let sigA = "";
 async function vigila() {
@@ -155,6 +226,7 @@ async function load() { cargaCodigos(); cargaOcupaciones();
   const urls = {}, rutas = lista.filter(x => x.foto).map(x => x.foto);
   if (rutas.length) { const s = await db.storage.from("fotos").createSignedUrls(rutas, 3600); (s.data || []).forEach(u => { if (u.signedUrl) urls[u.path] = u.signedUrl; }); }
   setAlarm(lista.filter(x => x.estado == "nueva").length);
+  if (typeof cargaMapa == "function") { cargaMapa(true); if (!window.STini) { window.STini = 1; cargaStats(); } }
   $("al").innerHTML = lista.map(x => { const p = x.profiles || {};
     const map = x.lat ? `<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${x.lat}&mlon=${x.lng}#map=18/${x.lat}/${x.lng}">Ver ubicación</a>` : "<small>Sin ubicación</small>";
     const mat = p.matricula ? `<br><b>Matrícula: ${esc(p.matricula)}</b> <small>(declarada, sin verificar)${p.aseguradora ? " · Aseguradora: " + esc(p.aseguradora) : ""}</small>` : "";
@@ -176,6 +248,8 @@ document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.m) upd(d.m, {estado:"asignada", patrulla:unidad()}, true);
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
   if (d.c || d.e) pedirEta(d.c || d.e);
+  if (d.mm) { MM = d.mm; document.querySelectorAll("[data-mm]").forEach(b => b.classList.toggle("on", b.dataset.mm == MM)); cargaMapa(); }
+  if (d.sp) { SP = d.sp; document.querySelectorAll("[data-sp]").forEach(b => b.classList.toggle("on", b.dataset.sp == SP)); cargaStats(); }
   if (d.bl) { const {error} = await db.rpc("bloquear_usuario", {p_id: d.bl, p_bloq: d.v == "1"}); if (error) alert("No se pudo cambiar: " + error.message + "\n(¿Has ejecutado el SQL de seguridad?)"); buscaUsuarios(); }
   if (d.r) { grId = d.r; $("grt").value = ""; $("grm").style.display = "flex"; }
   if (d.a) upd(d.a, {estado:"atendida"}, false);

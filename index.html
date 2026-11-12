@@ -152,7 +152,7 @@ $("tr-l").onclick = e => { const b = e.target.closest("button"); if (b) ({oc:abr
 function renderPf() {
   const p = perfil || {}, v = !!p.validado;
   $("pf").innerHTML = `<div class="card2"><b>${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}</b><span>${esc(me && me.email)}</span><span>${p.grupo == "Establecimiento" ? "Comerciante" : "Particular"} · ${v ? "Registro validado" : "Registro pendiente de validar"}</span></div>
-  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button>`;
+  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 32</p>`;
   $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await desactivarPush(); await db.auth.signOut(); show("auth"); };
   pushUI();
 }

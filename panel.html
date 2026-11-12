@@ -51,13 +51,16 @@ details.acc>summary{display:flex;justify-content:space-between;align-items:cente
 details.acc>summary::-webkit-details-marker{display:none}details.acc>summary::after{content:"▾";font-size:18px;transition:transform .2s}details.acc[open]>summary::after{transform:rotate(180deg)}
 details.acc>.card,details.acc>.bar,details.acc>div{margin:0;border:0;border-top:1px solid var(--line);border-radius:0}
 details.acc>#pe{padding:10px 12px 2px}
+.car{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:3px solid #fff;box-shadow:0 2px 8px #0007}.car svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.car.l{background:#2E9E5B}.car.o{background:#E8A33D}.car.x{background:#7C8D8B}
+.cartip{background:#fff;color:#12211F;border:0;font-weight:700;box-shadow:0 1px 4px #0005}#mapp{position:relative;z-index:0;height:400px;border-radius:12px;margin-bottom:6px}
+.card.ulibre{border-left:8px solid var(--ok)}.card.ucurso{border-left:8px solid var(--amb)}.card.usin{border-left:8px solid #7C8D8B;opacity:.7}
 </style>
 </head>
 <body>
 <header>
-<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v31</small></div></div>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v33</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
-<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
+<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
@@ -67,6 +70,11 @@ details.acc>#pe{padding:10px 12px 2px}
 <div class="bar"><b>Esta unidad:</b><input id="unit" placeholder="Ej. Comisaría, Patrulla 1" size="22"><small>Se guarda en este dispositivo. Los avisos que asignes aquí llevarán este nombre.</small></div>
 
 <section class="view on" id="v-avisos"><div class="chips"><button class="chip on" data-f="todos">Todos</button><button class="chip" data-f="nueva">Nuevos <b id="c_n">0</b></button><button class="chip" data-f="curso">En curso <b id="c_c">0</b></button><button class="chip" data-f="atendida">Atendidos <b id="c_a">0</b></button></div><div id="al" data-f="todos"></div></section>
+<section class="view" id="v-pat"><h2 class="vt">Patrullas</h2>
+<div class="card" style="display:block"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span><b>Esta unidad:</b> <span id="pt_nom">—</span></span><button id="pt_btn">📍 Compartir mi ubicación</button></div>
+<small id="pt_est">La ubicación solo la ven los agentes del panel. No se guarda el recorrido, solo la última posición. Mantén esta pantalla abierta y encendida.</small></div>
+<div class="card" style="display:block"><div id="mapp"></div><small id="mapp_n"></small></div>
+<div id="pt_lista"></div></section>
 <section class="view" id="v-mapa"><h2 class="vt">Mapa de avisos</h2><div class="card" style="display:block"><div><button class="mp on" data-mm="act">Activos ahora</button><button class="mp" data-mm="h1">Últimas 24 h</button><button class="mp" data-mm="h7">7 días</button><button class="mp" data-mm="h30">30 días</button></div>
 <div id="mapa"></div><small id="mapn"></small></div></section>
 <section class="view" id="v-stats"><h2 class="vt">Estadísticas</h2><div class="card" style="display:block"><div><button class="mp" data-sp="7">7 días</button><button class="mp on" data-sp="30">30 días</button><button class="mp" data-sp="365">12 meses</button><button class="mp" data-sp="0">Todo</button></div>
@@ -179,11 +187,80 @@ $("rv_go").onclick = async () => {
   const a = data.avisadas || [], s = data.sin_propietario || [];
   $("rv_res").innerHTML = `<b>Avisadas (${a.length}):</b> ${esc(a.join(", ") || "ninguna")}<br><b>Sin propietario registrado en la app (${s.length}):</b> ${esc(s.join(", ") || "ninguna")}${s.length ? "<br><small>Estas habrá que retirarlas con la grúa.</small>" : ""}`;
 };
+/* ---- patrullas: ubicación en tiempo real de las unidades (solo agentes) ---- */
+let MAPP = null, CAPAP = null, UNI = [], ALP = [], HOY = {}, PT_ON = false, PT_W = null, PT_LAST = 0, PT_WL = null, PT_UID = null, ptFit = true;
+const DEV = (() => { try { let d = localStorage.getItem("dev"); if (!d) { d = (crypto.randomUUID ? crypto.randomUUID() : "d" + Date.now() + Math.random().toString(36).slice(2)); localStorage.setItem("dev", d); } return d; } catch (e) { return "d" + Date.now(); } })();
+const CAR = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg>';
+const dist = (a, b) => { if (a.lat == null || b.lat == null) return null; const R = 6371000, r = x => x * Math.PI / 180, dl = r(b.lat - a.lat), dg = r(b.lng - a.lng), h = Math.sin(dl / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dg / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+const fdist = m => m == null ? "" : m < 1000 ? Math.round(m / 10) * 10 + " m" : (m / 1000).toFixed(1).replace(".", ",") + " km";
+const hace = t => { const s = Math.max(0, Math.round((Date.now() - new Date(t)) / 1000)); return s < 60 ? s + " s" : s < 3600 ? Math.round(s / 60) + " min" : Math.round(s / 3600) + " h"; };
+const enLinea = u => Date.now() - new Date(u.actualizado) < 120000;
+const clave = n => String(n || "").trim().toLowerCase();
+function estadoU(u) { const mine = ALP.filter(a => clave(a.patrulla) == clave(u.nombre) && a.estado != "nueva"); return {mine, cam: mine.find(a => a.estado == "en_camino") || mine[0]}; }
+function iniMapaP() {
+  if (MAPP || typeof L === "undefined") return;
+  MAPP = L.map("mapp").setView([40.8125, 0.5216], 14);
+  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19, attribution: "© OpenStreetMap"}).addTo(MAPP);
+  CAPAP = L.layerGroup().addTo(MAPP);
+}
+function pintaUnidades() {
+  const on = UNI.filter(enLinea).length, b = $("b_pat"); b.textContent = on; b.hidden = !on;
+  $("pt_lista").innerHTML = UNI.length ? UNI.map(u => {
+    const o = enLinea(u), {mine, cam} = estadoU(u), d = cam ? dist(u, cam) : null;
+    const st = !o ? "Sin señal" : cam ? (cam.estado == "en_camino" ? "En camino" : "Asignado") : "Libre", cl = !o ? "usin" : cam ? "ucurso" : "ulibre";
+    return `<div class="card ${cl}"><div><b>🚓 ${esc(u.nombre)}</b> <span class="bdg${cam && o ? " rojo" : ""}">${st}</span><br><small>${cam ? esc(tipoBase(cam.tipo)) + (d != null ? " · a " + fdist(d) + " en línea recta" : "") + " · " : ""}${u.velocidad != null && o ? Math.round(u.velocidad * 3.6) + " km/h · " : ""}hace ${hace(u.actualizado)} · atendidos hoy: ${HOY[clave(u.nombre)] || 0}${mine.length > 1 ? " · " + mine.length + " avisos asignados" : ""}</small></div><button data-pc="${esc(u.dispositivo)}">Ver en el mapa</button></div>`;
+  }).join("") : "<p><small>Ninguna unidad está compartiendo su ubicación. En cada dispositivo, entra en esta pestaña y pulsa «Compartir mi ubicación».</small></p>";
+  if (!MAPP || typeof L === "undefined") { if (typeof L === "undefined") $("mapp_n").textContent = "No se pudo cargar el mapa."; return; }
+  CAPAP.clearLayers(); const pts = [];
+  ALP.filter(a => a.lat != null).forEach(a => { pts.push([+a.lat, +a.lng]); L.circleMarker([+a.lat, +a.lng], {radius: 10, color: "#fff", weight: 2, fillColor: TCOL[a.estado] || "#888", fillOpacity: .95}).bindPopup("<b>" + esc(tipoBase(a.tipo)) + "</b><br>" + esc(a.estado) + (a.patrulla ? " · " + esc(a.patrulla) : "")).addTo(CAPAP); });
+  UNI.filter(u => u.lat != null).forEach(u => {
+    const o = enLinea(u), {cam} = estadoU(u); pts.push([+u.lat, +u.lng]);
+    if (cam && cam.lat != null && o) L.polyline([[+u.lat, +u.lng], [+cam.lat, +cam.lng]], {color: "#E8A33D", weight: 3, dashArray: "6 8"}).addTo(CAPAP);
+    L.marker([+u.lat, +u.lng], {icon: L.divIcon({className: "", html: '<div class="car ' + (!o ? "x" : cam ? "o" : "l") + '">' + CAR + "</div>", iconSize: [38, 38], iconAnchor: [19, 19]})}).bindTooltip(esc(u.nombre), {permanent: true, direction: "bottom", offset: [0, 18], className: "cartip"}).addTo(CAPAP);
+  });
+  $("mapp_n").textContent = on + " unidades con señal · Verde: libre · Naranja: con un aviso · Gris: sin señal · Círculos: avisos sin atender.";
+  if (ptFit && pts.length) { MAPP.fitBounds(L.latLngBounds(pts), {padding: [40, 40], maxZoom: 16}); ptFit = false; }
+}
+async function cargaUnidades() {
+  if ($("panel").hidden) return;
+  const hoy0 = new Date(); hoy0.setHours(0, 0, 0, 0);
+  const [u, a, h] = await Promise.all([
+    db.from("unidades").select("*").gte("actualizado", new Date(Date.now() - 6 * 3600000).toISOString()).order("nombre"),
+    db.from("alertas").select("id,tipo,estado,lat,lng,patrulla").neq("estado", "atendida").limit(300),
+    db.from("alertas").select("patrulla").eq("estado", "atendida").not("patrulla", "is", null).gte("created_at", hoy0.toISOString()).limit(1000)]);
+  if (u.error) { $("pt_lista").innerHTML = "<p>No se pudo cargar las patrullas: " + esc(u.error.message) + " <small>(¿has ejecutado el SQL de patrullas?)</small></p>"; return; }
+  UNI = u.data || []; ALP = a.data || []; HOY = {};
+  (h.data || []).forEach(x => { const k = clave(x.patrulla); HOY[k] = (HOY[k] || 0) + 1; });
+  pintaUnidades();
+}
+setInterval(cargaUnidades, 8000);
+function ptUI() { $("pt_btn").textContent = PT_ON ? "⏹ Dejar de compartir" : "📍 Compartir mi ubicación"; $("pt_btn").className = PT_ON ? "r" : ""; }
+async function subeUnidad(pos) {
+  const c = pos.coords, {error} = await db.from("unidades").upsert({dispositivo: DEV, user_id: PT_UID, nombre: $("unit").value.trim(), lat: c.latitude, lng: c.longitude, precision_m: c.accuracy, rumbo: c.heading, velocidad: c.speed, compartiendo: true}, {onConflict: "dispositivo"});
+  $("pt_est").textContent = error ? "No se pudo compartir: " + error.message + " (¿has ejecutado el SQL de patrullas?)" : "Compartiendo la ubicación · precisión " + Math.round(c.accuracy) + " m · actualizada a las " + new Date().toLocaleTimeString("es-ES");
+}
+async function iniciaPt() {
+  if (!navigator.geolocation) { $("pt_est").textContent = "Este dispositivo no permite compartir la ubicación."; return; }
+  if (!$("unit").value.trim()) { $("pt_est").textContent = "Escribe primero el nombre de la unidad en «Esta unidad», arriba del todo."; return; }
+  const u = await db.auth.getUser(); PT_UID = u.data && u.data.user ? u.data.user.id : null; if (!PT_UID) return;
+  PT_ON = true; try { localStorage.setItem("pt_on", "1"); } catch (e) {} ptUI(); $("pt_est").textContent = "Buscando tu ubicación…";
+  PT_W = navigator.geolocation.watchPosition(pos => { if (Date.now() - PT_LAST < 9000) return; PT_LAST = Date.now(); subeUnidad(pos); }, err => { $("pt_est").textContent = "No se pudo obtener la ubicación: " + err.message + ". Permite la ubicación para este sitio."; }, {enableHighAccuracy: true, maximumAge: 5000, timeout: 20000});
+  try { if (navigator.wakeLock) PT_WL = await navigator.wakeLock.request("screen"); } catch (e) {}
+}
+async function paraPt() {
+  PT_ON = false; try { localStorage.setItem("pt_on", "0"); } catch (e) {}
+  if (PT_W != null) navigator.geolocation.clearWatch(PT_W); try { if (PT_WL) PT_WL.release(); } catch (e) {}
+  await db.from("unidades").delete().eq("dispositivo", DEV); ptUI(); $("pt_est").textContent = "Has dejado de compartir tu ubicación."; cargaUnidades();
+}
+$("pt_btn").onclick = () => PT_ON ? paraPt() : iniciaPt();
+$("unit").addEventListener("input", () => { $("pt_nom").textContent = $("unit").value.trim() || "—"; });
+document.addEventListener("visibilitychange", async () => { if (document.visibilityState == "visible" && PT_ON && navigator.wakeLock) { try { PT_WL = await navigator.wakeLock.request("screen"); } catch (e) {} } });
 /* ---- pestañas del panel ---- */
 function ver(id) {
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id == "v-" + id));
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.t == id));
   if (id == "mapa") setTimeout(() => cargaMapa(), 60);
+  if (id == "pat") { ptFit = true; $("pt_nom").textContent = $("unit").value.trim() || "—"; setTimeout(() => { iniMapaP(); if (MAPP) MAPP.invalidateSize(); cargaUnidades(); }, 60); }
   window.scrollTo(0, 0);
 }
 document.querySelectorAll(".tab").forEach(b => b.onclick = () => ver(b.dataset.t));
@@ -302,6 +379,7 @@ async function load() { cargaCodigos(); cargaOcupaciones();
   if (rutas.length) { const s = await db.storage.from("fotos").createSignedUrls(rutas, 3600); (s.data || []).forEach(u => { if (u.signedUrl) urls[u.path] = u.signedUrl; }); }
   setAlarm(lista.filter(x => x.estado == "nueva").length);
   if (typeof cargaMapa == "function") { cargaMapa(true); if (!window.STini) { window.STini = 1; cargaStats(); } }
+  if (!window.PTini) { window.PTini = 1; cargaUnidades(); try { if (localStorage.getItem("pt_on") == "1") iniciaPt(); } catch (e) {} }
   $("al").innerHTML = lista.map(x => { const p = x.profiles || {};
     const map = x.lat ? `<a target="_blank" rel="noopener" href="https://www.openstreetmap.org/?mlat=${x.lat}&mlon=${x.lng}#map=18/${x.lat}/${x.lng}">Ver ubicación</a>` : "<small>Sin ubicación</small>";
     const mat = p.matricula ? `<br><b>Matrícula: ${esc(p.matricula)}</b> <small>(declarada, sin verificar)${p.aseguradora ? " · Aseguradora: " + esc(p.aseguradora) : ""}</small>` : "";
@@ -323,12 +401,14 @@ document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.m) upd(d.m, {estado:"asignada", patrulla:unidad()}, true);
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
   if (d.c || d.e) pedirEta(d.c || d.e);
+  if (d.pc) { const u = UNI.find(x => x.dispositivo == d.pc); if (u && u.lat != null && MAPP) { MAPP.setView([+u.lat, +u.lng], 17); window.scrollTo(0, 0); } }
   if (d.mm) { MM = d.mm; document.querySelectorAll("[data-mm]").forEach(b => b.classList.toggle("on", b.dataset.mm == MM)); cargaMapa(); }
   if (d.sp) { SP = d.sp; document.querySelectorAll("[data-sp]").forEach(b => b.classList.toggle("on", b.dataset.sp == SP)); cargaStats(); }
   if (d.bl) { const {error} = await db.rpc("bloquear_usuario", {p_id: d.bl, p_bloq: d.v == "1"}); if (error) alert("No se pudo cambiar: " + error.message + "\n(¿Has ejecutado el SQL de seguridad?)"); buscaUsuarios(); }
   if (d.r) { grId = d.r; $("grt").value = ""; $("grm").style.display = "flex"; }
   if (d.a) upd(d.a, {estado:"atendida"}, false);
   if (d.cp) copia(d.cp);
+  if (d.wa) window.open("https://wa.me/?text=" + encodeURIComponent("Hola, regístrate en PolAssist (Policía Local de Tortosa) con este enlace. El código de invitación ya va incluido:\n" + enlace(d.wa) + "\n\nRegistra't a PolAssist (Policia Local de Tortosa) amb aquest enllaç. El codi d'invitació ja hi va inclòs."), "_blank");
   if (d.ocm) { const o = OC[d.ocm]; location.href = "mailto:" + encodeURIComponent($("dest").value.trim()) + "?subject=" + encodeURIComponent("Solicitud de ocupación de vía pública: " + o.emplazamiento) + "&body=" + encodeURIComponent(textoOcupacion(o)); }
   if (d.ocp) imprimeOcupacion(OC[d.ocp]);
   if (d.ocr) { await db.from("ocupaciones").update({estado:"revisada"}).eq("id", d.ocr); cargaOcupaciones(); }
@@ -343,7 +423,7 @@ async function copia(c) { const t = enlace(c); try { await navigator.clipboard.w
 async function cargaCodigos() {
   const r = await db.from("codigos").select("*").order("created_at", {ascending:false}).limit(30);
   $("cl").innerHTML = (r.data || []).map(c => { const vivo = c.activo && c.usos < c.usos_max && (!c.caduca || new Date(c.caduca) > new Date());
-    return `<div class="card"><div><b>${esc(fmt(c.codigo))}</b> <small>${vivo ? "(activo)" : "(no válido)"}</small><br><small>Usos ${c.usos}/${c.usos_max} · caduca ${c.caduca ? new Date(c.caduca).toLocaleDateString("es-ES") : "nunca"}${c.nota ? " · " + esc(c.nota) : ""}</small></div><div>${vivo ? `<button data-cp="${esc(c.codigo)}">Copiar enlace</button> <button class="r" data-x="${esc(c.codigo)}">Desactivar</button>` : ""}</div></div>`; }).join("") || "<p>Aún no hay códigos.</p>";
+    return `<div class="card"><div><b>${esc(fmt(c.codigo))}</b> <small>${vivo ? "(activo)" : "(no válido)"}</small><br><small>Usos ${c.usos}/${c.usos_max} · caduca ${c.caduca ? new Date(c.caduca).toLocaleDateString("es-ES") : "nunca"}${c.nota ? " · " + esc(c.nota) : ""}</small></div><div>${vivo ? `<button class="k" data-wa="${esc(c.codigo)}">WhatsApp</button> <button data-cp="${esc(c.codigo)}">Copiar enlace</button> <button class="r" data-x="${esc(c.codigo)}">Desactivar</button>` : ""}</div></div>`; }).join("") || "<p>Aún no hay códigos.</p>";
 }
 $("gc").onclick = async () => {
   const {data, error} = await db.rpc("crear_codigo", {p_usos: +$("cu").value || 1, p_dias: +$("cd").value || 7, p_nota: $("cn").value.trim() || null});

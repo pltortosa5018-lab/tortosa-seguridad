@@ -43,7 +43,7 @@ nav#nav{display:grid;grid-template-columns:repeat(4,1fr);background:#fff;border-
 .seg{display:flex;gap:8px;flex:none}.seg button{min-width:64px;min-height:44px;border-radius:12px;border:2px solid var(--acc);background:#fff;color:var(--acc);font-weight:700}.seg button.on{background:var(--acc);color:#fff}.seg button[data-v=si].on{background:var(--red);border-color:var(--red)}
 .banner.alert{background:#FDE9E5;border-color:var(--red)}.resp{margin-top:14px;padding:14px;border-radius:14px;background:var(--tint);text-align:left}.resp b{display:block;margin-bottom:4px}
 .hero{position:relative}.tools{display:flex;gap:10px}.flagbtn svg{width:28px;height:28px;stroke:none;fill:none;border-radius:50%;display:block}.hero .flagbtn{position:absolute;top:calc(12px + env(safe-area-inset-top));right:14px;width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.75);background:rgba(255,255,255,.2);display:grid;place-items:center;padding:0}.trc svg{width:34px;height:34px;stroke:none;border-radius:50%;flex:none}
-.acc{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;font-size:14px;color:var(--mut)}.acc input{width:22px;height:22px;padding:0;margin:2px 0 0;flex:none}.acc a{color:var(--acc);font-weight:700}
+.acc{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;font-size:14px;color:var(--mut)}.acc input{width:22px;height:22px;padding:0;margin:2px 0 0;flex:none}.acc a,.note a{color:var(--acc);font-weight:700}
 .okbig{width:84px;height:84px;border-radius:50%;background:var(--acc);display:grid;place-items:center;margin:0 auto}.okbig svg{width:44px;fill:none;stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .more{margin-top:18px;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);text-align:left}.more label{font-weight:600;font-size:14px;display:block;margin-bottom:8px}
 .card2{padding:14px;border-radius:16px;background:#fff;border:1px solid var(--line);display:flex;flex-direction:column;gap:4px;margin-bottom:12px}.card2 span{font-size:14px;color:var(--mute)}
@@ -158,7 +158,7 @@ $("tr-l").onclick = e => { const b = e.target.closest("button"); if (b) ({oc:abr
 function renderPf() {
   const p = perfil || {}, v = !!p.validado;
   $("pf").innerHTML = `<div class="card2"><b>${esc(((p.nombre || "") + " " + (p.apellidos || "")).trim())}</b><span>${esc(me && me.email)}</span><span>${p.grupo == "Establecimiento" ? "Comerciante" : "Particular"} · ${v ? "Registro validado" : "Registro pendiente de validar"}</span></div>
-  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px">PolAssist · versión 36</p>`;
+  <p class="note">Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar.</p><div id="pushbox"></div><button class="btn o2" id="out">Cerrar sesión</button><p class="note" style="text-align:center;margin-top:12px"><a href="privacidad.html" target="_blank">Política de privacidad</a> · <a href="condiciones.html" target="_blank">Condiciones de uso</a></p><p class="note" style="text-align:center;margin-top:4px">PolAssist · versión 37</p>`;
   $("out").onclick = async () => { clearInterval(poll); clearInterval(tmr); await desactivarPush(); await db.auth.signOut(); show("auth"); };
   pushUI();
 }
@@ -396,7 +396,7 @@ async function editarComercio() {
 }
 
 const POL = [["Responsable", "Ayuntamiento de Tortosa, Policía Local. Los datos de contacto y del delegado de protección de datos están por confirmar."], ["Finalidad", "Gestionar los avisos de seguridad que envías, tramitar tus solicitudes ante la Policía Local y avisarte de asuntos que afectan a tu vehículo."], ["Datos", "Nombre, contacto y dirección; tu ubicación solo cuando envías un aviso; el texto o la foto que añadas; y, si lo indicas, la matrícula, la aseguradora y los datos de tu establecimiento."], ["Base legal", "Tu consentimiento y el interés público de la Policía Local en la seguridad ciudadana."], ["Destinatarios", "Solo el personal autorizado de la Policía Local. No se ceden a terceros salvo obligación legal. El almacenamiento lo presta un proveedor tecnológico contratado como encargado del tratamiento."], ["Conservación", "El plazo lo definirá el Ayuntamiento. Pasado ese plazo, los datos se suprimen."], ["Derechos", "Puedes pedir acceso, rectificación, supresión, oposición, limitación y portabilidad, y retirar tu consentimiento, escribiendo a la Policía Local. También puedes reclamar ante la autoridad de control competente (en Cataluña, la Autoritat Catalana de Protecció de Dades)."], ["Uso responsable", "Enviar avisos falsos o repetidos puede dar lugar al bloqueo de la cuenta y a responsabilidades legales. En una emergencia vital, llama siempre al 112."]];
-function abrirPolitica() { sheet(`<h1>Política de privacidad</h1><p class="note">Texto provisional pendiente de revisión por el Ayuntamiento y su delegado de protección de datos.</p>` + POL.map(([t, x]) => `<h3 class="h3">${t}</h3><p>${x}</p>`).join("")); }
+function abrirPolitica() { sheet(`<h1>Política de privacidad</h1><p class="note">Texto provisional pendiente de revisión por el Ayuntamiento y su delegado de protección de datos.</p>` + POL.map(([t, x]) => `<h3 class="h3">${t}</h3><p>${x}</p>`).join("") + `<p><b>Texto completo:</b> <a href="privacidad.html" target="_blank">Política de privacidad</a> · <a href="condiciones.html" target="_blank">Condiciones de uso</a></p>`); }
 $("ppl").onclick = e => { e.preventDefault(); abrirPolitica(); };
 /* ---- idiomas: castellano, català, English, français ---- */
 const LOCALES = {es:"es-ES", ca:"ca-ES", en:"en-GB", fr:"fr-FR"}, LANGS = [["es", "Castellano"], ["ca", "Català"], ["en", "English"], ["fr", "Français"]];
@@ -530,7 +530,9 @@ Comerciante | Comerciant | Business owner | Commerçant
 Consejo: añade esta página a la pantalla de inicio de tu móvil (botón compartir → «Añadir a pantalla de inicio») para abrirla como una app y no tener que volver a entrar. | Consell: afegeix aquesta pàgina a la pantalla d'inici del teu mòbil (botó compartir → «Afegeix a la pantalla d'inici») per obrir-la com una app i no haver de tornar a entrar. | Tip: add this page to your phone's home screen (share button → “Add to Home Screen”) to open it like an app and avoid logging in again. | Conseil : ajoutez cette page à l'écran d'accueil de votre téléphone (bouton partager → « Sur l'écran d'accueil ») pour l'ouvrir comme une app et ne plus avoir à vous reconnecter.
 Cerrar sesión | Tanca la sessió | Log out | Se déconnecter
 Idioma | Idioma | Language | Langue
-PolAssist · versión 36 | PolAssist · versió 36 | PolAssist · version 36 | PolAssist · version 36
+PolAssist · versión 37 | PolAssist · versió 37 | PolAssist · version 37 | PolAssist · version 37
+Condiciones de uso | Condicions d'ús | Terms of use | Conditions d'utilisation
+Texto completo: | Text complet: | Full text: | Texte complet :
 Avisos en el móvil. | Avisos al mòbil. | Mobile alerts. | Alertes sur mobile.
 Avisos en el móvil bloqueados. | Avisos al mòbil bloquejats. | Mobile alerts blocked. | Alertes sur mobile bloquées.
 Avisos en el móvil: activados. | Avisos al mòbil: activats. | Mobile alerts: on. | Alertes sur mobile : activées.

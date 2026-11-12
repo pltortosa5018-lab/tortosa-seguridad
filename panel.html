@@ -25,7 +25,7 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 </style>
 </head>
 <body>
-<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v27</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
+<header><b>PolAssist · Panel</b> <small style="opacity:.8">Policía Local de Tortosa</small> <small style="opacity:.6">v28</small><span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
 <div id="panel" hidden>
@@ -43,6 +43,8 @@ body.alarma header{animation:fl 1s steps(1) infinite}@keyframes fl{50%{backgroun
 <input id="rv_extra" placeholder="Mensaje adicional (opcional)" style="width:100%;margin-top:8px">
 <button id="rv_go" style="margin-top:10px">Enviar aviso a propietarios</button><div id="rv_res" style="margin-top:10px"></div></div>
 <h2>Registros pendientes de validar</h2><div id="pe"></div>
+<h2>Usuarios: buscar y bloquear</h2>
+<div class="card" style="display:block"><input id="us_q" placeholder="Buscar por nombre, teléfono o matrícula" style="width:100%"><div id="us_res" style="margin-top:10px"></div></div>
 <h2>Publicar notificación</h2>
 <div class="card"><input id="at" placeholder="Título del aviso" style="flex:1"><input id="ac" placeholder="Categoría" value="General"><button id="ap">Publicar</button></div>
 <h2>Códigos de invitación</h2>
@@ -129,6 +131,16 @@ $("rv_go").onclick = async () => {
   const a = data.avisadas || [], s = data.sin_propietario || [];
   $("rv_res").innerHTML = `<b>Avisadas (${a.length}):</b> ${esc(a.join(", ") || "ninguna")}<br><b>Sin propietario registrado en la app (${s.length}):</b> ${esc(s.join(", ") || "ninguna")}${s.length ? "<br><small>Estas habrá que retirarlas con la grúa.</small>" : ""}`;
 };
+/* ---- usuarios: buscar y bloquear ---- */
+let usT = null;
+$("us_q").addEventListener("input", () => { clearTimeout(usT); usT = setTimeout(buscaUsuarios, 350); });
+async function buscaUsuarios() {
+  const q = $("us_q").value.trim().replace(/[%,()*]/g, "");
+  if (q.length < 3) { $("us_res").innerHTML = "<small>Escribe al menos 3 caracteres.</small>"; return; }
+  const {data, error} = await db.from("profiles").select("id,nombre,apellidos,telefono,matricula,grupo,bloqueado").eq("rol", "ciudadano").or(`nombre.ilike.%${q}%,apellidos.ilike.%${q}%,telefono.ilike.%${q}%,matricula.ilike.%${q}%`).limit(10);
+  if (error) { $("us_res").textContent = "No se pudo buscar: " + error.message + " (¿has ejecutado el SQL de seguridad?)"; return; }
+  $("us_res").innerHTML = (data || []).map(u => `<div class="card" style="margin:6px 0"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b>${u.bloqueado ? " <b style='color:#C93A1F'>· BLOQUEADO</b>" : ""}<br><small>${esc(u.telefono)} · ${esc(u.matricula || "sin matrícula")} · ${esc(u.grupo)}</small></div><button class="${u.bloqueado ? "k" : "r"}" data-bl="${u.id}" data-v="${u.bloqueado ? 0 : 1}">${u.bloqueado ? "Desbloquear" : "Bloquear"}</button></div>`).join("") || "<small>Sin resultados.</small>";
+}
 /* ---- respaldo: comprueba los avisos cada 5 s y recarga solo si ha cambiado algo ---- */
 let sigA = "";
 async function vigila() {
@@ -164,6 +176,7 @@ document.addEventListener("click", async e => { const d = e.target.dataset;
   if (d.m) upd(d.m, {estado:"asignada", patrulla:unidad()}, true);
   if (d.o) { const n = prompt("¿A qué unidad lo asignas? (Ej. Patrulla 2)"); if (n && n.trim()) upd(d.o, {estado:"asignada", patrulla:n.trim()}, true); }
   if (d.c || d.e) pedirEta(d.c || d.e);
+  if (d.bl) { const {error} = await db.rpc("bloquear_usuario", {p_id: d.bl, p_bloq: d.v == "1"}); if (error) alert("No se pudo cambiar: " + error.message + "\n(¿Has ejecutado el SQL de seguridad?)"); buscaUsuarios(); }
   if (d.r) { grId = d.r; $("grt").value = ""; $("grm").style.display = "flex"; }
   if (d.a) upd(d.a, {estado:"atendida"}, false);
   if (d.cp) copia(d.cp);

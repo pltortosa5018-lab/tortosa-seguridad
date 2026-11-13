@@ -54,13 +54,22 @@ details.acc>#pe{padding:10px 12px 2px}
 .car{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;border:3px solid #fff;box-shadow:0 2px 8px #0007}.car svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.car.l{background:#2E9E5B}.car.o{background:#E8A33D}.car.x{background:#7C8D8B}
 .cartip{background:#fff;color:#12211F;border:0;font-weight:700;box-shadow:0 1px 4px #0005}#mapp{position:relative;z-index:0;height:400px;border-radius:12px;margin-bottom:6px}
 .card.ulibre{border-left:8px solid var(--ok)}.card.ucurso{border-left:8px solid var(--amb)}.card.usin{border-left:8px solid #7C8D8B;opacity:.7}
+.fl{display:block;margin:6px 0;font-size:13px}.fl input,.fl select,.fl textarea{width:100%;margin-top:3px}.g2{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 14px}.pad{padding:4px 18px 16px}
+.cbx{display:flex;gap:8px;align-items:flex-start;margin:6px 0;font-size:14px}.cbx input{width:20px;height:20px;margin:2px 0 0;flex:none}.gt{font-weight:700;margin:12px 0 2px;color:var(--navy)}
+#acta-print{position:fixed;inset:0;z-index:60;background:#cfd8d6;overflow:auto;padding:14px}#acta-print .bar2{position:sticky;top:0;z-index:2;display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+.apg{background:#fff;color:#000;width:210mm;min-height:297mm;margin:0 auto 14px;padding:8mm 11mm;box-shadow:0 2px 12px #0004;font:9.5px/1.28 Arial,sans-serif;position:relative;box-sizing:border-box}
+.apg h4{margin:6px 0 2px;font-size:10.5px;border-bottom:2px solid #000;padding-bottom:1px}.apg .row{display:flex;gap:10px;margin:3px 0}.apg .cell{flex:1;border-bottom:1px solid #000;min-height:19px}.apg .cell small{display:block;font-size:8.5px;color:#222}.apg .cell b{font-weight:600}
+.apg .box{display:inline-block;width:10px;height:10px;border:1px solid #000;margin-right:4px;text-align:center;line-height:9px;font-size:10px;vertical-align:-1px}.apg ul{list-style:none;padding:0;margin:2px 0}.apg li{margin:.5px 0}.apg .gh{font-weight:700;margin-top:3px}
+.apg .desc{white-space:pre-wrap;min-height:230px;border-bottom:1px dotted #000;padding:2px 0}.apg .sig{display:flex;gap:30px;margin-top:4px}.apg .sig div{flex:1;border-bottom:1px solid #000;height:44px;position:relative}.apg .sig span{position:absolute;left:0;bottom:-13px;font-size:9px}
+.apg .cod{position:absolute;left:4mm;top:150mm;transform:rotate(-90deg);transform-origin:left top;font:700 30px Arial}.apg .tr{font-size:7.5px;color:#333;margin-top:15px}.apg .top{margin-left:auto;width:50%}
+@media print{@page{size:A4;margin:0}body>*:not(#acta-print){display:none!important}#acta-print{position:static;background:#fff;padding:0;overflow:visible}#acta-print .bar2{display:none}.apg{box-shadow:none;margin:0;width:210mm;height:296mm;min-height:0;overflow:hidden;page-break-after:always}.apg:last-of-type{page-break-after:auto}}
 </style>
 </head>
 <body>
 <header>
-<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v33</small></div></div>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v34</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
-<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
+<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
@@ -75,6 +84,18 @@ details.acc>#pe{padding:10px 12px 2px}
 <small id="pt_est">La ubicación solo la ven los agentes del panel. No se guarda el recorrido, solo la última posición. Mantén esta pantalla abierta y encendida.</small></div>
 <div class="card" style="display:block"><div id="mapp"></div><small id="mapp_n"></small></div>
 <div id="pt_lista"></div></section>
+<section class="view" id="v-act"><h2 class="vt">Actas</h2>
+<details class="acc" open><summary>🚓 Inicio de servicio: indicativo y agentes</summary><div class="pad">
+<div class="g2"><label class="fl">Indicativo<input id="sv_ind" placeholder="Ej. V-12"></label>
+<label class="fl">Turno<select id="sv_tur"><option>Mañana</option><option>Tarde</option><option>Noche</option></select></label>
+<label class="fl">Agente 1: nombre y apellidos<input id="sv_n1"></label><label class="fl">N.º profesional<input id="sv_p1"></label>
+<label class="fl">Agente 2: nombre y apellidos<input id="sv_n2"></label><label class="fl">N.º profesional<input id="sv_p2"></label></div>
+<button id="sv_go">Iniciar servicio</button> <button id="sv_fin" style="background:none;color:inherit;border:1px solid #9996">Fin de servicio</button><div id="sv_res" style="margin-top:8px"></div></div></details>
+<div class="card" style="display:block"><b>Acta D-03: denuncia por infracción a la Ordenanza del buen uso de la vía pública</b>
+<p style="margin:6px 0"><small><b>Prototipo.</b> Úsalo solo con datos ficticios. Lo que escribes no se guarda en ningún servidor: vive en esta pantalla y se borra al pulsar «Nueva acta» o al recargar.</small></p>
+<div id="actaf"></div>
+<label class="fl" style="max-width:260px">Idioma de impresión<select id="act_lang"><option value="ca">Català</option><option value="es">Castellano</option><option value="en">English</option><option value="fr">Français</option></select></label>
+<button id="act_prev">Vista previa e imprimir</button> <button id="act_new" style="background:none;color:inherit;border:1px solid #9996">Nueva acta</button></div></section>
 <section class="view" id="v-mapa"><h2 class="vt">Mapa de avisos</h2><div class="card" style="display:block"><div><button class="mp on" data-mm="act">Activos ahora</button><button class="mp" data-mm="h1">Últimas 24 h</button><button class="mp" data-mm="h7">7 días</button><button class="mp" data-mm="h30">30 días</button></div>
 <div id="mapa"></div><small id="mapn"></small></div></section>
 <section class="view" id="v-stats"><h2 class="vt">Estadísticas</h2><div class="card" style="display:block"><div><button class="mp" data-sp="7">7 días</button><button class="mp on" data-sp="30">30 días</button><button class="mp" data-sp="365">12 meses</button><button class="mp" data-sp="0">Todo</button></div>
@@ -104,6 +125,7 @@ details.acc>#pe{padding:10px 12px 2px}
 </section>
 </div>
 </main>
+<div id="acta-print" hidden></div>
 <div id="cfm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 id="cfm_t" style="margin:0 0 8px"></h3><p id="cfm_p" style="margin:0 0 12px"></p><div style="display:flex;gap:8px"><button class="k" id="cfm_ok">Confirmar y enviar</button><button id="cfm_no" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <div id="grm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 style="margin:0 0 8px">Responder a la consulta de grúa</h3><small>Información adicional para el ciudadano (dirección del depósito, horario, qué documentos llevar):</small><textarea id="grt" rows="3" style="width:100%;margin-top:6px"></textarea><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="k" id="gr_si">Sí, está en el depósito</button><button id="gr_no">No consta en el depósito</button></div><div style="margin-top:8px"><button id="gr_cl" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <div id="etm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:380px;width:92%">
@@ -255,11 +277,201 @@ async function paraPt() {
 $("pt_btn").onclick = () => PT_ON ? paraPt() : iniciaPt();
 $("unit").addEventListener("input", () => { $("pt_nom").textContent = $("unit").value.trim() || "—"; });
 document.addEventListener("visibilitychange", async () => { if (document.visibilityState == "visible" && PT_ON && navigator.wakeLock) { try { PT_WL = await navigator.wakeLock.request("screen"); } catch (e) {} } });
+/* ---- actas D-03 (prototipo): inicio de servicio y acta en 4 idiomas ---- */
+const LB = {ca: {}, es: {}, en: {}, fr: {}}, LGS = ["ca", "es", "en", "fr"];
+`acta_t | Dades de l'acta | Datos del acta | Record details | Données du procès-verbal
+num | Número de l'acta | Número del acta | Record number | Numéro du procès-verbal
+data | Data | Fecha | Date | Date
+hora | Hora | Hora | Time | Heure
+ag | Agents actuants | Agentes actuantes | Acting officers | Agents intervenants
+pag | Pàgina | Página | Page | Page
+de | de | de | of | sur
+y | i | y | and | et
+titol | Denúncia per presumpte infracció a l'Ordenança del bon ús de la via pública i dels espais públics | Denuncia por presunta infracción a la Ordenanza del buen uso de la vía pública y de los espacios públicos | Report of an alleged breach of the Ordinance on the proper use of public roads and spaces | Procès-verbal pour présumée infraction à l'Ordonnance sur le bon usage de la voie publique et des espaces publics
+subt | En l'exercici de les funcions de Policia administrativa, es procedeix a la identificació del / de la presumpte/a infractor/a. | En el ejercicio de las funciones de Policía administrativa, se procede a la identificación del / de la presunto/a infractor/a. | In the exercise of administrative police duties, the alleged offender is identified. | Dans l'exercice des fonctions de police administrative, il est procédé à l'identification de la personne présumée contrevenante.
+dinf | Dades del / de la presumpte/a infractor/a | Datos del / de la presunto/a infractor/a | Alleged offender's details | Données de la personne présumée contrevenante
+c1 | Primer cognom | Primer apellido | First surname | Premier nom de famille
+c2 | Segon cognom | Segundo apellido | Second surname | Second nom de famille
+nom | Nom | Nombre | First name | Prénom
+lnaix | Lloc de naixement | Lugar de nacimiento | Place of birth | Lieu de naissance
+dnaix | Data de naixement | Fecha de nacimiento | Date of birth | Date de naissance
+doc | Número del document d'identitat | Número del documento de identidad | Identity document number | Numéro du document d'identité
+tel | Telèfon | Teléfono | Phone | Téléphone
+adr | Adreça (tipus de via, nom i número) | Dirección (tipo de vía, nombre y número) | Address (street type, name and number) | Adresse (type de voie, nom et numéro)
+mun | Municipi | Municipio | Municipality | Commune
+prov | Província | Provincia | Province | Province
+pais | País | País | Country | Pays
+dfet | Dades del fet | Datos del hecho | Details of the incident | Données des faits
+dia | Dia | Día | Day | Jour
+llocesp | Lloc específic | Lugar específico | Specific place | Lieu précis
+com | Comarca | Comarca | County (comarca) | Comarque
+motiu | Motiu de la infracció | Motivo de la infracción | Reason for the infringement | Motif de l'infraction
+g1 | Contaminació visual | Contaminación visual | Visual pollution | Pollution visuelle
+g2 | Neteja | Limpieza | Cleanliness | Propreté
+g3 | Deteriorament espai urbà | Deterioro del espacio urbano | Damage to urban space | Dégradation de l'espace urbain
+g4 | Convivència | Convivencia | Coexistence | Vivre ensemble
+g5 | Altres | Otros | Other | Autres
+art | Art | Art | Art | Art
+desc | Descripció de la infracció, circumstàncies i lloc de la mateixa | Descripción de la infracción, circunstancias y lugar de la misma | Description of the infringement, circumstances and place | Description de l'infraction, circonstances et lieu
+cont | Continuació de l'acta número | Continuación del acta número | Continuation of record number | Suite du procès-verbal numéro
+mc | Mesures cautelars | Medidas cautelares | Precautionary measures | Mesures conservatoires
+mcs | Descripció dels objectes intervinguts i/o de les mesures cautelars adoptades | Descripción de los objetos intervenidos y/o de las medidas cautelares adoptadas | Description of the seized items and/or precautionary measures adopted | Description des objets saisis et/ou des mesures conservatoires adoptées
+mo | Intervenció d'objectes / gènere | Intervención de objetos / género | Seizure of items / goods | Saisie d'objets / marchandises
+mm | Intervenció de moneda | Intervención de moneda | Seizure of money | Saisie d'argent
+ms | Suspensió d'activitat | Suspensión de actividad | Suspension of activity | Suspension d'activité
+altre | Altre | Otro | Other | Autre
+resten | Els objectes intervinguts resten a disposició de: | Los objetos intervenidos quedan a disposición de: | The seized items remain at the disposal of: | Les objets saisis restent à la disposition de :
+titular | El seu titular | Su titular | The owner | Son titulaire
+dep | Dependències Policia Local | Dependencias de la Policía Local | Local Police premises | Locaux de la police municipale
+instr | L'Instructor de l'expedient sancionador | El Instructor del expediente sancionador | The investigating officer of the sanctioning procedure | L'instructeur de la procédure de sanction
+alleg | Al·legacions de la persona denunciada | Alegaciones de la persona denunciada | Statements of the reported person | Observations de la personne verbalisée
+fil | Filiació de: | Filiación de: | Parentage of: | Filiation de :
+pare | Pare/Mare o tutor legal (en cas de menors) | Padre/Madre o tutor legal (en caso de menores) | Parent or legal guardian (in the case of minors) | Père/mère ou tuteur légal (en cas de mineurs)
+vol | Persona que efectua denúncia voluntària | Persona que efectúa denuncia voluntaria | Person making a voluntary report | Personne effectuant une dénonciation volontaire
+comu | S'ha comunicat el fet al pare / a la mare o al / a la representant legal? | ¿Se ha comunicado el hecho al padre / a la madre o al / a la representante legal? | Has the incident been reported to the parent or legal representative? | Les faits ont-ils été communiqués au père / à la mère ou au représentant légal ?
+si | Sí | Sí | Yes | Oui
+no | No | No | No | Non
+adj | S'adjunta: | Se adjunta: | Attached: | Pièces jointes :
+fot | Reportatge fotogràfic | Reportaje fotográfico | Photographic report | Reportage photographique
+inf | Informe ampliador | Informe ampliatorio | Supplementary report | Rapport complémentaire
+sig | Signatures | Firmas | Signatures | Signatures
+func | Funcionaris/àries | Funcionarios/as | Officers | Fonctionnaires
+pers | Persona interessada | Persona interesada | Person concerned | Personne concernée
+trad | Traducció informativa: el text oficial és el català. | Traducción informativa: el texto oficial es el catalán. | Informative translation: the official text is the Catalan one. | Traduction à titre informatif : le texte officiel est le catalan.
+t_dni | DNI | DNI | ID card (DNI) | DNI
+t_nie | NIE / TIE | NIE / TIE | NIE / TIE | NIE / TIE
+t_pas | Passaport | Pasaporte | Passport | Passeport
+t_per | Permís de conduir | Permiso de conducir | Driving licence | Permis de conduire
+t_alt | Altre document | Otro documento | Other document | Autre document
+l_via | Via pública | Vía pública | Public road | Voie publique
+l_dom | Domicili | Domicilio | Home | Domicile
+l_est | Establiment | Establecimiento | Establishment | Établissement
+nom_res | No manifesta res | No manifiesta nada | Makes no statement | Ne formule aucune observation`.split("\n").forEach(l => { const p = l.split(" | "); if (p.length == 5) LGS.forEach((c, i) => LB[c][p[0]] = p[i + 1]); });
+const INF = `g1 | 10.1 | Col·locar cartells, pancartes o qualsevol altra forma de publicitat, anunci o propaganda, en llocs no habilitats a l'efecte. | Colocar carteles, pancartas o cualquier otra forma de publicidad, anuncio o propaganda en lugares no habilitados al efecto. | Placing posters, banners or any other form of advertising, announcement or propaganda in places not authorised for that purpose. | Poser des affiches, banderoles ou toute autre forme de publicité, annonce ou propagande dans des lieux non autorisés à cet effet.
+g1 | 10.1 | Col·locar cartells o pancartes en edificis i instal·lacions municipals, espai públic, mobiliari urbà o espais verds | Colocar carteles o pancartas en edificios e instalaciones municipales, espacio público, mobiliario urbano o espacios verdes. | Placing posters or banners on municipal buildings and facilities, public space, street furniture or green areas. | Poser des affiches ou banderoles sur des bâtiments et installations municipaux, l'espace public, le mobilier urbain ou les espaces verts.
+g1 | 10.3 | Col·locar pancartes i tòtems sense l'autorització municipal prèvia | Colocar pancartas y tótems sin autorización municipal previa. | Placing banners and totems without prior municipal authorisation. | Installer des banderoles et des totems sans autorisation municipale préalable.
+g1 | 9.1 | Realitzar grafits, pintades i similars sobre un element de l'espai públic sense autorització municipal o del propietari | Realizar grafitis, pintadas y similares sobre un elemento del espacio público sin autorización municipal o del propietario. | Making graffiti, painting or similar on an element of public space without municipal or owner authorisation. | Réaliser des graffitis, peintures ou similaires sur un élément de l'espace public sans autorisation municipale ou du propriétaire.
+g2 | 10.6 | Esquinçar, arrencar o llençar a l'espai públic qualsevol tipus de residu sòlid, fora dels espais destinats a aquesta finalitat | Rasgar, arrancar o arrojar al espacio público cualquier tipo de residuo sólido, fuera de los espacios destinados a este fin. | Tearing, ripping off or throwing any kind of solid waste in public space, outside the areas intended for that purpose. | Déchirer, arracher ou jeter dans l'espace public tout type de déchet solide, en dehors des espaces prévus à cet effet.
+g2 | 14.1 | Efectuar necessitats fisiològiques, als espais públics o mobiliari urbà | Hacer necesidades fisiológicas en los espacios públicos o en el mobiliario urbano. | Relieving oneself in public spaces or on street furniture. | Faire ses besoins dans les espaces publics ou sur le mobilier urbain.
+g2 | 20.4 | Llençar qualsevol cosa o objecte a la vora del riu i/o canals de reg | Arrojar cualquier cosa u objeto a la orilla del río y/o canales de riego. | Throwing anything or any object on the riverbank and/or irrigation channels. | Jeter quoi que ce soit au bord de la rivière et/ou des canaux d'irrigation.
+g3 | 11.2 | Realitzar actes de deteriorament o destrosses dels espais públics instal·lacions o elements mobles o immobles | Realizar actos de deterioro o destrozos de los espacios públicos, instalaciones o elementos muebles o inmuebles. | Committing acts of damage or vandalism to public spaces, facilities or movable or immovable elements. | Commettre des actes de détérioration ou de dégâts sur les espaces publics, installations ou éléments mobiliers ou immobiliers.
+g3 | 12.3 | Efectuar acrobàcies amb patins i monopatins utilitzant elements del mobiliari urbà | Realizar acrobacias con patines y monopatines utilizando elementos del mobiliario urbano. | Performing stunts on skates and skateboards using street furniture. | Effectuer des acrobaties en patins ou skateboard en utilisant des éléments du mobilier urbain.
+g3 | 27.1 | Fer ús impropi dels espais públics i dels seus elements, impedint o dificultant la utilització per part de la resta d'usuaris | Hacer un uso impropio de los espacios públicos y de sus elementos, impidiendo o dificultando su utilización por el resto de usuarios. | Making improper use of public spaces and their elements, preventing or hindering their use by other users. | Faire un usage inapproprié des espaces publics et de leurs éléments, empêchant ou gênant leur utilisation par les autres usagers.
+g3 | 27.2 c | Utilitzar un bancs o seient públic per a usos diferents als quals estan destinats | Utilizar un banco o asiento público para usos distintos de aquellos a los que están destinados. | Using a public bench or seat for purposes other than those for which it is intended. | Utiliser un banc ou siège public à des usages autres que ceux auxquels il est destiné.
+g4 | 15 | Consumir begudes alcohòliques als espais públics ocasionant molèsties | Consumir bebidas alcohólicas en los espacios públicos ocasionando molestias. | Consuming alcoholic drinks in public spaces causing a nuisance. | Consommer des boissons alcoolisées dans les espaces publics en causant des nuisances.
+g4 | 15. 1 | Vendre o dispensar begudes alcohòliques a la via i als espais públics, ocasionant molèsties | Vender o dispensar bebidas alcohólicas en la vía y en los espacios públicos, ocasionando molestias. | Selling or dispensing alcoholic drinks on the road and in public spaces, causing a nuisance. | Vendre ou distribuer des boissons alcoolisées sur la voie et dans les espaces publics, en causant des nuisances.
+g4 | 19.1 | No procurar el propietari d'un animal de companyia que aquest produeixi molèsties | No procurar el propietario de un animal de compañía que este no produzca molestias. | Failing, as the owner of a pet, to ensure that it does not cause a nuisance. | Ne pas veiller, en tant que propriétaire d'un animal de compagnie, à ce qu'il ne cause pas de nuisances.
+g4 | 21.1 | Produir sorolls que causin molèsties a altres veïns en els seus immobles o en parts privades d'aquests | Producir ruidos que causen molestias a otros vecinos en sus inmuebles o en partes privadas de estos. | Making noise that disturbs other neighbours in their properties or private areas of them. | Produire des bruits qui gênent d'autres voisins dans leurs immeubles ou leurs parties privatives.
+g4 | 21.2 | Produir sorolls que causin molèsties a altres veïns entre les 22.00 hores i les 8.00 hores | Producir ruidos que causen molestias a otros vecinos entre las 22:00 y las 8:00 horas. | Making noise that disturbs other neighbours between 22:00 and 08:00. | Produire des bruits qui gênent d'autres voisins entre 22 h 00 et 8 h 00.
+g4 | 37.1 | Instal·lar un aparell d'aire condicionat produint soroll o molestant als habitatges contigus | Instalar un aparato de aire acondicionado que produzca ruido o moleste a las viviendas contiguas. | Installing an air-conditioning unit that makes noise or disturbs adjoining homes. | Installer un appareil de climatisation produisant du bruit ou gênant les logements voisins.
+g4 | 12.1 | Practicar competicions esportives massives pertorbant el descans i/o seguretat del veïnat, o d'altres usuaris de l'espai | Practicar competiciones deportivas masivas perturbando el descanso y/o la seguridad del vecindario o de otros usuarios del espacio. | Holding mass sports competitions that disturb the rest and/or safety of the neighbourhood or of other users of the space. | Pratiquer des compétitions sportives massives perturbant le repos et/ou la sécurité du voisinage ou d'autres usagers de l'espace.
+g4 | 26.1 | Prendre aigua potable d'una font pública urbana excedint dels 5 litres | Tomar agua potable de una fuente pública urbana excediendo los 5 litros. | Taking drinking water from an urban public fountain in excess of 5 litres. | Prélever de l'eau potable à une fontaine publique urbaine au-delà de 5 litres.
+g4 | 27.2 d | Rentar-se o banyar-se en les fonts, els estanys o similars | Lavarse o bañarse en las fuentes, los estanques o similares. | Washing or bathing in fountains, ponds or similar. | Se laver ou se baigner dans les fontaines, les bassins ou similaires.
+g4 | 27.2 e | Rentar roba a les fonts, als estanys, a les dutxes o similars | Lavar ropa en las fuentes, los estanques, las duchas o similares. | Washing clothes in fountains, ponds, showers or similar. | Laver du linge dans les fontaines, les bassins, les douches ou similaires.
+g4 | 27.2 e | Encendre o mantenir el foc d'una foguera sense autorització municipal | Encender o mantener el fuego de una hoguera sin autorización municipal. | Lighting or keeping a bonfire going without municipal authorisation. | Allumer ou entretenir un feu de joie sans autorisation municipale.
+g4 | 27 bis | Anar despullat/da o gairebé despullat/da pels espais públics | Ir desnudo/a o casi desnudo/a por los espacios públicos. | Going naked or almost naked in public spaces. | Se promener nu(e) ou presque nu(e) dans les espaces publics.
+g4 | 37 bis | Tenir a la vista del públic en obertures de cases o baranes de terrats vestits, roba bruta o rentada i/o altres objectes | Tener a la vista del público, en aberturas de casas o barandillas de terrazas, vestidos, ropa sucia o lavada y/u otros objetos. | Leaving clothes, dirty or washed laundry and/or other objects in public view at house openings or terrace railings. | Laisser à la vue du public, aux ouvertures des maisons ou aux garde-corps des terrasses, des vêtements, du linge sale ou lavé et/ou d'autres objets.
+g5 | 13.1 | Efectuar mendicitat, obstaculitzant o impedint el lliure trànsit de les persones pels espais públics | Ejercer la mendicidad obstaculizando o impidiendo el libre tránsito de las personas por los espacios públicos. | Begging in a way that obstructs or prevents the free movement of people in public spaces. | Pratiquer la mendicité en entravant ou empêchant la libre circulation des personnes dans les espaces publics.
+g5 | 13.2 | Efectuar mendicitat amb menors o persones amb discapacitats | Ejercer la mendicidad con menores o personas con discapacidad. | Begging with minors or persons with disabilities. | Pratiquer la mendicité avec des mineurs ou des personnes handicapées.
+g5 | 16.1 | Efectuar venda ambulant de qualsevol tipus a l'espai públic sense autorització | Efectuar venta ambulante de cualquier tipo en el espacio público sin autorización. | Carrying out street vending of any kind in public space without authorisation. | Pratiquer la vente ambulante de tout type dans l'espace public sans autorisation.
+g5 | 20.5 | Pescar des de la via pública sense autorització expressa | Pescar desde la vía pública sin autorización expresa. | Fishing from the public road without express authorisation. | Pêcher depuis la voie publique sans autorisation expresse.
+g5 | 20.5 | Realitzar l'activitat de pesca sense estar en disposició de la llicència corresponent | Realizar la actividad de pesca sin disponer de la licencia correspondiente. | Fishing without holding the corresponding licence. | Pratiquer la pêche sans disposer de la licence correspondante.
+g5 | 17.1 | Realitzar activitats i/o prestar serveis a la via pública sense autorització municipal | Realizar actividades y/o prestar servicios en la vía pública sin autorización municipal. | Carrying out activities and/or providing services on the public road without municipal authorisation. | Exercer des activités et/ou fournir des services sur la voie publique sans autorisation municipale.
+g5 | 29.1 | Realitzar espectacles a la via o espais públics sense autorització municipal | Realizar espectáculos en la vía o espacios públicos sin autorización municipal. | Staging shows on the road or in public spaces without municipal authorisation. | Organiser des spectacles sur la voie ou dans les espaces publics sans autorisation municipale.`.split("\n").map(l => { const p = l.split(" | "); return {g: p[0], art: p[1], ca: p[2], es: p[3], en: p[4], fr: p[5]}; });
+const lbl = (lg, k) => LB[lg][k] || k, fmtD = iso => iso ? iso.split("-").reverse().join("/") : "";
+const DESC_T = {
+  ca: (d, h, l, a, n, s) => `En data ${d}, a les ${h} hores, a ${l}, els agents actuants ${a} observen i denuncien una presumpta infracció de l'Ordenança del bon ús de la via pública i dels espais públics per part de ${n}: ${s}.`,
+  es: (d, h, l, a, n, s) => `En fecha ${d}, a las ${h} horas, en ${l}, los agentes actuantes ${a} observan y denuncian una presunta infracción de la Ordenanza del buen uso de la vía pública y de los espacios públicos por parte de ${n}: ${s}.`,
+  en: (d, h, l, a, n, s) => `On ${d} at ${h}, at ${l}, the acting officers ${a} observe and report an alleged breach of the Ordinance on the proper use of public roads and spaces by ${n}: ${s}.`,
+  fr: (d, h, l, a, n, s) => `Le ${d} à ${h}, à ${l}, les agents intervenants ${a} constatent et signalent une présumée infraction à l'Ordonnance sur le bon usage de la voie publique et des espaces publics par ${n} : ${s}.`};
+const DEP = "Pl Immaculada 16";
+const svLoad = () => { try { return JSON.parse(localStorage.getItem("servicio") || "null"); } catch (e) { return null; } };
+function svShow() { const s = svLoad(); $("sv_res").innerHTML = s ? "<b>Servicio activo:</b> " + esc(s.ind) + " · " + esc(s.tur) + "<br><small>" + esc(s.n1) + " (" + esc(s.p1) + ") · " + esc(s.n2) + " (" + esc(s.p2) + ")</small>" : "<small>Sin servicio iniciado.</small>"; }
+$("sv_go").onclick = () => {
+  const s = {ind: $("sv_ind").value.trim(), tur: $("sv_tur").value, n1: $("sv_n1").value.trim(), p1: $("sv_p1").value.trim(), n2: $("sv_n2").value.trim(), p2: $("sv_p2").value.trim()};
+  if (!s.ind || !s.n1 || !s.p1) { alert("Indica el indicativo y, al menos, el primer agente con su número profesional."); return; }
+  try { localStorage.setItem("servicio", JSON.stringify(s)); } catch (e) {}
+  $("unit").value = s.ind; $("unit").dispatchEvent(new Event("input")); svShow();
+};
+$("sv_fin").onclick = () => { try { localStorage.removeItem("servicio"); } catch (e) {} svShow(); };
+const gv = k => { const e = document.querySelector('#actaf [data-f="' + k + '"]'); return e ? (e.type == "checkbox" ? e.checked : e.value.trim()) : ""; };
+const sf = (k, v) => { const e = document.querySelector('#actaf [data-f="' + k + '"]'); if (e) e.value = v; };
+const selI = () => [...document.querySelectorAll("#actaf [data-i]")].filter(c => c.checked).map(c => +c.dataset.i);
+const FI = (l, k, t = "text", x = "") => `<label class="fl">${l}<input data-f="${k}" type="${t}" ${x}></label>`;
+const FC = (l, k) => `<label class="cbx"><input type="checkbox" data-f="${k}"><span>${l}</span></label>`;
+const FT = (l, k, r = 3) => `<label class="fl">${l}<textarea data-f="${k}" rows="${r}"></textarea></label>`;
+const AC = (t, b, o = false) => `<details class="acc"${o ? " open" : ""}><summary>${t}</summary><div class="pad">${b}</div></details>`;
+let actaOk = false, descAuto = true;
+function ahora() { const d = new Date(), z = n => String(n).padStart(2, "0"); return {f: d.getFullYear() + "-" + z(d.getMonth() + 1) + "-" + z(d.getDate()), h: z(d.getHours()) + ":" + z(d.getMinutes())}; }
+function actaInit() {
+  const sv = svLoad(); if (sv) { $("sv_ind").value = sv.ind; $("sv_tur").value = sv.tur; $("sv_n1").value = sv.n1; $("sv_p1").value = sv.p1; $("sv_n2").value = sv.n2; $("sv_p2").value = sv.p2; } svShow();
+  if (actaOk) return; actaOk = true;
+  const grp = ["g1", "g2", "g3", "g4", "g5"].map(g => `<div class="gt">${lbl("ca", g)}</div>` + INF.map((x, i) => x.g == g ? `<label class="cbx"><input type="checkbox" data-i="${i}"><span>${esc(x.ca)} (Art. ${esc(x.art)})</span></label>` : "").join("")).join("");
+  $("actaf").innerHTML =
+    AC("1. Datos del acta", `<div class="g2">${FI("Número del acta (a mano)", "num")}${FI("Fecha", "fecha", "date")}${FI("Hora", "hora", "time")}</div><small>Los agentes actuantes salen del inicio de servicio.</small>`, true)
+  + AC("2. Persona denunciada", `<div class="g2"><label class="fl">Tipo de documento<select data-f="tdoc"><option value="t_dni">DNI</option><option value="t_nie">NIE / TIE</option><option value="t_pas">Pasaporte</option><option value="t_per">Permiso de conducir</option><option value="t_alt">Otro</option></select></label>${FI("Número del documento", "doc")}${FI("Primer apellido", "ape1")}${FI("Segundo apellido", "ape2")}${FI("Nombre", "nom")}${FI("Lugar de nacimiento", "lnaix")}${FI("Fecha de nacimiento", "dnaix", "date")}${FI("Teléfono", "tel", "tel")}${FI("Dirección (tipo de vía, nombre y número)", "adr")}${FI("Municipio", "mun")}${FI("Provincia", "prov")}${FI("País", "pais")}</div>`)
+  + AC("3. Datos del hecho", `<div class="g2">${FI("Día", "hdia", "date")}${FI("Hora", "hhora", "time")}<label class="fl">Lugar específico<input data-f="lloc" list="llocs" placeholder="Vía pública, domicilio, establecimiento…"><datalist id="llocs"><option value="Via pública"><option value="Domicili"><option value="Establiment"></datalist></label>${FI("Dirección (tipo de vía, nombre y número)", "hadr")}${FI("Municipio", "hmun")}${FI("Comarca", "hcom")}</div><button id="act_gps" type="button">📍 Usar la ubicación de la tablet</button> <small id="act_gps_n"></small>`)
+  + AC("4. Motivo de la infracción", grp + `<div class="gt">Otro</div><div class="g2">${FI("Texto", "oi_txt")}${FI("Artículo", "oi_art")}</div>`)
+  + AC("5. Descripción de la infracción", `<button id="act_desc" type="button">✍️ Redactar con lo marcado</button>${FT("Descripción (puedes editarla)", "desc", 8)}<small>Si no la editas, se redacta sola en el idioma que elijas al imprimir.</small>`)
+  + AC("6. Medidas cautelares", `${FC("Intervención de objetos / género", "mc_obj")}${FC("Intervención de moneda", "mc_mon")}${FC("Suspensión de actividad", "mc_sus")}${FC("Otro", "mc_alt")}${FI("Otro: texto", "mc_alt_t")}${FT("Descripción de los objetos intervenidos y/o de las medidas adoptadas", "mc_desc", 4)}<div class="gt">Los objetos quedan a disposición de</div>${FC("Su titular", "d_tit")}${FC("Dependencias de la Policía Local (" + DEP + ")", "d_dep")}${FC("El instructor del expediente sancionador", "d_ins")}${FC("Otro", "d_alt")}${FI("Otro: texto", "d_alt_t")}`)
+  + AC("7. Alegaciones de la persona denunciada", `<button id="act_nom" type="button">No manifiesta nada</button>${FT("Alegaciones", "alegs", 4)}`)
+  + AC("8. Filiación (si es menor de edad)", `${FC("Padre / madre o tutor legal (en caso de menores)", "f_tut")}${FC("Persona que efectúa denuncia voluntaria", "f_vol")}<label class="fl">¿Se ha comunicado el hecho al padre / madre / representante legal?<select data-f="f_com"><option value="">—</option><option value="si">Sí</option><option value="no">No</option></select></label>${FT("Datos del padre, madre o tutor", "f_txt", 3)}`)
+  + AC("9. Se adjunta", `${FC("Reportaje fotográfico", "a_fot")}${FC("Informe ampliatorio", "a_inf")}${FC("Otro", "a_alt")}${FI("Otro: texto", "a_alt_t")}`);
+  const n = ahora(); sf("fecha", n.f); sf("hora", n.h); sf("hdia", n.f); sf("hhora", n.h);
+  $("actaf").addEventListener("input", e => { if (e.target.dataset.f == "desc") descAuto = false; });
+  $("act_desc").onclick = () => { descAuto = true; sf("desc", genDesc($("act_lang").value)); };
+  $("act_nom").onclick = () => sf("alegs", "—");
+  $("act_gps").onclick = () => {
+    if (!navigator.geolocation) { $("act_gps_n").textContent = "Este dispositivo no permite ubicación."; return; }
+    $("act_gps_n").textContent = "Buscando ubicación…";
+    navigator.geolocation.getCurrentPosition(async p => {
+      const la = p.coords.latitude, lo = p.coords.longitude, t = ahora(); sf("hdia", t.f); sf("hhora", t.h);
+      sf("hadr", la.toFixed(5) + ", " + lo.toFixed(5)); $("act_gps_n").textContent = "Ubicación obtenida. Buscando la dirección…";
+      try { const r = await (await fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&accept-language=ca&lat=" + la + "&lon=" + lo)).json(), a = r.address || {};
+        sf("hadr", [a.road, a.house_number].filter(Boolean).join(", ") || la.toFixed(5) + ", " + lo.toFixed(5)); sf("hmun", a.city || a.town || a.village || a.municipality || ""); sf("hcom", a.county || ""); $("act_gps_n").textContent = "Dirección rellenada: revísala."; }
+      catch (e) { $("act_gps_n").textContent = "Sin conexión para la dirección: se ha puesto la ubicación en coordenadas."; }
+    }, err => { $("act_gps_n").textContent = "No se pudo obtener la ubicación: " + err.message; }, {enableHighAccuracy: true, timeout: 15000});
+  };
+  $("act_new").onclick = () => { actaOk = false; descAuto = true; $("actaf").innerHTML = ""; actaInit(); };
+  $("act_prev").onclick = () => { const lg = $("act_lang").value; if (descAuto) sf("desc", genDesc(lg)); $("acta-print").innerHTML = '<div class="bar2"><button id="ap_pr">🖨️ Imprimir</button><button id="ap_x" style="background:#fff;color:#000">Cerrar</button></div>' + actaHTML(lg); $("acta-print").hidden = false; $("ap_pr").onclick = () => window.print(); $("ap_x").onclick = () => { $("acta-print").hidden = true; }; $("acta-print").scrollTop = 0; };
+  $("act_lang").onchange = () => { if (descAuto && gv("desc")) sf("desc", genDesc($("act_lang").value)); };
+}
+function agentes(lg) { const s = svLoad(); if (!s) return "—"; return s.n1 + " (" + s.p1 + ")" + (s.n2 ? " " + lbl(lg, "y") + " " + s.n2 + " (" + s.p2 + ")" : "") + (s.ind ? " · " + s.ind : ""); }
+function genDesc(lg) {
+  const nom = [gv("nom"), gv("ape1"), gv("ape2")].filter(Boolean).join(" ") || "—", lloc = [gv("lloc"), gv("hadr"), gv("hmun")].filter(Boolean).join(", ") || "—";
+  const li = selI().map(i => INF[i][lg] + " (" + lbl(lg, "art") + " " + INF[i].art + ")"); if (gv("oi_txt")) li.push(gv("oi_txt") + (gv("oi_art") ? " (" + lbl(lg, "art") + " " + gv("oi_art") + ")" : ""));
+  return DESC_T[lg](fmtD(gv("hdia")), gv("hhora") || "—", lloc, agentes(lg), nom, li.join("; ") || "—");
+}
+function actaHTML(lg) {
+  const l = k => esc(lbl(lg, k)), v = k => esc(gv(k)), bx = b => '<span class="box">' + (b ? "✕" : "") + "</span>", ce = (k, val, fl = 1) => `<div class="cell" style="flex:${fl}"><small>${l(k)}</small><b>${val}</b></div>`;
+  const sel = new Set(selI()), num = v("num");
+  const lista = g => '<div class="gh">' + l(g) + "</div><ul>" + INF.map((x, i) => x.g == g ? `<li>${bx(sel.has(i))}${esc(x[lg])} (${l("art")} ${esc(x.art)})</li>` : "").join("") + "</ul>";
+  const lloc = gv("lloc"), lt = {"via pública": "l_via", "domicili": "l_dom", "establiment": "l_est"}[lloc.toLowerCase()], llocT = lt ? lbl(lg, lt) : esc(lloc);
+  const doc = lbl(lg, gv("tdoc") || "t_dni") + " " + v("doc");
+  const trad = lg != "ca" ? `<div class="tr">${l("trad")}</div>` : "";
+  const firmas = `<h4>${l("sig")}</h4><div class="sig"><div><span>${l("func")}</span></div><div><span>${l("pers")}</span></div></div>`;
+  const p1 = `<div class="apg"><div class="cod">D-03</div><div class="top"><h4>${l("acta_t")} <span style="float:right;font-weight:400">${l("pag")} 1 ${l("de")} 2</span></h4>
+    <div class="row">${ce("num", num)}</div><div class="row">${ce("data", esc(fmtD(gv("fecha"))))}${ce("hora", v("hora"))}</div><div class="row">${ce("ag", esc(agentes(lg)))}</div></div>
+    <h4>${l("titol")}</h4><div>${l("subt")}</div>
+    <h4>${l("dinf")}</h4><div class="row">${ce("c1", v("ape1"))}${ce("c2", v("ape2"))}${ce("nom", v("nom"))}</div><div class="row">${ce("lnaix", v("lnaix"), 2)}${ce("dnaix", esc(fmtD(gv("dnaix"))))}</div>
+    <div class="row">${ce("doc", esc(doc), 2)}${ce("tel", v("tel"))}</div><div class="row">${ce("adr", v("adr"), 2)}${ce("mun", v("mun"))}</div><div class="row">${ce("prov", v("prov"))}${ce("pais", v("pais"))}</div>
+    <h4>${l("dfet")}</h4><div class="row">${ce("dia", esc(fmtD(gv("hdia"))))}${ce("hora", v("hhora"))}${ce("llocesp", llocT, 2)}</div><div class="row">${ce("adr", v("hadr"), 2)}${ce("mun", v("hmun"))}${ce("com", v("hcom"))}</div>
+    <h4>${l("motiu")}</h4>${["g1", "g2", "g3", "g4", "g5"].map(lista).join("")}<ul><li>${bx(gv("oi_txt"))}${gv("oi_txt") ? v("oi_txt") : "______________________________"} (${l("art")} ${gv("oi_art") ? v("oi_art") : "______"})</li></ul>${firmas}${trad}</div>`;
+  const p2 = `<div class="apg"><div class="top"><h4><span style="float:right;font-weight:400">${l("pag")} 2 ${l("de")} 2</span>${l("cont")}</h4><div class="row">${ce("num", num)}</div></div>
+    <h4>${l("desc")}</h4><div class="desc">${esc(gv("desc"))}</div>
+    <h4>${l("mc")} <span style="font-weight:400;font-style:italic">${l("mcs")}</span></h4><div>${bx(gv("mc_obj"))}${l("mo")} &nbsp; ${bx(gv("mc_mon"))}${l("mm")} &nbsp; ${bx(gv("mc_sus"))}${l("ms")} &nbsp; ${bx(gv("mc_alt"))}${l("altre")}: ${v("mc_alt_t")}</div><div class="desc" style="min-height:120px">${v("mc_desc")}</div>
+    <div>${l("resten")} ${bx(gv("d_tit"))}${l("titular")} &nbsp; ${bx(gv("d_dep"))}${l("dep")} (${esc(DEP)}) &nbsp; ${bx(gv("d_ins"))}${l("instr")} &nbsp; ${bx(gv("d_alt"))}${l("altre")}: ${v("d_alt_t")}</div>
+    <h4>${l("alleg")}</h4><div class="desc" style="min-height:100px">${v("alegs")}</div>
+    <h4>${l("fil")}</h4><div>${bx(gv("f_tut"))}${l("pare")} &nbsp; ${bx(gv("f_vol"))}${l("vol")}</div><div>${l("comu")} ${bx(gv("f_com") == "si")}${l("si")} ${bx(gv("f_com") == "no")}${l("no")}</div><div class="desc" style="min-height:60px">${v("f_txt")}</div>
+    <h4>${l("adj")}</h4><div>${bx(gv("a_fot"))}${l("fot")} &nbsp; ${bx(gv("a_inf"))}${l("inf")} &nbsp; ${bx(gv("a_alt"))}${l("altre")}: ${v("a_alt_t")}</div>${firmas}${trad}</div>`;
+  return p1 + p2;
+}
 /* ---- pestañas del panel ---- */
 function ver(id) {
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id == "v-" + id));
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.t == id));
   if (id == "mapa") setTimeout(() => cargaMapa(), 60);
+  if (id == "act") actaInit();
   if (id == "pat") { ptFit = true; $("pt_nom").textContent = $("unit").value.trim() || "—"; setTimeout(() => { iniMapaP(); if (MAPP) MAPP.invalidateSize(); cargaUnidades(); }, 60); }
   window.scrollTo(0, 0);
 }

@@ -68,7 +68,7 @@ details.acc>#pe{padding:10px 12px 2px}
 </head>
 <body>
 <header>
-<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v38</small></div></div>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v39</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
 <nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
@@ -374,6 +374,7 @@ function parseMRZ(text, texto) {
   return mejor;
 }
 const ETQ = /\b(?:LUGAR DE NACIMIENTO|LLOC DE NAIXEMENT|PLACE OF BIRTH|DOMICILIO|DOMICILI|DOMICILE|ADDRESS|HIJO ?\/? ?A? ?DE|FILIACION|FILIATION|EQUIPO|TEAM|APELLIDOS|COGNOMS|SURNAMES?|NOMBRE|NOM|NAME|SEXO|SEX|NACIONALIDAD|NATIONALITY|NACIMIENTO|DATE OF BIRTH|FECHA DE NACIMIENTO|SUPPORT NUMBER|NUM SOPORT|NUMERO DE SOPORTE|VALIDO HASTA|VALID UNTIL)\b/;
+const tipo = u => /NACIMIENTO|NAIXEMENT|BIRTH|LLOC|LUGAR/.test(u) ? "N" : /DOMICILI|ADDRESS/.test(u) ? "D" : /HIJO|FILI|EQUIP|TEAM/.test(u) ? "F" : /APELLIDO|COGNOM|SURNAME/.test(u) ? "A" : /\bNOMBRE\b|\bNOM\b|\bNAME\b/.test(u) ? "O" : "?";
 const ETQG = new RegExp(ETQ.source, "g");
 const PROV = ["SANTA CRUZ DE TENERIFE", "ILLES BALEARS", "ISLAS BALEARES", "CIUDAD REAL", "LAS PALMAS", "LA RIOJA", "A CORUNA", "LA CORUNA", "ALAVA", "ARABA", "ALBACETE", "ALICANTE", "ALACANT", "ALMERIA", "ASTURIAS", "AVILA", "BADAJOZ", "BARCELONA", "BURGOS", "CACERES", "CADIZ", "CANTABRIA", "CASTELLON", "CASTELLO", "CORDOBA", "CORUNA", "CUENCA", "GIRONA", "GERONA", "GRANADA", "GUADALAJARA", "GIPUZKOA", "GUIPUZCOA", "HUELVA", "HUESCA", "BALEARES", "JAEN", "LEON", "LLEIDA", "LERIDA", "LUGO", "MADRID", "MALAGA", "MURCIA", "NAVARRA", "OURENSE", "ORENSE", "PALENCIA", "PONTEVEDRA", "SALAMANCA", "SEGOVIA", "SEVILLA", "SORIA", "TARRAGONA", "TERUEL", "TOLEDO", "VALENCIA", "VALLADOLID", "BIZKAIA", "VIZCAYA", "ZAMORA", "ZARAGOZA", "CEUTA", "MELILLA"];
 const nrm = s => sinAc(String(s).toUpperCase());
@@ -399,6 +400,8 @@ function parseDom(v) {
   calle = calle.replace(/(\.{2,}|…).*$/, "").replace(/[\s.,;:\-]+$/, "").trim();
   if (calle) o.adr = calle.toUpperCase(); if (mun) o.mun = mun; return o;
 }
+const ETQS = ["LLOC DE NAIXEMENT", "LUGAR DE NACIMIENTO", "PLACE OF BIRTH", "DATA DE NAIXEMENT", "FECHA DE NACIMIENTO", "DATE OF BIRTH", "DOMICILIO", "DOMICILI", "FILIACION", "FILIATION", "FILIACIO", "NACIONALITAT", "NACIONALIDAD", "NATIONALITY", "VALIDO HASTA", "VALID UNTIL"];
+const borrosa = u => String(u).split("/").map(x => x.replace(/[^A-Z ]/g, "").replace(/\s+/g, " ").trim()).filter(x => x.length >= 4).some(x => /^(LLOC|LUGAR|PLACE|DATA|FECHA|DATE|HIJO|FILL)\b/.test(x) || /\b(NAIXEMENT|NACIMIENTO|BIRTH)\b/.test(x) || ETQS.some(k => Math.abs(x.length - k.length) <= 3 && lev(x, k) <= Math.floor(k.length * .3)));
 const MESES = {};
 function fechasEn(t) { const o = []; for (const m of String(t).matchAll(/(?<!\d)(\d{2})[\s./-]*(\d{2})[\s./-]*(19\d{2}|20\d{2})(?!\d)/g)) { const d = +m[1], mo = +m[2], y = +m[3]; if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12) o.push(y + "-" + m[2] + "-" + m[1]); } return o; }
 function parseTexto(text) {
@@ -407,10 +410,10 @@ function parseTexto(text) {
   const sinEtq = j => { let s = L[j]; for (const [x, y] of [...U[j].matchAll(ETQG)].map(m => [m.index, m.index + m[0].length]).reverse()) s = s.slice(0, x) + " " + s.slice(y); return limp(s.replace(/[\/]+/g, " ")); };
   const bueno = s => alfa(s) >= 2 && alfa(s) / s.length >= .6;
   const tras = (re, max) => {
-    const i = U.findIndex(x => re.test(x)); if (i < 0) return []; const v = [], r0 = sinEtq(i); if (bueno(r0)) v.push(r0);
+    const i = U.findIndex(x => re.test(x)); if (i < 0) return []; const ka = tipo(U[i]), v = [], r0 = sinEtq(i); if (bueno(r0)) v.push(r0);
     for (let j = i + 1; j < L.length && v.length < max; j++) {
       if (/<|^[A-Z0-9]{18,}$/.test(U[j])) break;
-      if (ETQ.test(U[j])) { const r = sinEtq(j); if (v.length || bueno(r)) break; continue; }
+      if (ETQ.test(U[j]) || borrosa(U[j])) { const kj = tipo(U[j]); if (v.length || (kj != "?" && kj != ka)) break; const r = ETQ.test(U[j]) ? sinEtq(j) : ""; if (bueno(r) && !borrosa(nrm(r))) v.push(r); continue; }
       const s = limp(L[j]); if (bueno(s)) v.push(s);
     }
     return v;
@@ -422,7 +425,7 @@ function parseTexto(text) {
   const fn = flat.match(/(?:NACIMIENTO|DATE OF BIRTH|NAIXEMENT)[^0-9]{0,40}?(\d{2}[\s./-]*\d{2}[\s./-]*(?:19|20)\d{2})/), hoy = new Date().toISOString().slice(0, 10);
   const fs = fechasEn(flat); if (fn) out.nac = fechasEn(fn[1])[0]; else { const pas = fs.filter(f => f <= hoy).sort(); if (pas.length) out.nac = pas[0]; }
   const nac = tras(/LUGAR DE NACIMIENTO|LLOC DE NAIXEMENT|PLACE OF BIRTH/, 3);
-  if (nac.length) { const m = nac.map(x => { const q = buscaProv(x); return q ? x.slice(0, q.ini) + " " + x.slice(q.fin) : x; }).map(limpiaMun).find(Boolean); if (m) out.lnaix = m; }
+  if (nac.length) { const m = nac.filter(x => !borrosa(nrm(x))).map(x => { const q = buscaProv(x); return q ? x.slice(0, q.ini) + " " + x.slice(q.fin) : x; }).map(limpiaMun).find(Boolean); if (m) out.lnaix = m; }
   const dom = tras(/DOMICILIO|DOMICILI|DOMICILE|ADDRESS/, 5); if (dom.length) Object.assign(out, parseDom(dom));
   const ap = tras(/^(PRIMER )?APELLIDO|\bAPELLIDOS\b|\bCOGNOMS\b|\bSURNAMES?\b/, 2).map(limpiaNom).filter(Boolean), no = tras(/\bNOMBRE\b|^NOM\b|\bNAME\b/, 1).map(limpiaNom).filter(Boolean);
   if (ap[0]) out.ape1 = ap[0]; if (ap[1]) out.ape2 = ap[1]; if (no[0]) out.nom = no[0];

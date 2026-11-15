@@ -415,10 +415,10 @@ async function detGuarda() {
   if (e) e.textContent = "Guardado ✓ " + new Date().toLocaleTimeString("es-ES", {hour: "2-digit", minute: "2-digit"}); return true;
 }
 function detEv(e) {
-  const t = e.target, c = t.dataset.c; if (!c || !DET.row) return;
+  const t = e.target, c = t.dataset.dc; if (!c || !DET.row) return;
   const v = t.type == "checkbox" ? t.checked : t.type == "datetime-local" ? (t.value ? new Date(t.value).toISOString() : null) : t.value;
   if (c == "entrada" && !v) return;
-  const i = t.dataset.i, k = t.dataset.k;
+  const i = t.dataset.di, k = t.dataset.dk;
   if (i !== undefined) DET.row[c][+i][k] = v; else if (k) { DET.row[c] = DET.row[c] || {}; DET.row[c][k] = v; } else DET.row[c] = v;
   detSucio(c);
 }
@@ -436,7 +436,7 @@ function firmaPide(titulo, cb) {
 }
 const sgi = u => u ? `<img class="sg" src="${u}" alt="firma">` : "<small>Sin firmar</small>";
 function detClick(e) {
-  const b = e.target.closest("[data-a]"); if (!b || !DET.row) return; const a = b.dataset.a, R = DET.row, i = +b.dataset.i;
+  const b = e.target.closest("[data-da]"); if (!b || !DET.row) return; const a = b.dataset.da, R = DET.row, i = +b.dataset.di;
   if (a == "back") { detGuarda().then(() => { DET.row = null; $("det_f").hidden = true; $("det_l").hidden = false; detLista(); }); return; }
   if (a == "cus+") R.custodia.push({nombre: "", prof: ""}), detSucio("custodia");
   else if (a == "cus-") R.custodia.splice(i, 1), detSucio("custodia");
@@ -444,10 +444,10 @@ function detClick(e) {
   else if (a == "dil-") { if (!confirm("¿Borrar esta diligencia del registro?")) return; R.diligencias.splice(i, 1); detSucio("diligencias"); }
   else if (a == "efe+") R.efectos.push({txt: ""}), detSucio("efectos");
   else if (a == "efe-") R.efectos.splice(i, 1), detSucio("efectos");
-  else if (a == "now") { const c = b.dataset.c, k = b.dataset.k, v = new Date().toISOString(); if (b.dataset.i !== undefined) R[c][i][k] = v; else R[c][k] = v; detSucio(c); }
+  else if (a == "now") { const c = b.dataset.dc, k = b.dataset.dk, v = new Date().toISOString(); if (b.dataset.di !== undefined) R[c][i][k] = v; else R[c][k] = v; detSucio(c); }
   else if (a == "firma") {
-    const c = b.dataset.c, k = b.dataset.k, ix = b.dataset.i;
-    firmaPide(b.dataset.t || "Firma", u => { if (c == "firma_conforme") R.firma_conforme = u; else if (ix !== undefined) R[c][+ix][k] = u; else R[c][k] = u; detSucio(c); detRender(); });
+    const c = b.dataset.dc, k = b.dataset.dk, ix = b.dataset.di;
+    firmaPide(b.dataset.dt || "Firma", u => { if (c == "firma_conforme") R.firma_conforme = u; else if (ix !== undefined) R[c][+ix][k] = u; else R[c][k] = u; detSucio(c); detRender(); });
     return;
   }
   else if (a == "cerrar") {
@@ -459,41 +459,41 @@ function detClick(e) {
   else if (a == "print") { detGuarda().then(() => { $("acta-print").innerHTML = '<div class="bar2"><button id="ap_pr">🖨️ Imprimir</button><button id="ap_x" style="background:#fff;color:#000">Cerrar</button></div>' + detHTML(); $("acta-print").hidden = false; $("ap_pr").onclick = () => window.print(); $("ap_x").onclick = () => { $("acta-print").hidden = true; }; $("acta-print").scrollTop = 0; }); return; }
   detRender();
 }
-const dI = (c, k, v, lbl, ty = "text", extra = "") => `<label class="fl">${lbl}<input type="${ty}" data-c="${c}" data-k="${k}" value="${esc(v || "")}" ${extra}></label>`;
-const dCk = (c, k, v, lbl) => `<label class="ck"><input type="checkbox" data-c="${c}" data-k="${k}" ${v ? "checked" : ""}> ${lbl}</label>`;
+const dI = (c, k, v, lbl, ty = "text", extra = "") => `<label class="fl">${lbl}<input type="${ty}" data-dc="${c}" data-dk="${k}" value="${esc(v || "")}" ${extra}></label>`;
+const dCk = (c, k, v, lbl) => `<label class="ck"><input type="checkbox" data-dc="${c}" data-dk="${k}" ${v ? "checked" : ""}> ${lbl}</label>`;
 function detRender() {
   const R = DET.row; $("det_l").hidden = true; const F = $("det_f"); F.hidden = false;
   const d = R.detenido || {}, dr = R.derechos || {}, em = R.efectos_meta || {}, tr = R.traslado || {}, ab = R.estado == "custodia";
   const h = dhoras(R.entrada);
-  F.innerHTML = `<div class="det-bar"><button data-a="back" type="button" class="sec2">← Lista</button><b>#${R.ref}</b><span id="det_est" style="font-size:13px;opacity:.8"></span></div>
+  F.innerHTML = `<div class="det-bar"><button data-da="back" type="button" class="sec2">← Lista</button><b>#${R.ref}</b><span id="det_est" style="font-size:13px;opacity:.8"></span></div>
 <div class="brf-aviso" style="${ab ? (h >= 72 ? "background:#f8d7d0;color:#5a1408;border-color:#C93A1F" : "") : "background:var(--tint);color:inherit;border-color:var(--line)"}">${ab ? `En el CDQ desde ${dfh(R.entrada)} · <b id="det_dur">${ddur(R.entrada)}</b> · plazo máximo de detención: 72 h (art. 520 LECrim)` : `Custodia cerrada: <b>${R.estado == "libertad" ? "puesto en libertad" : "trasladado"}</b>`}</div>
 <details class="acc" open><summary>1. Detenido</summary><div class="pad"><div class="g2">${dI("detenido", "nombre", d.nombre, "Nombre")}${dI("detenido", "apellidos", d.apellidos, "Apellidos")}${dI("detenido", "doc", d.doc, "DNI / NIE / pasaporte", "text", 'autocapitalize="characters"')}${dI("detenido", "nacimiento", d.nacimiento, "Fecha de nacimiento", "date")}${dI("detenido", "nacionalidad", d.nacionalidad, "Nacionalidad")}${dI("detenido", "domicilio", d.domicilio, "Domicilio")}</div></div></details>
-<details class="acc" open><summary>2. Detención y custodia</summary><div class="pad"><div class="g2"><label class="fl">Entrada al CDQ<input type="datetime-local" data-c="entrada" value="${dtl(R.entrada)}"></label></div>
-<label class="fl">Motivo / presunto delito<input data-c="motivo" value="${esc(R.motivo)}"></label>
-<label class="fl">Lugar y hora de la detención<input data-c="lugar" value="${esc(R.lugar)}"></label>
-<label class="fl">Agentes que practican la detención (nombre y TIP)<input data-c="agentes_detencion" value="${esc(R.agentes_detencion)}"></label>
-<h4 style="margin:10px 0 4px">Agentes de custodia</h4>${R.custodia.map((a, i) => `<div class="row"><label class="fl" style="flex:2;min-width:140px">Nombre<input data-c="custodia" data-i="${i}" data-k="nombre" value="${esc(a.nombre)}"></label><label class="fl" style="flex:1;min-width:90px">TIP<input data-c="custodia" data-i="${i}" data-k="prof" value="${esc(a.prof)}"></label><button data-a="cus-" data-i="${i}" type="button" class="sec2" aria-label="Quitar">✕</button></div>`).join("")}<button data-a="cus+" type="button" class="sec2">+ Añadir agente de custodia</button></div></details>
+<details class="acc" open><summary>2. Detención y custodia</summary><div class="pad"><div class="g2"><label class="fl">Entrada al CDQ<input type="datetime-local" data-dc="entrada" value="${dtl(R.entrada)}"></label></div>
+<label class="fl">Motivo / presunto delito<input data-dc="motivo" value="${esc(R.motivo)}"></label>
+<label class="fl">Lugar y hora de la detención<input data-dc="lugar" value="${esc(R.lugar)}"></label>
+<label class="fl">Agentes que practican la detención (nombre y TIP)<input data-dc="agentes_detencion" value="${esc(R.agentes_detencion)}"></label>
+<h4 style="margin:10px 0 4px">Agentes de custodia</h4>${R.custodia.map((a, i) => `<div class="row"><label class="fl" style="flex:2;min-width:140px">Nombre<input data-dc="custodia" data-di="${i}" data-dk="nombre" value="${esc(a.nombre)}"></label><label class="fl" style="flex:1;min-width:90px">TIP<input data-dc="custodia" data-di="${i}" data-dk="prof" value="${esc(a.prof)}"></label><button data-da="cus-" data-di="${i}" type="button" class="sec2" aria-label="Quitar">✕</button></div>`).join("")}<button data-da="cus+" type="button" class="sec2">+ Añadir agente de custodia</button></div></details>
 <details class="acc" open><summary>3. Derechos</summary><div class="pad">${dCk("derechos", "leidos", dr.leidos, "Derechos leídos al detenido")}
-<div class="row"><label class="fl" style="flex:1">Hora de lectura<input type="datetime-local" data-c="derechos" data-k="hora" value="${dtl(dr.hora)}"></label><button data-a="now" data-c="derechos" data-k="hora" type="button" class="sec2">Ahora</button></div>
+<div class="row"><label class="fl" style="flex:1">Hora de lectura<input type="datetime-local" data-dc="derechos" data-dk="hora" value="${dtl(dr.hora)}"></label><button data-da="now" data-dc="derechos" data-dk="hora" type="button" class="sec2">Ahora</button></div>
 ${dI("derechos", "idioma", dr.idioma, "Idioma / intérprete")}${dI("derechos", "abogado", dr.abogado, "Asistencia letrada (abogado)")}${dCk("derechos", "familiar", dr.familiar, "Comunicado a familiar o persona designada")}${dCk("derechos", "consulado", dr.consulado, "Comunicado al consulado (si es extranjero)")}${dCk("derechos", "medico", dr.medico, "Reconocimiento médico solicitado/realizado")}</div></details>
-<details class="acc" open><summary>4. Diligencias y salidas (${R.diligencias.length})</summary><div class="pad">${R.diligencias.map((x, i) => `<div class="it"><div class="row"><label class="fl" style="flex:1;min-width:150px">Tipo<select data-c="diligencias" data-i="${i}" data-k="tipo">${TIPOS_DIL.map(t => `<option ${t == x.tipo ? "selected" : ""}>${t}</option>`).join("")}</select></label><button data-a="dil-" data-i="${i}" type="button" class="sec2" aria-label="Borrar">✕</button></div>
-<label class="fl">Descripción<textarea rows="2" data-c="diligencias" data-i="${i}" data-k="desc">${esc(x.desc)}</textarea></label>
-<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de salida<input type="datetime-local" data-c="diligencias" data-i="${i}" data-k="salida" value="${dtl(x.salida)}"></label><button data-a="now" data-c="diligencias" data-i="${i}" data-k="salida" type="button" class="sec2">Ahora</button></div>
-<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de regreso<input type="datetime-local" data-c="diligencias" data-i="${i}" data-k="regreso" value="${dtl(x.regreso)}"></label><button data-a="now" data-c="diligencias" data-i="${i}" data-k="regreso" type="button" class="sec2">Ahora</button></div>
-<label class="fl">Agentes que acompañan (nombre y TIP)<input data-c="diligencias" data-i="${i}" data-k="agentes" value="${esc(x.agentes)}"></label>
-<div>Firma de los agentes:${sgi(x.firma)}<button data-a="firma" data-c="diligencias" data-i="${i}" data-k="firma" data-t="Firma de los agentes" type="button" class="sec2">✍️ ${x.firma ? "Repetir firma" : "Firmar"}</button></div></div>`).join("") || "<small>Sin diligencias todavía.</small>"}
-<div><button data-a="dil+" type="button">+ Registrar salida / diligencia</button></div></div></details>
-<details class="acc" open><summary>5. Efectos personales</summary><div class="pad">${R.efectos.map((x, i) => `<div class="row"><label class="fl" style="flex:1;min-width:200px"><input data-c="efectos" data-i="${i}" data-k="txt" value="${esc(x.txt)}" placeholder="Ej.: móvil Samsung negro, cartera con 35 €"></label><button data-a="efe-" data-i="${i}" type="button" class="sec2" aria-label="Quitar">✕</button></div>`).join("")}<button data-a="efe+" type="button" class="sec2">+ Añadir efecto</button>
+<details class="acc" open><summary>4. Diligencias y salidas (${R.diligencias.length})</summary><div class="pad">${R.diligencias.map((x, i) => `<div class="it"><div class="row"><label class="fl" style="flex:1;min-width:150px">Tipo<select data-dc="diligencias" data-di="${i}" data-dk="tipo">${TIPOS_DIL.map(t => `<option ${t == x.tipo ? "selected" : ""}>${t}</option>`).join("")}</select></label><button data-da="dil-" data-di="${i}" type="button" class="sec2" aria-label="Borrar">✕</button></div>
+<label class="fl">Descripción<textarea rows="2" data-dc="diligencias" data-di="${i}" data-dk="desc">${esc(x.desc)}</textarea></label>
+<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de salida<input type="datetime-local" data-dc="diligencias" data-di="${i}" data-dk="salida" value="${dtl(x.salida)}"></label><button data-da="now" data-dc="diligencias" data-di="${i}" data-dk="salida" type="button" class="sec2">Ahora</button></div>
+<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de regreso<input type="datetime-local" data-dc="diligencias" data-di="${i}" data-dk="regreso" value="${dtl(x.regreso)}"></label><button data-da="now" data-dc="diligencias" data-di="${i}" data-dk="regreso" type="button" class="sec2">Ahora</button></div>
+<label class="fl">Agentes que acompañan (nombre y TIP)<input data-dc="diligencias" data-di="${i}" data-dk="agentes" value="${esc(x.agentes)}"></label>
+<div>Firma de los agentes:${sgi(x.firma)}<button data-da="firma" data-dc="diligencias" data-di="${i}" data-dk="firma" data-dt="Firma de los agentes" type="button" class="sec2">✍️ ${x.firma ? "Repetir firma" : "Firmar"}</button></div></div>`).join("") || "<small>Sin diligencias todavía.</small>"}
+<div><button data-da="dil+" type="button">+ Registrar salida / diligencia</button></div></div></details>
+<details class="acc" open><summary>5. Efectos personales</summary><div class="pad">${R.efectos.map((x, i) => `<div class="row"><label class="fl" style="flex:1;min-width:200px"><input data-dc="efectos" data-di="${i}" data-dk="txt" value="${esc(x.txt)}" placeholder="Ej.: móvil Samsung negro, cartera con 35 €"></label><button data-da="efe-" data-di="${i}" type="button" class="sec2" aria-label="Quitar">✕</button></div>`).join("")}<button data-da="efe+" type="button" class="sec2">+ Añadir efecto</button>
 ${dCk("efectos_meta", "bolsa", em.bolsa, "Guardados en bolsa, que sale con el detenido")}${dCk("efectos_meta", "n01", em.n01, "Fotocopia de la N01 incluida en la bolsa")}
-<div>Firma del detenido (recibe/entrega efectos):${sgi(em.firma_det)}<button data-a="firma" data-c="efectos_meta" data-k="firma_det" data-t="Firma del detenido (efectos personales)" type="button" class="sec2">✍️ Firmar</button></div>
-<div>Firma del agente:${sgi(em.firma_ag)}<button data-a="firma" data-c="efectos_meta" data-k="firma_ag" data-t="Firma del agente (efectos personales)" type="button" class="sec2">✍️ Firmar</button></div></div></details>
-<details class="acc" open><summary>6. Traslado y fin de custodia</summary><div class="pad"><label class="fl">Destino<select data-c="traslado" data-k="destino"><option value="">—</option>${DESTINOS.map(t => `<option ${t == tr.destino ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+<div>Firma del detenido (recibe/entrega efectos):${sgi(em.firma_det)}<button data-da="firma" data-dc="efectos_meta" data-dk="firma_det" data-dt="Firma del detenido (efectos personales)" type="button" class="sec2">✍️ Firmar</button></div>
+<div>Firma del agente:${sgi(em.firma_ag)}<button data-da="firma" data-dc="efectos_meta" data-dk="firma_ag" data-dt="Firma del agente (efectos personales)" type="button" class="sec2">✍️ Firmar</button></div></div></details>
+<details class="acc" open><summary>6. Traslado y fin de custodia</summary><div class="pad"><label class="fl">Destino<select data-dc="traslado" data-dk="destino"><option value="">—</option>${DESTINOS.map(t => `<option ${t == tr.destino ? "selected" : ""}>${t}</option>`).join("")}</select></label>
 ${dI("traslado", "detalle", tr.detalle, "Detalle (diligencias, número, observaciones)")}
-<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de salida del CDQ<input type="datetime-local" data-c="traslado" data-k="fecha" value="${dtl(tr.fecha)}"></label><button data-a="now" data-c="traslado" data-k="fecha" type="button" class="sec2">Ahora</button></div>
+<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de salida del CDQ<input type="datetime-local" data-dc="traslado" data-dk="fecha" value="${dtl(tr.fecha)}"></label><button data-da="now" data-dc="traslado" data-dk="fecha" type="button" class="sec2">Ahora</button></div>
 ${dI("traslado", "agentes", tr.agentes, "Agentes que realizan el traslado (nombre y TIP)")}
-<div>Firma de los agentes:${sgi(tr.firma)}<button data-a="firma" data-c="traslado" data-k="firma" data-t="Firma de los agentes (traslado)" type="button" class="sec2">✍️ Firmar</button></div>
-<div style="margin-top:8px">Firma del detenido, conforme ha estado detenido en las dependencias:${sgi(R.firma_conforme)}<button data-a="firma" data-c="firma_conforme" data-t="Firma del detenido (conforme)" type="button" class="sec2">✍️ Firmar</button></div></div></details>
-<div class="brf-fin">${ab ? `<button data-a="cerrar" type="button" class="k">Cerrar custodia</button>` : `<button data-a="reabrir" type="button" class="sec2">Reabrir custodia</button>`}<button data-a="print" type="button" class="sec2">Vista previa e imprimir</button></div>`;
+<div>Firma de los agentes:${sgi(tr.firma)}<button data-da="firma" data-dc="traslado" data-dk="firma" data-dt="Firma de los agentes (traslado)" type="button" class="sec2">✍️ Firmar</button></div>
+<div style="margin-top:8px">Firma del detenido, conforme ha estado detenido en las dependencias:${sgi(R.firma_conforme)}<button data-da="firma" data-dc="firma_conforme" data-dt="Firma del detenido (conforme)" type="button" class="sec2">✍️ Firmar</button></div></div></details>
+<div class="brf-fin">${ab ? `<button data-da="cerrar" type="button" class="k">Cerrar custodia</button>` : `<button data-da="reabrir" type="button" class="sec2">Reabrir custodia</button>`}<button data-da="print" type="button" class="sec2">Vista previa e imprimir</button></div>`;
 }
 function detHTML() {
   const R = DET.row, d = R.detenido || {}, dr = R.derechos || {}, em = R.efectos_meta || {}, tr = R.traslado || {}, td = 'style="border:1px solid #000;padding:3px 6px;vertical-align:top"', tb = 'style="width:100%;border-collapse:collapse"', bx = v => `<span class="box">${v ? "✕" : ""}</span>`, im = u => u ? `<img src="${u}" style="height:46px">` : "";

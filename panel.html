@@ -68,7 +68,7 @@ details.acc>#pe{padding:10px 12px 2px}
 </head>
 <body>
 <header>
-<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v35</small></div></div>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v36</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
 <nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
@@ -281,84 +281,207 @@ document.addEventListener("visibilitychange", async () => { if (document.visibil
 /* ---- escaneo de documentos: lectura (PURE) ---- */
 const W7 = [7, 3, 1], LETRA = "TRWAGMYFPDXBNJZSQVHLCKE";
 const mzChk = s => { let t = 0; for (let i = 0; i < s.length; i++) { const c = s[i], v = c == "<" ? 0 : /\d/.test(c) ? +c : c.charCodeAt(0) - 55; t += v * W7[i % 3]; } return t % 10; };
-const fixNum = s => s.replace(/O/g, "0").replace(/[IL]/g, "1").replace(/B/g, "8").replace(/S/g, "5").replace(/Z/g, "2").replace(/G/g, "6");
+const D2 = {O: "0", Q: "0", D: "0", I: "1", L: "1", B: "8", S: "5", Z: "2", G: "6"}, L2 = {"0": "O", "1": "I", "8": "B", "5": "S", "2": "Z", "6": "G"};
+const fixNum = s => String(s).replace(/./g, c => D2[c] || c);
+const fixLet = s => String(s).replace(/./g, c => L2[c] || c);
+const ALT = {}; [[0, 8], [0, 6], [1, 7], [2, 7], [3, 8], [3, 5], [4, 9], [5, 6], [5, 8], [6, 8], [8, 9]].forEach(([a, b]) => { ALT[a] = (ALT[a] || "") + b; ALT[b] = (ALT[b] || "") + a; });
+const LALT = {O: "QD", Q: "OD", D: "OQ", I: "LT", L: "IT", T: "IL", U: "VY", V: "UY", C: "GO", G: "CO", E: "F", F: "E", B: "R", R: "B", H: "N", N: "H", M: "N"};
+const ALTS = c => /\d/.test(c) ? (ALT[c] || "") + (L2[c] || "") : (LALT[c] || "") + (D2[c] || "");
+const fechaOk = s => /^\d{6}$/.test(s) && +s.slice(2, 4) >= 1 && +s.slice(2, 4) <= 12 && +s.slice(4, 6) >= 1 && +s.slice(4, 6) <= 31;
 const mzDate = (s, past) => { s = fixNum(s); if (!/^\d{6}$/.test(s)) return ""; let y = +s.slice(0, 2); const cy = new Date().getFullYear() % 100; y = past ? (y > cy ? 1900 + y : 2000 + y) : 2000 + y; return y + "-" + s.slice(2, 4) + "-" + s.slice(4, 6); };
-const sinAc = t => t.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+const sinAc = t => t.normalize("NFD").replace(/[̀-ͯ]/g, "");
 const letraOk = n => { const m = String(n).match(/^([XYZ]?)(\d{7,8})([A-Z])$/); if (!m) return false; const num = (m[1] ? "XYZ".indexOf(m[1]) : "") + m[2]; return LETRA[+num % 23] == m[3]; };
+const letraDe = (pre, d) => LETRA[+((pre ? "XYZ".indexOf(pre) : "") + d) % 23];
 const PAISES = {ESP: "Espanya", MAR: "Marroc", ROU: "Romania", FRA: "França", ITA: "Itàlia", PRT: "Portugal", GBR: "Regne Unit", DEU: "Alemanya", COL: "Colòmbia", ECU: "Equador", PER: "Perú", ARG: "Argentina", VEN: "Veneçuela", DZA: "Algèria", SEN: "Senegal", GMB: "Gàmbia", PAK: "Pakistan", CHN: "Xina", UKR: "Ucraïna"};
+/* Repara una lectura con el dígito de control: corrige UN carácter si solo hay una forma plausible de que cuadre */
+function repA(s, c, mask, extra) {
+  const cv = +fixNum(c); if (isNaN(cv)) return {f: s, ok: false};
+  const cls = (ch, i) => mask[i] == "N" ? /\d/.test(ch) : mask[i] == "L" ? /[A-Z]/.test(ch) : true;
+  const norm = t => [...t].map((ch, i) => mask[i] == "N" ? fixNum(ch) : mask[i] == "L" ? fixLet(ch) : ch).join("");
+  const ok = g => g.length == s.length && [...g].every(cls) && mzChk(g) == cv && (!extra || extra(g));
+  s = norm(s); if (ok(s)) return {f: s, ok: true};
+  const cand = new Set();
+  for (let i = 0; i < s.length; i++) for (const a of ALTS(s[i])) { const t = norm(s.slice(0, i) + a + s.slice(i + 1)); if (t[i] == a && ok(t)) cand.add(t); }
+  return cand.size == 1 ? {f: [...cand][0], ok: true, fix: true} : {f: s, ok: false, cands: [...cand]};
+}
+/* Número de DNI / NIE de 9 caracteres: la letra se comprueba con las cifras */
+function repDni(s) {
+  s = s.toUpperCase(); const pre = /^[XYZ]/.test(s) ? s[0] : "", nd = pre ? 7 : 8, r = s.slice(pre ? 1 : 0);
+  if (r.length < nd + 1) return {v: s, ok: false};
+  const d = fixNum(r.slice(0, nd)), l = fixLet(r[nd]); if (!/^\d+$/.test(d)) return {v: s, ok: false};
+  if (letraOk(pre + d + l)) return {v: pre + d + l, ok: true};
+  const cand = new Set();
+  for (let i = 0; i < nd; i++) for (const a of ALT[d[i]] || "") { const g = d.slice(0, i) + a + d.slice(i + 1); if (letraOk(pre + g + l)) cand.add(g); }
+  if (cand.size == 1) return {v: pre + [...cand][0] + l, ok: true, fix: true};
+  return {v: pre + d + l, ok: false, alt: pre + d + letraDe(pre, d)};
+}
 function nombresMZ(t, texto) {
+  t = fixLet(t); if (!t.replace(/<+$/, "").includes("<<")) t = t.replace(/K{2,}/, "<<");
   const [su, ...gi] = t.split("<<"), toks = su.split("<").filter(Boolean), nom = gi.join(" ").replace(/</g, " ").trim();
   let k = 1; if (texto && toks.length > 2) { const T = sinAc((texto || "").toUpperCase()).split("\n").map(x => x.replace(/[^A-Z ]/g, "").trim()); for (let j = 1; j < toks.length; j++) if (T.includes(toks.slice(0, j).join(" "))) { k = j; break; } }
   return {ape1: toks.slice(0, k).join(" "), ape2: toks.slice(k).join(" "), nom};
 }
-function td1(a, b, c, texto) {
-  const av = [], o1 = a.slice(15, 30).replace(/</g, ""), soporte = a.slice(5, 14).replace(/</g, "");
-  if (mzChk(a.slice(5, 14)) != +fixNum(a[14])) av.push("El dígito de control del número de soporte no cuadra: puede haber letras mal leídas.");
-  if (mzChk(fixNum(b.slice(0, 6))) != +fixNum(b[6])) av.push("El dígito de control de la fecha de nacimiento no cuadra: revisa la fecha.");
-  let doc = soporte; const m = o1.match(/[XYZ]\d{7}[A-Z]|\d{8}[A-Z]/);
-  if (a.slice(2, 5) == "ESP" && m) { doc = m[0]; if (!letraOk(doc)) av.push("La letra del número de documento no es válida: revísalo."); } else if (a.slice(2, 5) == "ESP" && o1) doc = o1;
-  const n = nombresMZ(c, texto);
-  return {tipo: "td1", pais: a.slice(2, 5), doc, soporte, sexo: b[7], nac: mzDate(b.slice(0, 6), true), cad: mzDate(b.slice(8, 14), false), nat: b.slice(15, 18), ...n, av};
+const R2 = /([0-9OQDILBSZG]{6})([0-9OQDILBSZG])([A-Z<])([0-9OQDILBSZG]{6})([0-9OQDILBSZG])([A-Z]{3})/;
+function td1(l1, l2, l3, texto) {
+  const m2 = l2.match(R2); if (!m2) return null;
+  const av = [], nac = repA(m2[1], m2[2], "NNNNNN", fechaOk), cad = repA(m2[4], m2[5], "NNNNNN", fechaOk), sexo = /^[MF]$/.test(m2[3]) ? m2[3] : "";
+  const nat = fixLet(m2[6]), resto = l2.slice(m2.index + m2[0].length), comp = fixNum(resto.slice(-1));
+  // línea 1: se prueba tal cual y quitando un carácter sobrante, hasta que cuadre el dígito de control del soporte
+  let p = l1.padEnd(30, "<"), pais = fixLet(p.slice(2, 5)); if (pais == "E5P") pais = "ESP";
+  const esp = pais == "ESP" || nat == "ESP", mask = esp ? "LLLNNNNNN" : "AAAAAAAAA";
+  let sop = repA(p.slice(5, 14), p[14], mask), pp = p;
+  if (!sop.ok && l1.length > 30) for (let i = 2; i < 16 && !sop.ok; i++) { const q = (l1.slice(0, i) + l1.slice(i + 1)).padEnd(30, "<"), s2 = repA(q.slice(5, 14), q[14], mask); if (s2.ok) { sop = s2; pp = q; } }
+  const chk1 = String(fixNum(pp[14])), opt = pp.slice(15);
+  let doc = sop.f, dniOk = true, cands = [opt.padEnd(15, "<").slice(0, 15)];
+  if (esp) {
+    const mm = opt.match(/[XYZ][0-9OQDILBSZG]{7}[A-Z0-9]|[0-9OQDILBSZG]{8}[A-Z0-9]/);
+    if (mm && mm.index <= 3) { const r = repDni(mm[0]); doc = r.v; dniOk = r.ok; cands = [r.v.padEnd(15, "<")]; if (r.alt) cands.push(r.alt.padEnd(15, "<")); }
+    else { doc = ""; dniOk = false; cands = [opt.padEnd(15, "<").slice(0, 15)]; }
+  }
+  const resto2 = resto.slice(0, -1).replace(/[^A-Z0-9<]/g, "").padEnd(11, "<").slice(0, 11);
+  const glob = o => mzChk(sop.f + chk1 + o + nac.f + fixNum(m2[2]) + cad.f + fixNum(m2[5]) + resto2);
+  let optC = cands[0], compOk = !isNaN(+comp) && glob(optC) == +comp;
+  if (!compOk && cands[1] && glob(cands[1]) == +comp) { optC = cands[1]; compOk = true; doc = cands[1].replace(/</g, ""); dniOk = true; }
+  let nacF = nac.f, cadF = cad.f, sopF = sop.f, nacOk = nac.ok, cadOk = cad.ok, sopOk = sop.ok;
+  if (!compOk && (nac.cands || cad.cands || sop.cands)) {
+    const ok = [];
+    for (const a of nac.cands || [nac.f]) for (const b of cad.cands || [cad.f]) for (const c of sop.cands || [sop.f]) for (const o of cands) if (mzChk(c + chk1 + o + a + fixNum(m2[2]) + b + fixNum(m2[5]) + resto2) == +comp) ok.push({a, b, c, o});
+    if (ok.length == 1) { nacF = ok[0].a; cadF = ok[0].b; sopF = ok[0].c; optC = ok[0].o; nacOk = cadOk = sopOk = compOk = true; if (cands.length > 1 || esp) { doc = optC.replace(/</g, ""); dniOk = true; } }
+  }
+  if (esp && !doc) av.push("No se ha podido leer el número de documento: escríbelo a mano.");
+  else if (esp && !dniOk) av.push("La letra del número de documento no cuadra con sus cifras: revísalo.");
+  if (!sopOk) av.push("El número de soporte no supera su dígito de control: puede haber caracteres mal leídos.");
+  if (!nacOk) av.push("La fecha de nacimiento no supera su dígito de control: revísala.");
+  if (!cadOk) av.push("La fecha de caducidad no supera su dígito de control: revísala.");
+  if (sopOk && nacOk && cadOk && dniOk && !compOk) av.push("El dígito de control global no cuadra: revisa los datos.");
+  return {tipo: "td1", pais, doc, soporte: sopF, sexo, nac: fechaOk(nacF) ? mzDate(nacF, true) : "", cad: fechaOk(cadF) ? mzDate(cadF, false) : "", nat, ...nombresMZ(l3.slice(0, 30), texto), av, ok: sopOk && nacOk && cadOk && dniOk && compOk, nacOk, nacChk: +fixNum(m2[2])};
 }
 function td3(a, b, texto) {
-  const av = [], doc = b.slice(0, 9).replace(/</g, "");
-  if (mzChk(b.slice(0, 9)) != +fixNum(b[9])) av.push("El dígito de control del número de pasaporte no cuadra: revísalo.");
-  if (mzChk(fixNum(b.slice(13, 19))) != +fixNum(b[19])) av.push("El dígito de control de la fecha de nacimiento no cuadra: revisa la fecha.");
-  return {tipo: "td3", pais: a.slice(2, 5), doc, sexo: b[20], nac: mzDate(b.slice(13, 19), true), cad: mzDate(b.slice(21, 27), false), nat: b.slice(10, 13), ...nombresMZ(a.slice(5, 44), texto), av};
+  const av = [], doc = b.slice(0, 9).replace(/</g, ""), d = repA(b.slice(0, 9), b[9], "AAAAAAAAA"), n = repA(b.slice(13, 19), b[19], "NNNNNN", fechaOk);
+  if (!d.ok) av.push("El dígito de control del número de pasaporte no cuadra: revísalo.");
+  if (!n.ok) av.push("El dígito de control de la fecha de nacimiento no cuadra: revisa la fecha.");
+  return {tipo: "td3", pais: a.slice(2, 5), doc: d.ok ? d.f.replace(/</g, "") : doc, sexo: b[20], nac: mzDate(n.f, true), cad: mzDate(b.slice(21, 27), false), nat: b.slice(10, 13), ...nombresMZ(a.slice(5, 44), texto), av, ok: d.ok && n.ok};
 }
+const limpia = l => String(l).toUpperCase().replace(/«/g, "<").replace(/[^A-Z0-9<]/g, "").replace(/[KCLE]{3,}/g, m => "<".repeat(m.length));
 function parseMRZ(text, texto) {
-  const L = String(text).toUpperCase().replace(/«/g, "<").split("\n").map(l => l.replace(/[^A-Z0-9<]/g, "")).filter(l => l.length >= 26);
+  const L = String(text).split("\n").map(limpia).filter(l => l.length >= 14);
   for (let i = 0; i < L.length - 1; i++) if (L[i].length >= 38 && L[i + 1].length >= 38 && L[i][0] == "P") return td3(L[i].padEnd(44, "<").slice(0, 44), L[i + 1].padEnd(44, "<").slice(0, 44), texto);
-  for (let i = 0; i < L.length - 2; i++) if (/^[IAC]/.test(L[i]) && L[i].length <= 34 && L[i + 1].length <= 34 && L[i + 2].length <= 34) return td1(L[i].padEnd(30, "<").slice(0, 30), L[i + 1].padEnd(30, "<").slice(0, 30), L[i + 2].padEnd(30, "<").slice(0, 30), texto);
-  return null;
+  let mejor = null;
+  for (let i = 0; i < L.length; i++) if (R2.test(L[i]) && L[i].length <= 40) {
+    const r = td1(i > 0 && !R2.test(L[i - 1]) ? L[i - 1] : "", L[i], L[i + 1] || "", texto);
+    if (r && (!mejor || (r.ok && !mejor.ok) || (r.ok == mejor.ok && r.av.length < mejor.av.length))) mejor = r;
+  }
+  return mejor;
 }
 function parseTexto(text) {
   const L = String(text).split("\n").map(x => x.trim()).filter(Boolean), U = L.map(x => sinAc(x.toUpperCase())), out = {};
-  const sig = (re, n = 1) => { const i = U.findIndex(x => re.test(x)); return i < 0 ? [] : L.slice(i + 1, i + 1 + n).filter(x => !/^[A-Z\/ ]{3,}\s*\/\s*[A-Z ]{3,}$/.test(x) || /\d/.test(x)); };
-  const dn = U.join(" ").match(/\b(\d{8}[A-Z]|[XYZ]\d{7}[A-Z])\b/); if (dn) out.doc = dn[1];
+  const sig = (re, n = 1) => { const i = U.findIndex(x => re.test(x)); return i < 0 ? [] : L.slice(i + 1, i + 1 + n).filter(x => !/<|^[A-Z0-9]{20,}$/.test(x) && (!/^[A-Z\/ ]{3,}\s*\/\s*[A-Z ]{3,}$/.test(x) || /\d/.test(x))); };
+  const flat = U.join(" ").replace(/(\d)[\s.\-](?=[A-Z](?![A-Z]))/g, "$1");
+  const cs = [...flat.matchAll(/(?<![0-9A-Z])([XYZ]\d{7}|\d{8})\s?-?([A-Z])(?![A-Z0-9])/g)].map(m => m[1] + m[2]), ok = cs.find(letraOk); if (ok) out.doc = ok;
+  const fn = flat.match(/(?:FECHA DE NACIMIENTO|DATA DE NAIXEMENT|DATE OF BIRTH)\D{0,25}?(\d{2})[\s./-]+(\d{2})[\s./-]+(\d{4})/); if (fn && +fn[2] >= 1 && +fn[2] <= 12 && +fn[1] >= 1 && +fn[1] <= 31) out.nac = fn[3] + "-" + fn[2] + "-" + fn[1];
   const nac = sig(/LUGAR DE NACIMIENTO|LLOC DE NAIXEMENT|PLACE OF BIRTH/, 2); if (nac[0]) { const m = nac[0].match(/^(.*?)\s*\(([^)]+)\)\s*$/); out.lnaix = (m ? m[1] : nac[0]).trim(); }
   const dom = sig(/DOMICILIO|DOMICILI|ADDRESS/, 3); if (dom[0]) { out.adr = dom[0]; const l2 = dom[1] || "", m = l2.match(/^(.*?)\s*\(([^)]+)\)\s*$/); if (m) { out.mun = m[1].trim(); out.prov = m[2].trim(); } else if (l2) out.mun = l2.trim(); }
-  const nu = U.join("\n"), ap = sig(/^(PRIMER )?APELLIDO|^APELLIDOS|^COGNOMS|SURNAME/, 2), no = sig(/^NOMBRE|^NOM$|^NAME/, 1); if (ap[0]) out.ape1 = ap[0]; if (ap[1]) out.ape2 = ap[1]; if (no[0]) out.nom = no[0];
+  const ap = sig(/^(PRIMER )?APELLIDO|^APELLIDOS|^COGNOMS|SURNAME/, 2), no = sig(/^NOMBRE|^NOM$|^NAME/, 1); if (ap[0]) out.ape1 = ap[0]; if (ap[1]) out.ape2 = ap[1]; if (no[0]) out.nom = no[0];
   const lic = {1: /^\s*1[.\s]+(.+)$/m, 2: /^\s*2[.\s]+(.+)$/m, 3: /^\s*3[.\s]+(\d{2}[./-]\d{2}[./-]\d{4})\s*(.*)$/m, 5: /^\s*5[.\s]+(.+)$/m, 8: /^\s*8[.\s]+(.+)$/m};
   if (!out.ape1) { const a = String(text).match(lic[1]); if (a) { const t = a[1].trim().split(/\s+/); out.ape1 = t[0]; out.ape2 = t.slice(1).join(" "); } }
   if (!out.nom) { const a = String(text).match(lic[2]); if (a) out.nom = a[1].trim(); }
-  const f = String(text).match(lic[3]); if (f) { out.nac = f[1].split(/[./-]/).reverse().join("-"); if (f[2]) out.lnaix = f[2].trim(); }
+  const f = String(text).match(lic[3]); if (f) { if (!out.nac) out.nac = f[1].split(/[./-]/).reverse().join("-"); if (f[2]) out.lnaix = f[2].trim(); }
   if (!out.doc) { const a = String(text).match(lic[5]); if (a) out.doc = a[1].trim(); } const ad = String(text).match(lic[8]); if (ad && !out.adr) out.adr = ad[1].trim();
   return out;
+}
+const lev = (a, b) => { const d = Array.from({length: a.length + 1}, (_, i) => [i, ...Array(b.length).fill(0)]); for (let j = 1; j <= b.length; j++) d[0][j] = j; for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)); return d[a.length][b.length]; };
+/* Contrasta la lectura de las líneas MRZ con el texto impreso: arregla letras y fechas dudosas */
+function cruza(mz, t) {
+  if (!mz) return mz; const r = {...mz, av: [...mz.av]}, lim = x => sinAc(String(x).toUpperCase()).replace(/[^A-Z ]/g, "").replace(/\s+/g, " ").trim();
+  for (const k of ["ape1", "ape2", "nom"]) if (t[k] && r[k]) { const a = lim(t[k]), b = r[k]; if (a && a != b && lev(a.replace(/ /g, ""), b.replace(/ /g, "")) <= 2) r[k] = String(t[k]).toUpperCase().replace(/[^A-ZÑÁÉÍÓÚÜÇ ·'-]/g, "").replace(/\s+/g, " ").trim(); }
+  if (t.nac && r.nacOk === false && r.nacChk >= 0) { const y = t.nac.slice(2, 4) + t.nac.slice(5, 7) + t.nac.slice(8, 10); if (mzChk(y) == r.nacChk) { r.nac = t.nac; r.nacOk = true; r.av = r.av.filter(x => !/fecha de nacimiento/.test(x)); } }
+  if (t.doc && r.doc && t.doc != r.doc && !r.ok && letraOk(t.doc) && lev(t.doc, r.doc) <= 2) { r.doc = t.doc; r.av = r.av.filter(x => !/documento/.test(x)); }
+  return r;
 }
 /* ---- fin PURE ---- */
 /* ---- escaneo de documentos: cámara y OCR en el propio dispositivo ---- */
 const TS_URL = "https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js";
 const cargaTs = () => new Promise((ok, ko) => { if (window.Tesseract) return ok(); const t = document.createElement("script"); t.src = TS_URL; t.onload = ok; t.onerror = () => ko(new Error("No se pudo cargar el lector: la primera vez hace falta internet.")); document.head.appendChild(t); });
-function prepImg(file, max = 1800) { return new Promise((ok, ko) => { const u = URL.createObjectURL(file), im = new Image(); im.onload = () => { const k = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement("canvas"); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); const g = c.getContext("2d"); g.drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u); const d = g.getImageData(0, 0, c.width, c.height), a = d.data; for (let i = 0; i < a.length; i += 4) { let y = .299 * a[i] + .587 * a[i + 1] + .114 * a[i + 2]; y = Math.max(0, Math.min(255, (y - 128) * 1.35 + 128)); a[i] = a[i + 1] = a[i + 2] = y; } g.putImageData(d, 0, 0); c.toBlob(ok, "image/png"); }; im.onerror = () => ko(new Error("Imagen no válida")); im.src = u; }); }
-async function ocr(blob, lang, wl, prog) { const w = await Tesseract.createWorker(lang, 1, {logger: m => { if (m.status == "recognizing text") prog(m.progress); }}); if (wl) await w.setParameters({tessedit_char_whitelist: wl, tessedit_pageseg_mode: "6"}); const r = await w.recognize(blob); await w.terminate(); return r.data.text || ""; }
+const cargaImg = (file, max) => new Promise((ok, ko) => { const u = URL.createObjectURL(file), im = new Image(); im.onload = () => { const k = Math.min(1, max / Math.max(im.naturalWidth, im.naturalHeight)), c = document.createElement("canvas"); c.width = Math.round(im.naturalWidth * k); c.height = Math.round(im.naturalHeight * k); c.getContext("2d").drawImage(im, 0, 0, c.width, c.height); URL.revokeObjectURL(u); ok(c); }; im.onerror = () => ko(new Error("Imagen no válida")); im.src = u; });
+/* recorta una zona, la ajusta de tamaño y mejora el contraste; modo "b" = blanco y negro adaptativo */
+function recorte(src, b, ancho, modo) {
+  const k = Math.min(3, ancho / b.w), w = Math.max(8, Math.round(b.w * k)), h = Math.max(8, Math.round(b.h * k)), c = document.createElement("canvas"); c.width = w; c.height = h;
+  const g = c.getContext("2d", {willReadFrequently: true}); g.imageSmoothingQuality = "high"; g.drawImage(src, b.x, b.y, b.w, b.h, 0, 0, w, h);
+  const d = g.getImageData(0, 0, w, h), a = d.data, n = w * h, y = new Uint8ClampedArray(n), H = new Uint32Array(256);
+  for (let i = 0, j = 0; i < n; i++, j += 4) { const v = Math.round(.299 * a[j] + .587 * a[j + 1] + .114 * a[j + 2]); y[i] = v; H[v]++; }
+  let lo = 0, hi = 255, s = 0; for (; lo < 255; lo++) { s += H[lo]; if (s > n * .01) break; } s = 0; for (; hi > 0; hi--) { s += H[hi]; if (s > n * .01) break; }
+  const sc = 255 / Math.max(40, hi - lo); for (let i = 0; i < n; i++) y[i] = Math.max(0, Math.min(255, (y[i] - lo) * sc));
+  let out = y;
+  if (modo == "b") {
+    const I = new Float64Array((w + 1) * (h + 1)); for (let r = 0; r < h; r++) { let rs = 0; for (let x = 0; x < w; x++) { rs += y[r * w + x]; I[(r + 1) * (w + 1) + x + 1] = I[r * (w + 1) + x + 1] + rs; } }
+    const R = Math.max(8, Math.round(Math.min(w, h) / 6)); out = new Uint8ClampedArray(n);
+    for (let r = 0; r < h; r++) { const r0 = Math.max(0, r - R), r1 = Math.min(h, r + R + 1); for (let x = 0; x < w; x++) { const x0 = Math.max(0, x - R), x1 = Math.min(w, x + R + 1), m = (I[r1 * (w + 1) + x1] - I[r0 * (w + 1) + x1] - I[r1 * (w + 1) + x0] + I[r0 * (w + 1) + x0]) / ((r1 - r0) * (x1 - x0)); out[r * w + x] = y[r * w + x] < m * .86 ? 0 : 255; } }
+  }
+  for (let i = 0, j = 0; i < n; i++, j += 4) { a[j] = a[j + 1] = a[j + 2] = out[i]; a[j + 3] = 255; }
+  g.putImageData(d, 0, 0); return c;
+}
+const aBlob = c => new Promise(ok => c.toBlob(ok, "image/png"));
+let PROG = () => {};
+async function crearW(lang, wl) { const w = await Tesseract.createWorker(lang, 1, {logger: m => { if (m.status == "recognizing text") PROG(m.progress); }}); if (wl) await w.setParameters({tessedit_char_whitelist: wl, tessedit_pageseg_mode: "6"}); return w; }
+const WL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<";
+const mrzLike = t => { const c = limpia(t); return c.length >= 22 && (c.includes("<<") || R2.test(c) || (/ESP/.test(c) && /\d{6}/.test(c))); };
+const puntuaMZ = r => !r ? -1 : r.ok ? 100 : 50 - r.av.length * 10 + (r.doc ? 5 : 0);
 function marca(k, v) { if (!v) return; const e = document.querySelector('#actaf [data-f="' + k + '"]'); if (!e) return; e.value = v; e.classList.add("rev"); }
+/* Lee una imagen: localiza las líneas de lectura automática, las amplía y las relee hasta que cuadren los dígitos de control */
+async function leeImagen(file, wMZ, wTX, paso) {
+  const src = await cargaImg(file, 3000), W = src.width, H = src.height, out = {raw: "", mz: null, tx: ""}, tz = [];
+  const c1 = recorte(src, {x: 0, y: 0, w: W, h: H}, Math.min(W, 2400), "g"), k = c1.width / W, b1 = await aBlob(c1);
+  paso("Buscando las líneas de lectura automática…", 0);
+  const r1 = await wMZ.recognize(b1), t1 = r1.data.text || ""; out.raw += "--- líneas MRZ (imagen entera) ---\n" + t1 + "\n"; tz.push(t1);
+  let mz = parseMRZ(t1, ""); if (mz && mz.ok) out.mz = mz;
+  let reg = [];
+  if (!out.mz) {
+    const ls = (r1.data.lines || []).filter(l => l.bbox && mrzLike(l.text));
+    if (ls.length) { const x0 = Math.min(...ls.map(l => l.bbox.x0)), x1 = Math.max(...ls.map(l => l.bbox.x1)), y0 = Math.min(...ls.map(l => l.bbox.y0)), y1 = Math.max(...ls.map(l => l.bbox.y1)), lh = (y1 - y0) / ls.length, px = .04 * c1.width, py = lh * .7;
+      const bx = Math.max(0, x0 - px) / k, by = Math.max(0, y0 - py) / k; reg.push({x: bx, y: by, w: Math.min(c1.width, x1 + px) / k - bx, h: Math.min(c1.height, y1 + py) / k - by}); }
+    reg.push({x: 0, y: H * .58, w: W, h: H * .42});
+    let best = mz;
+    for (const b of reg) for (const modo of ["b", "g"]) {
+      if (best && best.ok) break;
+      paso("Releyendo las líneas ampliadas…", .3);
+      const t = (await wMZ.recognize(await aBlob(recorte(src, b, 2200, modo)))).data.text || ""; out.raw += "--- líneas MRZ ampliadas (" + modo + ") ---\n" + t + "\n"; tz.push(t);
+      const r = parseMRZ(t, ""); if (puntuaMZ(r) > puntuaMZ(best)) best = r;
+    }
+    out.mz = best;
+  }
+  paso("Leyendo el texto del documento…", .6);
+  out.tx = (await wTX.recognize(b1)).data.text || ""; out.raw += "--- texto ---\n" + out.tx + "\n";
+  for (const t of tz) { const r = parseMRZ(t, out.tx); if (puntuaMZ(r) > puntuaMZ(out.mz)) out.mz = r; }
+  return out;
+}
 function escanerInit() {
   $("actaf").addEventListener("input", e => e.target.classList && e.target.classList.remove("rev"));
   $("sc_btn").onclick = () => $("sc_file").click();
   $("sc_file").onchange = async () => {
     const fs = [...$("sc_file").files]; if (!fs.length) return;
-    $("sc_bar").hidden = false; let mz = null, tx = "", raw = "";
+    $("sc_bar").hidden = false; let mz = null, tx = "", raw = "", wMZ = null, wTX = null;
     try {
-      await cargaTs();
+      $("sc_n").textContent = "Cargando el lector…"; await cargaTs(); wMZ = await crearW("eng", WL); wTX = await crearW("spa", "");
       for (let i = 0; i < fs.length; i++) {
-        const base = i / fs.length, paso = 1 / fs.length;
-        $("sc_n").textContent = "Preparando la imagen " + (i + 1) + " de " + fs.length + "…"; const img = await prepImg(fs[i]);
-        $("sc_n").textContent = "Leyendo las líneas de lectura automática (imagen " + (i + 1) + ")…";
-        const t1 = await ocr(img, "eng", "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<", f => { $("sc_pr").value = 100 * (base + paso * f * .4); });
-        $("sc_n").textContent = "Leyendo el texto del documento (imagen " + (i + 1) + ")…";
-        const t2 = await ocr(img, "spa", "", f => { $("sc_pr").value = 100 * (base + paso * (.4 + f * .6)); });
-        raw += "--- Imagen " + (i + 1) + ": líneas MRZ ---\n" + t1 + "\n--- Imagen " + (i + 1) + ": texto ---\n" + t2 + "\n"; tx += t2 + "\n"; if (!mz) mz = parseMRZ(t1, tx) || parseMRZ(t2, tx);
+        const base = 100 * i / fs.length, ancho = 100 / fs.length;
+        PROG = f => { $("sc_pr").value = base + ancho * Math.min(.95, (PROG.p || 0) + f * .3); };
+        const r = await leeImagen(fs[i], wMZ, wTX, (m, p) => { PROG.p = p; $("sc_n").textContent = m + " (imagen " + (i + 1) + " de " + fs.length + ")"; });
+        raw += "=== Imagen " + (i + 1) + " ===\n" + r.raw; tx += r.tx + "\n";
+        if (puntuaMZ(r.mz) > puntuaMZ(mz)) mz = r.mz;
       }
-      const t = parseTexto(tx), av = []; let n = 0;
-      if (mz) {
-        const dniE = mz.pais == "ESP" && /^\d{8}[A-Z]$/.test(mz.doc), nieE = /^[XYZ]\d{7}[A-Z]$/.test(mz.doc);
-        marca("tdoc", mz.tipo == "td3" ? "t_pas" : nieE ? "t_nie" : "t_dni"); marca("ape1", mz.ape1); marca("ape2", mz.ape2); marca("nom", mz.nom); marca("doc", mz.doc); marca("dnaix", mz.nac); if (mz.pais == "ESP") marca("pais", PAISES.ESP); av.push(...mz.av); n++;
-      }
-      Object.entries({ape1: "ape1", ape2: "ape2", nom: "nom", doc: "doc", lnaix: "lnaix", adr: "adr", mun: "mun", prov: "prov", dnaix: "dnaix"}).forEach(([k, f]) => { if (t[k] && !(mz && ["ape1", "ape2", "nom", "doc", "dnaix"].includes(k))) { marca(f, t[k]); n++; } });
-      $("sc_n").textContent = (n ? "Lectura hecha. Los campos en amarillo vienen del documento: revísalos antes de imprimir." : "No he podido leer datos del documento. Prueba con más luz, sin reflejos y con el documento recto.") + (av.length ? " " + av.join(" ") : "");
+      const t = parseTexto(tx), av = []; let n = 0; mz = cruza(mz, t);
+      const doc = mz && mz.doc && (mz.ok || letraOk(mz.doc) || !t.doc) ? mz.doc : (t.doc || (mz && mz.doc) || "");
+      if (mz && t.doc && mz.doc && t.doc != mz.doc && !mz.ok) av.push("El número leído por delante (" + t.doc + ") y por detrás (" + mz.doc + ") no coincide: revísalo.");
+      if (mz || doc) { marca("tdoc", mz && mz.tipo == "td3" ? "t_pas" : /^[XYZ]/.test(doc) ? "t_nie" : "t_dni"); n++; }
+      const v = k => (mz && mz[k]) || t[k] || "";
+      marca("doc", doc); marca("ape1", v("ape1")); marca("ape2", v("ape2")); marca("nom", v("nom")); marca("dnaix", (mz && mz.nac) || t.nac || ""); if (mz && mz.pais == "ESP") marca("pais", PAISES.ESP);
+      ["lnaix", "adr", "mun", "prov"].forEach(k => marca(k, t[k]));
+      n += ["doc", "ape1", "ape2", "nom", "lnaix", "adr", "mun", "prov"].filter(k => k == "doc" ? doc : v(k)).length;
+      if (mz) av.push(...mz.av);
+      $("sc_n").textContent = (!n ? "No he podido leer datos del documento. Prueba con más luz, sin reflejos, de cerca y con el documento recto." : mz && mz.ok ? "✔ Lectura verificada con los dígitos de control del documento. Los campos en amarillo vienen de él." : mz && !av.length ? "Lectura contrastada con el texto impreso del documento. Los campos en amarillo vienen de él: dales un vistazo antes de imprimir." : "Lectura hecha. Los campos en amarillo vienen del documento: revísalos antes de imprimir.") + (n && !mz ? " No se han leído las líneas de lectura automática (<<<<): escanea también la cara de atrás, que es la más fiable." : "") + (av.length ? " " + av.join(" ") : "");
       $("sc_txt").textContent = raw; $("sc_raw").hidden = false;
     } catch (e) { $("sc_n").textContent = "No se pudo leer: " + e.message; }
+    for (const w of [wMZ, wTX]) try { w && await w.terminate(); } catch (e) {}
     $("sc_bar").hidden = true; $("sc_file").value = "";
   };
 }

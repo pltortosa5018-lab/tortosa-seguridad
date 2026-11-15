@@ -74,13 +74,19 @@ details.acc>#pe{padding:10px 12px 2px}
 .brf-d{display:grid;grid-template-columns:minmax(70px,.6fr) 1.3fr 1fr 1fr;gap:8px;align-items:end;padding:8px 0;border-top:1px solid var(--line)}.brf-d:first-of-type{border-top:0}.brf-d b{padding-bottom:12px}.brf-d label{font-size:12px}.brf-d select,.brf-d input{width:100%;padding:9px;margin-top:2px;box-sizing:border-box}
 @media(max-width:560px){.brf-d{grid-template-columns:1fr 1fr}.brf-d b{grid-column:1/3;padding-bottom:0}}
 .brf-fin{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.det-c{cursor:pointer;display:flex}.det-c .bd{font-size:12px;font-weight:700;border-radius:20px;padding:3px 10px;background:var(--tint)}.det-c .bd.am{background:#fff4d6;color:#4a3500}.det-c .bd.ro{background:#C93A1F;color:#fff}
+#det_f .fl{display:block;margin:8px 0;font-size:13px}#det_f .fl input,#det_f .fl select,#det_f .fl textarea{width:100%;box-sizing:border-box;margin-top:3px;padding:10px}#det_f .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+#det_f .it{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}#det_f .row{display:flex;gap:8px;align-items:end;flex-wrap:wrap}#det_f .ck{display:flex;gap:8px;align-items:center;margin:8px 0;font-size:14px}#det_f .ck input{width:22px;height:22px}
+#det_f img.sg{height:60px;background:#fff;border:1px solid var(--line);border-radius:8px;display:block;margin:4px 0}.det-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}.sec2{background:none;color:inherit;border:1px solid var(--line)}
+#sig_m{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;align-items:center;justify-content:center}#sig_m .box2{background:var(--card);border-radius:16px;padding:14px;width:min(94vw,640px)}#sig_c{width:100%;height:220px;background:#fff;border:1px solid #999;border-radius:10px;touch-action:none;display:block}
+@media(max-width:560px){#det_f .g2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <header>
 <div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v41</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
-<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="brf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5a3 3 0 010 6M18 20a6 6 0 00-3-5"/></svg><span>Briefing</span></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
+<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="brf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5a3 3 0 010 6M18 20a6 6 0 00-3-5"/></svg><span>Briefing</span></button><button class="tab" data-t="det"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18M15 3v18M4 9h16M4 15h16"/></svg><span>Detenidos</span><i class="tb" id="b_det" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
@@ -103,6 +109,10 @@ details.acc>#pe{padding:10px 12px 2px}
 <details class="acc" open><summary>3. Tareas por indicativo</summary><div class="pad" id="brf_tar"></div></details>
 <details class="acc" open><summary>4. Descanso (9.15)</summary><div class="pad" id="brf_des"></div></details>
 <div class="brf-fin"><button id="brf_res" type="button">Copiar resumen</button><button id="brf_imp" type="button" style="background:none;color:inherit;border:1px solid var(--line)">Vista previa e imprimir</button></div></section>
+<section class="view" id="v-det"><h2 class="vt">Detenidos · CDQ</h2>
+<div id="det_l"><div class="brf-bar"><button id="det_new" type="button" class="k">+ Nuevo detenido</button><button class="chip on" data-df="custodia" type="button">En el CDQ</button><button class="chip" data-df="todos" type="button">Todos</button></div>
+<div id="det_est0" style="font-size:13px;opacity:.8;margin:0 0 8px"></div><div id="det_lst"></div></div>
+<div id="det_f" hidden></div></section>
 <section class="view" id="v-pat"><h2 class="vt">Patrullas</h2>
 <div class="card" style="display:block"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span><b>Esta unidad:</b> <span id="pt_nom">—</span></span><button id="pt_btn">📍 Compartir mi ubicación</button></div>
 <small id="pt_est">La ubicación solo la ven los agentes del panel. No se guarda el recorrido, solo la última posición. Mantén esta pantalla abierta y encendida.</small></div>
@@ -149,6 +159,7 @@ details.acc>#pe{padding:10px 12px 2px}
 </section>
 </div>
 </main>
+<div id="sig_m"><div class="box2"><h3 id="sig_t" style="margin:0 0 8px"></h3><canvas id="sig_c" width="900" height="330"></canvas><div style="display:flex;gap:8px;margin-top:10px"><button id="sig_ok" class="k" type="button">Aceptar firma</button><button id="sig_clr" type="button" class="sec2">Borrar</button><button id="sig_no" type="button" class="sec2">Cancelar</button></div></div></div>
 <div id="acta-print" hidden></div>
 <div id="cfm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 id="cfm_t" style="margin:0 0 8px"></h3><p id="cfm_p" style="margin:0 0 12px"></p><div style="display:flex;gap:8px"><button class="k" id="cfm_ok">Confirmar y enviar</button><button id="cfm_no" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <div id="grm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 style="margin:0 0 8px">Responder a la consulta de grúa</h3><small>Información adicional para el ciudadano (dirección del depósito, horario, qué documentos llevar):</small><textarea id="grt" rows="3" style="width:100%;margin-top:6px"></textarea><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="k" id="gr_si">Sí, está en el depósito</button><button id="gr_no">No consta en el depósito</button></div><div style="margin-top:8px"><button id="gr_cl" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
@@ -351,6 +362,151 @@ function brfInit() {
   }
   brfCarga(); clearInterval(BRF.iv); BRF.iv = setInterval(() => { if (document.getElementById("v-brf").classList.contains("on") && !document.hidden) brfCarga(true); }, 25000);
 }
+/* ---- detenidos en el CDQ ---- */
+const DET = {row: null, filtro: "custodia", sucio: new Set(), tm: null, ok: false, iv: null};
+const DESTINOS = ["Comisaría de Mossos d'Esquadra", "Juzgado de guardia", "Puesto en libertad", "Otro"];
+const TIPOS_DIL = ["Salida al médico", "Traslado a juzgado", "Diligencia policial", "Visita de abogado", "Otra"];
+const dtl = iso => { if (!iso) return ""; const d = new Date(iso), p = n => String(n).padStart(2, "0"); return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
+const dfh = iso => iso ? new Date(iso).toLocaleString("es-ES", {day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit"}) : "—";
+const dhoras = iso => (Date.now() - new Date(iso)) / 3600000;
+const ddur = iso => { const m = Math.max(0, Math.round((Date.now() - new Date(iso)) / 60000)); return Math.floor(m / 60) + " h " + String(m % 60).padStart(2, "0") + " min"; };
+function detInit() {
+  if (!DET.ok) {
+    DET.ok = true;
+    $("det_new").onclick = detNuevo;
+    document.querySelectorAll("[data-df]").forEach(b => b.onclick = () => { DET.filtro = b.dataset.df; document.querySelectorAll("[data-df]").forEach(x => x.classList.toggle("on", x == b)); detLista(); });
+    $("det_lst").onclick = e => { const c = e.target.closest("[data-id]"); if (c) detAbre(c.dataset.id); };
+    $("det_f").addEventListener("input", detEv); $("det_f").addEventListener("change", detEv); $("det_f").addEventListener("click", detClick);
+    DET.iv = setInterval(() => { if (!$("v-det").classList.contains("on")) return; if (DET.row) { $("det_dur") && ($("det_dur").textContent = DET.row.estado == "custodia" ? ddur(DET.row.entrada) : ""); } else detLista(); }, 30000);
+  }
+  if (DET.row) detRender(); else detLista();
+}
+async function detLista() {
+  let q = db.from("detenidos").select("id,ref,estado,entrada,motivo,detenido,traslado").order("entrada", {ascending: false}).limit(100);
+  if (DET.filtro == "custodia") q = q.eq("estado", "custodia");
+  const {data, error} = await q;
+  if (error) { $("det_lst").innerHTML = `<div class="brf-aviso">⚠️ No se pudo cargar (${esc(error.message)}). ¿Has ejecutado 15-detenidos.sql?</div>`; return; }
+  const n = (data || []).filter(r => r.estado == "custodia").length;
+  $("det_est0").textContent = DET.filtro == "custodia" ? `${n} en el CDQ ahora` : `${(data || []).length} registros`;
+  const bt = $("b_det"); if (bt) { bt.hidden = !n || DET.filtro != "custodia"; bt.textContent = n; }
+  $("det_lst").innerHTML = (data || []).map(r => {
+    const d = r.detenido || {}, h = dhoras(r.entrada), ab = r.estado == "custodia";
+    const bd = ab ? `<span class="bd ${h >= 72 ? "ro" : h >= 48 ? "am" : ""}">En el CDQ · ${ddur(r.entrada)}</span>` : `<span class="bd">${r.estado == "libertad" ? "Libertad" : "Trasladado"}</span>`;
+    return `<div class="card det-c" data-id="${r.id}"><div><b>#${r.ref} · ${esc(((d.apellidos || "") + " " + (d.nombre || "")).trim() || "Sin identificar")}</b><br><small>Entrada ${dfh(r.entrada)} · ${esc(r.motivo || "sin motivo")}</small></div>${bd}</div>`;
+  }).join("") || "<p>Ningún detenido.</p>";
+}
+async function detNuevo() {
+  const {data, error} = await db.from("detenidos").insert({entrada: new Date().toISOString(), custodia: [{nombre: "", prof: ""}]}).select("*").single();
+  if (error) { alert("No se pudo crear: " + error.message); return; }
+  DET.row = data; DET.sucio.clear(); detRender();
+}
+async function detAbre(id) {
+  const {data, error} = await db.from("detenidos").select("*").eq("id", id).single();
+  if (error) { alert("No se pudo abrir: " + error.message); return; }
+  DET.row = data; DET.sucio.clear(); detRender();
+}
+function detSucio(c) { DET.sucio.add(c); const e = $("det_est"); if (e) e.textContent = "Editando…"; clearTimeout(DET.tm); DET.tm = setTimeout(detGuarda, 900); }
+async function detGuarda() {
+  clearTimeout(DET.tm); const cols = [...DET.sucio]; if (!cols.length || !DET.row) return true;
+  const pl = {}; cols.forEach(c => pl[c] = DET.row[c]); DET.sucio.clear();
+  const {error} = await db.from("detenidos").update(pl).eq("id", DET.row.id);
+  const e = $("det_est");
+  if (error) { cols.forEach(c => DET.sucio.add(c)); if (e) e.textContent = "⚠️ No guardado (" + error.message + ")"; return false; }
+  if (e) e.textContent = "Guardado ✓ " + new Date().toLocaleTimeString("es-ES", {hour: "2-digit", minute: "2-digit"}); return true;
+}
+function detEv(e) {
+  const t = e.target, c = t.dataset.c; if (!c || !DET.row) return;
+  const v = t.type == "checkbox" ? t.checked : t.type == "datetime-local" ? (t.value ? new Date(t.value).toISOString() : null) : t.value;
+  if (c == "entrada" && !v) return;
+  const i = t.dataset.i, k = t.dataset.k;
+  if (i !== undefined) DET.row[c][+i][k] = v; else if (k) { DET.row[c] = DET.row[c] || {}; DET.row[c][k] = v; } else DET.row[c] = v;
+  detSucio(c);
+}
+/* firma en pantalla */
+function firmaPide(titulo, cb) {
+  const m = $("sig_m"), cv = $("sig_c"), cx = cv.getContext("2d"); let dib = false, tocado = false, ult = null;
+  $("sig_t").textContent = titulo; m.style.display = "flex"; cx.clearRect(0, 0, cv.width, cv.height); cx.lineWidth = 4; cx.lineCap = "round"; cx.lineJoin = "round"; cx.strokeStyle = "#000";
+  const pt = e => { const r = cv.getBoundingClientRect(); return {x: (e.clientX - r.left) * cv.width / r.width, y: (e.clientY - r.top) * cv.height / r.height}; };
+  cv.onpointerdown = e => { e.preventDefault(); cv.setPointerCapture(e.pointerId); dib = true; ult = pt(e); cx.beginPath(); cx.arc(ult.x, ult.y, 2, 0, 7); cx.fill(); tocado = true; };
+  cv.onpointermove = e => { if (!dib) return; e.preventDefault(); const p = pt(e); cx.beginPath(); cx.moveTo(ult.x, ult.y); cx.lineTo(p.x, p.y); cx.stroke(); ult = p; };
+  cv.onpointerup = cv.onpointercancel = () => { dib = false; };
+  $("sig_clr").onclick = () => { cx.clearRect(0, 0, cv.width, cv.height); tocado = false; };
+  $("sig_no").onclick = () => { m.style.display = "none"; };
+  $("sig_ok").onclick = () => { if (!tocado) { alert("Dibuja la firma antes de aceptar."); return; } const u = cv.toDataURL("image/png"); m.style.display = "none"; cb(u); };
+}
+const sgi = u => u ? `<img class="sg" src="${u}" alt="firma">` : "<small>Sin firmar</small>";
+function detClick(e) {
+  const b = e.target.closest("[data-a]"); if (!b || !DET.row) return; const a = b.dataset.a, R = DET.row, i = +b.dataset.i;
+  if (a == "back") { detGuarda().then(() => { DET.row = null; $("det_f").hidden = true; $("det_l").hidden = false; detLista(); }); return; }
+  if (a == "cus+") R.custodia.push({nombre: "", prof: ""}), detSucio("custodia");
+  else if (a == "cus-") R.custodia.splice(i, 1), detSucio("custodia");
+  else if (a == "dil+") R.diligencias.push({tipo: TIPOS_DIL[0], desc: "", salida: new Date().toISOString(), regreso: null, agentes: "", firma: null}), detSucio("diligencias");
+  else if (a == "dil-") { if (!confirm("¿Borrar esta diligencia del registro?")) return; R.diligencias.splice(i, 1); detSucio("diligencias"); }
+  else if (a == "efe+") R.efectos.push({txt: ""}), detSucio("efectos");
+  else if (a == "efe-") R.efectos.splice(i, 1), detSucio("efectos");
+  else if (a == "now") { const c = b.dataset.c, k = b.dataset.k, v = new Date().toISOString(); if (b.dataset.i !== undefined) R[c][i][k] = v; else R[c][k] = v; detSucio(c); }
+  else if (a == "firma") {
+    const c = b.dataset.c, k = b.dataset.k, ix = b.dataset.i;
+    firmaPide(b.dataset.t || "Firma", u => { if (c == "firma_conforme") R.firma_conforme = u; else if (ix !== undefined) R[c][+ix][k] = u; else R[c][k] = u; detSucio(c); detRender(); });
+    return;
+  }
+  else if (a == "cerrar") {
+    const t = R.traslado || {}; const falta = [!t.destino && "destino", !t.fecha && "hora de salida", !R.firma_conforme && "firma conforme del detenido"].filter(Boolean);
+    if (falta.length && !confirm("Falta: " + falta.join(", ") + ". ¿Cerrar igualmente la custodia?")) return;
+    R.estado = (t.destino || "").startsWith("Puesto") ? "libertad" : "trasladado"; detSucio("estado");
+  }
+  else if (a == "reabrir") { if (!confirm("¿Reabrir la custodia?")) return; R.estado = "custodia"; detSucio("estado"); }
+  else if (a == "print") { detGuarda().then(() => { $("acta-print").innerHTML = '<div class="bar2"><button id="ap_pr">🖨️ Imprimir</button><button id="ap_x" style="background:#fff;color:#000">Cerrar</button></div>' + detHTML(); $("acta-print").hidden = false; $("ap_pr").onclick = () => window.print(); $("ap_x").onclick = () => { $("acta-print").hidden = true; }; $("acta-print").scrollTop = 0; }); return; }
+  detRender();
+}
+const dI = (c, k, v, lbl, ty = "text", extra = "") => `<label class="fl">${lbl}<input type="${ty}" data-c="${c}" data-k="${k}" value="${esc(v || "")}" ${extra}></label>`;
+const dCk = (c, k, v, lbl) => `<label class="ck"><input type="checkbox" data-c="${c}" data-k="${k}" ${v ? "checked" : ""}> ${lbl}</label>`;
+function detRender() {
+  const R = DET.row; $("det_l").hidden = true; const F = $("det_f"); F.hidden = false;
+  const d = R.detenido || {}, dr = R.derechos || {}, em = R.efectos_meta || {}, tr = R.traslado || {}, ab = R.estado == "custodia";
+  const h = dhoras(R.entrada);
+  F.innerHTML = `<div class="det-bar"><button data-a="back" type="button" class="sec2">← Lista</button><b>#${R.ref}</b><span id="det_est" style="font-size:13px;opacity:.8"></span></div>
+<div class="brf-aviso" style="${ab ? (h >= 72 ? "background:#f8d7d0;color:#5a1408;border-color:#C93A1F" : "") : "background:var(--tint);color:inherit;border-color:var(--line)"}">${ab ? `En el CDQ desde ${dfh(R.entrada)} · <b id="det_dur">${ddur(R.entrada)}</b> · plazo máximo de detención: 72 h (art. 520 LECrim)` : `Custodia cerrada: <b>${R.estado == "libertad" ? "puesto en libertad" : "trasladado"}</b>`}</div>
+<details class="acc" open><summary>1. Detenido</summary><div class="pad"><div class="g2">${dI("detenido", "nombre", d.nombre, "Nombre")}${dI("detenido", "apellidos", d.apellidos, "Apellidos")}${dI("detenido", "doc", d.doc, "DNI / NIE / pasaporte", "text", 'autocapitalize="characters"')}${dI("detenido", "nacimiento", d.nacimiento, "Fecha de nacimiento", "date")}${dI("detenido", "nacionalidad", d.nacionalidad, "Nacionalidad")}${dI("detenido", "domicilio", d.domicilio, "Domicilio")}</div></div></details>
+<details class="acc" open><summary>2. Detención y custodia</summary><div class="pad"><div class="g2"><label class="fl">Entrada al CDQ<input type="datetime-local" data-c="entrada" value="${dtl(R.entrada)}"></label></div>
+<label class="fl">Motivo / presunto delito<input data-c="motivo" value="${esc(R.motivo)}"></label>
+<label class="fl">Lugar y hora de la detención<input data-c="lugar" value="${esc(R.lugar)}"></label>
+<label class="fl">Agentes que practican la detención (nombre y TIP)<input data-c="agentes_detencion" value="${esc(R.agentes_detencion)}"></label>
+<h4 style="margin:10px 0 4px">Agentes de custodia</h4>${R.custodia.map((a, i) => `<div class="row"><label class="fl" style="flex:2;min-width:140px">Nombre<input data-c="custodia" data-i="${i}" data-k="nombre" value="${esc(a.nombre)}"></label><label class="fl" style="flex:1;min-width:90px">TIP<input data-c="custodia" data-i="${i}" data-k="prof" value="${esc(a.prof)}"></label><button data-a="cus-" data-i="${i}" type="button" class="sec2" aria-label="Quitar">✕</button></div>`).join("")}<button data-a="cus+" type="button" class="sec2">+ Añadir agente de custodia</button></div></details>
+<details class="acc" open><summary>3. Derechos</summary><div class="pad">${dCk("derechos", "leidos", dr.leidos, "Derechos leídos al detenido")}
+<div class="row"><label class="fl" style="flex:1">Hora de lectura<input type="datetime-local" data-c="derechos" data-k="hora" value="${dtl(dr.hora)}"></label><button data-a="now" data-c="derechos" data-k="hora" type="button" class="sec2">Ahora</button></div>
+${dI("derechos", "idioma", dr.idioma, "Idioma / intérprete")}${dI("derechos", "abogado", dr.abogado, "Asistencia letrada (abogado)")}${dCk("derechos", "familiar", dr.familiar, "Comunicado a familiar o persona designada")}${dCk("derechos", "consulado", dr.consulado, "Comunicado al consulado (si es extranjero)")}${dCk("derechos", "medico", dr.medico, "Reconocimiento médico solicitado/realizado")}</div></details>
+<details class="acc" open><summary>4. Diligencias y salidas (${R.diligencias.length})</summary><div class="pad">${R.diligencias.map((x, i) => `<div class="it"><div class="row"><label class="fl" style="flex:1;min-width:150px">Tipo<select data-c="diligencias" data-i="${i}" data-k="tipo">${TIPOS_DIL.map(t => `<option ${t == x.tipo ? "selected" : ""}>${t}</option>`).join("")}</select></label><button data-a="dil-" data-i="${i}" type="button" class="sec2" aria-label="Borrar">✕</button></div>
+<label class="fl">Descripción<textarea rows="2" data-c="diligencias" data-i="${i}" data-k="desc">${esc(x.desc)}</textarea></label>
+<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de salida<input type="datetime-local" data-c="diligencias" data-i="${i}" data-k="salida" value="${dtl(x.salida)}"></label><button data-a="now" data-c="diligencias" data-i="${i}" data-k="salida" type="button" class="sec2">Ahora</button></div>
+<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de regreso<input type="datetime-local" data-c="diligencias" data-i="${i}" data-k="regreso" value="${dtl(x.regreso)}"></label><button data-a="now" data-c="diligencias" data-i="${i}" data-k="regreso" type="button" class="sec2">Ahora</button></div>
+<label class="fl">Agentes que acompañan (nombre y TIP)<input data-c="diligencias" data-i="${i}" data-k="agentes" value="${esc(x.agentes)}"></label>
+<div>Firma de los agentes:${sgi(x.firma)}<button data-a="firma" data-c="diligencias" data-i="${i}" data-k="firma" data-t="Firma de los agentes" type="button" class="sec2">✍️ ${x.firma ? "Repetir firma" : "Firmar"}</button></div></div>`).join("") || "<small>Sin diligencias todavía.</small>"}
+<div><button data-a="dil+" type="button">+ Registrar salida / diligencia</button></div></div></details>
+<details class="acc" open><summary>5. Efectos personales</summary><div class="pad">${R.efectos.map((x, i) => `<div class="row"><label class="fl" style="flex:1;min-width:200px"><input data-c="efectos" data-i="${i}" data-k="txt" value="${esc(x.txt)}" placeholder="Ej.: móvil Samsung negro, cartera con 35 €"></label><button data-a="efe-" data-i="${i}" type="button" class="sec2" aria-label="Quitar">✕</button></div>`).join("")}<button data-a="efe+" type="button" class="sec2">+ Añadir efecto</button>
+${dCk("efectos_meta", "bolsa", em.bolsa, "Guardados en bolsa, que sale con el detenido")}${dCk("efectos_meta", "n01", em.n01, "Fotocopia de la N01 incluida en la bolsa")}
+<div>Firma del detenido (recibe/entrega efectos):${sgi(em.firma_det)}<button data-a="firma" data-c="efectos_meta" data-k="firma_det" data-t="Firma del detenido (efectos personales)" type="button" class="sec2">✍️ Firmar</button></div>
+<div>Firma del agente:${sgi(em.firma_ag)}<button data-a="firma" data-c="efectos_meta" data-k="firma_ag" data-t="Firma del agente (efectos personales)" type="button" class="sec2">✍️ Firmar</button></div></div></details>
+<details class="acc" open><summary>6. Traslado y fin de custodia</summary><div class="pad"><label class="fl">Destino<select data-c="traslado" data-k="destino"><option value="">—</option>${DESTINOS.map(t => `<option ${t == tr.destino ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+${dI("traslado", "detalle", tr.detalle, "Detalle (diligencias, número, observaciones)")}
+<div class="row"><label class="fl" style="flex:1;min-width:150px">Hora de salida del CDQ<input type="datetime-local" data-c="traslado" data-k="fecha" value="${dtl(tr.fecha)}"></label><button data-a="now" data-c="traslado" data-k="fecha" type="button" class="sec2">Ahora</button></div>
+${dI("traslado", "agentes", tr.agentes, "Agentes que realizan el traslado (nombre y TIP)")}
+<div>Firma de los agentes:${sgi(tr.firma)}<button data-a="firma" data-c="traslado" data-k="firma" data-t="Firma de los agentes (traslado)" type="button" class="sec2">✍️ Firmar</button></div>
+<div style="margin-top:8px">Firma del detenido, conforme ha estado detenido en las dependencias:${sgi(R.firma_conforme)}<button data-a="firma" data-c="firma_conforme" data-t="Firma del detenido (conforme)" type="button" class="sec2">✍️ Firmar</button></div></div></details>
+<div class="brf-fin">${ab ? `<button data-a="cerrar" type="button" class="k">Cerrar custodia</button>` : `<button data-a="reabrir" type="button" class="sec2">Reabrir custodia</button>`}<button data-a="print" type="button" class="sec2">Vista previa e imprimir</button></div>`;
+}
+function detHTML() {
+  const R = DET.row, d = R.detenido || {}, dr = R.derechos || {}, em = R.efectos_meta || {}, tr = R.traslado || {}, td = 'style="border:1px solid #000;padding:3px 6px;vertical-align:top"', tb = 'style="width:100%;border-collapse:collapse"', bx = v => `<span class="box">${v ? "✕" : ""}</span>`, im = u => u ? `<img src="${u}" style="height:46px">` : "";
+  return `<div class="apg" style="font-size:11.5px;min-height:0;height:auto;overflow:visible"><h4 style="font-size:15px">HOJA DE CUSTODIA DE DETENIDO · #${R.ref}</h4><div style="font-size:10px">Policia Local · CDQ</div>
+<h4>Detenido</h4><div><b>${esc(((d.apellidos || "") + ", " + (d.nombre || "")).trim())}</b> · ${esc(d.doc || "—")} · nac. ${esc(d.nacimiento || "—")} · ${esc(d.nacionalidad || "—")}<br>${esc(d.domicilio || "")}</div>
+<h4>Detención y custodia</h4><div>Entrada al CDQ: <b>${dfh(R.entrada)}</b> · Motivo: ${esc(R.motivo || "—")}<br>Lugar/hora detención: ${esc(R.lugar || "—")}<br>Agentes de la detención: ${esc(R.agentes_detencion || "—")}<br>Custodia: ${R.custodia.filter(a => a.nombre || a.prof).map(a => esc(a.nombre) + " (" + esc(a.prof) + ")").join(" · ") || "—"}</div>
+<h4>Derechos</h4><div>${bx(dr.leidos)}Derechos leídos (${dfh(dr.hora)}) ${bx(dr.familiar)}Comunicación a familiar ${bx(dr.consulado)}Consulado ${bx(dr.medico)}Reconocimiento médico<br>Idioma/intérprete: ${esc(dr.idioma || "—")} · Abogado: ${esc(dr.abogado || "—")}</div>
+<h4>Diligencias y salidas</h4><table ${tb}><tr><td ${td}><b>Tipo</b></td><td ${td}><b>Salida</b></td><td ${td}><b>Regreso</b></td><td ${td}><b>Agentes</b></td><td ${td}><b>Firma</b></td></tr>${R.diligencias.map(x => `<tr><td ${td}>${esc(x.tipo)}<br><small>${esc(x.desc || "")}</small></td><td ${td}>${dfh(x.salida)}</td><td ${td}>${dfh(x.regreso)}</td><td ${td}>${esc(x.agentes || "")}</td><td ${td}>${im(x.firma)}</td></tr>`).join("")}</table>
+<h4>Efectos personales</h4><ul>${R.efectos.filter(x => x.txt).map(x => `<li>· ${esc(x.txt)}</li>`).join("") || "<li>—</li>"}</ul><div>${bx(em.bolsa)}Bolsa ${bx(em.n01)}Fotocopia N01</div><div style="display:flex;gap:30px">${em.firma_det ? `<div>Detenido: ${im(em.firma_det)}</div>` : ""}${em.firma_ag ? `<div>Agente: ${im(em.firma_ag)}</div>` : ""}</div>
+<h4>Traslado</h4><div>Destino: <b>${esc(tr.destino || "—")}</b> · Salida: ${dfh(tr.fecha)}<br>${esc(tr.detalle || "")}<br>Agentes: ${esc(tr.agentes || "—")} ${im(tr.firma)}</div>
+<h4>Conforme del detenido</h4><div>${im(R.firma_conforme)}</div></div>`;
+}
+
 /* ---- patrullas: ubicación en tiempo real de las unidades (solo agentes) ---- */
 let MAPP = null, CAPAP = null, UNI = [], ALP = [], HOY = {}, PT_ON = false, PT_W = null, PT_LAST = 0, PT_WL = null, PT_UID = null, ptFit = true;
 const DEV = (() => { try { let d = localStorage.getItem("dev"); if (!d) { d = (crypto.randomUUID ? crypto.randomUUID() : "d" + Date.now() + Math.random().toString(36).slice(2)); localStorage.setItem("dev", d); } return d; } catch (e) { return "d" + Date.now(); } })();
@@ -896,6 +1052,7 @@ function ver(id) {
   if (id == "mapa") setTimeout(() => cargaMapa(), 60);
   if (id == "act") actaInit();
   if (id == "brf") brfInit();
+  if (id == "det") detInit();
   if (id == "pat") { ptFit = true; $("pt_nom").textContent = $("unit").value.trim() || "—"; setTimeout(() => { iniMapaP(); if (MAPP) MAPP.invalidateSize(); cargaUnidades(); }, 60); }
   window.scrollTo(0, 0);
 }

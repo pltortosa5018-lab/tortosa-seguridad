@@ -68,7 +68,7 @@ details.acc>#pe{padding:10px 12px 2px}
 </head>
 <body>
 <header>
-<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v39</small></div></div>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v40</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
 <nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
@@ -386,7 +386,17 @@ function buscaProv(s) {
 }
 const ARTS = /^(DE|DEL|LA|LAS|LOS|EL|ELS|LES|L'|D')$/i;
 const limpiaMun = s => { let t = String(s).replace(/[()\[\]{}|_«»"“”<>.,;:*]/g, " ").split(/\s+/).filter(x => /^[A-Za-zÀ-ÿ'·-]+$/.test(x) && (x.length >= 3 || ARTS.test(x))); while (t.length && /^(DE|DEL)$/i.test(t[0])) t.shift(); while (t.length && /^(DE|DEL|LA|EL|LES|ELS)$/i.test(t[t.length - 1]) && t.length > 1) t.pop(); return t.some(x => x.length >= 3) ? t.join(" ").toUpperCase() : ""; };
-const limpiaNom = s => String(s).replace(/[^A-Za-zÀ-ÿ'·\- ]/g, " ").replace(/\s+/g, " ").replace(/^[^A-Za-zÀ-ÿ]+|[^A-Za-zÀ-ÿ]+$/g, "").trim();
+const limpiaNom = s => String(s).replace(/[^A-Za-zÀ-ÿ'·\- ]/g, " ").replace(/\s+/g, " ").split(" ").filter(t => t.length > 1 || /^[YyIi]$/.test(t)).join(" ").replace(/^([A-Za-zÀ-ÿ] )+|( [A-Za-zÀ-ÿ])+$/g, "").replace(/^[^A-Za-zÀ-ÿ]+|[^A-Za-zÀ-ÿ]+$/g, "").trim();
+const PART = /^(DE|DEL|LA|LAS|LOS|EL|ELS|LES|Y|I|SAN|SANT|SANTA|MAC|MC|VAN|VON|DER|DEN|DA|DO|DOS|DAS|D'|L')$/i;
+/* Si los dos apellidos vienen juntos ("GARCIA DE LA CRUZ"), los separa: la partícula se queda con la palabra que sigue */
+function partirApellidos(s) {
+  const t = limpiaNom(s).split(" ").filter(Boolean), u = []; let cur = [];
+  for (const w of t) { cur.push(w); if (!PART.test(w)) { u.push(cur.join(" ")); cur = []; } }
+  if (cur.length) { if (u.length) u[u.length - 1] += " " + cur.join(" "); else u.push(cur.join(" ")); }
+  return u.length < 2 ? [u[0] || "", ""] : [u[0], u.slice(1).join(" ")];
+}
+const CABECERA = /\b(ESPANA|ESPANYA|SPAIN|REINO|KINGDOM|DOCUMENTO|DOCUMENT|NACIONAL|IDENTIDAD|IDENTITY|FIRMA|SIGNATURE|VALIDEZ|VALIDITY|EMISION|ISSUE|EXPEDICION|SOPORTE|SUPPORT|NUM|NUMERO|DNI|CAN|SEXO|SEX|SEXE|NACIONALIDAD|NATIONALITY|ESP)\b/g;
+const soloCabecera = u => (u.replace(CABECERA, " ").replace(/[^A-Z]/g, "").length < 2);
 /* Domicilio: la calle es la línea con cifras; la provincia se reconoce por su nombre; lo que queda es el municipio */
 function parseDom(v) {
   const o = {}, ls = v.map(x => x.replace(/[()]/g, " ").replace(/\s+/g, " ").trim()).filter(Boolean), via = /^(C\/|CL\b|CALLE|CARRER|CRER|AV\b|AVDA|AVD\b|AVENIDA|AVINGUDA|PL\b|PZA|PLAZA|PLACA|CTRA|CARRETERA|PS\b|PASEO|PASSEIG|RDA|RONDA|TRAV|URB|POL\b|CAMINO|CAMI|PJE|PASAJE|PG\b)/;
@@ -406,7 +416,7 @@ const MESES = {};
 function fechasEn(t) { const o = []; for (const m of String(t).matchAll(/(?<!\d)(\d{2})[\s./-]*(\d{2})[\s./-]*(19\d{2}|20\d{2})(?!\d)/g)) { const d = +m[1], mo = +m[2], y = +m[3]; if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12) o.push(y + "-" + m[2] + "-" + m[1]); } return o; }
 function parseTexto(text) {
   const L = String(text).split("\n").map(x => x.trim()).filter(Boolean), U = L.map(x => sinAc(x.toUpperCase())), out = {}, flat = U.join(" ");
-  const alfa = s => (s.match(/[A-Za-zÀ-ÿ0-9]/g) || []).length, limp = s => s.replace(/[|_«»"“”<>]/g, " ").replace(/\s+/g, " ").trim();
+  const alfa = s => (s.match(/[A-Za-zÀ-ÿ0-9]/g) || []).length, limp = s => s.replace(/[|_«»"“”<>]/g, " ").replace(/\s+/g, " ").replace(/^[^A-Za-zÀ-ÿ0-9]+|[^A-Za-zÀ-ÿ0-9.)]+$/g, "").trim();
   const sinEtq = j => { let s = L[j]; for (const [x, y] of [...U[j].matchAll(ETQG)].map(m => [m.index, m.index + m[0].length]).reverse()) s = s.slice(0, x) + " " + s.slice(y); return limp(s.replace(/[\/]+/g, " ")); };
   const bueno = s => alfa(s) >= 2 && alfa(s) / s.length >= .6;
   const tras = (re, max) => {
@@ -414,7 +424,7 @@ function parseTexto(text) {
     for (let j = i + 1; j < L.length && v.length < max; j++) {
       if (/<|^[A-Z0-9]{18,}$/.test(U[j])) break;
       if (ETQ.test(U[j]) || borrosa(U[j])) { const kj = tipo(U[j]); if (v.length || (kj != "?" && kj != ka)) break; const r = ETQ.test(U[j]) ? sinEtq(j) : ""; if (bueno(r) && !borrosa(nrm(r))) v.push(r); continue; }
-      const s = limp(L[j]); if (bueno(s)) v.push(s);
+      const s = limp(L[j]); if (bueno(s) && !soloCabecera(U[j])) v.push(s);
     }
     return v;
   };
@@ -535,7 +545,8 @@ function escanerInit() {
       if (mz && t.doc && mz.doc && t.doc != mz.doc && !mz.ok) av.push("El número leído por delante (" + t.doc + ") y por detrás (" + mz.doc + ") no coincide: revísalo.");
       if (mz || doc) { marca("tdoc", mz && mz.tipo == "td3" ? "t_pas" : /^[XYZ]/.test(doc) ? "t_nie" : "t_dni"); n++; }
       const v = k => (mz && mz[k]) || t[k] || "";
-      marca("doc", doc); marca("ape1", v("ape1")); marca("ape2", v("ape2")); marca("nom", v("nom")); marca("dnaix", (mz && mz.nac) || t.nac || ""); if (mz && mz.pais == "ESP") marca("pais", PAISES.ESP);
+      let a1 = limpiaNom(v("ape1")), a2 = limpiaNom(v("ape2")); if (a1 && !a2 && /\s/.test(a1) && /^\d{8}[A-Z]$/.test(doc)) [a1, a2] = partirApellidos(a1);
+      marca("doc", doc); marca("ape1", a1); marca("ape2", a2); marca("nom", limpiaNom(v("nom"))); marca("dnaix", (mz && mz.nac) || t.nac || ""); if (mz && mz.pais == "ESP") marca("pais", PAISES.ESP);
       ["lnaix", "adr", "mun", "prov"].forEach(k => marca(k, t[k]));
       n += ["doc", "ape1", "ape2", "nom", "lnaix", "adr", "mun", "prov"].filter(k => k == "doc" ? doc : v(k)).length;
       if (mz) av.push(...mz.av);

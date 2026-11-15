@@ -64,13 +64,23 @@ details.acc>#pe{padding:10px 12px 2px}
 .apg .desc{white-space:pre-wrap;min-height:230px;border-bottom:1px dotted #000;padding:2px 0}.apg .sig{display:flex;gap:30px;margin-top:4px}.apg .sig div{flex:1;border-bottom:1px solid #000;height:44px;position:relative}.apg .sig span{position:absolute;left:0;bottom:-13px;font-size:9px}
 .apg .cod{position:absolute;left:4mm;top:150mm;transform:rotate(-90deg);transform-origin:left top;font:700 30px Arial}.apg .tr{font-size:7.5px;color:#333;margin-top:15px}.apg .top{margin-left:auto;width:50%}
 @media print{@page{size:A4;margin:0}body>*:not(#acta-print){display:none!important}#acta-print{position:static;background:#fff;padding:0;overflow:visible}#acta-print .bar2{display:none}.apg{box-shadow:none;margin:0;width:210mm;height:296mm;min-height:0;overflow:hidden;page-break-after:always}.apg:last-of-type{page-break-after:auto}}
+.brf-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:end;margin:0 0 12px}.brf-bar label{font-size:13px}.brf-bar input,.brf-bar select{margin-top:3px;padding:10px}
+#brf_est{font-size:13px;opacity:.8;margin:0 0 10px}.brf-aviso{background:#fff4d6;color:#4a3500;border:1px solid #e8c766;border-radius:12px;padding:10px 12px;margin:8px 0;font-size:13px}
+.brf-ag{display:grid;grid-template-columns:minmax(80px,.7fr) minmax(0,2fr) minmax(90px,.8fr) 44px;gap:8px;padding:8px 0;border-top:1px solid var(--line)}.brf-ag:first-child{border-top:0}.brf-ag input{width:100%;min-width:0;padding:10px}
+.brf-ag .x{background:none;border:1px solid var(--line);color:inherit;padding:0}
+@media(max-width:560px){.brf-ag{grid-template-columns:1fr 1fr 44px}.brf-ag .nom{grid-column:1/4;grid-row:2}}
+.brf-u{border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}.brf-u h4{margin:0 0 6px;font-size:15px}.brf-u small{opacity:.75}.brf-u textarea{width:100%;min-height:70px;margin-top:6px;box-sizing:border-box}
+.brf-ch{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}.brf-ch button{font-size:12px;padding:6px 10px;border-radius:999px;background:none;color:inherit;border:1px solid var(--line)}
+.brf-d{display:grid;grid-template-columns:minmax(70px,.6fr) 1.3fr 1fr 1fr;gap:8px;align-items:end;padding:8px 0;border-top:1px solid var(--line)}.brf-d:first-of-type{border-top:0}.brf-d b{padding-bottom:12px}.brf-d label{font-size:12px}.brf-d select,.brf-d input{width:100%;padding:9px;margin-top:2px;box-sizing:border-box}
+@media(max-width:560px){.brf-d{grid-template-columns:1fr 1fr}.brf-d b{grid-column:1/3;padding-bottom:0}}
+.brf-fin{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
 </style>
 </head>
 <body>
 <header>
-<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v40</small></div></div>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v41</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
-<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
+<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="brf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5a3 3 0 010 6M18 20a6 6 0 00-3-5"/></svg><span>Briefing</span></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
@@ -80,6 +90,19 @@ details.acc>#pe{padding:10px 12px 2px}
 <div class="bar"><b>Esta unidad:</b><input id="unit" placeholder="Ej. Comisaría, Patrulla 1" size="22"><small>Se guarda en este dispositivo. Los avisos que asignes aquí llevarán este nombre.</small></div>
 
 <section class="view on" id="v-avisos"><div class="chips"><button class="chip on" data-f="todos">Todos</button><button class="chip" data-f="nueva">Nuevos <b id="c_n">0</b></button><button class="chip" data-f="curso">En curso <b id="c_c">0</b></button><button class="chip" data-f="atendida">Atendidos <b id="c_a">0</b></button></div><div id="al" data-f="todos"></div></section>
+<section class="view" id="v-brf"><h2 class="vt">Briefing</h2>
+<div class="brf-bar"><label>Fecha<input type="date" id="brf_f"></label><label>Turno<select id="brf_t"><option value="manana">Mañana</option><option value="tarde">Tarde</option><option value="noche">Noche</option></select></label><button id="brf_hoy" type="button" style="background:none;color:inherit;border:1px solid var(--line)">Turno actual</button></div>
+<div id="brf_est"></div><div id="brf_av"></div>
+<details class="acc" open><summary>1. Novedades del turno anterior</summary><div class="pad">
+<label class="fl">Lo que deja el turno anterior (se rellena solo con lo que escribió ese turno al acabar)<textarea id="brf_ne" rows="5" placeholder="Incidencias, avisos pendientes, vehículos en depósito, objetivos a vigilar…"></textarea></label>
+<label class="fl">Novedades que dejas al turno siguiente (escríbelas al terminar tu turno)<textarea id="brf_ns" rows="4"></textarea></label></div></details>
+<details class="acc" open><summary>2. Indicativos del turno</summary><div class="pad">
+<small>Un agente por línea. Los que comparten indicativo van juntos en el mismo vehículo o servicio.</small>
+<div id="brf_ag"></div><datalist id="brf_inds"></datalist>
+<button id="brf_add" type="button">+ Añadir agente</button> <button id="brf_cop" type="button" style="background:none;color:inherit;border:1px solid var(--line)">Copiar agentes del último turno igual</button></div></details>
+<details class="acc" open><summary>3. Tareas por indicativo</summary><div class="pad" id="brf_tar"></div></details>
+<details class="acc" open><summary>4. Descanso (9.15)</summary><div class="pad" id="brf_des"></div></details>
+<div class="brf-fin"><button id="brf_res" type="button">Copiar resumen</button><button id="brf_imp" type="button" style="background:none;color:inherit;border:1px solid var(--line)">Vista previa e imprimir</button></div></section>
 <section class="view" id="v-pat"><h2 class="vt">Patrullas</h2>
 <div class="card" style="display:block"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span><b>Esta unidad:</b> <span id="pt_nom">—</span></span><button id="pt_btn">📍 Compartir mi ubicación</button></div>
 <small id="pt_est">La ubicación solo la ven los agentes del panel. No se guarda el recorrido, solo la última posición. Mantén esta pantalla abierta y encendida.</small></div>
@@ -210,6 +233,124 @@ $("rv_go").onclick = async () => {
   const a = data.avisadas || [], s = data.sin_propietario || [];
   $("rv_res").innerHTML = `<b>Avisadas (${a.length}):</b> ${esc(a.join(", ") || "ninguna")}<br><b>Sin propietario registrado en la app (${s.length}):</b> ${esc(s.join(", ") || "ninguna")}${s.length ? "<br><small>Estas habrá que retirarlas con la grúa.</small>" : ""}`;
 };
+/* ---- briefing: novedades, indicativos, tareas y descansos (9.15) del turno ---- */
+const TURNOS = {manana: "Mañana", tarde: "Tarde", noche: "Noche"}, COMIDA = {manana: "Almuerzo", tarde: "Merienda", noche: "Cena"}, TIPOS_9 = ["Almuerzo", "Comida", "Merienda", "Cena"];
+const TAREAS_RAP = ["Patrulla centro", "Patrulla barrios", "Control de tráfico", "Entrada/salida de colegios", "Mercado y ocupaciones de vía pública", "Control de terrazas", "Atención en oficina", "Vigilancia de parques", "Seguimiento de avisos de vecinos", "Servicio de protocolo"];
+const BRF = {f: "", t: "", d: null, prev: null, sucio: new Set(), tm: null, local: false, ok: false, iv: null, prof: {}};
+const pad2 = n => String(n).padStart(2, "0"), fLocal = d => d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+const sumaDias = (f, n) => { const d = new Date(f + "T12:00:00"); d.setDate(d.getDate() + n); return fLocal(d); };
+function brfActual() { const d = new Date(), h = d.getHours(); if (h < 6) return {f: sumaDias(fLocal(d), -1), t: "noche"}; return {f: fLocal(d), t: h < 14 ? "manana" : h < 22 ? "tarde" : "noche"}; }
+const brfPrev = (f, t) => t == "manana" ? {f: sumaDias(f, -1), t: "noche"} : t == "tarde" ? {f, t: "manana"} : {f, t: "tarde"};
+const brfVacio = () => ({novedades_entrada: "", novedades_salida: "", agentes: [], tareas: {}, descansos: {}});
+const brfKey = (f, t) => "brf:" + f + ":" + t;
+const brfLocal = (f, t) => { try { return JSON.parse(localStorage.getItem(brfKey(f, t)) || "null"); } catch (e) { return null; } };
+const brfEnfoque = () => { const a = document.activeElement; return !!(a && a.closest && a.closest("#v-brf") && /INPUT|TEXTAREA|SELECT/.test(a.tagName)); };
+const brfInds = () => { const s = []; (BRF.d.agentes || []).forEach(a => { const i = (a.ind || "").trim(); if (i && !s.includes(i)) s.push(i); }); return s; };
+const brfNombres = ind => (BRF.d.agentes || []).filter(a => (a.ind || "").trim() == ind && a.nombre).map(a => a.nombre.trim()).join(", ");
+const hmin = h => /^\d\d:\d\d$/.test(h || "") ? +h.slice(0, 2) * 60 + +h.slice(3) : null;
+const mhm = m => pad2(Math.floor(m / 60) % 24) + ":" + pad2(m % 60);
+const fechaLarga = f => new Date(f + "T12:00:00").toLocaleDateString("es-ES", {weekday: "long", day: "2-digit", month: "2-digit", year: "numeric"});
+function brfSucio(c) { BRF.sucio.add(c); try { localStorage.setItem(brfKey(BRF.f, BRF.t), JSON.stringify(BRF.d)); } catch (e) {} $("brf_est").textContent = "Guardando…"; clearTimeout(BRF.tm); BRF.tm = setTimeout(brfGuarda, 800); }
+async function brfGuarda() {
+  const cols = [...BRF.sucio]; if (!cols.length) return;
+  if (BRF.local) { BRF.sucio.clear(); $("brf_est").textContent = "Guardado solo en este dispositivo."; return; }
+  const pl = {fecha: BRF.f, turno: BRF.t}; cols.forEach(c => pl[c] = BRF.d[c]);
+  const {error} = await db.from("briefings").upsert(pl, {onConflict: "fecha,turno"});
+  if (error) { $("brf_est").textContent = "⚠️ No se pudo guardar (" + error.message + "). Queda en este dispositivo."; return; }
+  cols.forEach(c => BRF.sucio.delete(c)); $("brf_est").textContent = "Guardado ✓ " + new Date().toLocaleTimeString("es-ES", {hour: "2-digit", minute: "2-digit"});
+}
+async function brfCarga(sil) {
+  const {f, t} = BRF, p = brfPrev(f, t); let cur = null, prev = null;
+  const {data, error} = await db.from("briefings").select("*").in("fecha", [...new Set([f, p.f])]);
+  if (error) { BRF.local = true; $("brf_av").innerHTML = '<div class="brf-aviso">Falta activar el briefing en la base de datos (SQL 14). Mientras tanto se guarda solo en este dispositivo y no lo ven los demás agentes.</div>'; cur = brfLocal(f, t); prev = brfLocal(p.f, p.t); }
+  else { BRF.local = false; $("brf_av").innerHTML = ""; const r = k => (data || []).find(x => x.fecha == k.f && x.turno == k.t) || null; cur = r({f, t}); prev = r(p); }
+  if (sil && (BRF.sucio.size || brfEnfoque())) return;
+  if (f != BRF.f || t != BRF.t) return;
+  BRF.prev = prev; BRF.d = Object.assign(brfVacio(), cur || {}); BRF.d.agentes = BRF.d.agentes || []; BRF.d.tareas = BRF.d.tareas || {}; BRF.d.descansos = BRF.d.descansos || {};
+  if (!BRF.d.novedades_entrada && prev && prev.novedades_salida) { BRF.d.novedades_entrada = prev.novedades_salida; brfSucio("novedades_entrada"); }
+  brfRender(); if (!BRF.sucio.size) $("brf_est").textContent = cur ? "Actualizado " + new Date().toLocaleTimeString("es-ES", {hour: "2-digit", minute: "2-digit"}) : "Briefing nuevo: todavía no hay nada guardado.";
+}
+function brfRender() { $("brf_ne").value = BRF.d.novedades_entrada; $("brf_ns").value = BRF.d.novedades_salida; brfRenderAg(); brfRenderTar(); brfRenderDes(); }
+function brfRenderAg() {
+  $("brf_ag").innerHTML = BRF.d.agentes.length ? BRF.d.agentes.map((a, i) => `<div class="brf-ag"><input class="ind" data-i="${i}" list="brf_inds" placeholder="Indicativo" value="${esc(a.ind)}" autocapitalize="characters"><input class="nom" data-i="${i}" placeholder="Nombre y apellidos" value="${esc(a.nombre)}"><input class="prof" data-i="${i}" placeholder="N.º profesional" inputmode="numeric" value="${esc(a.prof)}"><button type="button" class="x" data-i="${i}" aria-label="Quitar">✕</button></div>`).join("") : '<p><small>Todavía no hay agentes en este turno.</small></p>';
+  const sin = BRF.d.agentes.filter(a => (a.nombre || a.prof) && !(a.ind || "").trim()).length; $("brf_ag").insertAdjacentHTML("beforeend", sin ? `<div class="brf-aviso">${sin} agente${sin > 1 ? "s" : ""} sin indicativo.</div>` : "");
+}
+function brfRenderTar() {
+  const inds = brfInds(); $("brf_tar").innerHTML = inds.length ? inds.map(i => `<div class="brf-u"><h4>${esc(i)}</h4><small>${esc(brfNombres(i)) || "sin nombres"}</small><textarea data-ind="${esc(i)}" placeholder="Tareas de este indicativo">${esc(BRF.d.tareas[i] || "")}</textarea><div class="brf-ch">${TAREAS_RAP.map(t => `<button type="button" data-ind="${esc(i)}" data-add="${esc(t)}">+ ${esc(t)}</button>`).join("")}</div></div>`).join("") : "<p><small>Primero asigna indicativos a los agentes (apartado 2).</small></p>";
+}
+function brfSolape() {
+  const iv = brfInds().map(i => { const d = BRF.d.descansos[i] || {}, a = hmin(d.desde); let b = hmin(d.hasta); if (a == null || b == null) return null; if (b <= a) b += 1440; return {i, a, b}; }).filter(Boolean), n = brfInds().length;
+  if (n < 2 || iv.length < 2) return ""; let mejor = {c: 0, a: 0, b: 0};
+  for (const x of iv) { const sol = iv.filter(y => y.a < x.b && x.a < y.b), a = Math.max(...sol.map(y => y.a)), b = Math.min(...sol.map(y => y.b)); if (sol.length > mejor.c && a < b) mejor = {c: sol.length, a, b}; }
+  return mejor.c >= Math.floor(n / 2) + 1 ? `<div class="brf-aviso">⚠️ De ${mhm(mejor.a)} a ${mhm(mejor.b)} coinciden ${mejor.c} de ${n} indicativos en descanso.</div>` : "";
+}
+function brfRenderDes() {
+  const inds = brfInds(); $("brf_des").innerHTML = inds.length ? inds.map(i => { const d = BRF.d.descansos[i] || {}, tp = d.tipo || COMIDA[BRF.t]; return `<div class="brf-d"><b>${esc(i)}</b><label>Descanso<select data-ind="${esc(i)}" data-k="tipo">${TIPOS_9.map(x => `<option${x == tp ? " selected" : ""}>${x}</option>`).join("")}</select></label><label>Desde<input type="time" data-ind="${esc(i)}" data-k="desde" value="${esc(d.desde || "")}"></label><label>Hasta<input type="time" data-ind="${esc(i)}" data-k="hasta" value="${esc(d.hasta || "")}"></label></div>`; }).join("") + brfSolape() : "<p><small>Primero asigna indicativos a los agentes (apartado 2).</small></p>";
+}
+function brfResumen() {
+  const d = BRF.d, inds = brfInds(), L = [`BRIEFING · ${TURNOS[BRF.t]} · ${fechaLarga(BRF.f)}`, "", "NOVEDADES DEL TURNO ANTERIOR", (d.novedades_entrada || "—").trim(), "", "INDICATIVOS"];
+  inds.forEach(i => L.push(`${i}: ` + d.agentes.filter(a => (a.ind || "").trim() == i).map(a => (a.nombre || "?") + (a.prof ? ` (${a.prof})` : "")).join(" · ")));
+  L.push("", "TAREAS"); inds.forEach(i => L.push(`${i}: ` + ((d.tareas[i] || "—").trim().replace(/\n+/g, " · "))));
+  L.push("", "DESCANSO 9.15"); inds.forEach(i => { const x = d.descansos[i] || {}; L.push(`${i}: ${x.tipo || COMIDA[BRF.t]} ${x.desde || "—"}${x.hasta ? "–" + x.hasta : ""}`); });
+  return L.join("\n");
+}
+function brfHTML() {
+  const d = BRF.d, inds = brfInds(), td = 'style="border:1px solid #000;padding:3px 6px;vertical-align:top"', tb = 'style="width:100%;border-collapse:collapse"';
+  return `<div class="apg" style="font-size:12px;min-height:0;height:auto"><h4 style="font-size:15px">BRIEFING · ${TURNOS[BRF.t]} · ${esc(fechaLarga(BRF.f))}</h4>
+<h4>1. Novedades del turno anterior</h4><div style="white-space:pre-wrap">${esc((d.novedades_entrada || "—").trim())}</div>
+<h4>2. Indicativos</h4><table ${tb}>${inds.map(i => `<tr><td ${td}><b>${esc(i)}</b></td><td ${td}>${d.agentes.filter(a => (a.ind || "").trim() == i).map(a => esc(a.nombre || "?") + (a.prof ? " (" + esc(a.prof) + ")" : "")).join("<br>")}</td></tr>`).join("")}</table>
+<h4>3. Tareas</h4><table ${tb}>${inds.map(i => `<tr><td ${td} width="12%"><b>${esc(i)}</b></td><td ${td} style="border:1px solid #000;padding:3px 6px;white-space:pre-wrap">${esc((d.tareas[i] || "—").trim())}</td></tr>`).join("")}</table>
+<h4>4. Descanso (9.15)</h4><table ${tb}>${inds.map(i => { const x = d.descansos[i] || {}; return `<tr><td ${td} width="12%"><b>${esc(i)}</b></td><td ${td}>${esc(x.tipo || COMIDA[BRF.t])}</td><td ${td}>${esc(x.desde || "—")}${x.hasta ? " – " + esc(x.hasta) : ""}</td></tr>`; }).join("")}</table>
+<h4>Novedades para el turno siguiente</h4><div style="white-space:pre-wrap;min-height:40px">${esc((d.novedades_salida || "").trim())}</div></div>`;
+}
+async function brfHist() {
+  const {data} = await db.from("briefings").select("agentes").order("fecha", {ascending: false}).limit(60), inds = new Set();
+  (data || []).forEach(r => (r.agentes || []).forEach(a => { if (a.ind) inds.add(a.ind); if (a.prof && a.nombre && !BRF.prof[a.prof]) BRF.prof[a.prof] = a.nombre; }));
+  $("brf_inds").innerHTML = [...inds].sort().map(i => `<option value="${esc(i)}">`).join("");
+}
+function brfInit() {
+  if (!BRF.ok) {
+    BRF.ok = true; const a = brfActual(); BRF.f = a.f; BRF.t = a.t; $("brf_f").value = a.f; $("brf_t").value = a.t; BRF.d = brfVacio();
+    const sel = () => { BRF.f = $("brf_f").value || brfActual().f; BRF.t = $("brf_t").value; BRF.sucio.clear(); brfCarga(); };
+    $("brf_f").onchange = sel; $("brf_t").onchange = sel; $("brf_hoy").onclick = () => { const a = brfActual(); $("brf_f").value = a.f; $("brf_t").value = a.t; sel(); };
+    $("brf_ne").oninput = () => { BRF.d.novedades_entrada = $("brf_ne").value; brfSucio("novedades_entrada"); };
+    $("brf_ns").oninput = () => { BRF.d.novedades_salida = $("brf_ns").value; brfSucio("novedades_salida"); };
+    const ag = $("brf_ag");
+    ag.addEventListener("focusin", e => { if (e.target.classList.contains("ind")) e.target.dataset.old = e.target.value; });
+    ag.addEventListener("input", e => {
+      const i = +e.target.dataset.i, k = ["ind", "nom", "prof"].find(c => e.target.classList.contains(c)); if (!k) return; const a = BRF.d.agentes[i]; if (!a) return;
+      if (k == "ind") a.ind = e.target.value; else if (k == "nom") a.nombre = e.target.value; else { a.prof = e.target.value; const nm = BRF.prof[a.prof.trim()]; if (nm && !a.nombre) { a.nombre = nm; e.target.closest(".brf-ag").querySelector(".nom").value = nm; } }
+      brfSucio("agentes");
+    });
+    ag.addEventListener("change", e => {
+      if (!e.target.classList.contains("ind")) return; const i = +e.target.dataset.i, a = BRF.d.agentes[i]; if (!a) return;
+      const old = (e.target.dataset.old || "").trim(), nu = e.target.value.trim().toUpperCase(); a.ind = nu; e.target.value = nu;
+      if (old && old != nu && !BRF.d.agentes.some(x => (x.ind || "").trim() == old)) { for (const c of ["tareas", "descansos"]) if (BRF.d[c][old] !== undefined && BRF.d[c][nu] === undefined) { BRF.d[c][nu] = BRF.d[c][old]; delete BRF.d[c][old]; brfSucio(c); } }
+      brfSucio("agentes"); brfRenderTar(); brfRenderDes();
+    });
+    ag.addEventListener("click", e => { const x = e.target.closest(".x"); if (!x) return; BRF.d.agentes.splice(+x.dataset.i, 1); brfSucio("agentes"); brfRenderAg(); brfRenderTar(); brfRenderDes(); });
+    $("brf_add").onclick = () => {
+      const ult = BRF.d.agentes[BRF.d.agentes.length - 1], ind = ult && ult.ind && BRF.d.agentes.filter(x => x.ind == ult.ind).length == 1 ? ult.ind : "";
+      BRF.d.agentes.push({ind, nombre: "", prof: ""}); brfSucio("agentes"); brfRenderAg(); brfRenderTar(); brfRenderDes(); const f = $("brf_ag").querySelectorAll(".nom"); f[f.length - 1].focus();
+    };
+    $("brf_cop").onclick = async () => {
+      const {data} = await db.from("briefings").select("agentes").eq("turno", BRF.t).lt("fecha", BRF.f).order("fecha", {ascending: false}).limit(1), r = data && data[0];
+      if (!r || !(r.agentes || []).length) { $("brf_est").textContent = "No hay un turno anterior igual con agentes para copiar."; return; }
+      BRF.d.agentes = r.agentes.map(a => ({ind: a.ind || "", nombre: a.nombre || "", prof: a.prof || ""})); brfSucio("agentes"); brfRenderAg(); brfRenderTar(); brfRenderDes();
+    };
+    $("brf_tar").addEventListener("input", e => { const i = e.target.dataset.ind; if (i && e.target.tagName == "TEXTAREA") { BRF.d.tareas[i] = e.target.value; brfSucio("tareas"); } });
+    $("brf_tar").addEventListener("click", e => { const b = e.target.closest("[data-add]"); if (!b) return; const i = b.dataset.ind, ta = b.closest(".brf-u").querySelector("textarea"), v = ta.value.trim(); ta.value = (v ? v + "\n" : "") + "• " + b.dataset.add; BRF.d.tareas[i] = ta.value; brfSucio("tareas"); });
+    $("brf_des").addEventListener("change", e => {
+      const i = e.target.dataset.ind, k = e.target.dataset.k; if (!i || !k) return; const d = BRF.d.descansos[i] = Object.assign({tipo: COMIDA[BRF.t]}, BRF.d.descansos[i]); d[k] = e.target.value;
+      if (k == "desde" && d.desde && !d.hasta) d.hasta = mhm(hmin(d.desde) + 30);
+      brfSucio("descansos"); brfRenderDes();
+    });
+    $("brf_res").onclick = async () => { const t = brfResumen(); try { await navigator.clipboard.writeText(t); $("brf_est").textContent = "Resumen copiado ✓ Pégalo en el grupo del turno."; } catch (e) { prompt("Copia el resumen:", t); } };
+    $("brf_imp").onclick = () => { $("acta-print").innerHTML = '<div class="bar2"><button id="ap_pr">🖨️ Imprimir</button><button id="ap_x" style="background:#fff;color:#000">Cerrar</button></div>' + brfHTML(); $("acta-print").hidden = false; $("ap_pr").onclick = () => window.print(); $("ap_x").onclick = () => { $("acta-print").hidden = true; }; $("acta-print").scrollTop = 0; };
+    brfHist();
+  }
+  brfCarga(); clearInterval(BRF.iv); BRF.iv = setInterval(() => { if (document.getElementById("v-brf").classList.contains("on") && !document.hidden) brfCarga(true); }, 25000);
+}
 /* ---- patrullas: ubicación en tiempo real de las unidades (solo agentes) ---- */
 let MAPP = null, CAPAP = null, UNI = [], ALP = [], HOY = {}, PT_ON = false, PT_W = null, PT_LAST = 0, PT_WL = null, PT_UID = null, ptFit = true;
 const DEV = (() => { try { let d = localStorage.getItem("dev"); if (!d) { d = (crypto.randomUUID ? crypto.randomUUID() : "d" + Date.now() + Math.random().toString(36).slice(2)); localStorage.setItem("dev", d); } return d; } catch (e) { return "d" + Date.now(); } })();
@@ -754,6 +895,7 @@ function ver(id) {
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("on", b.dataset.t == id));
   if (id == "mapa") setTimeout(() => cargaMapa(), 60);
   if (id == "act") actaInit();
+  if (id == "brf") brfInit();
   if (id == "pat") { ptFit = true; $("pt_nom").textContent = $("unit").value.trim() || "—"; setTimeout(() => { iniMapaP(); if (MAPP) MAPP.invalidateSize(); cargaUnidades(); }, 60); }
   window.scrollTo(0, 0);
 }

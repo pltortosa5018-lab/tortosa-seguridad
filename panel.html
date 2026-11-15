@@ -68,7 +68,7 @@ details.acc>#pe{padding:10px 12px 2px}
 </head>
 <body>
 <header>
-<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v36</small></div></div>
+<div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v37</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
 <nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
@@ -373,20 +373,48 @@ function parseMRZ(text, texto) {
   }
   return mejor;
 }
+const ETQ = /\b(?:LUGAR DE NACIMIENTO|LLOC DE NAIXEMENT|PLACE OF BIRTH|DOMICILIO|DOMICILI|DOMICILE|ADDRESS|HIJO ?\/? ?A? ?DE|FILIACION|FILIATION|EQUIPO|TEAM|APELLIDOS|COGNOMS|SURNAMES?|NOMBRE|NOM|NAME|SEXO|SEX|NACIONALIDAD|NATIONALITY|NACIMIENTO|DATE OF BIRTH|FECHA DE NACIMIENTO|SUPPORT NUMBER|NUM SOPORT|NUMERO DE SOPORTE|VALIDO HASTA|VALID UNTIL)\b/;
+const ETQG = new RegExp(ETQ.source, "g");
+const MESES = {};
+function fechasEn(t) { const o = []; for (const m of String(t).matchAll(/(?<!\d)(\d{2})[\s./-]*(\d{2})[\s./-]*(19\d{2}|20\d{2})(?!\d)/g)) { const d = +m[1], mo = +m[2], y = +m[3]; if (d >= 1 && d <= 31 && mo >= 1 && mo <= 12) o.push(y + "-" + m[2] + "-" + m[1]); } return o; }
 function parseTexto(text) {
-  const L = String(text).split("\n").map(x => x.trim()).filter(Boolean), U = L.map(x => sinAc(x.toUpperCase())), out = {};
-  const sig = (re, n = 1) => { const i = U.findIndex(x => re.test(x)); return i < 0 ? [] : L.slice(i + 1, i + 1 + n).filter(x => !/<|^[A-Z0-9]{20,}$/.test(x) && (!/^[A-Z\/ ]{3,}\s*\/\s*[A-Z ]{3,}$/.test(x) || /\d/.test(x))); };
-  const flat = U.join(" ").replace(/(\d)[\s.\-](?=[A-Z](?![A-Z]))/g, "$1");
-  const cs = [...flat.matchAll(/(?<![0-9A-Z])([XYZ]\d{7}|\d{8})\s?-?([A-Z])(?![A-Z0-9])/g)].map(m => m[1] + m[2]), ok = cs.find(letraOk); if (ok) out.doc = ok;
-  const fn = flat.match(/(?:FECHA DE NACIMIENTO|DATA DE NAIXEMENT|DATE OF BIRTH)\D{0,25}?(\d{2})[\s./-]+(\d{2})[\s./-]+(\d{4})/); if (fn && +fn[2] >= 1 && +fn[2] <= 12 && +fn[1] >= 1 && +fn[1] <= 31) out.nac = fn[3] + "-" + fn[2] + "-" + fn[1];
-  const nac = sig(/LUGAR DE NACIMIENTO|LLOC DE NAIXEMENT|PLACE OF BIRTH/, 2); if (nac[0]) { const m = nac[0].match(/^(.*?)\s*\(([^)]+)\)\s*$/); out.lnaix = (m ? m[1] : nac[0]).trim(); }
-  const dom = sig(/DOMICILIO|DOMICILI|ADDRESS/, 3); if (dom[0]) { out.adr = dom[0]; const l2 = dom[1] || "", m = l2.match(/^(.*?)\s*\(([^)]+)\)\s*$/); if (m) { out.mun = m[1].trim(); out.prov = m[2].trim(); } else if (l2) out.mun = l2.trim(); }
-  const ap = sig(/^(PRIMER )?APELLIDO|^APELLIDOS|^COGNOMS|SURNAME/, 2), no = sig(/^NOMBRE|^NOM$|^NAME/, 1); if (ap[0]) out.ape1 = ap[0]; if (ap[1]) out.ape2 = ap[1]; if (no[0]) out.nom = no[0];
-  const lic = {1: /^\s*1[.\s]+(.+)$/m, 2: /^\s*2[.\s]+(.+)$/m, 3: /^\s*3[.\s]+(\d{2}[./-]\d{2}[./-]\d{4})\s*(.*)$/m, 5: /^\s*5[.\s]+(.+)$/m, 8: /^\s*8[.\s]+(.+)$/m};
-  if (!out.ape1) { const a = String(text).match(lic[1]); if (a) { const t = a[1].trim().split(/\s+/); out.ape1 = t[0]; out.ape2 = t.slice(1).join(" "); } }
-  if (!out.nom) { const a = String(text).match(lic[2]); if (a) out.nom = a[1].trim(); }
-  const f = String(text).match(lic[3]); if (f) { if (!out.nac) out.nac = f[1].split(/[./-]/).reverse().join("-"); if (f[2]) out.lnaix = f[2].trim(); }
-  if (!out.doc) { const a = String(text).match(lic[5]); if (a) out.doc = a[1].trim(); } const ad = String(text).match(lic[8]); if (ad && !out.adr) out.adr = ad[1].trim();
+  const L = String(text).split("\n").map(x => x.trim()).filter(Boolean), U = L.map(x => sinAc(x.toUpperCase())), out = {}, flat = U.join(" ");
+  const alfa = s => (s.match(/[A-Za-zÀ-ÿ0-9]/g) || []).length, limp = s => s.replace(/[|_«»"“”<>]/g, " ").replace(/\s+/g, " ").trim();
+  const sinEtq = j => { let s = L[j]; for (const [x, y] of [...U[j].matchAll(ETQG)].map(m => [m.index, m.index + m[0].length]).reverse()) s = s.slice(0, x) + " " + s.slice(y); return limp(s.replace(/[\/]+/g, " ")); };
+  const bueno = s => alfa(s) >= 2 && alfa(s) / s.length >= .6;
+  const tras = (re, max) => {
+    const i = U.findIndex(x => re.test(x)); if (i < 0) return []; const v = [], r0 = sinEtq(i); if (bueno(r0)) v.push(r0);
+    for (let j = i + 1; j < L.length && v.length < max; j++) {
+      if (/<|^[A-Z0-9]{18,}$/.test(U[j])) break;
+      if (ETQ.test(U[j])) { const r = sinEtq(j); if (v.length || bueno(r)) break; continue; }
+      const s = limp(L[j]); if (bueno(s)) v.push(s);
+    }
+    return v;
+  };
+  // número de documento: se acepta solo si la letra cuadra con las cifras
+  const cs = [...flat.matchAll(/(?<!\d)([XYZ]\d{7}|\d{8})\s?-?([A-Z])(?![A-Z0-9])/g)].map(m => m[1] + m[2]).concat([...flat.matchAll(/(?<![0-9A-Z])([XYZ]?[0-9OQDILBSZG]{7,8})\s?-?([A-Z0-9])(?![A-Z0-9])/g)].map(m => { const r = repDni(m[1] + m[2]); return r.ok ? r.v : ""; }));
+  const dn = cs.find(x => x && letraOk(x)); if (dn) out.doc = dn;
+  // fecha de nacimiento: la que sigue a la etiqueta; si no, la única fecha pasada del texto
+  const fn = flat.match(/(?:NACIMIENTO|DATE OF BIRTH|NAIXEMENT)[^0-9]{0,40}?(\d{2}[\s./-]*\d{2}[\s./-]*(?:19|20)\d{2})/), hoy = new Date().toISOString().slice(0, 10);
+  const fs = fechasEn(flat); if (fn) out.nac = fechasEn(fn[1])[0]; else { const pas = fs.filter(f => f <= hoy).sort(); if (pas.length) out.nac = pas[0]; }
+  const nac = tras(/LUGAR DE NACIMIENTO|LLOC DE NAIXEMENT|PLACE OF BIRTH/, 1); if (nac[0]) { const m = nac[0].match(/^(.*?)\s*\(([^)]+)\)\s*$/); out.lnaix = (m ? m[1] : nac[0]).trim(); }
+  const dom = tras(/DOMICILIO|DOMICILI|DOMICILE|ADDRESS/, 4);
+  if (dom.length) {
+    const last = dom[dom.length - 1], pm = last.match(/^(.*?)\s*\(([^)]+)\)\s*$/);
+    if (pm && dom.length > 1) { out.adr = dom.slice(0, -1).join(" "); out.mun = pm[1].trim(); out.prov = pm[2].trim(); }
+    else if (dom.length >= 3) { out.adr = dom.slice(0, -2).join(" "); out.mun = dom[dom.length - 2]; out.prov = last; }
+    else if (dom.length == 2) { out.adr = dom[0]; out.mun = last; }
+    else out.adr = dom[0];
+  }
+  const ap = tras(/^(PRIMER )?APELLIDO|\bAPELLIDOS\b|\bCOGNOMS\b|\bSURNAMES?\b/, 2), no = tras(/\bNOMBRE\b|^NOM\b|\bNAME\b/, 1);
+  if (ap[0]) out.ape1 = ap[0]; if (ap[1]) out.ape2 = ap[1]; if (no[0]) out.nom = no[0];
+  if (/PERMISO|CONDUCIR|CONDUIR|DRIVING|LICENCIA|LLICENCIA/.test(flat)) {   // permiso de conducción (campos numerados)
+    const lic = {1: /^\s*1[.\s]+(.+)$/m, 2: /^\s*2[.\s]+(.+)$/m, 3: /^\s*3[.\s]+(\d{2}[./-]\d{2}[./-]\d{4})\s*(.*)$/m, 5: /^\s*5[.\s]+(.+)$/m, 8: /^\s*8[.\s]+(.+)$/m};
+    if (!out.ape1) { const a = String(text).match(lic[1]); if (a) { const t = a[1].trim().split(/\s+/); out.ape1 = t[0]; out.ape2 = t.slice(1).join(" "); } }
+    if (!out.nom) { const a = String(text).match(lic[2]); if (a) out.nom = a[1].trim(); }
+    const f = String(text).match(lic[3]); if (f) { if (!out.nac) out.nac = f[1].split(/[./-]/).reverse().join("-"); if (f[2] && !out.lnaix) out.lnaix = f[2].trim(); }
+    if (!out.doc) { const a = String(text).match(lic[5]); if (a && /^[0-9A-Z]{6,12}$/.test(a[1].trim().replace(/[\s-]/g, ""))) out.doc = a[1].trim(); } const ad = String(text).match(lic[8]); if (ad && !out.adr) out.adr = ad[1].trim();
+  }
   return out;
 }
 const lev = (a, b) => { const d = Array.from({length: a.length + 1}, (_, i) => [i, ...Array(b.length).fill(0)]); for (let j = 1; j <= b.length; j++) d[0][j] = j; for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] == b[j - 1] ? 0 : 1)); return d[a.length][b.length]; };
@@ -422,14 +450,14 @@ function recorte(src, b, ancho, modo) {
 }
 const aBlob = c => new Promise(ok => c.toBlob(ok, "image/png"));
 let PROG = () => {};
-async function crearW(lang, wl) { const w = await Tesseract.createWorker(lang, 1, {logger: m => { if (m.status == "recognizing text") PROG(m.progress); }}); if (wl) await w.setParameters({tessedit_char_whitelist: wl, tessedit_pageseg_mode: "6"}); return w; }
+async function crearW(lang, wl, psm) { const w = await Tesseract.createWorker(lang, 1, {logger: m => { if (m.status == "recognizing text") PROG(m.progress); }}); if (wl) await w.setParameters({tessedit_char_whitelist: wl, tessedit_pageseg_mode: psm || "6"}); return w; }
 const WL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789<";
 const mrzLike = t => { const c = limpia(t); return c.length >= 22 && (c.includes("<<") || R2.test(c) || (/ESP/.test(c) && /\d{6}/.test(c))); };
 const puntuaMZ = r => !r ? -1 : r.ok ? 100 : 50 - r.av.length * 10 + (r.doc ? 5 : 0);
 function marca(k, v) { if (!v) return; const e = document.querySelector('#actaf [data-f="' + k + '"]'); if (!e) return; e.value = v; e.classList.add("rev"); }
 /* Lee una imagen: localiza las líneas de lectura automática, las amplía y las relee hasta que cuadren los dígitos de control */
-async function leeImagen(file, wMZ, wTX, paso) {
-  const src = await cargaImg(file, 3000), W = src.width, H = src.height, out = {raw: "", mz: null, tx: ""}, tz = [];
+async function leeImagen(file, wMZ, wTX, wNU, paso) {
+  const src = await cargaImg(file, 3000), W = src.width, H = src.height, out = {raw: "", mz: null, tx: "", nu: ""}, tz = [];
   const c1 = recorte(src, {x: 0, y: 0, w: W, h: H}, Math.min(W, 2400), "g"), k = c1.width / W, b1 = await aBlob(c1);
   paso("Buscando las líneas de lectura automática…", 0);
   const r1 = await wMZ.recognize(b1), t1 = r1.data.text || ""; out.raw += "--- líneas MRZ (imagen entera) ---\n" + t1 + "\n"; tz.push(t1);
@@ -451,6 +479,12 @@ async function leeImagen(file, wMZ, wTX, paso) {
   }
   paso("Leyendo el texto del documento…", .6);
   out.tx = (await wTX.recognize(b1)).data.text || ""; out.raw += "--- texto ---\n" + out.tx + "\n";
+  const t0 = parseTexto(out.tx);
+  if ((!t0.doc || !t0.nac) && !(out.mz && out.mz.ok)) {   // texto suelto, solo cifras y letras: encuentra el número grande y las fechas
+    paso("Buscando el número y las fechas…", .8);
+    for (const bl of [b1, await aBlob(recorte(src, {x: 0, y: 0, w: W, h: H}, Math.min(W, 2400), "b"))]) out.nu += ((await wNU.recognize(bl)).data.text || "") + "\n";
+    out.raw += "--- cifras y letras sueltas ---\n" + out.nu + "\n";
+  }
   for (const t of tz) { const r = parseMRZ(t, out.tx); if (puntuaMZ(r) > puntuaMZ(out.mz)) out.mz = r; }
   return out;
 }
@@ -459,14 +493,14 @@ function escanerInit() {
   $("sc_btn").onclick = () => $("sc_file").click();
   $("sc_file").onchange = async () => {
     const fs = [...$("sc_file").files]; if (!fs.length) return;
-    $("sc_bar").hidden = false; let mz = null, tx = "", raw = "", wMZ = null, wTX = null;
+    $("sc_bar").hidden = false; let mz = null, tx = "", raw = "", wMZ = null, wTX = null, wNU = null;
     try {
-      $("sc_n").textContent = "Cargando el lector…"; await cargaTs(); wMZ = await crearW("eng", WL); wTX = await crearW("spa", "");
+      $("sc_n").textContent = "Cargando el lector…"; await cargaTs(); wMZ = await crearW("eng", WL); wTX = await crearW("spa", ""); wNU = await crearW("eng", "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ", "11");
       for (let i = 0; i < fs.length; i++) {
         const base = 100 * i / fs.length, ancho = 100 / fs.length;
         PROG = f => { $("sc_pr").value = base + ancho * Math.min(.95, (PROG.p || 0) + f * .3); };
-        const r = await leeImagen(fs[i], wMZ, wTX, (m, p) => { PROG.p = p; $("sc_n").textContent = m + " (imagen " + (i + 1) + " de " + fs.length + ")"; });
-        raw += "=== Imagen " + (i + 1) + " ===\n" + r.raw; tx += r.tx + "\n";
+        const r = await leeImagen(fs[i], wMZ, wTX, wNU, (m, p) => { PROG.p = p; $("sc_n").textContent = m + " (imagen " + (i + 1) + " de " + fs.length + ")"; });
+        raw += "=== Imagen " + (i + 1) + " ===\n" + r.raw; tx += r.tx + "\n" + r.nu + "\n";
         if (puntuaMZ(r.mz) > puntuaMZ(mz)) mz = r.mz;
       }
       const t = parseTexto(tx), av = []; let n = 0; mz = cruza(mz, t);
@@ -478,10 +512,10 @@ function escanerInit() {
       ["lnaix", "adr", "mun", "prov"].forEach(k => marca(k, t[k]));
       n += ["doc", "ape1", "ape2", "nom", "lnaix", "adr", "mun", "prov"].filter(k => k == "doc" ? doc : v(k)).length;
       if (mz) av.push(...mz.av);
-      $("sc_n").textContent = (!n ? "No he podido leer datos del documento. Prueba con más luz, sin reflejos, de cerca y con el documento recto." : mz && mz.ok ? "✔ Lectura verificada con los dígitos de control del documento. Los campos en amarillo vienen de él." : mz && !av.length ? "Lectura contrastada con el texto impreso del documento. Los campos en amarillo vienen de él: dales un vistazo antes de imprimir." : "Lectura hecha. Los campos en amarillo vienen del documento: revísalos antes de imprimir.") + (n && !mz ? " No se han leído las líneas de lectura automática (<<<<): escanea también la cara de atrás, que es la más fiable." : "") + (av.length ? " " + av.join(" ") : "");
+      $("sc_n").textContent = (!n ? "No he podido leer datos del documento. Prueba con mucha luz (junto a una ventana o bajo una lámpara), sin reflejos, de cerca y con el documento recto." : mz && mz.ok ? "✔ Lectura verificada con los dígitos de control del documento. Los campos en amarillo vienen de él." : mz && !av.length ? "Lectura contrastada con el texto impreso del documento. Los campos en amarillo vienen de él: dales un vistazo antes de imprimir." : "Lectura hecha. Los campos en amarillo vienen del documento: revísalos antes de imprimir.") + (n && !mz ? " No se han leído las líneas de lectura automática (<<<<): escanea también la cara de atrás, que es la más fiable." : "") + (av.length ? " " + av.join(" ") : "");
       $("sc_txt").textContent = raw; $("sc_raw").hidden = false;
     } catch (e) { $("sc_n").textContent = "No se pudo leer: " + e.message; }
-    for (const w of [wMZ, wTX]) try { w && await w.terminate(); } catch (e) {}
+    for (const w of [wMZ, wTX, wNU]) try { w && await w.terminate(); } catch (e) {}
     $("sc_bar").hidden = true; $("sc_file").value = "";
   };
 }

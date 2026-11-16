@@ -80,13 +80,18 @@ details.acc>#pe{padding:10px 12px 2px}
 #det_f img.sg{height:60px;background:#fff;border:1px solid var(--line);border-radius:8px;display:block;margin:4px 0}.det-bar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}.sec2{background:none;color:inherit;border:1px solid var(--line)}
 #sig_m{display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:70;align-items:center;justify-content:center}#sig_m .box2{background:var(--card);border-radius:16px;padding:14px;width:min(94vw,640px)}#sig_c{width:100%;height:220px;background:#fff;border:1px solid #999;border-radius:10px;touch-action:none;display:block}
 @media(max-width:560px){#det_f .g2{grid-template-columns:1fr}}
+#cro{position:fixed;inset:0;z-index:65;background:#e9efee;display:flex;flex-direction:column;color:#12211F}#cro[hidden]{display:none}#cro button{border-radius:10px;padding:8px 10px;font-size:14px}#cro_s{flex:1;width:100%;min-height:0;touch-action:none;display:block;cursor:crosshair}
+.cro-top{display:flex;gap:6px;padding:8px;background:#0E5A5A;align-items:center;flex-wrap:wrap}.cro-top button{background:#ffffff22;color:#fff;border:1px solid #fff4}.cro-et{display:flex;gap:2px;margin:0 auto}.cro-et button.on{background:#fff;color:#0E5A5A;font-weight:700}
+.cro-tools{display:flex;gap:6px;overflow-x:auto;padding:8px;background:#fff;border-top:1px solid #cfd8d6;-webkit-overflow-scrolling:touch}.cro-tools button{display:flex;flex-direction:column;align-items:center;min-width:64px;background:#fff;color:#12211F;border:1px solid #cfd8d6;font-size:11px;padding:6px 4px}.cro-tools button span{font-size:20px}.cro-tools button.on{background:#0E5A5A;color:#fff}
+.cro-pn{background:#fff;border-top:1px solid #cfd8d6;padding:8px 10px;max-height:38vh;overflow:auto;font-size:14px}.cro-pn[hidden]{display:none}.cro-pn .cro-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}.cro-pn button{background:#0E5A5A;color:#fff;border:0}.cro-pn button.sec2{background:#fff;color:#12211F;border:1px solid #cfd8d6}.cro-pn button.r{background:#C93A1F}.cro-pn button:disabled{opacity:.4}.cro-pn input,.cro-pn select{padding:7px;border:1px solid #cfd8d6;border-radius:8px;background:#fff;color:#12211F}
+.cro-b{position:absolute;left:8px;right:8px;top:62px;background:#fff4d6;color:#4a3500;border:1px solid #e8c766;border-radius:12px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;z-index:2}.cro-b[hidden]{display:none}.cro-b span{flex:1;font-size:13px}.cro-b button{background:#0E5A5A;color:#fff;border:0}
 </style>
 </head>
 <body>
 <header>
 <div class="hrow"><div class="brand"><svg viewBox="0 0 40 48" aria-hidden="true"><path d="M20 3C10.5 3 4 10 4 18.5 4 30 20 45 20 45s16-15 16-26.5C36 10 29.5 3 20 3z" fill="#fff"/><text x="20" y="26" text-anchor="middle" font-size="19" font-weight="700" fill="#0E5A5A" font-family="Inter,system-ui,sans-serif">P</text><circle cx="31" cy="8" r="5" fill="#C93A1F"/></svg><div><b>PolAssist · Panel</b><br><small>Policía Local de Tortosa · v41</small></div></div>
 <span><button class="g" id="mute">🔔 Sonido: sí</button> <button class="g" id="out" hidden>Salir</button></span></div>
-<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="brf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5a3 3 0 010 6M18 20a6 6 0 00-3-5"/></svg><span>Briefing</span></button><button class="tab" data-t="det"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18M15 3v18M4 9h16M4 15h16"/></svg><span>Detenidos</span><i class="tb" id="b_det" hidden></i></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
+<nav id="tabs" hidden><button class="tab on" data-t="avisos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg><span>Avisos</span><i class="tb" id="b_avisos" hidden></i></button><button class="tab" data-t="brf"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M3 20a6 6 0 0112 0"/><path d="M16 5a3 3 0 010 6M18 20a6 6 0 00-3-5"/></svg><span>Briefing</span></button><button class="tab" data-t="det"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M9 3v18M15 3v18M4 9h16M4 15h16"/></svg><span>Detenidos</span><i class="tb" id="b_det" hidden></i></button><button class="tab" data-t="acc"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="4"/><path d="M8.5 8h7M8.5 16h7"/></svg><span>Accidentes</span></button><button class="tab" data-t="pat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 14l1.6-4.2A2 2 0 016.5 8.5h11a2 2 0 011.9 1.3L21 14"/><rect x="2.5" y="14" width="19" height="4.5" rx="1.5"/><circle cx="7.5" cy="18.5" r="1.4"/><circle cx="16.5" cy="18.5" r="1.4"/></svg><span>Patrullas</span><i class="tb" id="b_pat" hidden></i></button><button class="tab" data-t="act"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4h6a1 1 0 011 1v1H8V5a1 1 0 011-1z"/><path d="M8 6H6v14h12V6h-2M9 12h6M9 16h4"/></svg><span>Actas</span></button><button class="tab" data-t="mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><span>Mapa</span><i class="tb" id="b_mapa" hidden></i></button><button class="tab" data-t="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg><span>Estadísticas</span><i class="tb" id="b_stats" hidden></i></button><button class="tab" data-t="oc"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M10 13h6M10 17h6"/></svg><span>Ocupaciones</span><i class="tb" id="b_oc" hidden></i></button><button class="tab" data-t="vec"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 10v4h3l7 4V6L7 10z"/><path d="M17 9a4 4 0 010 6"/></svg><span>Vecinos</span><i class="tb" id="b_vec" hidden></i></button><button class="tab" data-t="usu"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0113 0"/><circle cx="17" cy="9" r="2.5"/><path d="M17 14.5a5 5 0 014.5 5"/></svg><span>Usuarios</span><i class="tb" id="b_usu" hidden></i></button></nav>
 </header>
 <main>
 <div id="login"><h2>Acceso de agentes</h2><input id="em" type="email" placeholder="Correo"><input id="pw" type="password" placeholder="Contraseña"><button id="go">Entrar</button><div id="err"></div></div>
@@ -113,6 +118,9 @@ details.acc>#pe{padding:10px 12px 2px}
 <div id="det_l"><div class="brf-bar"><button id="det_new" type="button" class="k">+ Nuevo detenido</button><button class="chip on" data-df="custodia" type="button">En el CDQ</button><button class="chip" data-df="todos" type="button">Todos</button></div>
 <div id="det_est0" style="font-size:13px;opacity:.8;margin:0 0 8px"></div><div id="det_lst"></div></div>
 <div id="det_f" hidden></div></section>
+<section class="view" id="v-acc"><h2 class="vt">Accidentes · T01 y croquis</h2>
+<div id="acc_l"><div class="brf-bar"><button id="acc_new" type="button" class="k">+ Nuevo accidente</button><button class="chip on" data-qf="todos" type="button">Todos</button><button class="chip" data-qf="abierto" type="button">Abiertos</button></div><div id="acc_lst"></div></div>
+<div id="acc_f" hidden></div></section>
 <section class="view" id="v-pat"><h2 class="vt">Patrullas</h2>
 <div class="card" style="display:block"><div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span><b>Esta unidad:</b> <span id="pt_nom">—</span></span><button id="pt_btn">📍 Compartir mi ubicación</button></div>
 <small id="pt_est">La ubicación solo la ven los agentes del panel. No se guarda el recorrido, solo la última posición. Mantén esta pantalla abierta y encendida.</small></div>
@@ -160,6 +168,8 @@ details.acc>#pe{padding:10px 12px 2px}
 </div>
 </main>
 <div id="sig_m"><div class="box2"><h3 id="sig_t" style="margin:0 0 8px"></h3><canvas id="sig_c" width="900" height="330"></canvas><div style="display:flex;gap:8px;margin-top:10px"><button id="sig_ok" class="k" type="button">Aceptar firma</button><button id="sig_clr" type="button" class="sec2">Borrar</button><button id="sig_no" type="button" class="sec2">Cancelar</button></div></div></div>
+<div id="cro" hidden><div class="cro-top"><button id="cro_x" type="button">✕ Cerrar</button><button id="cro_un" type="button" aria-label="Deshacer">↶</button><button id="cro_re" type="button" aria-label="Rehacer">↷</button><span id="cro_et" class="cro-et"><button type="button" data-et="0">Antes</button><button type="button" data-et="1" class="on">Impacto</button><button type="button" data-et="2">Final</button></span><button id="cro_fit" type="button" aria-label="Encajar">⤢</button><button id="cro_fo" type="button">Fondo</button><button id="cro_pr" type="button">🖨️</button></div>
+<svg id="cro_s"></svg><div id="cro_b" class="cro-b" hidden></div><div id="cro_fm" class="cro-pn" hidden></div><div id="cro_p" class="cro-pn" hidden></div><div id="cro_t" class="cro-tools"></div><input type="file" id="cro_file" accept="image/*" hidden></div>
 <div id="acta-print" hidden></div>
 <div id="cfm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 id="cfm_t" style="margin:0 0 8px"></h3><p id="cfm_p" style="margin:0 0 12px"></p><div style="display:flex;gap:8px"><button class="k" id="cfm_ok">Confirmar y enviar</button><button id="cfm_no" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <div id="grm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 style="margin:0 0 8px">Responder a la consulta de grúa</h3><small>Información adicional para el ciudadano (dirección del depósito, horario, qué documentos llevar):</small><textarea id="grt" rows="3" style="width:100%;margin-top:6px"></textarea><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="k" id="gr_si">Sí, está en el depósito</button><button id="gr_no">No consta en el depósito</button></div><div style="margin-top:8px"><button id="gr_cl" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
@@ -505,6 +515,428 @@ function detHTML() {
 <h4>Efectos personales</h4><ul>${R.efectos.filter(x => x.txt).map(x => `<li>· ${esc(x.txt)}</li>`).join("") || "<li>—</li>"}</ul><div>${bx(em.bolsa)}Bolsa ${bx(em.n01)}Fotocopia N01</div><div style="display:flex;gap:30px">${em.firma_det ? `<div>Detenido: ${im(em.firma_det)}</div>` : ""}${em.firma_ag ? `<div>Agente: ${im(em.firma_ag)}</div>` : ""}</div>
 <h4>Traslado</h4><div>Destino: <b>${esc(tr.destino || "—")}</b> · Salida: ${dfh(tr.fecha)}<br>${esc(tr.detalle || "")}<br>Agentes: ${esc(tr.agentes || "—")} ${im(tr.firma)}</div>
 <h4>Conforme del detenido</h4><div>${im(R.firma_conforme)}</div></div>`;
+}
+
+/* ---- accidentes: acta T01 + croquizador a escala ---- */
+const ACC = {row: null, filtro: "todos", sucio: new Set(), tm: null, ok: false};
+const ACC_TIPOS = ["Colisión frontal", "Colisión fronto-lateral", "Colisión lateral", "Alcance", "Colisión múltiple", "Atropello a peatón", "Atropello a ciclista", "Salida de la vía", "Vuelco", "Choque con obstáculo", "Caída de moto / bicicleta", "Otro"];
+const VTIPOS = {turismo: {n: "Turismo", l: 4.4, w: 1.8}, suv: {n: "Todoterreno / SUV", l: 4.6, w: 1.9}, furgoneta: {n: "Furgoneta", l: 5.3, w: 2.0}, camion: {n: "Camión", l: 9, w: 2.5}, bus: {n: "Autobús", l: 12, w: 2.55}, moto: {n: "Motocicleta", l: 2.1, w: 0.8}, bici: {n: "Bicicleta", l: 1.8, w: 0.6}, vmp: {n: "Patinete (VMP)", l: 1.1, w: 0.5}, peaton: {n: "Peatón", l: 0.6, w: 0.6}};
+// Dimensiones orientativas (largo × ancho en metros): verificar con la ficha técnica si hace falta precisión
+const MODELOS = [["Seat", "Ibiza", 4.06, 1.78, "turismo"], ["Seat", "León", 4.37, 1.80, "turismo"], ["Seat", "Arona", 4.14, 1.78, "suv"], ["Seat", "Ateca", 4.38, 1.84, "suv"], ["Renault", "Clio", 4.05, 1.80, "turismo"], ["Renault", "Captur", 4.23, 1.80, "suv"], ["Renault", "Kangoo", 4.28, 1.83, "furgoneta"], ["Dacia", "Sandero", 4.09, 1.85, "turismo"], ["Dacia", "Duster", 4.34, 1.81, "suv"], ["Volkswagen", "Polo", 4.07, 1.75, "turismo"], ["Volkswagen", "Golf", 4.28, 1.79, "turismo"], ["Volkswagen", "Tiguan", 4.51, 1.84, "suv"], ["Toyota", "Yaris", 3.94, 1.74, "turismo"], ["Toyota", "Corolla", 4.37, 1.79, "turismo"], ["Toyota", "C-HR", 4.36, 1.80, "suv"], ["Ford", "Fiesta", 4.04, 1.73, "turismo"], ["Ford", "Focus", 4.38, 1.83, "turismo"], ["Ford", "Transit", 5.53, 2.06, "furgoneta"], ["Opel", "Corsa", 4.06, 1.77, "turismo"], ["Peugeot", "208", 4.06, 1.74, "turismo"], ["Peugeot", "308", 4.36, 1.85, "turismo"], ["Peugeot", "2008", 4.30, 1.77, "suv"], ["Citroën", "C3", 3.99, 1.75, "turismo"], ["Citroën", "C4", 4.36, 1.80, "turismo"], ["Citroën", "Berlingo", 4.40, 1.85, "furgoneta"], ["Nissan", "Qashqai", 4.42, 1.84, "suv"], ["Nissan", "Micra", 3.99, 1.74, "turismo"], ["Hyundai", "i30", 4.34, 1.79, "turismo"], ["Hyundai", "Tucson", 4.50, 1.86, "suv"], ["Kia", "Ceed", 4.31, 1.80, "turismo"], ["Kia", "Sportage", 4.50, 1.87, "suv"], ["Fiat", "500", 3.57, 1.63, "turismo"], ["Fiat", "Panda", 3.65, 1.64, "turismo"], ["Mercedes", "Clase A", 4.42, 1.80, "turismo"], ["Mercedes", "Sprinter", 5.93, 1.99, "furgoneta"], ["BMW", "Serie 1", 4.32, 1.80, "turismo"], ["Audi", "A3", 4.34, 1.82, "turismo"], ["Honda", "PCX 125", 1.92, 0.74, "moto"], ["Yamaha", "NMAX 125", 1.94, 0.74, "moto"]];
+const VCOL = ["#1F6FEB", "#C93A1F", "#2E9E5B", "#E8A33D", "#7B3FE4", "#0E8F9E"];
+const gP = (o, p) => p.split(".").reduce((a, k) => a == null ? a : a[k], o);
+const sP = (o, p, v) => { const ks = p.split("."), l = ks.pop(); const t = ks.reduce((a, k) => a[k] ?? (a[k] = {}), o); t[l] = v; };
+const vacioVeh = (tipo = "turismo") => ({tipo, marca: "", modelo: "", mat: "", pais: "E", color: "", vin: "", itv: "", cia: "", pol: "", vig: "", soa: "", largo: VTIPOS[tipo].l, ancho: VTIPOS[tipo].w, prop: "", ocup: "", danos: "", grua: "", cond: {nombre: "", apellidos: "", doc: "", nac: "", dom: "", tel: "", permiso: "", clase: "", pvig: "", alc: "", alcres: ""}});
+const vacioDatos = () => ({via: {nombre: "", tipo: "", limite: ""}, cond: {clima: "Despejado", luz: "Día", calzada: "Seca", visib: "Buena"}, tipo: "", heridos: {hay: false, desc: ""}, testigos: [], agentes: "", desc: "", obs: ""});
+function accInit() {
+  if (!ACC.ok) {
+    ACC.ok = true;
+    $("acc_new").onclick = accNuevo;
+    document.querySelectorAll("[data-qf]").forEach(b => b.onclick = () => { ACC.filtro = b.dataset.qf; document.querySelectorAll("[data-qf]").forEach(x => x.classList.toggle("on", x == b)); accLista(); });
+    $("acc_lst").onclick = e => { const c = e.target.closest("[data-qid]"); if (c) accAbre(c.dataset.qid); };
+    $("acc_f").addEventListener("input", accEv); $("acc_f").addEventListener("change", accEv); $("acc_f").addEventListener("click", accClick);
+    croInit();
+  }
+  if (ACC.row) accRender(); else accLista();
+}
+async function accLista() {
+  let q = db.from("accidentes").select("id,ref,estado,fecha,lugar,datos,vehiculos").order("fecha", {ascending: false}).limit(100);
+  if (ACC.filtro == "abierto") q = q.eq("estado", "abierto");
+  const {data, error} = await q;
+  if (error) { $("acc_lst").innerHTML = `<div class="brf-aviso">⚠️ No se pudo cargar (${esc(error.message)}). ¿Has ejecutado 16-accidentes.sql?</div>`; return; }
+  $("acc_lst").innerHTML = (data || []).map(r => `<div class="card det-c" data-qid="${r.id}"><div><b>#${r.ref} · ${esc(r.lugar || "Sin lugar")}</b><br><small>${dfh(r.fecha)} · ${esc((r.datos || {}).tipo || "sin tipo")} · ${(r.vehiculos || []).length} vehículo(s)</small></div><span class="bd">${r.estado == "cerrado" ? "Cerrado" : "Abierto"}</span></div>`).join("") || "<p>Ningún accidente.</p>";
+}
+async function accNuevo() {
+  const {data, error} = await db.from("accidentes").insert({fecha: new Date().toISOString(), datos: vacioDatos(), vehiculos: [vacioVeh(), vacioVeh()]}).select("*").single();
+  if (error) { alert("No se pudo crear: " + error.message); return; }
+  ACC.row = data; ACC.sucio.clear(); accRender();
+}
+async function accAbre(id) {
+  const {data, error} = await db.from("accidentes").select("*").eq("id", id).single();
+  if (error) { alert("No se pudo abrir: " + error.message); return; }
+  ACC.row = data; ACC.sucio.clear(); accRender();
+}
+function accSucio(c) { ACC.sucio.add(c); const e = $("acc_est"); if (e) e.textContent = "Editando…"; clearTimeout(ACC.tm); ACC.tm = setTimeout(accGuarda, 1000); }
+async function accGuarda() {
+  clearTimeout(ACC.tm); const cols = [...ACC.sucio]; if (!cols.length || !ACC.row) return true;
+  const pl = {}; cols.forEach(c => pl[c] = ACC.row[c]); ACC.sucio.clear();
+  const {error} = await db.from("accidentes").update(pl).eq("id", ACC.row.id), e = $("acc_est");
+  if (error) { cols.forEach(c => ACC.sucio.add(c)); if (e) e.textContent = "⚠️ No guardado (" + error.message + ")"; return false; }
+  if (e) e.textContent = "Guardado ✓ " + new Date().toLocaleTimeString("es-ES", {hour: "2-digit", minute: "2-digit"}); return true;
+}
+function accEv(e) {
+  const t = e.target, p = t.dataset.qp; if (!p || !ACC.row) return;
+  const v = t.type == "checkbox" ? t.checked : t.type == "datetime-local" ? (t.value ? new Date(t.value).toISOString() : null) : t.type == "number" ? (t.value === "" ? null : parseFloat(t.value)) : t.value;
+  const col = p.split(".")[0]; if (col == "fecha" && !v) return;
+  sP(ACC.row, p, v); accSucio(col);
+  if (e.type == "change") { const m = p.match(/^vehiculos\.(\d+)\.(tipo|marca|modelo)$/); if (m) accVehAuto(+m[1], m[2]); }
+}
+function accVehAuto(i, k) {
+  const v = ACC.row.vehiculos[i];
+  if (k == "tipo") { v.largo = VTIPOS[v.tipo].l; v.ancho = VTIPOS[v.tipo].w; }
+  else { const m = MODELOS.find(x => x[0].toLowerCase() == (v.marca || "").trim().toLowerCase() && x[1].toLowerCase() == (v.modelo || "").trim().toLowerCase()); if (!m) return; v.tipo = m[4]; v.largo = m[2]; v.ancho = m[3]; }
+  accSucio("vehiculos"); accRender();
+}
+function accClick(e) {
+  const b = e.target.closest("[data-qa]"); if (!b || !ACC.row) return; const a = b.dataset.qa, R = ACC.row, i = +b.dataset.qi;
+  if (a == "back") { accGuarda().then(() => { ACC.row = null; $("acc_f").hidden = true; $("acc_l").hidden = false; accLista(); }); return; }
+  if (a == "veh+") { R.vehiculos.push(vacioVeh()); accSucio("vehiculos"); }
+  else if (a == "veh-") { if (!confirm("¿Quitar el vehículo V" + (i + 1) + " de la T01 y del croquis?")) return; R.vehiculos.splice(i, 1); const c = R.croquis || {}; if (c.vehs) { c.vehs = c.vehs.filter(x => x.i != i).map(x => ({...x, i: x.i > i ? x.i - 1 : x.i})); accSucio("croquis"); } accSucio("vehiculos"); }
+  else if (a == "tes+") { R.datos.testigos = R.datos.testigos || []; R.datos.testigos.push({nombre: "", doc: "", tel: "", decl: ""}); accSucio("datos"); }
+  else if (a == "tes-") { R.datos.testigos.splice(i, 1); accSucio("datos"); }
+  else if (a == "now") { R.fecha = new Date().toISOString(); accSucio("fecha"); }
+  else if (a == "gps") { if (!navigator.geolocation) { alert("Este dispositivo no da la ubicación."); return; } b.textContent = "Buscando…"; navigator.geolocation.getCurrentPosition(p => { R.lat = +p.coords.latitude.toFixed(6); R.lng = +p.coords.longitude.toFixed(6); accSucio("lat"); accSucio("lng"); accRender(); }, er => { alert("No se pudo obtener la ubicación (" + er.message + ")."); accRender(); }, {enableHighAccuracy: true, timeout: 15000}); return; }
+  else if (a == "cerrar") { R.estado = R.estado == "cerrado" ? "abierto" : "cerrado"; accSucio("estado"); }
+  else if (a == "cro") { croAbre(); return; }
+  else if (a == "p1") { accGuarda().then(() => muestraImp(accHTML())); return; }
+  else if (a == "p2") { accGuarda().then(() => muestraImp(croHTML())); return; }
+  accRender();
+}
+function muestraImp(h) { $("acta-print").innerHTML = '<div class="bar2"><button id="ap_pr">🖨️ Imprimir</button><button id="ap_x" style="background:#fff;color:#000">Cerrar</button></div>' + h; $("acta-print").hidden = false; $("ap_pr").onclick = () => window.print(); $("ap_x").onclick = () => { $("acta-print").hidden = true; }; $("acta-print").scrollTop = 0; }
+const qI = (p, lbl, ty = "text", ex = "") => { const v = gP(ACC.row, p); return `<label class="fl">${lbl}<input type="${ty}" ${ty == "number" ? 'step="any" inputmode="decimal"' : ""} data-qp="${p}" value="${esc(v ?? "")}" ${ex}></label>`; };
+const qS = (p, lbl, ops) => { const v = gP(ACC.row, p); return `<label class="fl">${lbl}<select data-qp="${p}"><option value="">—</option>${ops.map(o => `<option ${o == v ? "selected" : ""}>${esc(o)}</option>`).join("")}</select></label>`; };
+const qC = (p, lbl) => `<label class="ck"><input type="checkbox" data-qp="${p}" ${gP(ACC.row, p) ? "checked" : ""}> ${lbl}</label>`;
+const qT = (p, lbl, rows = 3) => `<label class="fl">${lbl}<textarea rows="${rows}" data-qp="${p}">${esc(gP(ACC.row, p) || "")}</textarea></label>`;
+function accRender() {
+  const R = ACC.row; $("acc_l").hidden = true; const F = $("acc_f"); F.hidden = false;
+  const nv = R.vehiculos.length, hayCro = R.croquis && ((R.croquis.objs || []).length || (R.croquis.vehs || []).length);
+  F.innerHTML = `<div class="det-bar"><button data-qa="back" type="button" class="sec2">← Lista</button><b>T01 · #${R.ref}</b><span id="acc_est" style="font-size:13px;opacity:.8"></span></div>
+<details class="acc" open><summary>1. Accidente</summary><div class="pad"><div class="row"><label class="fl" style="flex:1;min-width:190px">Fecha y hora<input type="datetime-local" data-qp="fecha" value="${dtl(R.fecha)}"></label><button data-qa="now" type="button" class="sec2">Ahora</button></div>
+${qI("lugar", "Lugar (calle, número o punto kilométrico, municipio)")}
+<div class="row"><div style="flex:1;min-width:120px">${qI("lat", "Latitud", "number")}</div><div style="flex:1;min-width:120px">${qI("lng", "Longitud", "number")}</div><button data-qa="gps" type="button" class="sec2">📍 Mi ubicación</button></div>
+${qS("datos.tipo", "Tipo de accidente", ACC_TIPOS)}
+<div class="g2">${qI("datos.via.nombre", "Vía")}${qS("datos.via.tipo", "Tipo de vía", ["Urbana", "Travesía", "Interurbana", "Autovía / autopista", "Camino", "Otra"])}${qI("datos.via.limite", "Velocidad limitada (km/h)", "number")}</div></div></details>
+<details class="acc" open><summary>2. Condiciones</summary><div class="pad"><div class="g2">${qS("datos.cond.clima", "Meteorología", ["Despejado", "Nublado", "Lluvia", "Niebla", "Nieve / hielo", "Viento fuerte"])}${qS("datos.cond.luz", "Luminosidad", ["Día", "Amanecer / anochecer", "Noche con iluminación", "Noche sin iluminación"])}${qS("datos.cond.calzada", "Estado de la calzada", ["Seca", "Mojada", "Con barro / gravilla", "Helada", "Con aceite"])}${qS("datos.cond.visib", "Visibilidad", ["Buena", "Reducida", "Muy reducida"])}</div></div></details>
+<details class="acc" open><summary>3. Vehículos (${nv})</summary><div class="pad">${R.vehiculos.map((v, i) => accVehForm(v, i)).join("")}<button data-qa="veh+" type="button">+ Añadir vehículo / peatón</button></div></details>
+<details class="acc" open><summary>4. Heridos y testigos</summary><div class="pad">${qC("datos.heridos.hay", "Hay heridos")}${qT("datos.heridos.desc", "Heridos: quién, lesiones aparentes, asistencia y centro de traslado", 3)}
+<h4 style="margin:10px 0 4px">Testigos</h4>${(R.datos.testigos || []).map((t, i) => `<div class="it"><div class="g2">${qI("datos.testigos." + i + ".nombre", "Nombre y apellidos")}${qI("datos.testigos." + i + ".doc", "DNI / NIE")}${qI("datos.testigos." + i + ".tel", "Teléfono", "tel")}</div>${qT("datos.testigos." + i + ".decl", "Manifestación", 2)}<button data-qa="tes-" data-qi="${i}" type="button" class="sec2">Quitar testigo</button></div>`).join("")}<button data-qa="tes+" type="button" class="sec2">+ Añadir testigo</button></div></details>
+<details class="acc" open><summary>5. Descripción y agentes</summary><div class="pad">${qT("datos.desc", "Descripción de los hechos y circunstancias del accidente", 5)}${qT("datos.obs", "Observaciones", 3)}${qI("datos.agentes", "Agentes actuantes (nombre y TIP)")}</div></details>
+<details class="acc" open><summary>6. Croquis</summary><div class="pad"><div style="margin-bottom:8px">${hayCro ? `Croquis con ${(R.croquis.vehs || []).length} vehículo(s) y ${(R.croquis.objs || []).length} elemento(s).` : "Aún no hay croquis."}</div><button data-qa="cro" type="button" class="k">✏️ Abrir croquizador</button></div></details>
+<div class="brf-fin"><button data-qa="p1" type="button">Imprimir T01</button><button data-qa="p2" type="button">Imprimir croquis</button><button data-qa="cerrar" type="button" class="sec2">${R.estado == "cerrado" ? "Reabrir" : "Marcar como cerrado"}</button></div>
+<datalist id="dl_marcas">${[...new Set(MODELOS.map(m => m[0]))].map(m => `<option value="${m}">`).join("")}</datalist><datalist id="dl_modelos">${MODELOS.map(m => `<option value="${m[1]}">`).join("")}</datalist>`;
+}
+function accVehForm(v, i) {
+  const q = k => "vehiculos." + i + "." + k;
+  return `<details class="acc" ${i < 2 ? "open" : ""} style="margin:8px 0"><summary><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${VCOL[i % VCOL.length]};margin-right:6px"></span>V${i + 1} · ${esc((VTIPOS[v.tipo] || {}).n || "")} ${esc(v.marca)} ${esc(v.modelo)} ${esc(v.mat)}</summary><div class="pad">
+<div class="g2"><label class="fl">Tipo<select data-qp="${q("tipo")}">${Object.keys(VTIPOS).map(k => `<option value="${k}" ${k == v.tipo ? "selected" : ""}>${VTIPOS[k].n}</option>`).join("")}</select></label>${qI(q("mat"), "Matrícula", "text", 'autocapitalize="characters"')}${qI(q("marca"), "Marca", "text", 'list="dl_marcas"')}${qI(q("modelo"), "Modelo", "text", 'list="dl_modelos"')}${qI(q("color"), "Color")}${qI(q("pais"), "País de matrícula")}${qI(q("vin"), "Bastidor (VIN)")}${qI(q("itv"), "ITV vigente hasta", "date")}${qI(q("largo"), "Largo (m) para el croquis", "number")}${qI(q("ancho"), "Ancho (m)", "number")}</div>
+<h4 style="margin:10px 0 2px">Seguro</h4><div class="g2">${qI(q("cia"), "Compañía aseguradora")}${qI(q("pol"), "Nº de póliza")}${qI(q("vig"), "Vigencia hasta", "date")}${qS(q("soa"), "Seguro obligatorio", ["Acreditado", "No acreditado", "Sin seguro", "Se consulta FIVA"])}</div>
+<h4 style="margin:10px 0 2px">Conductor</h4><div class="g2">${qI(q("cond.nombre"), "Nombre")}${qI(q("cond.apellidos"), "Apellidos")}${qI(q("cond.doc"), "DNI / NIE / pasaporte", "text", 'autocapitalize="characters"')}${qI(q("cond.nac"), "Fecha de nacimiento", "date")}${qI(q("cond.tel"), "Teléfono", "tel")}${qI(q("cond.dom"), "Domicilio")}${qI(q("cond.permiso"), "Nº de permiso de conducir")}${qI(q("cond.clase"), "Clase")}${qI(q("cond.pvig"), "Permiso válido hasta", "date")}${qS(q("cond.alc"), "Prueba de alcoholemia", ["No realizada", "Negativa", "Positiva", "Se niega"])}${qI(q("cond.alcres"), "Resultado (mg/l aire)")}</div>
+<div class="g2">${qI(q("prop"), "Propietario (si no es el conductor)")}${qI(q("ocup"), "Ocupantes (nº y datos)")}${qI(q("grua"), "Retirada por grúa (empresa / depósito)")}</div>${qT(q("danos"), "Daños del vehículo (zonas y descripción)", 3)}
+<button data-qa="veh-" data-qi="${i}" type="button" class="sec2">Quitar V${i + 1}</button></div></details>`;
+}
+/* ---- impresión T01 ---- */
+function accHTML() {
+  const R = ACC.row, D = R.datos, c = D.cond || {}, e = esc, pg = (n, N, body) => `<div class="apg" style="font-size:10.5px;padding:10mm 12mm"><div style="display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:3px"><b style="font-size:14px">T-01 · INFORME DE ACCIDENTE DE TRÁFICO · #${R.ref}</b><span>Policia Local de Tortosa · Pág. ${n}/${N}</span></div>${body}</div>`;
+  const row = (a, b) => `<tr><td style="border:1px solid #000;padding:3px 6px;width:26%;background:#eee"><b>${a}</b></td><td style="border:1px solid #000;padding:3px 6px">${b || "&nbsp;"}</td></tr>`, tb = r => `<table style="width:100%;border-collapse:collapse;margin:3px 0 8px">${r}</table>`, bx = v => `<span class="box">${v ? "✕" : ""}</span>`;
+  const vb = (v, i) => { const x = v.cond || {}; return `<h4>V${i + 1} · ${e((VTIPOS[v.tipo] || {}).n || "")}</h4>` + tb(row("Vehículo", e((v.marca + " " + v.modelo).trim()) + (v.color ? " · " + e(v.color) : "")) + row("Matrícula / país", e(v.mat) + " · " + e(v.pais)) + row("Bastidor (VIN) · ITV", e(v.vin) + (v.itv ? " · ITV hasta " + e(v.itv) : "")) + row("Seguro", e(v.cia) + " · póliza " + e(v.pol) + (v.vig ? " · vigencia " + e(v.vig) : "") + " · " + e(v.soa)) + row("Propietario", e(v.prop)) + row("Conductor", e((x.nombre + " " + x.apellidos).trim()) + " · " + e(x.doc) + (x.nac ? " · nac. " + e(x.nac) : "")) + row("Domicilio · teléfono", e(x.dom) + " · " + e(x.tel)) + row("Permiso de conducir", e(x.permiso) + " " + e(x.clase) + (x.pvig ? " · hasta " + e(x.pvig) : "")) + row("Alcoholemia", e(x.alc) + (x.alcres ? " · " + e(x.alcres) + " mg/l" : "")) + row("Ocupantes", e(v.ocup)) + row("Daños", `<span style="white-space:pre-wrap">${e(v.danos)}</span>`) + row("Grúa", e(v.grua))); };
+  const p1 = `<h4>Accidente</h4>` + tb(row("Fecha y hora", dfh(R.fecha)) + row("Lugar", e(R.lugar)) + row("Coordenadas", R.lat != null ? R.lat + ", " + R.lng : "") + row("Vía", e((D.via || {}).nombre) + " · " + e((D.via || {}).tipo) + ((D.via || {}).limite ? " · límite " + e(D.via.limite) + " km/h" : "")) + row("Tipo de accidente", e(D.tipo)) + row("Condiciones", e(c.clima) + " · " + e(c.luz) + " · calzada " + e(c.calzada).toLowerCase() + " · visibilidad " + e(c.visib).toLowerCase()) + row("Vehículos implicados", R.vehiculos.map((v, i) => "V" + (i + 1) + " " + e(v.mat)).join(" · ")))
+    + `<h4>Heridos</h4><div>${bx((D.heridos || {}).hay)}Hay heridos &nbsp; ${bx(!(D.heridos || {}).hay)}Sin heridos</div><div style="white-space:pre-wrap;min-height:22px">${e((D.heridos || {}).desc)}</div>`
+    + `<h4>Testigos</h4>` + ((D.testigos || []).map(t => tb(row(e(t.nombre) + " · " + e(t.doc), e(t.tel) + "<br>" + `<span style="white-space:pre-wrap">${e(t.decl)}</span>`))).join("") || "<div>Sin testigos.</div>")
+    + `<h4>Descripción de los hechos</h4><div style="white-space:pre-wrap;min-height:120px;border-bottom:1px dotted #000">${e(D.desc)}</div><h4>Observaciones</h4><div style="white-space:pre-wrap;min-height:40px;border-bottom:1px dotted #000">${e(D.obs)}</div>`
+    + `<h4>Agentes actuantes</h4><div>${e(D.agentes)}</div><div class="sig" style="margin-top:20px"><div><span>Firma agente 1</span></div><div><span>Firma agente 2</span></div></div>`;
+  const vp = []; for (let i = 0; i < R.vehiculos.length; i += 2) vp.push(R.vehiculos.slice(i, i + 2).map((v, j) => vb(v, i + j)).join(""));
+  const N = 1 + vp.length; return pg(1, N, p1) + vp.map((b, k) => pg(k + 2, N, b)).join("");
+}
+
+/* ======== CROQUIZADOR ======== */
+const CR = {objs: [], vehs: [], fondo: null, img: null, norte: 0, sel: null, tool: "mover", etapa: 1, k: 12, tx: 0, ty: 0, un: [], re: [], draft: null, drag: null, ptr: new Map(), grid: false, calib: null, pinch: null, on: false, mv: false};
+const ETAPAS = ["Antes", "Impacto", "Final"];
+const SENALES = {STOP: "Stop", CEDA: "Ceda el paso", PROH: "Entrada prohibida", V30: "Límite 30", V40: "Límite 40", V50: "Límite 50", SEM: "Semáforo", PELI: "Peligro"};
+const OBST = {arbol: "Árbol", poste: "Poste / farola", edif: "Edificio / muro", cont: "Contenedor"};
+const SVGNS = "http://www.w3.org/2000/svg";
+const nid = () => "o" + Math.random().toString(36).slice(2, 8);
+const r1 = n => Math.round(n * 100) / 100;
+const vdim = i => { const v = ACC.row.vehiculos[i] || {}, t = VTIPOS[v.tipo] || VTIPOS.turismo; return {L: +v.largo || t.l, W: +v.ancho || t.w, tipo: v.tipo || "turismo"}; };
+function croInit() {
+  const s = $("cro_s"); s.addEventListener("pointerdown", croDown); s.addEventListener("pointermove", croMove); s.addEventListener("pointerup", croUp); s.addEventListener("pointercancel", croUp);
+  s.addEventListener("wheel", e => { e.preventDefault(); const f = e.deltaY < 0 ? 1.15 : 1 / 1.15, r = s.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top, wx = (mx - CR.tx) / CR.k, wy = (my - CR.ty) / CR.k; CR.k = Math.min(250, Math.max(1.5, CR.k * f)); CR.tx = mx - wx * CR.k; CR.ty = my - wy * CR.k; croRender(); }, {passive: false});
+  $("cro_x").onclick = croCierra; $("cro_un").onclick = () => croDeshaz(CR.un, CR.re); $("cro_re").onclick = () => croDeshaz(CR.re, CR.un); $("cro_fit").onclick = croFit;
+  $("cro_fo").onclick = () => { $("cro_fm").hidden = !$("cro_fm").hidden; croFondoUI(); };
+  $("cro_pr").onclick = () => { croCierra(); muestraImp(croHTML()); };
+  $("cro_t").onclick = e => { const b = e.target.closest("[data-tool]"); if (b) croTool(b.dataset.tool); };
+  $("cro_et").onclick = e => { const b = e.target.closest("[data-et]"); if (!b) return; CR.etapa = +b.dataset.et; croRender(); croPanel(); };
+  $("cro_p").addEventListener("click", croPanelClick); $("cro_p").addEventListener("input", croPanelInput); $("cro_p").addEventListener("change", croPanelInput);
+  $("cro_b").onclick = e => { const a = e.target.dataset.cb; if (a == "ok") croFinDraft(); else if (a == "un") { if (CR.draft) { CR.draft.pts.pop(); croRender(); } } else if (a == "no") { CR.draft = null; CR.calib = null; croTool("mover"); } };
+  $("cro_fm").addEventListener("click", croFondoClick); $("cro_fm").addEventListener("input", e => { if (e.target.id == "cro_op" && CR.fondo) { CR.fondo.op = +e.target.value; croRender(); croSync(); } });
+  $("cro_file").onchange = croCargaImg;
+  document.addEventListener("keydown", e => { if (!CR.on) return; if ((e.key == "Delete" || e.key == "Backspace") && CR.sel && !/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)) croBorra(); });
+  $("cro_t").innerHTML = [["mover", "✋", "Mover"], ["via", "🛣️", "Calzada"], ["acera", "▭", "Acera"], ["veh", "🚗", "Vehículo"], ["cebra", "🦓", "Paso"], ["senal", "🛑", "Señal"], ["imp", "💥", "Impacto"], ["fren", "〰️", "Frenada"], ["cota", "📏", "Cota"], ["flecha", "➡️", "Flecha"], ["txt", "🔤", "Texto"], ["obs", "🌳", "Obstáculo"]].map(t => `<button type="button" data-tool="${t[0]}"><span>${t[1]}</span>${t[2]}</button>`).join("");
+}
+function croAbre() {
+  const c = ACC.row.croquis || {}; CR.objs = JSON.parse(JSON.stringify(c.objs || [])); CR.vehs = JSON.parse(JSON.stringify(c.vehs || [])); CR.fondo = c.fondo ? {...c.fondo} : null; CR.img = ACC.row.fondo || null; CR.norte = c.norte || 0;
+  CR.sel = null; CR.tool = "mover"; CR.etapa = 1; CR.un = []; CR.re = []; CR.draft = null; CR.calib = null; CR.on = true; $("cro").hidden = false; $("cro_fm").hidden = true; croFit(); croTool("mover");
+}
+function croCierra() { croSync(); CR.on = false; $("cro").hidden = true; accGuarda(); accRender(); }
+function croSync() { if (!ACC.row) return; ACC.row.croquis = {objs: CR.objs, vehs: CR.vehs, fondo: CR.fondo, norte: CR.norte}; accSucio("croquis"); }
+const croSnap = () => JSON.stringify({objs: CR.objs, vehs: CR.vehs, fondo: CR.fondo, norte: CR.norte});
+function croPush() { CR.un.push(croSnap()); if (CR.un.length > 60) CR.un.shift(); CR.re = []; }
+function croDeshaz(from, to) { if (!from.length) return; to.push(croSnap()); const s = JSON.parse(from.pop()); CR.objs = s.objs; CR.vehs = s.vehs; CR.fondo = s.fondo; CR.norte = s.norte; CR.sel = null; croRender(); croPanel(); croSync(); }
+function croTool(t) {
+  if (t == "veh") { croTool("mover"); croPickVeh(); return; }
+  CR.tool = t; CR.draft = ["via", "acera", "fren", "cota", "flecha"].includes(t) ? {k: t, pts: []} : null; if (t != "calib") CR.calib = null;
+  document.querySelectorAll("#cro_t [data-tool]").forEach(b => b.classList.toggle("on", b.dataset.tool == t));
+  if (t != "mover" && !CR.draft) CR.sel = null;
+  croRender(); croPanel();
+}
+function croPickVeh() {
+  const R = ACC.row, libres = R.vehiculos.map((v, i) => i).filter(i => !CR.vehs.find(x => x.i == i && x.poses[CR.etapa]));
+  const p = $("cro_p"); p.hidden = false;
+  p.innerHTML = `<b>Colocar en «${ETAPAS[CR.etapa]}»:</b><div class="cro-row">${libres.map(i => `<button type="button" data-ca="placev" data-i="${i}" style="border-left:8px solid ${VCOL[i % VCOL.length]}">V${i + 1} ${esc(R.vehiculos[i].mat || (VTIPOS[R.vehiculos[i].tipo] || {}).n || "")}</button>`).join("") || "<small>Todos colocados en esta fase.</small>"}<button type="button" data-ca="addveh" class="sec2">+ Nuevo vehículo</button></div>`;
+}
+function croView() { const r = $("cro_s").getBoundingClientRect(); return {w: r.width, h: r.height}; }
+function croCentro() { const v = croView(); return [(v.w / 2 - CR.tx) / CR.k, (v.h / 2 - CR.ty) / CR.k]; }
+function croBBox(extra) {
+  let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; const add = (x, y, m = 0) => { x0 = Math.min(x0, x - m); y0 = Math.min(y0, y - m); x1 = Math.max(x1, x + m); y1 = Math.max(y1, y + m); };
+  CR.objs.forEach(o => { if (o.pts) o.pts.forEach(p => add(p[0], p[1], (o.w || 1) / 2)); else if (o.a) { add(o.a[0], o.a[1]); add(o.b[0], o.b[1]); } else add(o.x, o.y, Math.max(o.w || 1, o.l || 1, o.h || 1) / 2 + 1); });
+  CR.vehs.forEach(v => { const d = vdim(v.i); v.poses.forEach(p => { if (p) add(p.x, p.y, d.L / 2 + 0.3); }); });
+  if (extra && CR.fondo && x0 > x1) { add(CR.fondo.x, CR.fondo.y); add(CR.fondo.x + CR.fondo.w, CR.fondo.y + CR.fondo.h); }
+  return x0 > x1 ? null : {x0, y0, x1, y1};
+}
+function croFit() {
+  const v = croView(), b = croBBox(true); if (!b) { CR.k = Math.max(4, v.w / 40); CR.tx = v.w / 2; CR.ty = v.h / 2; croRender(); return; }
+  const bw = Math.max(b.x1 - b.x0, 6), bh = Math.max(b.y1 - b.y0, 6); CR.k = Math.min(v.w / bw, v.h / bh) * 0.85; CR.tx = v.w / 2 - (b.x0 + b.x1) / 2 * CR.k; CR.ty = v.h / 2 - (b.y0 + b.y1) / 2 * CR.k; croRender();
+}
+const sn = v => CR.grid ? Math.round(v * 2) / 2 : v;
+function croW(e) { const r = $("cro_s").getBoundingClientRect(); return [sn((e.clientX - r.left - CR.tx) / CR.k), sn((e.clientY - r.top - CR.ty) / CR.k)]; }
+function croObj(id) { return CR.objs.find(o => o.id == id); }
+function croVeh(id) { return CR.vehs.find(v => "v" + v.i == id); }
+function croPoseSel() { const v = CR.sel && CR.sel[0] == "v" ? croVeh(CR.sel) : null; return v ? v.poses[CR.etapa] : null; }
+function croDown(e) {
+  const s = $("cro_s"); s.setPointerCapture(e.pointerId); CR.ptr.set(e.pointerId, {x: e.clientX, y: e.clientY}); CR.mv = false;
+  if (CR.ptr.size == 2) { const [a, b] = [...CR.ptr.values()]; CR.pinch = {d: Math.hypot(a.x - b.x, a.y - b.y), k: CR.k, tx: CR.tx, ty: CR.ty, mx: (a.x + b.x) / 2, my: (a.y + b.y) / 2}; CR.drag = null; return; }
+  const t = e.target, w = croW(e), tl = CR.tool;
+  if (tl == "mover") {
+    const rot = t.closest && t.closest("[data-rot]"), vt = t.closest && t.closest("[data-vtx]"), ob = t.closest && t.closest("[data-oid]");
+    if (rot) { croPush(); CR.drag = {m: "rot"}; }
+    else if (vt) { croPush(); CR.drag = {m: "vtx", i: +vt.dataset.vtx}; }
+    else if (ob) { CR.sel = ob.dataset.oid; croPanel(); const orig = CR.sel[0] == "v" ? JSON.parse(JSON.stringify(croPoseSel() || {})) : JSON.parse(JSON.stringify(croObj(CR.sel))); CR.drag = {m: "mov", w, orig, push: false}; croRender(); }
+    else { CR.sel = null; croPanel(); CR.drag = {m: "pan", sx: e.clientX, sy: e.clientY, tx: CR.tx, ty: CR.ty}; croRender(); }
+  } else if (tl == "calib") { CR.calib = CR.calib || []; CR.calib.push(w); if (CR.calib.length == 2) croCalibra(); croRender(); }
+  else if (CR.draft) { CR.draft.pts.push(w); if (CR.draft.k == "cota" && CR.draft.pts.length == 2) croFinDraft(); else croRender(); }
+  else croPlace(w);
+}
+function croMove(e) {
+  if (!CR.ptr.has(e.pointerId)) { if (CR.draft && CR.tool != "mover") { CR.hov = croW(e); croRender(); } return; }
+  CR.ptr.set(e.pointerId, {x: e.clientX, y: e.clientY});
+  if (CR.pinch && CR.ptr.size >= 2) { const [a, b] = [...CR.ptr.values()], d = Math.hypot(a.x - b.x, a.y - b.y), p = CR.pinch, k = Math.min(250, Math.max(1.5, p.k * d / p.d)), r = $("cro_s").getBoundingClientRect(), mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, wx = (p.mx - r.left - p.tx) / p.k, wy = (p.my - r.top - p.ty) / p.k; CR.k = k; CR.tx = mx - r.left - wx * k; CR.ty = my - r.top - wy * k; CR.mv = true; croRender(); return; }
+  const dr = CR.drag; if (!dr) return; const w = croW(e); CR.mv = true;
+  if (dr.m == "pan") { CR.tx = dr.tx + e.clientX - dr.sx; CR.ty = dr.ty + e.clientY - dr.sy; croRender(); return; }
+  const sel = CR.sel; if (!sel) return;
+  if (dr.m == "mov") {
+    if (!dr.push) { croPush(); dr.push = true; }
+    const dx = w[0] - dr.w[0], dy = w[1] - dr.w[1];
+    if (sel[0] == "v") { const p = croPoseSel(); if (p) { p.x = r1(dr.orig.x + dx); p.y = r1(dr.orig.y + dy); } }
+    else { const o = croObj(sel), g = dr.orig; if (!o) return; if (g.pts) o.pts = g.pts.map(p => [r1(p[0] + dx), r1(p[1] + dy)]); else if (g.a) { o.a = [r1(g.a[0] + dx), r1(g.a[1] + dy)]; o.b = [r1(g.b[0] + dx), r1(g.b[1] + dy)]; } else { o.x = r1(g.x + dx); o.y = r1(g.y + dy); } }
+  } else if (dr.m == "vtx") { const o = croObj(sel); if (o && o.pts) o.pts[dr.i] = [r1(w[0]), r1(w[1])]; else if (o && o.a) { (dr.i == 0 ? (o.a = [r1(w[0]), r1(w[1])]) : (o.b = [r1(w[0]), r1(w[1])])); } }
+  else if (dr.m == "rot") { const c = sel[0] == "v" ? croPoseSel() : croObj(sel); if (c) c.r = r1(Math.atan2(w[1] - c.y, w[0] - c.x) * 180 / Math.PI); }
+  croRender();
+}
+function croUp(e) {
+  CR.ptr.delete(e.pointerId); if (CR.ptr.size < 2) CR.pinch = null;
+  if (CR.drag && CR.mv && CR.drag.m != "pan") { croSync(); croPanel(); } if (CR.ptr.size == 0) CR.drag = null;
+}
+function croPlace(w) {
+  croPush(); const t = CR.tool; let o;
+  if (t == "cebra") o = {t: "cebra", x: w[0], y: w[1], r: 0, l: 7, w: 3}; else if (t == "senal") o = {t: "senal", x: w[0], y: w[1], r: 0, k: "STOP"}; else if (t == "imp") o = {t: "imp", x: w[0], y: w[1]};
+  else if (t == "txt") { const s = prompt("Texto"); if (!s) { CR.un.pop(); return; } o = {t: "txt", x: w[0], y: w[1], s, size: 14}; } else if (t == "obs") o = {t: "obs", x: w[0], y: w[1], r: 0, k: "arbol", w: 3, h: 3};
+  else { CR.un.pop(); return; }
+  o.id = nid(); CR.objs.push(o); CR.sel = o.id; croTool("mover"); CR.sel = o.id; croSync(); croRender(); croPanel();
+}
+function croFinDraft() {
+  const d = CR.draft; if (!d) return; const need = d.k == "cota" ? 2 : 2; if (d.pts.length < need) { alert("Marca al menos " + need + " puntos."); return; }
+  croPush(); const o = {id: nid(), t: d.k, pts: d.pts.map(p => [r1(p[0]), r1(p[1])])};
+  if (d.k == "via") { o.w = 7; o.m = "central"; } else if (d.k == "acera") o.w = 1.8; else if (d.k == "cota") { o.a = o.pts[0]; o.b = o.pts[1]; delete o.pts; }
+  CR.objs.push(o); CR.draft = null; CR.tool = "mover"; croTool("mover"); CR.sel = o.id; croSync(); croRender(); croPanel();
+}
+function croBorra() {
+  const s = CR.sel; if (!s) return; croPush();
+  if (s[0] == "v") { const v = croVeh(s); if (v) CR.vehs = CR.vehs.filter(x => x != v); } else CR.objs = CR.objs.filter(o => o.id != s);
+  CR.sel = null; croSync(); croRender(); croPanel();
+}
+/* ---- dibujo (también para imprimir) ---- */
+function vehShape(tipo, L, W, col, u) {
+  const hl = L / 2, hw = W / 2, st = `stroke="#111" stroke-width="${r1(u * 1.4)}" stroke-linejoin="round"`, wh = (x, y, l, w) => `<rect x="${x - l / 2}" y="${y - w / 2}" width="${l}" height="${w}" fill="#222"/>`;
+  if (tipo == "peaton") return `<circle r="${Math.max(.28, hw)}" fill="${col}" ${st}/>`;
+  if (tipo == "bici" || tipo == "moto" || tipo == "vmp") return `${wh(hl * .66, 0, hl * .34, hw * .35)}${wh(-hl * .66, 0, hl * .34, hw * .35)}<rect x="${-hl * .8}" y="${-hw * .22}" width="${L * .8}" height="${hw * .44}" rx="${hw * .2}" fill="${col}" ${st}/><circle cx="${-hl * .1}" cy="0" r="${hw * .55}" fill="#fff" ${st}/><line x1="${hl * .45}" y1="${-hw}" x2="${hl * .45}" y2="${hw}" stroke="#111" stroke-width="${r1(u * 2)}"/>`;
+  if (tipo == "camion") return `<rect x="${-hl}" y="${-hw}" width="${L * .72}" height="${W}" rx="${r1(W * .05)}" fill="${col}" ${st}/><rect x="${hl - L * .26}" y="${-hw * .92}" width="${L * .26}" height="${W * .92}" rx="${r1(W * .12)}" fill="${col}" ${st}/><path d="M${hl - L * .09},${-hw * .72} L${hl - L * .035},${-hw * .6} L${hl - L * .035},${hw * .6} L${hl - L * .09},${hw * .72}Z" fill="#fff" opacity=".85"/>${wh(-hl * .72, hw, 1.0, .28)}${wh(-hl * .72, -hw, 1.0, .28)}${wh(-hl * .42, hw, 1.0, .28)}${wh(-hl * .42, -hw, 1.0, .28)}${wh(hl * .72, hw, 1.0, .28)}${wh(hl * .72, -hw, 1.0, .28)}`;
+  if (tipo == "bus") return `<rect x="${-hl}" y="${-hw}" width="${L}" height="${W}" rx="${r1(W * .1)}" fill="${col}" ${st}/><rect x="${-hl * .86}" y="${-hw * .7}" width="${L * .72}" height="${W * .4}" fill="#fff" opacity=".6"/><rect x="${-hl * .86}" y="${hw * .3}" width="${L * .72}" height="${W * .4}" fill="#fff" opacity=".6"/><path d="M${hl - L * .06},${-hw * .8} L${hl - L * .02},${-hw * .65} L${hl - L * .02},${hw * .65} L${hl - L * .06},${hw * .8}Z" fill="#fff" opacity=".85"/>`;
+  return `${wh(hl * .58, hw, .66, .24)}${wh(hl * .58, -hw, .66, .24)}${wh(-hl * .58, hw, .66, .24)}${wh(-hl * .58, -hw, .66, .24)}<rect x="${-hl}" y="${-hw}" width="${L}" height="${W}" rx="${r1(Math.min(.5, W * .25))}" fill="${col}" ${st}/><path d="M${hl * .18},${-hw * .8} L${hl * .42},${-hw * .62} L${hl * .42},${hw * .62} L${hl * .18},${hw * .8}Z" fill="#fff" opacity=".85"/><path d="M${-hl * .5},${-hw * .72} L${-hl * .68},${-hw * .62} L${-hl * .68},${hw * .62} L${-hl * .5},${hw * .72}Z" fill="#fff" opacity=".7"/>`;
+}
+function croVehG(i, p, mode, u, sel, lab) {
+  const d = vdim(i), col = VCOL[i % VCOL.length], op = mode == "ghost" ? .38 : 1, fs = r1(Math.max(Math.min(d.W * .5, d.L * .3), 10 * u));
+  let body = vehShape(d.tipo, d.L, d.W, col, u);
+  if (mode == "final") body = `<g opacity=".72">${body}</g><rect x="${-d.L / 2}" y="${-d.W / 2}" width="${d.L}" height="${d.W}" fill="none" stroke="#111" stroke-width="${r1(u * 1.6)}" stroke-dasharray="${r1(u * 5)},${r1(u * 3)}"/>`;
+  if (mode == "ghost") body = `<g opacity="${op}">${body}</g><rect x="${-d.L / 2}" y="${-d.W / 2}" width="${d.L}" height="${d.W}" fill="none" stroke="${col}" stroke-width="${r1(u * 1.2)}" stroke-dasharray="${r1(u * 3)},${r1(u * 3)}"/>`;
+  const hi = sel ? `<rect x="${-d.L / 2 - u * 4}" y="${-d.W / 2 - u * 4}" width="${d.L + u * 8}" height="${d.W + u * 8}" rx="${u * 4}" fill="none" stroke="#E8A33D" stroke-width="${u * 2.5}" stroke-dasharray="${u * 6},${u * 4}"/>` : "";
+  return `<g transform="translate(${p.x} ${p.y}) rotate(${p.r || 0})">${body}${hi}<text transform="rotate(${-(p.r || 0)})" text-anchor="middle" dominant-baseline="central" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="${fs}" fill="#fff" stroke="#000" stroke-width="${r1(fs * .08)}" paint-order="stroke">${lab}</text></g>`;
+}
+function croSenal(o, u) {
+  const R = 0.7, k = o.k, fs = R * .55, T = (s, c = "#fff", z = fs) => `<text text-anchor="middle" dominant-baseline="central" font-family="Arial" font-weight="800" font-size="${z}" fill="${c}">${s}</text>`;
+  let g = "";
+  if (k == "STOP") g = `<polygon points="${[0, 1, 2, 3, 4, 5, 6, 7].map(a => { const t = (a * 45 + 22.5) * Math.PI / 180; return r1(Math.cos(t) * R) + "," + r1(Math.sin(t) * R); }).join(" ")}" fill="#C93A1F" stroke="#fff" stroke-width="${R * .06}"/>${T("STOP", "#fff", R * .4)}`;
+  else if (k == "CEDA") g = `<polygon points="${-R},${-R * .8} ${R},${-R * .8} 0,${R}" fill="#fff" stroke="#C93A1F" stroke-width="${R * .22}" stroke-linejoin="round"/>`;
+  else if (k == "PROH") g = `<circle r="${R}" fill="#C93A1F" stroke="#fff" stroke-width="${R * .06}"/><rect x="${-R * .7}" y="${-R * .13}" width="${R * 1.4}" height="${R * .26}" fill="#fff"/>`;
+  else if (k[0] == "V") g = `<circle r="${R}" fill="#fff" stroke="#C93A1F" stroke-width="${R * .22}"/>${T(k.slice(1), "#111", R * .85)}`;
+  else if (k == "SEM") g = `<rect x="${-R * .4}" y="${-R * 1.1}" width="${R * .8}" height="${R * 2.2}" rx="${R * .2}" fill="#222"/><circle cy="${-R * .7}" r="${R * .26}" fill="#C93A1F"/><circle cy="0" r="${R * .26}" fill="#E8A33D"/><circle cy="${R * .7}" r="${R * .26}" fill="#2E9E5B"/>`;
+  else g = `<polygon points="0,${-R} ${R},${R * .8} ${-R},${R * .8}" fill="#fff" stroke="#C93A1F" stroke-width="${R * .2}" stroke-linejoin="round"/>${T("!", "#111", R * .9)}`;
+  return `<g transform="translate(${o.x} ${o.y}) rotate(${o.r || 0})">${g}</g>`;
+}
+function croScene(o) {
+  const u = o.upp, f = n => r1(n), P = pts => pts.map(p => f(p[0]) + "," + f(p[1])).join(" "), sel = o.sel; let s = "";
+  const F = CR.fondo; if (F && CR.img) s += `<image href="${CR.img}" x="${f(F.x)}" y="${f(F.y)}" width="${f(F.w)}" height="${f(F.h)}" opacity="${F.op ?? .85}" preserveAspectRatio="none" transform="rotate(${F.r || 0} ${f(F.x + F.w / 2)} ${f(F.y + F.h / 2)})"/>`;
+  if (o.grid) s += o.grid;
+  const hit = (ob, inner, extra = "") => `<g data-oid="${ob.id}" ${extra}>${inner}</g>`, by = t => CR.objs.filter(x => x.t == t), pl = (ob, w, c, ex = "") => `<polyline points="${P(ob.pts)}" fill="none" stroke="${c}" stroke-width="${f(w)}" stroke-linejoin="round" stroke-linecap="butt" ${ex}/>`;
+  const hitPl = ob => `<polyline points="${P(ob.pts)}" fill="none" stroke="#000" stroke-opacity="0" stroke-width="${f(Math.max(ob.w || 1, 22 * u))}" stroke-linejoin="round" pointer-events="stroke"/>`;
+  by("acera").forEach(ob => s += hit(ob, pl(ob, ob.w + u * 2.4, "#555") + pl(ob, ob.w, "#e6e1d6") + hitPl(ob)));
+  const vias = by("via"); s += vias.map(ob => `<g>${pl(ob, ob.w + u * 3, "#2b3432")}</g>`).join(""); s += vias.map(ob => hit(ob, pl(ob, ob.w, "#b4bcba") + hitPl(ob))).join("");
+  vias.forEach(ob => { if (ob.m == "central") s += `<g pointer-events="none">${pl(ob, u * 2.2, "#fff", `stroke-dasharray="${f(2)},${f(4)}"`)}</g>`; else if (ob.m == "doble") { const off = (sg) => ob.pts.map((p, i, a) => { const q = a[Math.min(i + 1, a.length - 1)], pr = a[Math.max(i - 1, 0)], dx = q[0] - pr[0], dy = q[1] - pr[1], l = Math.hypot(dx, dy) || 1; return [p[0] - dy / l * sg, p[1] + dx / l * sg]; }); s += `<g pointer-events="none">${[0.14, -0.14].map(sg => `<polyline points="${P(off(sg))}" fill="none" stroke="#fff" stroke-width="${f(u * 2.2)}"/>`).join("")}</g>`; } });
+  by("cebra").forEach(ob => { let b = ""; for (let x = -ob.l / 2; x < ob.l / 2 - .2; x += 1) b += `<rect x="${f(x)}" y="${f(-ob.w / 2)}" width=".5" height="${ob.w}" fill="#fff"/>`; s += hit(ob, `<g transform="translate(${ob.x} ${ob.y}) rotate(${ob.r || 0})">${b}<rect x="${-ob.l / 2}" y="${-ob.w / 2}" width="${ob.l}" height="${ob.w}" fill="#000" fill-opacity="0.001"/></g>`); });
+  by("fren").forEach(ob => { const off = sg => ob.pts.map((p, i, a) => { const q = a[Math.min(i + 1, a.length - 1)], pr = a[Math.max(i - 1, 0)], dx = q[0] - pr[0], dy = q[1] - pr[1], l = Math.hypot(dx, dy) || 1; return [p[0] - dy / l * sg, p[1] + dx / l * sg]; }); s += hit(ob, [.8, -.8].map(sg => `<polyline points="${P(off(sg))}" fill="none" stroke="#111" stroke-width="${f(u * 2.6)}" stroke-dasharray="${f(u * 6)},${f(u * 2)}"/>`).join("") + hitPl({pts: ob.pts, w: 1.8})); });
+  by("obs").forEach(ob => { let g; if (ob.k == "arbol") g = `<circle r="${f(ob.w / 2)}" fill="#7bb36a" stroke="#2f5d27" stroke-width="${f(u * 1.6)}"/><circle r="${f(ob.w / 5)}" fill="#5e8f4e"/>`; else if (ob.k == "poste") g = `<circle r="${f(Math.max(ob.w / 2, .15))}" fill="#222"/>`; else g = `<rect x="${-ob.w / 2}" y="${-ob.h / 2}" width="${ob.w}" height="${ob.h}" fill="${ob.k == "cont" ? "#3f7d52" : "#cfc7bb"}" stroke="#333" stroke-width="${f(u * 1.6)}"/>`; s += hit(ob, `<g transform="translate(${ob.x} ${ob.y}) rotate(${ob.r || 0})">${g}<rect x="${-ob.w / 2 - u * 6}" y="${-ob.h / 2 - u * 6}" width="${ob.w + u * 12}" height="${ob.h + u * 12}" fill="#000" fill-opacity="0.001"/></g>`); });
+  by("flecha").forEach(ob => { const a = ob.pts, l = a[a.length - 1], pr = a[a.length - 2], ang = Math.atan2(l[1] - pr[1], l[0] - pr[0]) * 180 / Math.PI, hs = u * 11; s += hit(ob, pl(ob, u * 2.4, "#111", `stroke-dasharray="${f(u * 8)},${f(u * 4)}"`) + `<polygon points="0,0 ${-hs * 1.6},${-hs * .7} ${-hs * 1.6},${hs * .7}" fill="#111" transform="translate(${l[0]} ${l[1]}) rotate(${ang})"/>` + hitPl(ob)); });
+  by("cota").forEach(ob => { const dx = ob.b[0] - ob.a[0], dy = ob.b[1] - ob.a[1], len = Math.hypot(dx, dy), ang = Math.atan2(dy, dx) * 180 / Math.PI, fs = 12 * u; s += hit(ob, `<g transform="translate(${ob.a[0]} ${ob.a[1]}) rotate(${ang})"><line x1="0" y1="0" x2="${f(len)}" y2="0" stroke="#7B3FE4" stroke-width="${f(u * 1.6)}"/><line x1="0" y1="${-u * 6}" x2="0" y2="${u * 6}" stroke="#7B3FE4" stroke-width="${f(u * 1.6)}"/><line x1="${f(len)}" y1="${-u * 6}" x2="${f(len)}" y2="${u * 6}" stroke="#7B3FE4" stroke-width="${f(u * 1.6)}"/><text x="${f(len / 2)}" y="${f(-u * 4)}" text-anchor="middle" font-family="Arial" font-weight="700" font-size="${f(fs)}" fill="#5a2db3" stroke="#fff" stroke-width="${f(fs * .22)}" paint-order="stroke" transform="${ang > 90 || ang < -90 ? `rotate(180 ${f(len / 2)} ${f(-u * 4)})` : ""}">${len.toFixed(2).replace(".", ",")} m</text><line x1="0" y1="0" x2="${f(len)}" y2="0" stroke="#000" stroke-opacity="0" stroke-width="${f(22 * u)}" pointer-events="stroke"/></g>`); });
+  // vehículos
+  const vs = CR.vehs.slice().sort((a, b) => (sel == "v" + a.i) - (sel == "v" + b.i));
+  vs.forEach(v => { const pp = v.poses.filter(Boolean); if (pp.length > 1) { const pts = v.poses.map((p, k) => p ? [p.x, p.y, k] : null).filter(Boolean); s += `<polyline points="${P(pts)}" fill="none" stroke="${VCOL[v.i % VCOL.length]}" stroke-width="${f(u * 2)}" stroke-dasharray="${f(u * 7)},${f(u * 4)}" pointer-events="none"/>`; } });
+  vs.forEach(v => v.poses.forEach((p, k) => { if (!p) return; const has1 = !!v.poses[1], cur = o.print ? true : k == CR.etapa, mode = o.print ? (has1 ? (k == 0 ? "ghost" : k == 1 ? "solid" : "final") : (k == 0 && v.poses[2] ? "ghost" : "solid")) : (k == CR.etapa ? "solid" : "ghost"), lab = "V" + (v.i + 1) + (mode == "solid" ? "" : "·" + "AIF"[k]), g = croVehG(v.i, p, mode, u, sel == "v" + v.i && !o.print && k == CR.etapa, lab); s += (o.print || k != CR.etapa ? g : `<g data-oid="v${v.i}">${g}</g>`); }));
+  by("senal").forEach(ob => s += hit(ob, croSenal(ob, u) + `<circle cx="${ob.x}" cy="${ob.y}" r="${f(Math.max(.9, 14 * u))}" fill="#000" fill-opacity="0.001"/>`));
+  by("imp").forEach(ob => { const z = Math.max(.7, 10 * u); s += hit(ob, `<g transform="translate(${ob.x} ${ob.y})"><circle r="${f(z)}" fill="#fff" fill-opacity=".85" stroke="#C93A1F" stroke-width="${f(u * 2.2)}"/><line x1="${-z * .6}" y1="${-z * .6}" x2="${z * .6}" y2="${z * .6}" stroke="#C93A1F" stroke-width="${f(u * 2.6)}"/><line x1="${-z * .6}" y1="${z * .6}" x2="${z * .6}" y2="${-z * .6}" stroke="#C93A1F" stroke-width="${f(u * 2.6)}"/></g>`); });
+  by("txt").forEach(ob => { const fs = (ob.size || 14) * u; s += hit(ob, `<text x="${ob.x}" y="${ob.y}" text-anchor="middle" dominant-baseline="central" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="${f(fs)}" fill="#111" stroke="#fff" stroke-width="${f(fs * .22)}" paint-order="stroke">${esc(ob.s)}</text>`); });
+  if (o.handles) s += croHandles(u);
+  if (o.draft && CR.draft && CR.draft.pts.length) { const pts = CR.draft.pts.concat(CR.hov ? [CR.hov] : []); s += `<polyline points="${P(pts)}" fill="none" stroke="#E8A33D" stroke-width="${f(u * 3)}" stroke-dasharray="${f(u * 6)},${f(u * 4)}"/>` + CR.draft.pts.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="${f(u * 6)}" fill="#E8A33D"/>`).join(""); }
+  if (o.draft && CR.calib) s += CR.calib.map(p => `<circle cx="${p[0]}" cy="${p[1]}" r="${f(u * 8)}" fill="#7B3FE4" fill-opacity=".7"/>`).join("");
+  return s;
+}
+function croHandles(u) {
+  const s = CR.sel, f = r1; if (!s) return ""; let g = "";
+  if (s[0] == "v") { const v = croVeh(s), p = v && v.poses[CR.etapa]; if (!p) return ""; const d = vdim(v.i), a = (p.r || 0) * Math.PI / 180, dd = d.L / 2 + u * 22, hx = p.x + Math.cos(a) * dd, hy = p.y + Math.sin(a) * dd; return `<line x1="${p.x}" y1="${p.y}" x2="${f(hx)}" y2="${f(hy)}" stroke="#E8A33D" stroke-width="${u * 1.5}"/><circle data-rot="1" cx="${f(hx)}" cy="${f(hy)}" r="${u * 11}" fill="#E8A33D" stroke="#fff" stroke-width="${u * 1.5}"/>`; }
+  const o = croObj(s); if (!o) return "";
+  if (o.pts) g += o.pts.map((p, i) => `<circle data-vtx="${i}" cx="${p[0]}" cy="${p[1]}" r="${u * 9}" fill="#fff" stroke="#E8A33D" stroke-width="${u * 2.5}"/>`).join("") + `<polyline points="${o.pts.map(p => p.join(",")).join(" ")}" fill="none" stroke="#E8A33D" stroke-width="${u * 1.5}" stroke-dasharray="${u * 5},${u * 4}" pointer-events="none"/>`;
+  else if (o.a) g += [o.a, o.b].map((p, i) => `<circle data-vtx="${i}" cx="${p[0]}" cy="${p[1]}" r="${u * 9}" fill="#fff" stroke="#E8A33D" stroke-width="${u * 2.5}"/>`).join("");
+  else if (o.r !== undefined) { const a = (o.r || 0) * Math.PI / 180, dd = Math.max(o.l || o.w || 1, o.h || 1, 1.4) / 2 + u * 22, hx = o.x + Math.cos(a) * dd, hy = o.y + Math.sin(a) * dd; g += `<circle cx="${o.x}" cy="${o.y}" r="${u * 7}" fill="none" stroke="#E8A33D" stroke-width="${u * 2}"/><line x1="${o.x}" y1="${o.y}" x2="${f(hx)}" y2="${f(hy)}" stroke="#E8A33D" stroke-width="${u * 1.5}"/><circle data-rot="1" cx="${f(hx)}" cy="${f(hy)}" r="${u * 11}" fill="#E8A33D" stroke="#fff" stroke-width="${u * 1.5}"/>`; }
+  else g += `<circle cx="${o.x}" cy="${o.y}" r="${u * 12}" fill="none" stroke="#E8A33D" stroke-width="${u * 2.5}" stroke-dasharray="${u * 5},${u * 3}"/>`;
+  return g;
+}
+function croGrid(u, x0, y0, x1, y1) {
+  const st = CR.k >= 14 ? 1 : CR.k >= 5 ? 5 : 10; let g = ""; const a = Math.floor(x0 / st) * st, b = Math.floor(y0 / st) * st;
+  for (let x = a; x <= x1; x += st) g += `<line x1="${x}" y1="${y0}" x2="${x}" y2="${y1}" stroke="${x % (st * 5) == 0 ? "#9fb0ac" : "#c9d4d1"}" stroke-width="${r1(u)}"/>`;
+  for (let y = b; y <= y1; y += st) g += `<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${y % (st * 5) == 0 ? "#9fb0ac" : "#c9d4d1"}" stroke-width="${r1(u)}"/>`;
+  return `<g pointer-events="none">${g}</g>`;
+}
+function croRender() {
+  const sv = $("cro_s"), v = croView(), u = 1 / CR.k, x0 = -CR.tx / CR.k, y0 = -CR.ty / CR.k, x1 = x0 + v.w / CR.k, y1 = y0 + v.h / CR.k;
+  const hud = (() => { const L = nice(100 / CR.k); return `<g transform="translate(14 ${v.h - 18})"><rect x="0" y="-4" width="${r1(L * CR.k)}" height="6" fill="#111"/><text y="-9" font-family="Arial" font-size="12" font-weight="700" fill="#111">${L} m</text></g>`; })();
+  sv.innerHTML = `<rect width="100%" height="100%" fill="#f4f7f6"/><g transform="translate(${CR.tx} ${CR.ty}) scale(${CR.k})">${croScene({upp: u, sel: CR.sel, handles: CR.tool == "mover", draft: true, grid: croGrid(u, x0, y0, x1, y1)})}</g>${hud}<g transform="translate(${v.w - 36} 40) rotate(${CR.norte})"><polygon points="0,-20 8,10 0,4 -8,10" fill="#111"/><text y="-24" text-anchor="middle" font-family="Arial" font-size="12" font-weight="800">N</text></g>`;
+  const b = $("cro_b"), d = CR.draft, c = CR.calib !== null && CR.tool == "calib";
+  b.hidden = !(d || c); if (d) b.innerHTML = `<span>${{via: "Calzada", acera: "Acera", fren: "Frenada", cota: "Cota (2 puntos)", flecha: "Flecha"}[d.k]}: toca los puntos (${d.pts.length})</span><button data-cb="un" type="button">↩</button><button data-cb="ok" type="button" class="k">✓ Terminar</button><button data-cb="no" type="button">✕</button>`; else if (c) b.innerHTML = `<span>Calibrar: toca 2 puntos de distancia conocida (${CR.calib.length}/2)</span><button data-cb="no" type="button">✕</button>`;
+  document.querySelectorAll("#cro_et [data-et]").forEach(x => x.classList.toggle("on", +x.dataset.et == CR.etapa));
+}
+const nice = x => { const e = Math.pow(10, Math.floor(Math.log10(x))), m = x / e; return (m >= 5 ? 5 : m >= 2 ? 2 : 1) * e; };
+/* ---- panel de propiedades ---- */
+function rotRow(r) { return `<div class="cro-row"><small>Giro</small><button type="button" data-ca="rot" data-d="-15">⟲15</button><button type="button" data-ca="rot" data-d="-5">⟲5</button><input type="number" data-cz="r" value="${Math.round(r || 0)}" style="width:70px"><button type="button" data-ca="rot" data-d="5">5⟳</button><button type="button" data-ca="rot" data-d="15">15⟳</button></div>`; }
+function croPanel() {
+  const el = $("cro_p"), s = CR.sel;
+  if (CR.draft || CR.tool == "calib") { el.hidden = true; return; }
+  if (!s) { el.hidden = true; return; } el.hidden = false; let h = "";
+  const act = `<div class="cro-row"><button type="button" data-ca="dup" class="sec2">Duplicar</button><button type="button" data-ca="del" class="r">Borrar</button></div>`;
+  if (s[0] == "v") {
+    const i = +s.slice(1), v = croVeh(s), p = v && v.poses[CR.etapa], R = ACC.row.vehiculos[i] || {};
+    h = `<b>V${i + 1} ${esc(R.mat || "")}</b> <small>fase: ${ETAPAS[CR.etapa]}</small>` + (p ? rotRow(p.r) : `<div><small>No está colocado en «${ETAPAS[CR.etapa]}».</small> <button type="button" data-ca="poseaqui">Colocar aquí</button></div>`) + `<div class="cro-row">${p ? `<button type="button" data-ca="posedel" class="sec2">Quitar esta fase</button>` : ""}<button type="button" data-ca="del" class="r">Quitar del croquis</button></div>`;
+  } else {
+    const o = croObj(s); if (!o) { el.hidden = true; return; }
+    const nm = {via: "Calzada", acera: "Acera", cebra: "Paso de peatones", senal: "Señal", obs: "Obstáculo", txt: "Texto", cota: "Cota", imp: "Punto de impacto", fren: "Huella de frenada", flecha: "Flecha"}[o.t];
+    h = `<b>${nm}</b>`;
+    if (o.t == "via") h += `<div class="cro-row"><small>Ancho (m)</small><input type="number" step="0.1" data-cz="w" value="${o.w}" style="width:80px"><select data-cz="m"><option value="central" ${o.m == "central" ? "selected" : ""}>Línea central discontinua</option><option value="doble" ${o.m == "doble" ? "selected" : ""}>Doble continua</option><option value="no" ${o.m == "no" ? "selected" : ""}>Sin marcas</option></select></div>`;
+    else if (o.t == "acera") h += `<div class="cro-row"><small>Ancho (m)</small><input type="number" step="0.1" data-cz="w" value="${o.w}" style="width:80px"></div>`;
+    else if (o.t == "cebra") h += rotRow(o.r) + `<div class="cro-row"><small>Largo (m)</small><input type="number" step="0.5" data-cz="l" value="${o.l}" style="width:70px"><small>Ancho</small><input type="number" step="0.5" data-cz="w" value="${o.w}" style="width:70px"></div>`;
+    else if (o.t == "senal") h += rotRow(o.r) + `<div class="cro-row"><select data-cz="k">${Object.keys(SENALES).map(k => `<option value="${k}" ${k == o.k ? "selected" : ""}>${SENALES[k]}</option>`).join("")}</select></div>`;
+    else if (o.t == "obs") h += rotRow(o.r) + `<div class="cro-row"><select data-cz="k">${Object.keys(OBST).map(k => `<option value="${k}" ${k == o.k ? "selected" : ""}>${OBST[k]}</option>`).join("")}</select><small>Ancho</small><input type="number" step="0.5" data-cz="w" value="${o.w}" style="width:70px"><small>Largo</small><input type="number" step="0.5" data-cz="h" value="${o.h}" style="width:70px"></div>`;
+    else if (o.t == "txt") h += `<div class="cro-row"><input data-cz="s" value="${esc(o.s)}" style="flex:1"><small>Tamaño</small><input type="number" data-cz="size" value="${o.size || 14}" style="width:70px"></div>`;
+    else if (o.t == "cota") h += `<div><small>Longitud: ${Math.hypot(o.b[0] - o.a[0], o.b[1] - o.a[1]).toFixed(2)} m</small></div>`;
+    h += act;
+  }
+  el.innerHTML = h;
+}
+function croPanelClick(e) {
+  const b = e.target.closest("[data-ca]"); if (!b) return; const a = b.dataset.ca;
+  if (a == "placev") { croPlaceVeh(+b.dataset.i); return; }
+  if (a == "addveh") { ACC.row.vehiculos.push(vacioVeh()); accSucio("vehiculos"); croPickVeh(); return; }
+  if (a == "del") { croBorra(); return; }
+  if (a == "dup") { const o = croObj(CR.sel); if (!o) return; croPush(); const c = JSON.parse(JSON.stringify(o)); c.id = nid(); if (c.pts) c.pts = c.pts.map(p => [p[0] + 2, p[1] + 2]); else if (c.a) { c.a = [c.a[0] + 2, c.a[1] + 2]; c.b = [c.b[0] + 2, c.b[1] + 2]; } else { c.x += 2; c.y += 2; } CR.objs.push(c); CR.sel = c.id; croSync(); croRender(); croPanel(); return; }
+  if (a == "rot") { const c = CR.sel[0] == "v" ? croPoseSel() : croObj(CR.sel); if (!c) return; croPush(); c.r = r1(((c.r || 0) + +b.dataset.d + 540) % 360 - 180); croSync(); croRender(); croPanel(); return; }
+  if (a == "poseaqui") { const v = croVeh(CR.sel), o = v.poses.find(Boolean), c = croCentro(); croPush(); v.poses[CR.etapa] = {x: r1(o ? o.x + 1.5 : c[0]), y: r1(o ? o.y + 1.5 : c[1]), r: o ? o.r : 0}; croSync(); croRender(); croPanel(); return; }
+  if (a == "posedel") { const v = croVeh(CR.sel); croPush(); v.poses[CR.etapa] = null; if (!v.poses.some(Boolean)) CR.vehs = CR.vehs.filter(x => x != v); croSync(); croRender(); croPanel(); }
+}
+function croPanelInput(e) {
+  const t = e.target, k = t.dataset.cz; if (!k) return; const s = CR.sel; if (!s) return; let c = s[0] == "v" ? croPoseSel() : croObj(s); if (!c) return;
+  if (!t._p) { croPush(); t._p = 1; setTimeout(() => t._p = 0, 1500); }
+  c[k] = t.type == "number" ? (t.value === "" ? 0 : parseFloat(t.value)) : t.value; if (k == "k" && c.t == "obs") { if (c.k == "poste") { c.w = .4; c.h = .4; } else if (c.k == "arbol") { c.w = 3; c.h = 3; } else if (c.k == "cont") { c.w = 2.5; c.h = 1.2; } else { c.w = 8; c.h = 5; } }
+  croSync(); croRender(); if (e.type == "change") croPanel();
+}
+function croPlaceVeh(i) {
+  croPush(); let v = CR.vehs.find(x => x.i == i); if (!v) { v = {i, poses: [null, null, null]}; CR.vehs.push(v); }
+  const o = v.poses.find(Boolean), c = croCentro(); v.poses[CR.etapa] = {x: r1(o ? o.x + 1.5 : c[0]), y: r1(o ? o.y + 1.5 : c[1]), r: o ? o.r : 0}; CR.sel = "v" + i; croSync(); croRender(); croPanel();
+}
+/* ---- fondo: imagen, mapa y escala ---- */
+function croFondoUI() {
+  const F = CR.fondo, m = $("cro_fm");
+  m.innerHTML = `<b>Fondo del croquis</b><div class="cro-row"><button type="button" data-cf="img">📷 Subir captura / foto</button><button type="button" data-cf="osm">🗺️ Mapa en mi posición GPS</button></div>
+<div class="cro-row"><button type="button" data-cf="cal" class="sec2" ${F ? "" : "disabled"}>📐 Calibrar escala</button><button type="button" data-cf="r-90" class="sec2" ${F ? "" : "disabled"}>⟲90°</button><button type="button" data-cf="r-5" class="sec2" ${F ? "" : "disabled"}>⟲5°</button><button type="button" data-cf="r5" class="sec2" ${F ? "" : "disabled"}>5°⟳</button><button type="button" data-cf="r90" class="sec2" ${F ? "" : "disabled"}>90°⟳</button></div>
+<div class="cro-row"><small>Opacidad</small><input type="range" id="cro_op" min="0.2" max="1" step="0.05" value="${F ? F.op ?? .85 : .85}" style="flex:1"><label class="ck" style="margin:0"><input type="checkbox" id="cro_gr" ${CR.grid ? "checked" : ""}> Ajustar a 0,5 m</label></div>
+<div class="cro-row"><small>Norte</small><button type="button" data-cf="n-15" class="sec2">⟲</button><button type="button" data-cf="n0" class="sec2">0°</button><button type="button" data-cf="n15" class="sec2">⟳</button><button type="button" data-cf="quita" class="r" ${F ? "" : "disabled"}>Quitar fondo</button></div>
+<small>${F ? (F.osm ? "Mapa © OpenStreetMap, escala real (zoom 19)." : F.cal ? "Imagen calibrada." : "⚠️ Imagen SIN calibrar: calibra la escala antes de dibujar.") : "Sin fondo: dibujas sobre la rejilla (cuadros de 1 m)."} Las capturas de Google Maps están sujetas a sus condiciones de uso; para uso oficial es preferible el mapa propio o una foto aérea/oficial.</small>`;
+  m.querySelector("#cro_gr") && (m.querySelector("#cro_gr").onchange = e => { CR.grid = e.target.checked; });
+}
+function croFondoClick(e) {
+  const b = e.target.closest("[data-cf]"); if (!b) return; const a = b.dataset.cf, F = CR.fondo;
+  if (a == "img") { $("cro_file").value = ""; $("cro_file").click(); return; }
+  if (a == "osm") { croOSM(); return; }
+  if (a == "cal") { $("cro_fm").hidden = true; croTool("calib"); CR.calib = []; croRender(); return; }
+  croPush();
+  if (a[0] == "r" && F) { const d = +a.slice(1); F.r = ((F.r || 0) + d) % 360; CR.norte = (CR.norte - d) % 360; }
+  else if (a[0] == "n") { const d = a == "n0" ? null : +a.slice(1); CR.norte = d === null ? 0 : (CR.norte + d) % 360; }
+  else if (a == "quita") { CR.fondo = null; CR.img = null; ACC.row.fondo = null; accSucio("fondo"); }
+  croSync(); croRender(); croFondoUI();
+}
+function croCargaImg() {
+  const f = $("cro_file").files[0]; if (!f) return;
+  cargaImg(f, 1600).then(cv => { croPush(); const u = cv.toDataURL("image/jpeg", .8), w = 60, h = 60 * cv.height / cv.width, c = croCentro(); CR.img = u; ACC.row.fondo = u; accSucio("fondo"); CR.fondo = {x: r1(c[0] - w / 2), y: r1(c[1] - h / 2), w, h, r: 0, op: .85, cal: false}; croSync(); croFit(); croFondoUI(); croTool("calib"); CR.calib = []; $("cro_fm").hidden = true; croRender(); }).catch(er => alert("No se pudo leer la imagen: " + er.message));
+}
+function croCalibra() {
+  const [a, b] = CR.calib, F = CR.fondo, d0 = Math.hypot(b[0] - a[0], b[1] - a[1]); CR.calib = null;
+  const s = prompt("Distancia real entre los dos puntos (metros)"), d = parseFloat((s || "").replace(",", ".")); if (!d || d <= 0 || !F) { croTool("mover"); return; }
+  croPush(); const k = d / d0, cx = a[0], cy = a[1]; F.x = r1(cx + (F.x - cx) * k); F.y = r1(cy + (F.y - cy) * k); F.w = r1(F.w * k); F.h = r1(F.h * k); F.cal = true; croTool("mover"); croSync(); croRender();
+}
+async function croOSM() {
+  const R = ACC.row; if (R.lat == null || R.lng == null) { alert("Primero pon la ubicación del accidente (botón «Mi ubicación» en la T01)."); return; }
+  const z = 19, n = Math.pow(2, z), lat = R.lat * Math.PI / 180, fx = (R.lng + 180) / 360 * n, fy = (1 - Math.log(Math.tan(lat) + 1 / Math.cos(lat)) / Math.PI) / 2 * n, tx = Math.floor(fx), ty = Math.floor(fy);
+  const mpp = 156543.03392 * Math.cos(lat) / n, cv = document.createElement("canvas"); cv.width = cv.height = 768; const cx = cv.getContext("2d"); cx.fillStyle = "#eee"; cx.fillRect(0, 0, 768, 768);
+  $("cro_fm").insertAdjacentHTML("beforeend", "<div id='cro_wait'><small>Cargando mapa…</small></div>");
+  try {
+    await Promise.all([-1, 0, 1].flatMap(dy => [-1, 0, 1].map(dx => new Promise((ok, ko) => { const im = new Image(); im.crossOrigin = "anonymous"; im.onload = () => { cx.drawImage(im, (dx + 1) * 256, (dy + 1) * 256); ok(); }; im.onerror = () => ko(new Error("sin conexión con el mapa")); im.src = `https://tile.openstreetmap.org/${z}/${tx + dx}/${ty + dy}.png`; }))));
+    const px = 256 + (fx - tx) * 256, py = 256 + (fy - ty) * 256; croPush(); CR.img = cv.toDataURL("image/jpeg", .85); ACC.row.fondo = CR.img; accSucio("fondo");
+    CR.fondo = {x: r1(-px * mpp), y: r1(-py * mpp), w: r1(768 * mpp), h: r1(768 * mpp), r: 0, op: .9, cal: true, osm: true}; CR.norte = 0; croSync(); croFit(); croFondoUI();
+  } catch (er) { alert("No se pudo cargar el mapa: " + er.message + ". Sube una captura o foto como fondo."); const w = $("cro_wait"); if (w) w.remove(); }
+}
+/* ---- croquis impreso a escala ---- */
+const ESCALAS = [20, 25, 50, 75, 100, 125, 150, 200, 250, 300, 400, 500, 750, 1000, 1500, 2000];
+function croHTML() {
+  const R = ACC.row, c = R.croquis || {}; CR.objs = c.objs || []; CR.vehs = c.vehs || []; CR.fondo = c.fondo || null; CR.img = R.fondo || null; CR.norte = c.norte || 0;
+  const b = croBBox(false), AW = 0.19, AH = 0.165; let S = 200, bx, by;
+  if (b) { const m = 2; S = ESCALAS.find(s => (b.x1 - b.x0 + 2 * m) <= AW * s && (b.y1 - b.y0 + 2 * m) <= AH * s) || 2000; bx = (b.x0 + b.x1) / 2; by = (b.y0 + b.y1) / 2; } else { bx = 0; by = 0; }
+  const vw = AW * S, vh = AH * S, x0 = bx - vw / 2, y0 = by - vh / 2, upp = S * 0.2646 / 1000, L = nice(30 * S / 1000), sc = L, e = esc;
+  const scene = croScene({upp, print: true}), sx = x0 + vw * .03 / 1, sy = y0 + vh - 8 * S / 1000, nx = x0 + vw - 14 * S / 1000, ny = y0 + 16 * S / 1000, ns = S / 1000;
+  const svg = `<svg xmlns="${SVGNS}" width="190mm" height="165mm" viewBox="${r1(x0)} ${r1(y0)} ${r1(vw)} ${r1(vh)}" style="border:1.5px solid #000;background:#fff;display:block" preserveAspectRatio="xMidYMid meet"><defs><clipPath id="cpx"><rect x="${r1(x0)}" y="${r1(y0)}" width="${r1(vw)}" height="${r1(vh)}"/></clipPath></defs><g clip-path="url(#cpx)">${scene}</g>
+<g transform="translate(${r1(sx)} ${r1(sy)})"><rect x="0" y="${-ns * 2}" width="${sc}" height="${ns * 2}" fill="#fff" stroke="#000" stroke-width="${upp}"/><rect x="0" y="${-ns * 2}" width="${sc / 2}" height="${ns * 2}" fill="#000"/><text x="0" y="${-ns * 3}" font-family="Arial" font-size="${r1(ns * 3.2)}" font-weight="700">0</text><text x="${sc}" y="${-ns * 3}" text-anchor="middle" font-family="Arial" font-size="${r1(ns * 3.2)}" font-weight="700">${sc} m</text></g>
+<g transform="translate(${r1(nx)} ${r1(ny)}) rotate(${CR.norte})"><polygon points="0,${-ns * 7} ${ns * 3},${ns * 3} 0,${ns} ${-ns * 3},${ns * 3}" fill="#000"/><text y="${-ns * 8.5}" text-anchor="middle" font-family="Arial" font-size="${r1(ns * 4)}" font-weight="800">N</text></g></svg>`;
+  const F = CR.fondo, nota = F && CR.img ? (F.osm ? "Fondo: mapa © colaboradores de OpenStreetMap." : F.cal ? "Fondo: imagen calibrada por el agente." : "AVISO: fondo sin calibrar; las medidas del fondo no son fiables.") : "Sin imagen de fondo.";
+  const leg = R.vehiculos.map((v, i) => `<tr><td style="border:1px solid #000;padding:2px 5px"><span style="display:inline-block;width:10px;height:10px;background:${VCOL[i % VCOL.length]};border:1px solid #000"></span> <b>V${i + 1}</b></td><td style="border:1px solid #000;padding:2px 5px">${e((VTIPOS[v.tipo] || {}).n || "")} ${e(v.marca)} ${e(v.modelo)}</td><td style="border:1px solid #000;padding:2px 5px">${e(v.mat)}</td><td style="border:1px solid #000;padding:2px 5px">${e((((v.cond || {}).nombre || "") + " " + ((v.cond || {}).apellidos || "")).trim())}</td></tr>`).join("");
+  return `<div class="apg" style="font-size:10.5px;padding:10mm 10mm"><div style="display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:3px"><b style="font-size:14px">CROQUIS DE ACCIDENTE DE TRÁFICO · T-01 #${R.ref}</b><span>Policia Local de Tortosa</span></div>
+<div style="margin:4px 0 6px"><b>Fecha:</b> ${dfh(R.fecha)} &nbsp; <b>Lugar:</b> ${e(R.lugar)} ${R.lat != null ? "(" + R.lat + ", " + R.lng + ")" : ""}<br><b>Tipo:</b> ${e((R.datos || {}).tipo)} &nbsp; <b>Agentes:</b> ${e((R.datos || {}).agentes)}</div>${svg}
+<div style="margin:5px 0;display:flex;justify-content:space-between"><b>Escala 1:${S}</b><span>Impreso en A4 al 100 % (sin «ajustar a página»)</span></div>
+<table style="width:100%;border-collapse:collapse;margin:4px 0">${leg}</table>
+<div style="font-size:9.5px;line-height:1.35">Leyenda: vehículo sólido = posición en el impacto; discontinuo = posición final (·F); tenue = posición previa (·A); línea discontinua = trayectoria; ✕ = punto de impacto; el dibujo muestra los vehículos a su tamaño real. ${e(nota)}</div>
+<div class="sig" style="margin-top:22px"><div><span>Firma del agente</span></div><div><span>Visto bueno</span></div></div><div style="font-size:8px;margin-top:16px;color:#333">Generado con PolAssist el ${new Date().toLocaleString("es-ES")}</div></div>`;
 }
 
 /* ---- patrullas: ubicación en tiempo real de las unidades (solo agentes) ---- */
@@ -1053,6 +1485,7 @@ function ver(id) {
   if (id == "act") actaInit();
   if (id == "brf") brfInit();
   if (id == "det") detInit();
+  if (id == "acc") accInit();
   if (id == "pat") { ptFit = true; $("pt_nom").textContent = $("unit").value.trim() || "—"; setTimeout(() => { iniMapaP(); if (MAPP) MAPP.invalidateSize(); cargaUnidades(); }, 60); }
   window.scrollTo(0, 0);
 }

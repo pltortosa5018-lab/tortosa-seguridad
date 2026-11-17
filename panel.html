@@ -524,13 +524,13 @@ function detHTML() {
 /* ---- accidentes: acta T01 + croquizador a escala ---- */
 const ACC = {row: null, filtro: "todos", sucio: new Set(), tm: null, ok: false};
 const ACC_TIPOS = ["Colisión frontal", "Colisión fronto-lateral", "Colisión lateral", "Alcance", "Colisión múltiple", "Atropello a peatón", "Atropello a ciclista", "Salida de la vía", "Vuelco", "Choque con obstáculo", "Caída de moto / bicicleta", "Otro"];
-const VTIPOS = {turismo: {n: "Turismo", l: 4.4, w: 1.8}, suv: {n: "Todoterreno / SUV", l: 4.6, w: 1.9}, furgoneta: {n: "Furgoneta", l: 5.3, w: 2.0}, camion: {n: "Camión", l: 9, w: 2.5}, bus: {n: "Autobús", l: 12, w: 2.55}, moto: {n: "Motocicleta", l: 2.1, w: 0.8}, bici: {n: "Bicicleta", l: 1.8, w: 0.6}, vmp: {n: "Patinete (VMP)", l: 1.1, w: 0.5}, peaton: {n: "Peatón", l: 0.6, w: 0.6}};
+const VTIPOS = {turismo: {n: "Turismo", l: 4.4, w: 1.8}, suv: {n: "Todoterreno / SUV", l: 4.6, w: 1.9}, furgoneta: {n: "Furgoneta", l: 5.3, w: 2.0}, camion: {n: "Camión", l: 9, w: 2.5}, bus: {n: "Autobús", l: 12, w: 2.55}, moto: {n: "Motocicleta", l: 2.1, w: 0.8}, bici: {n: "Bicicleta", l: 1.8, w: 0.6}, vmp: {n: "Patinete (VMP)", l: 1.1, w: 0.5}, peaton: {n: "Peatón", l: 0.6, w: 0.6}, pickup: {n: "Pick-up", l: 5.3, w: 1.9}};
 // Dimensiones orientativas (largo × ancho en metros): verificar con la ficha técnica si hace falta precisión
 const MODELOS = [["Seat", "Ibiza", 4.06, 1.78, "turismo"], ["Seat", "León", 4.37, 1.80, "turismo"], ["Seat", "Arona", 4.14, 1.78, "suv"], ["Seat", "Ateca", 4.38, 1.84, "suv"], ["Renault", "Clio", 4.05, 1.80, "turismo"], ["Renault", "Captur", 4.23, 1.80, "suv"], ["Renault", "Kangoo", 4.28, 1.83, "furgoneta"], ["Dacia", "Sandero", 4.09, 1.85, "turismo"], ["Dacia", "Duster", 4.34, 1.81, "suv"], ["Volkswagen", "Polo", 4.07, 1.75, "turismo"], ["Volkswagen", "Golf", 4.28, 1.79, "turismo"], ["Volkswagen", "Tiguan", 4.51, 1.84, "suv"], ["Toyota", "Yaris", 3.94, 1.74, "turismo"], ["Toyota", "Corolla", 4.37, 1.79, "turismo"], ["Toyota", "C-HR", 4.36, 1.80, "suv"], ["Ford", "Fiesta", 4.04, 1.73, "turismo"], ["Ford", "Focus", 4.38, 1.83, "turismo"], ["Ford", "Transit", 5.53, 2.06, "furgoneta"], ["Opel", "Corsa", 4.06, 1.77, "turismo"], ["Peugeot", "208", 4.06, 1.74, "turismo"], ["Peugeot", "308", 4.36, 1.85, "turismo"], ["Peugeot", "2008", 4.30, 1.77, "suv"], ["Citroën", "C3", 3.99, 1.75, "turismo"], ["Citroën", "C4", 4.36, 1.80, "turismo"], ["Citroën", "Berlingo", 4.40, 1.85, "furgoneta"], ["Nissan", "Qashqai", 4.42, 1.84, "suv"], ["Nissan", "Micra", 3.99, 1.74, "turismo"], ["Hyundai", "i30", 4.34, 1.79, "turismo"], ["Hyundai", "Tucson", 4.50, 1.86, "suv"], ["Kia", "Ceed", 4.31, 1.80, "turismo"], ["Kia", "Sportage", 4.50, 1.87, "suv"], ["Fiat", "500", 3.57, 1.63, "turismo"], ["Fiat", "Panda", 3.65, 1.64, "turismo"], ["Mercedes", "Clase A", 4.42, 1.80, "turismo"], ["Mercedes", "Sprinter", 5.93, 1.99, "furgoneta"], ["BMW", "Serie 1", 4.32, 1.80, "turismo"], ["Audi", "A3", 4.34, 1.82, "turismo"], ["Honda", "PCX 125", 1.92, 0.74, "moto"], ["Yamaha", "NMAX 125", 1.94, 0.74, "moto"]];
 const VCOL = ["#1F6FEB", "#C93A1F", "#2E9E5B", "#E8A33D", "#7B3FE4", "#0E8F9E"];
 const gP = (o, p) => p.split(".").reduce((a, k) => a == null ? a : a[k], o);
 const sP = (o, p, v) => { const ks = p.split("."), l = ks.pop(); const t = ks.reduce((a, k) => a[k] ?? (a[k] = {}), o); t[l] = v; };
-const vacioVeh = (tipo = "turismo") => ({tipo, marca: "", modelo: "", mat: "", pais: "E", color: "", vin: "", itv: "", cia: "", pol: "", vig: "", soa: "", largo: VTIPOS[tipo].l, ancho: VTIPOS[tipo].w, prop: "", ocup: "", danos: "", grua: "", cond: {nombre: "", apellidos: "", doc: "", nac: "", dom: "", tel: "", permiso: "", clase: "", pvig: "", alc: "", alcres: ""}});
+const vacioVeh = (tipo = "turismo") => ({tipo, clase: "", marca: "", modelo: "", mat: "", pais: "E", color: "", vin: "", itv: "", cia: "", pol: "", vig: "", soa: "", largo: VTIPOS[tipo].l, ancho: VTIPOS[tipo].w, prop: "", ocup: "", danos: "", grua: "", cond: {nombre: "", apellidos: "", doc: "", nac: "", dom: "", tel: "", permiso: "", clase: "", pvig: "", alc: "", alcres: ""}});
 const vacioDatos = () => ({via: {nombre: "", tipo: "", limite: ""}, cond: {clima: "Despejado", luz: "Día", calzada: "Seca", visib: "Buena"}, tipo: "", heridos: {hay: false, desc: ""}, testigos: [], agentes: "", desc: "", obs: ""});
 function accInit() {
   if (!ACC.ok) {
@@ -573,13 +573,7 @@ function accEv(e) {
   const v = t.type == "checkbox" ? t.checked : t.type == "datetime-local" ? (t.value ? new Date(t.value).toISOString() : null) : t.type == "number" ? (t.value === "" ? null : parseFloat(t.value)) : t.value;
   const col = p.split(".")[0]; if (col == "fecha" && !v) return;
   sP(ACC.row, p, v); accSucio(col);
-  if (e.type == "change") { const m = p.match(/^vehiculos\.(\d+)\.(tipo|marca|modelo)$/); if (m) accVehAuto(+m[1], m[2]); }
-}
-function accVehAuto(i, k) {
-  const v = ACC.row.vehiculos[i];
-  if (k == "tipo") { v.largo = VTIPOS[v.tipo].l; v.ancho = VTIPOS[v.tipo].w; }
-  else { const m = MODELOS.find(x => x[0].toLowerCase() == (v.marca || "").trim().toLowerCase() && x[1].toLowerCase() == (v.modelo || "").trim().toLowerCase()); if (!m) return; v.tipo = m[4]; v.largo = m[2]; v.ancho = m[3]; }
-  accSucio("vehiculos"); accRender();
+  if (e.type == "change") { const m = p.match(/^vehiculos\.(\d+)\.(tipo|marca|modelo|clase|color)$/); if (m) accVehAuto(+m[1], m[2]); }
 }
 function accClick(e) {
   const b = e.target.closest("[data-qa]"); if (!b || !ACC.row) return; const a = b.dataset.qa, R = ACC.row, i = +b.dataset.qi;
@@ -617,16 +611,7 @@ ${qS("datos.tipo", "Tipo de accidente", ACC_TIPOS)}
 <details class="acc" open><summary>5. Descripción y agentes</summary><div class="pad">${qT("datos.desc", "Descripción de los hechos y circunstancias del accidente", 5)}${qT("datos.obs", "Observaciones", 3)}${qI("datos.agentes", "Agentes actuantes (nombre y TIP)")}</div></details>
 <details class="acc" open><summary>6. Croquis</summary><div class="pad"><div style="margin-bottom:8px">${hayCro ? `Croquis con ${(R.croquis.vehs || []).length} vehículo(s) y ${(R.croquis.objs || []).length} elemento(s).` : "Aún no hay croquis."}</div><button data-qa="cro" type="button" class="k">✏️ Abrir croquizador</button></div></details>
 <div class="brf-fin"><button data-qa="p1" type="button">Imprimir T01</button><button data-qa="p2" type="button">Imprimir croquis</button><button data-qa="cerrar" type="button" class="sec2">${R.estado == "cerrado" ? "Reabrir" : "Marcar como cerrado"}</button></div>
-<datalist id="dl_marcas">${[...new Set(MODELOS.map(m => m[0]))].map(m => `<option value="${m}">`).join("")}</datalist><datalist id="dl_modelos">${MODELOS.map(m => `<option value="${m[1]}">`).join("")}</datalist>`;
-}
-function accVehForm(v, i) {
-  const q = k => "vehiculos." + i + "." + k;
-  return `<details class="acc" ${i < 2 ? "open" : ""} style="margin:8px 0"><summary><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${VCOL[i % VCOL.length]};margin-right:6px"></span>V${i + 1} · ${esc((VTIPOS[v.tipo] || {}).n || "")} ${esc(v.marca)} ${esc(v.modelo)} ${esc(v.mat)}</summary><div class="pad">
-<div class="g2"><label class="fl">Tipo<select data-qp="${q("tipo")}">${Object.keys(VTIPOS).map(k => `<option value="${k}" ${k == v.tipo ? "selected" : ""}>${VTIPOS[k].n}</option>`).join("")}</select></label>${qI(q("mat"), "Matrícula", "text", 'autocapitalize="characters"')}${qI(q("marca"), "Marca", "text", 'list="dl_marcas"')}${qI(q("modelo"), "Modelo", "text", 'list="dl_modelos"')}${qI(q("color"), "Color")}${qI(q("pais"), "País de matrícula")}${qI(q("vin"), "Bastidor (VIN)")}${qI(q("itv"), "ITV vigente hasta", "date")}${qI(q("largo"), "Largo (m) para el croquis", "number")}${qI(q("ancho"), "Ancho (m)", "number")}</div>
-<h4 style="margin:10px 0 2px">Seguro</h4><div class="g2">${qI(q("cia"), "Compañía aseguradora")}${qI(q("pol"), "Nº de póliza")}${qI(q("vig"), "Vigencia hasta", "date")}${qS(q("soa"), "Seguro obligatorio", ["Acreditado", "No acreditado", "Sin seguro", "Se consulta FIVA"])}</div>
-<h4 style="margin:10px 0 2px">Conductor</h4><div class="g2">${qI(q("cond.nombre"), "Nombre")}${qI(q("cond.apellidos"), "Apellidos")}${qI(q("cond.doc"), "DNI / NIE / pasaporte", "text", 'autocapitalize="characters"')}${qI(q("cond.nac"), "Fecha de nacimiento", "date")}${qI(q("cond.tel"), "Teléfono", "tel")}${qI(q("cond.dom"), "Domicilio")}${qI(q("cond.permiso"), "Nº de permiso de conducir")}${qI(q("cond.clase"), "Clase")}${qI(q("cond.pvig"), "Permiso válido hasta", "date")}${qS(q("cond.alc"), "Prueba de alcoholemia", ["No realizada", "Negativa", "Positiva", "Se niega"])}${qI(q("cond.alcres"), "Resultado (mg/l aire)")}</div>
-<div class="g2">${qI(q("prop"), "Propietario (si no es el conductor)")}${qI(q("ocup"), "Ocupantes (nº y datos)")}${qI(q("grua"), "Retirada por grúa (empresa / depósito)")}</div>${qT(q("danos"), "Daños del vehículo (zonas y descripción)", 3)}
-<button data-qa="veh-" data-qi="${i}" type="button" class="sec2">Quitar V${i + 1}</button></div></details>`;
+${accDatalists(R)}`;
 }
 /* ---- impresión T01 ---- */
 function accHTML() {
@@ -640,6 +625,207 @@ function accHTML() {
     + `<h4>Agentes actuantes</h4><div>${e(D.agentes)}</div><div class="sig" style="margin-top:20px"><div><span>Firma agente 1</span></div><div><span>Firma agente 2</span></div></div>`;
   const vp = []; for (let i = 0; i < R.vehiculos.length; i += 2) vp.push(R.vehiculos.slice(i, i + 2).map((v, j) => vb(v, i + j)).join(""));
   const N = 1 + vp.length; return pg(1, N, p1) + vp.map((b, k) => pg(k + 2, N, b)).join("");
+}
+
+/* ---- catálogo de vehículos, clases y dibujo según carrocería ---- */
+// Clases: dimensiones orientativas por segmento (largo, ancho en m), carrocería y tipo
+const CLS = {
+  A: ["Utilitario pequeño", 3.65, 1.66, "hatch", "turismo"], B: ["Utilitario", 4.05, 1.75, "hatch", "turismo"], C: ["Compacto", 4.35, 1.80, "hatch", "turismo"],
+  S: ["Berlina compacta (3 volúmenes)", 4.65, 1.82, "sedan", "turismo"], D: ["Berlina media", 4.8, 1.85, "sedan", "turismo"], E: ["Berlina grande", 5.0, 1.88, "sedan", "turismo"], F: ["Familiar (ranchera)", 4.7, 1.83, "wagon", "turismo"],
+  SB: ["SUV pequeño", 4.15, 1.78, "suv", "suv"], SC: ["SUV compacto", 4.45, 1.84, "suv", "suv"], SD: ["SUV grande", 4.75, 1.92, "suv", "suv"], SE: ["SUV / todoterreno XL", 5.0, 1.97, "suv", "suv"],
+  M: ["Monovolumen", 4.45, 1.82, "mpv", "turismo"], MG: ["Monovolumen grande", 4.85, 1.88, "mpv", "turismo"], CP: ["Coupé / deportivo", 4.5, 1.85, "coupe", "turismo"], PK: ["Pick-up", 5.3, 1.9, "pickup", "pickup"],
+  V1: ["Furgoneta pequeña / combi", 4.4, 1.85, "van", "furgoneta"], V2: ["Furgoneta mediana", 5.4, 2.0, "van", "furgoneta"], V3: ["Furgón grande", 6.0, 2.05, "van", "furgoneta"],
+  CM: ["Camión rígido", 8.5, 2.5, "truck", "camion"], CA: ["Camión articulado", 16.5, 2.55, "truck", "camion"], BU: ["Autobús / autocar", 12.0, 2.55, "bus", "bus"], MB: ["Minibús", 7.5, 2.2, "bus", "bus"],
+  MS: ["Scooter", 1.9, 0.75, "mscoot", "moto"], MN: ["Moto de calle (naked)", 2.1, 0.8, "mnaked", "moto"], MT: ["Moto trail / touring", 2.25, 0.9, "mtrail", "moto"], MC: ["Moto custom", 2.4, 0.95, "mcust", "moto"], MD: ["Moto deportiva", 2.05, 0.72, "msport", "moto"], MM: ["Ciclomotor", 1.75, 0.68, "mscoot", "moto"],
+  BI: ["Bicicleta", 1.8, 0.6, "bici", "bici"], VM: ["Patinete (VMP)", 1.1, 0.5, "vmp", "vmp"], PE: ["Peatón", 0.6, 0.6, "peaton", "peaton"]
+};
+const TIPO_CLASE = {turismo: "C", suv: "SC", furgoneta: "V2", camion: "CM", bus: "BU", moto: "MN", bici: "BI", vmp: "VM", peaton: "PE", pickup: "PK"};
+// Marca: "Modelo:clase,..." (clases de arriba). Dimensiones por segmento; verificar con la ficha técnica si hace falta precisión.
+const CAT = {
+  "Abarth": "500:A,595:A,695:A,124 Spider:CP", "Alfa Romeo": "MiTo:B,Giulietta:C,Giulia:D,Stelvio:SD,Tonale:SC,Junior:SB,4C:CP,159:D,147:C",
+  "Alpine": "A110:CP", "Audi": "A1:B,A3:C,A4:D,A5:D,A6:E,A7:E,A8:E,Q2:SB,Q3:SC,Q4 e-tron:SC,Q5:SD,Q7:SE,Q8:SE,e-tron:SD,TT:CP,R8:CP,A2:B",
+  "BMW": "Serie 1:C,Serie 2:C,Serie 3:D,Serie 4:D,Serie 5:E,Serie 7:E,X1:SC,X2:SB,X3:SD,X4:SD,X5:SE,X6:SE,X7:SE,i3:B,i4:D,iX:SE,Z4:CP,iX1:SC",
+  "BYD": "Seagull:A,Dolphin:B,Atto 3:SC,Seal:D,Han:E,Tang:SE,Sealion 7:SD", "Chevrolet": "Spark:A,Aveo:B,Cruze:C,Captiva:SD,Orlando:M",
+  "Citroën": "C1:A,C3:B,C3 Aircross:SB,C4:C,C4 Cactus:SB,C5 Aircross:SD,C5 X:D,C-Elysée:S,Berlingo:V1,Jumpy:V2,Jumper:V3,Spacetourer:V2,Ami:A,C2:A,Saxo:A,Xsara:C,C5:D",
+  "Cupra": "Formentor:SC,Born:C,León:C,Ateca:SC,Tavascan:SD,Terramar:SC", "Dacia": "Spring:A,Sandero:B,Logan:S,Duster:SC,Jogger:MG,Dokker:V1,Lodgy:M,Bigster:SD",
+  "DS": "DS 3:SB,DS 4:C,DS 7:SD,DS 9:D", "Fiat": "500:A,Panda:A,Punto:B,Tipo:C,500X:SB,500L:M,600:SB,Doblò:V1,Fiorino:V1,Scudo:V2,Talento:V2,Ducato:V3,Bravo:C,Stilo:C,Multipla:M",
+  "Ford": "Ka:A,Fiesta:B,Focus:C,Mondeo:D,Puma:SB,EcoSport:SB,Kuga:SC,Explorer:SE,Mustang:CP,Mustang Mach-E:SD,C-Max:M,Galaxy:MG,S-Max:MG,Tourneo Connect:V1,Tourneo Custom:V2,Transit Connect:V1,Transit Custom:V2,Transit:V3,Ranger:PK",
+  "Honda": "e:B,Jazz:B,Civic:C,Accord:D,HR-V:SB,ZR-V:SC,CR-V:SD", "Hyundai": "i10:A,i20:B,i30:C,Ioniq:C,Ioniq 5:SC,Ioniq 6:D,Bayon:SB,Kona:SB,Tucson:SC,ix35:SC,Santa Fe:SD,Staria:MG,Getz:B,Elantra:S",
+  "Iveco": "Daily:V3,Eurocargo:CM,Stralis:CA,S-Way:CA,Crossway:BU,Urbanway:BU", "Jaguar": "XE:D,XF:E,E-Pace:SC,F-Pace:SD,I-Pace:SD,F-Type:CP",
+  "Jeep": "Avenger:SB,Renegade:SB,Compass:SC,Cherokee:SD,Wrangler:SC,Grand Cherokee:SE,Gladiator:PK", "Kia": "Picanto:A,Rio:B,Ceed:C,ProCeed:C,XCeed:SC,Stonic:SB,Soul:SB,Niro:SC,Sportage:SC,EV6:SC,Sorento:SD,EV9:SE,Carens:M,Stinger:E",
+  "Lancia": "Ypsilon:B", "Land Rover": "Defender:SD,Discovery:SE,Discovery Sport:SD,Freelander:SC,Range Rover:SE,Range Rover Sport:SE,Range Rover Velar:SD,Range Rover Evoque:SC",
+  "Lexus": "CT:C,UX:SB,NX:SC,RX:SD,IS:D,ES:D,LC:CP", "Lynk & Co": "01:SC", "MAN": "TGL:CM,TGM:CM,TGS:CM,TGX:CA,Lion's City:BU,Lion's Coach:BU",
+  "Maserati": "Ghibli:E,Levante:SD,GranTurismo:CP", "Mazda": "Mazda2:B,Mazda3:C,Mazda6:D,CX-3:SB,CX-30:SC,CX-5:SC,CX-60:SD,MX-5:CP,MX-30:SC",
+  "Mercedes-Benz": "Clase A:C,Clase B:M,CLA:S,Clase C:D,Clase E:E,Clase S:E,GLA:SC,GLB:SC,GLC:SD,GLE:SE,GLS:SE,Clase G:SE,EQA:SC,EQB:SC,EQC:SD,Citan:V1,Vito:V2,Clase V:MG,Sprinter:V3,Atego:CM,Actros:CA,Tourismo:BU,Citaro:BU",
+  "MG": "MG3:B,MG4:C,MG5:F,ZS:SC,HS:SD,Marvel R:SD", "Mini": "Cooper:B,Cabrio:B,Clubman:C,Countryman:SC", "Mitsubishi": "Space Star:B,ASX:SC,Eclipse Cross:SC,Outlander:SD,L200:PK",
+  "Nissan": "Micra:B,Note:B,Juke:SB,Leaf:C,Qashqai:SC,Ariya:SC,X-Trail:SD,NV200:V1,Townstar:V1,Primastar:V2,Navara:PK,Pathfinder:SE,Pulsar:C",
+  "Opel": "Karl:A,Adam:A,Corsa:B,Astra:C,Insignia:D,Crossland:SB,Mokka:SB,Grandland:SC,Meriva:M,Zafira:MG,Combo:V1,Vivaro:V2,Movano:V3",
+  "Peugeot": "108:A,206:B,207:B,208:B,e-208:B,307:C,308:C,407:D,408:SC,508:D,2008:SB,3008:SC,5008:SD,Bipper:V1,Partner:V1,Rifter:V1,Expert:V2,Traveller:V2,Boxer:V3",
+  "Polestar": "2:D,3:SD", "Porsche": "911:CP,718:CP,Macan:SD,Cayenne:SE,Panamera:E,Taycan:E", "Renault": "Twingo:A,Clio:B,Zoe:B,Mégane:C,Fluence:S,Talisman:D,Laguna:D,Captur:SB,Symbioz:SB,Arkana:SC,Kadjar:SC,Austral:SC,Rafale:SC,Koleos:SD,Scénic:M,Espace:MG,Kangoo:V1,Trafic:V2,Master:V3,Serie D:CM,Serie C:CM,Serie T:CA",
+  "Scania": "Serie P:CM,Serie G:CM,Serie R:CA,Serie S:CA", "Seat": "Mii:A,Arosa:A,Ibiza:B,Córdoba:S,León:C,Toledo:S,Altea:M,Arona:SB,Ateca:SC,Tarraco:SD,Alhambra:MG",
+  "Škoda": "Citigo:A,Fabia:B,Scala:C,Octavia:C,Rapid:C,Superb:E,Kamiq:SB,Karoq:SC,Yeti:SC,Kodiaq:SD,Enyaq:SC", "Smart": "fortwo:A,forfour:A,#1:SB", "SsangYong / KGM": "Tivoli:SB,Korando:SC,Torres:SC,Rexton:SD,Musso:PK",
+  "Subaru": "Impreza:C,XV:SC,Crosstrek:SC,Forester:SC,Outback:SD,Solterra:SC", "Tesla": "Model 3:D,Model S:E,Model X:SE,Model Y:SC",
+  "Toyota": "Aygo:A,Aygo X:A,Yaris:B,Yaris Cross:SB,Auris:C,Corolla:C,Prius:C,Verso:M,Avensis:D,Camry:D,C-HR:SC,RAV4:SC,bZ4X:SC,Highlander:SD,Land Cruiser:SE,GT86:CP,Supra:CP,Proace City:V1,Proace:V2,Hilux:PK",
+  "Volkswagen": "up!:A,Polo:B,Taigo:SB,T-Cross:SB,Golf:C,Beetle:C,Scirocco:CP,Jetta:S,ID.3:C,T-Roc:SB,Tiguan:SC,ID.4:SC,ID.5:SC,Touran:M,Passat:D,ID.7:D,Arteon:E,Touareg:SE,Sharan:MG,Caddy:V1,Transporter:V2,Multivan:V2,California:V2,ID. Buzz:V2,Crafter:V3,Amarok:PK",
+  "Volvo": "EX30:SB,V40:C,S60:D,V60:F,S90:E,V90:F,XC40:SC,C40:SC,XC60:SD,XC90:SE,EX90:SE", "Volvo Trucks": "FL:CM,FE:CM,FM:CA,FH:CA", "DAF": "LF:CM,CF:CA,XF:CA,XG:CA",
+  "Irizar": "i4:BU,i6:BU,i8:BU", "Solaris": "Urbino:BU", "Setra": "S 515:BU,S 516:BU",
+  "Honda (moto)": "PCX:MS,SH:MS,Vision:MS,Forza:MS,CB125R:MN,Hornet:MN,CB500F:MN,CBR500R:MD,Transalp:MT,NC750X:MT,Africa Twin:MT,Rebel:MC,Gold Wing:MC",
+  "Yamaha (moto)": "Aerox:MM,NMAX:MS,XMAX:MS,TMAX:MS,Tricity:MS,MT-03:MN,MT-07:MN,MT-09:MN,XSR:MN,YZF-R6:MD,YZF-R1:MD,Tracer:MT,Ténéré:MT",
+  "Kawasaki": "Z400:MN,Z650:MN,Z900:MN,Ninja 400:MD,Ninja 650:MD,Versys:MT,Vulcan:MC", "Suzuki (moto)": "Burgman:MS,GSX-S:MN,SV650:MN,GSX-R:MD,V-Strom:MT",
+  "Ducati": "Monster:MN,Streetfighter:MN,Scrambler:MN,Panigale:MD,Multistrada:MT,Diavel:MC", "BMW Motorrad": "G 310 R:MN,R nineT:MN,S 1000 RR:MD,F 850 GS:MT,R 1250 GS:MT,C 400:MS",
+  "KTM": "Duke 125:MN,Duke 390:MN,Duke 790:MN,RC:MD,Adventure:MT,EXC:MT,SX:MT", "Piaggio": "Zip:MM,Typhoon:MM,Liberty:MS,Beverly:MS,Medley:MS,MP3:MS", "Vespa": "LX:MS,Primavera:MS,Sprint:MS,GTS:MS",
+  "Kymco": "Agility:MS,Like:MS,People:MS,Downtown:MS,X-Citing:MS", "SYM": "Orbit:MM,Jet 14:MS,Symphony:MS,Cruisym:MS", "Triumph": "Trident:MN,Street Triple:MN,Speed Triple:MN,Tiger:MT,Bonneville:MC",
+  "Harley-Davidson": "Sportster:MC,Iron 883:MC,Fat Boy:MC,Street Glide:MC", "Royal Enfield": "Classic 350:MC,Meteor:MC,Interceptor:MN,Himalayan:MT", "Derbi": "Senda:MM,GPR:MM,Variant:MM",
+  "Rieju": "MRT:MM,RS3:MM,Tango:MM", "Benelli": "Leoncino:MN,TRK 502:MT,Imperiale:MC", "CFMoto": "300 NK:MN,650 MT:MT,800 MT:MT",
+  "Camión (genérico)": "Rígido:CM,Articulado:CA", "Autobús (genérico)": "Urbano:BU,Autocar:BU,Minibús:MB", "Bicicleta / patinete": "Bicicleta:BI,Patinete eléctrico:VM"
+};
+const CATM = new Map();
+const nrmv = s => (s || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]/g, "");
+const MARCAS = Object.keys(CAT).sort((a, b) => a.localeCompare(b, "es"));
+MARCAS.forEach(m => CAT[m].split(",").forEach(x => { const i = x.lastIndexOf(":"); CATM.set(nrmv(m.replace(/ \(moto\)$/, "")) + "|" + nrmv(x.slice(0, i)), x.slice(i + 1)); }));
+const modelosDe = marca => { const k = nrmv((marca || "").replace(/ \(moto\)$/, "")); const out = []; MARCAS.forEach(m => { if (nrmv(m.replace(/ \(moto\)$/, "")) == k) CAT[m].split(",").forEach(x => out.push(x.slice(0, x.lastIndexOf(":")))); }); return out; };
+const clsDe = v => CLS[v.clase] ? v.clase : TIPO_CLASE[v.tipo] || "C";
+const COLORES = {blanco: "#f4f4f2", negro: "#1d1d20", gris: "#8b9197", plata: "#c4c9cd", plateado: "#c4c9cd", rojo: "#c4262e", azul: "#2257b8", verde: "#2f7d4f", amarillo: "#f1c40f", naranja: "#ec7a1c", marron: "#6b4a33", beige: "#d8c7a3", burdeos: "#6e1423", granate: "#6e1423", dorado: "#b8964a", rosa: "#e48ab0", morado: "#6a3d9a", violeta: "#6a3d9a", turquesa: "#1aa6a6", crema: "#e8dfc4"};
+const colHex = (t, def) => { const s = nrmv(t); for (const k in COLORES) if (s.includes(k)) return COLORES[k]; return def; };
+const mixc = (h, p) => { const n = parseInt(h.slice(1), 16), c = [n >> 16, n >> 8 & 255, n & 255].map(v => Math.max(0, Math.min(255, Math.round(p >= 0 ? v + (255 - v) * p : v * (1 + p))))); return "#" + c.map(v => v.toString(16).padStart(2, "0")).join(""); };
+function vehAuto(v, k) {
+  if (k == "tipo") v.clase = TIPO_CLASE[v.tipo] || "C";
+  else if (k == "clase") { const c = CLS[v.clase]; if (!c) return; v.tipo = c[4]; }
+  else {
+    const ex = MODELOS.find(x => nrmv(x[0]) == nrmv(v.marca) && nrmv(x[1]) == nrmv(v.modelo)), c = CATM.get(nrmv(v.marca) + "|" + nrmv(v.modelo));
+    if (!c && !ex) return;
+    if (c) { v.clase = c; v.tipo = CLS[c][4]; } else { v.tipo = ex[4]; v.clase = TIPO_CLASE[ex[4]]; }
+    if (ex) { v.largo = ex[2]; v.ancho = ex[3]; return; }
+  }
+  const c = CLS[v.clase]; if (c) { v.largo = c[1]; v.ancho = c[2]; }
+}
+function accVehAuto(i, k) {
+  const v = ACC.row.vehiculos[i], F = $("acc_f"); if (k != "color") vehAuto(v, k); accSucio("vehiculos");
+  const pv = $("vp_" + i); if (pv) pv.innerHTML = vehPreview(v, i);
+  if (k == "marca") { const dl = $("dl_mod_" + i); if (dl) dl.innerHTML = modelosDe(v.marca).map(m => `<option value="${esc(m)}">`).join(""); return; }
+  if (k == "color") return;
+  const set = (key, val) => { const el = F.querySelector(`[data-qp="vehiculos.${i}.${key}"]`); if (el && document.activeElement !== el) el.value = val ?? ""; };
+  set("clase", clsDe(v)); set("largo", v.largo); set("ancho", v.ancho);
+}
+const vdim = i => { const v = ACC.row.vehiculos[i] || {}, c = CLS[clsDe(v)]; return {L: +v.largo || c[1], W: +v.ancho || c[2], tipo: v.tipo || "turismo", body: c[3]}; };
+/* dibujo en planta con volumen (sombras, cristales, luces, color real) */
+function carTop(body, L, W, col, u) {
+  const hl = L / 2, hw = W / 2, f = r1, st = `stroke="#111" stroke-width="${f(u * 1.2)}" stroke-linejoin="round"`, dk = mixc(col, -.4), lt = mixc(col, .3), gl = "#2a3946";
+  const PR = {hatch: [.19, -.30, .11], sedan: [.13, -.17, .10], wagon: [.15, -.40, .11], suv: [.16, -.38, .10], mpv: [.21, -.40, .12], coupe: [.05, -.12, .10], pickup: [.12, -.05, .09]}[body] || [.15, -.3, .1];
+  const xf = PR[0] * L, xr = PR[1] * L, wl = PR[2] * L, A = hl * .45, ww = Math.min(.26, W * .15), wlen = Math.min(.72, L * .17);
+  const bp = `M${f(-hl)},${f(-hw * .86)} Q${f(-hl)},${f(-hw)} ${f(-hl + .35)},${f(-hw)} L${f(A)},${f(-hw)} C${f(hl * .8)},${f(-hw)} ${f(hl * .96)},${f(-hw * .9)} ${f(hl)},${f(-hw * .6)} L${f(hl)},${f(hw * .6)} C${f(hl * .96)},${f(hw * .9)} ${f(hl * .8)},${f(hw)} ${f(A)},${f(hw)} L${f(-hl + .35)},${f(hw)} Q${f(-hl)},${f(hw)} ${f(-hl)},${f(hw * .86)}Z`;
+  let s = "";
+  [[.31, 1], [.31, -1], [-.31, 1], [-.31, -1]].forEach(w => s += `<rect x="${f(w[0] * L - wlen / 2)}" y="${f(w[1] * (hw - ww * .25) - ww / 2)}" width="${f(wlen)}" height="${f(ww)}" rx="${f(ww * .3)}" fill="#151515"/>`);
+  const mw = Math.min(.22, L * .05); [1, -1].forEach(sg => s += `<rect x="${f(xf - wl * .25)}" y="${f(sg > 0 ? hw - mw * .2 : -hw - mw * .8)}" width="${f(mw * 1.7)}" height="${f(mw)}" rx="${f(mw * .3)}" fill="${col}" ${st}/>`);
+  s += `<path d="${bp}" fill="${col}" ${st}/>`;
+  s += `<rect x="${f(-hl + .2)}" y="${f(-hw)}" width="${f(L - .45)}" height="${f(hw * .14)}" fill="#000" opacity=".16"/><rect x="${f(-hl + .2)}" y="${f(hw * .86)}" width="${f(L - .45)}" height="${f(hw * .14)}" fill="#000" opacity=".16"/>`;
+  s += `<rect x="${f(xf)}" y="${f(-hw * .34)}" width="${f(hl * .93 - xf)}" height="${f(hw * .68)}" rx="${f(hw * .2)}" fill="#fff" opacity=".14"/>`;
+  if (body == "pickup") {
+    s += `<rect x="${f(-hl + .1)}" y="${f(-hw * .82)}" width="${f(xr - .05 + hl - .1)}" height="${f(hw * 1.64)}" rx=".08" fill="${mixc(col, -.6)}" ${st}/>`; for (let x = -hl + .45; x < xr - .1; x += .5) s += `<line x1="${f(x)}" y1="${f(-hw * .78)}" x2="${f(x)}" y2="${f(hw * .78)}" stroke="#000" stroke-opacity=".3" stroke-width="${f(u)}"/>`;
+  } else s += `<rect x="${f(-hl * .93)}" y="${f(-hw * .34)}" width="${f(xr + hl * .93 - .05)}" height="${f(hw * .68)}" rx="${f(hw * .2)}" fill="#fff" opacity=".1"/>`;
+  const rx0 = xr + wl * .8, rx1 = xf - wl;
+  s += `<path d="M${f(xf)},${f(-hw * .82)} L${f(rx1)},${f(-hw * .72)} L${f(rx1)},${f(hw * .72)} L${f(xf)},${f(hw * .82)}Z" fill="${gl}" ${st}/><path d="M${f(xf - wl * .15)},${f(-hw * .6)} L${f(xf - wl * .55)},${f(-hw * .55)}" stroke="#9fb6c8" stroke-width="${f(u * 1.5)}" opacity=".7"/>`;
+  s += `<rect x="${f(rx0)}" y="${f(-hw * .74)}" width="${f(Math.max(.3, rx1 - rx0))}" height="${f(hw * 1.48)}" rx="${f(hw * .22)}" fill="${lt}" ${st}/><rect x="${f(rx0 + .05)}" y="${f(-hw * .3)}" width="${f(Math.max(.2, rx1 - rx0 - .1))}" height="${f(hw * .6)}" rx="${f(hw * .15)}" fill="#fff" opacity=".18"/>`;
+  s += `<path d="M${f(rx0)},${f(-hw * .7)} L${f(xr)},${f(-hw * .76)} L${f(xr)},${f(hw * .76)} L${f(rx0)},${f(hw * .7)}Z" fill="${gl}" ${st}/>`;
+  if (body == "suv" || body == "wagon" || body == "mpv") [1, -1].forEach(sg => s += `<line x1="${f(rx0 + .1)}" y1="${f(sg * hw * .56)}" x2="${f(rx1 - .05)}" y2="${f(sg * hw * .56)}" stroke="#111" stroke-width="${f(u * 2)}" opacity=".6"/>`);
+  [1, -1].forEach(sg => { s += `<rect x="${f(hl - .09)}" y="${f(sg * hw * .58 - hw * .14)}" width=".1" height="${f(hw * .28)}" fill="#ffe9a8" ${st}/><rect x="${f(-hl - .01)}" y="${f(sg * hw * .6 - hw * .13)}" width=".08" height="${f(hw * .26)}" fill="#d33"/>`; });
+  return s;
+}
+function vanTop(L, W, col, u) {
+  const hl = L / 2, hw = W / 2, f = r1, st = `stroke="#111" stroke-width="${f(u * 1.2)}" stroke-linejoin="round"`, lt = mixc(col, .25), gl = "#2a3946", xf = L * .36, wl = L * .09;
+  let s = "";
+  [[.34, 1], [.34, -1], [-.3, 1], [-.3, -1]].forEach(w => s += `<rect x="${f(w[0] * L - .36)}" y="${f(w[1] * (hw - .05) - .13)}" width=".72" height=".26" rx=".08" fill="#151515"/>`);
+  s += `<rect x="${f(-hl)}" y="${f(-hw)}" width="${f(L)}" height="${f(W)}" rx="${f(Math.min(.35, W * .16))}" fill="${col}" ${st}/>`;
+  s += `<rect x="${f(-hl + .05)}" y="${f(-hw * .9)}" width="${f(xf - wl + hl - .05)}" height="${f(hw * 1.8)}" rx=".12" fill="${lt}" ${st}/><rect x="${f(-hl + .15)}" y="${f(-hw * .35)}" width="${f(xf - wl + hl - .3)}" height="${f(hw * .7)}" rx=".1" fill="#fff" opacity=".18"/>`;
+  for (let x = -hl + .9; x < xf - wl - .2; x += .9) s += `<line x1="${f(x)}" y1="${f(-hw * .88)}" x2="${f(x)}" y2="${f(hw * .88)}" stroke="#000" stroke-opacity=".22" stroke-width="${f(u)}"/>`;
+  s += `<path d="M${f(xf)},${f(-hw * .84)} L${f(xf - wl)},${f(-hw * .76)} L${f(xf - wl)},${f(hw * .76)} L${f(xf)},${f(hw * .84)}Z" fill="${gl}" ${st}/><rect x="${f(xf)}" y="${f(-hw * .34)}" width="${f(hl * .9 - xf)}" height="${f(hw * .68)}" rx=".1" fill="#fff" opacity=".14"/>`;
+  [1, -1].forEach(sg => s += `<rect x="${f(hl - .09)}" y="${f(sg * hw * .6 - hw * .13)}" width=".1" height="${f(hw * .26)}" fill="#ffe9a8" ${st}/><rect x="${f(-hl - .01)}" y="${f(sg * hw * .7 - hw * .13)}" width=".08" height="${f(hw * .26)}" fill="#d33"/><rect x="${f(xf - wl * .3)}" y="${f(sg > 0 ? hw - .04 : -hw - .16)}" width=".3" height=".2" rx=".05" fill="${col}" ${st}/>`);
+  return s;
+}
+function truckTop(L, W, col, u, art) {
+  const hl = L / 2, hw = W / 2, f = r1, st = `stroke="#111" stroke-width="${f(u * 1.2)}" stroke-linejoin="round"`, cab = art ? 2.6 : Math.min(2.4, L * .22), gl = "#2a3946", box = "#e9ecee";
+  let s = "";
+  const axes = art ? [hl - 1.4, -hl + 2.1, -hl + 3.5, -hl + 4.9] : [hl - 1.3, -hl + 1.2, -hl + 2.5];
+  axes.forEach(x => [1, -1].forEach(sg => s += `<rect x="${f(x - .55)}" y="${f(sg * (hw - .05) - .14)}" width="1.1" height=".28" rx=".08" fill="#151515"/>`));
+  const bx = -hl, bw = L - cab - (art ? .25 : .15);
+  s += `<rect x="${f(bx)}" y="${f(-hw)}" width="${f(bw)}" height="${f(W)}" rx=".1" fill="${box}" ${st}/>`;
+  for (let x = bx + 1; x < bx + bw - .5; x += 1.2) s += `<line x1="${f(x)}" y1="${f(-hw * .9)}" x2="${f(x)}" y2="${f(hw * .9)}" stroke="#000" stroke-opacity=".18" stroke-width="${f(u)}"/>`;
+  s += `<rect x="${f(bx + .1)}" y="${f(-hw * .35)}" width="${f(bw - .2)}" height="${f(hw * .7)}" rx=".1" fill="#fff" opacity=".35"/>`;
+  const cx = hl - cab;
+  s += `<rect x="${f(cx)}" y="${f(-hw * .94)}" width="${f(cab)}" height="${f(W * .94)}" rx="${f(Math.min(.3, W * .12))}" fill="${col}" ${st}/><rect x="${f(cx + .1)}" y="${f(-hw * .3)}" width="${f(cab * .45)}" height="${f(hw * .6)}" rx=".1" fill="#fff" opacity=".22"/>`;
+  s += `<path d="M${f(hl - cab * .3)},${f(-hw * .8)} L${f(hl - cab * .45)},${f(-hw * .72)} L${f(hl - cab * .45)},${f(hw * .72)} L${f(hl - cab * .3)},${f(hw * .8)}Z" fill="${gl}" ${st}/>`;
+  [1, -1].forEach(sg => s += `<rect x="${f(hl - .09)}" y="${f(sg * hw * .6 - .15)}" width=".1" height=".3" fill="#ffe9a8" ${st}/><rect x="${f(-hl - .01)}" y="${f(sg * hw * .7 - .13)}" width=".08" height=".26" fill="#d33"/>`);
+  return s;
+}
+function busTop(L, W, col, u) {
+  const hl = L / 2, hw = W / 2, f = r1, st = `stroke="#111" stroke-width="${f(u * 1.2)}" stroke-linejoin="round"`, gl = "#2a3946";
+  let s = ""; [-.32, .28].forEach(x => [1, -1].forEach(sg => s += `<rect x="${f(x * L - .55)}" y="${f(sg * (hw - .05) - .14)}" width="1.1" height=".28" rx=".08" fill="#151515"/>`));
+  s += `<rect x="${f(-hl)}" y="${f(-hw)}" width="${f(L)}" height="${f(W)}" rx="${f(Math.min(.4, W * .15))}" fill="${col}" ${st}/><rect x="${f(-hl + .15)}" y="${f(-hw * .78)}" width="${f(L - .45)}" height="${f(hw * 1.56)}" rx=".15" fill="${mixc(col, .25)}"/>`;
+  for (let i = 0; i < Math.max(2, Math.round(L / 4)); i++) s += `<rect x="${f(-hl + .8 + i * (L - 2.4) / Math.max(1, Math.round(L / 4) - 1) - .45)}" y="${f(-hw * .32)}" width=".9" height="${f(hw * .64)}" rx=".1" fill="#fff" opacity=".4" ${st}/>`;
+  s += `<path d="M${f(hl - .05)},${f(-hw * .8)} L${f(hl - .35)},${f(-hw * .7)} L${f(hl - .35)},${f(hw * .7)} L${f(hl - .05)},${f(hw * .8)}Z" fill="${gl}" ${st}/>`;
+  [1, -1].forEach(sg => s += `<rect x="${f(hl - .09)}" y="${f(sg * hw * .62 - .13)}" width=".1" height=".26" fill="#ffe9a8" ${st}/><rect x="${f(-hl - .01)}" y="${f(sg * hw * .7 - .13)}" width=".08" height=".26" fill="#d33"/>`);
+  return s;
+}
+function motoTop(v, L, W, col, u) {
+  const hl = L / 2, hw = W / 2, f = r1, st = `stroke="#111" stroke-width="${f(u * 1.2)}" stroke-linejoin="round"`, dk = mixc(col, -.45), tyre = (x, l) => `<rect x="${f(x - l / 2)}" y="${f(-hw * .18)}" width="${f(l)}" height="${f(hw * .36)}" rx="${f(hw * .15)}" fill="#1a1a1a" ${st}/>`;
+  let s = tyre(-hl * .68, L * .26) + tyre(hl * .68, L * .26);
+  if (v == "mscoot") s += `<rect x="${f(-hl * .42)}" y="${f(-hw * .5)}" width="${f(L * .5)}" height="${f(hw)}" rx="${f(hw * .3)}" fill="${dk}" ${st}/><ellipse cx="${f(-hl * .3)}" cy="0" rx="${f(L * .2)}" ry="${f(hw * .48)}" fill="${col}" ${st}/><path d="M${f(hl * .15)},${f(-hw * .45)} Q${f(hl * .8)},${f(-hw * .5)} ${f(hl * .8)},0 Q${f(hl * .8)},${f(hw * .5)} ${f(hl * .15)},${f(hw * .45)}Z" fill="${col}" ${st}/>`;
+  else if (v == "msport") s += `<path d="M${f(hl * .8)},0 L${f(hl * .25)},${f(-hw * .42)} L${f(-hl * .2)},${f(-hw * .36)} L${f(-hl * .2)},${f(hw * .36)} L${f(hl * .25)},${f(hw * .42)}Z" fill="${col}" ${st}/><ellipse cx="${f(-hl * .3)}" cy="0" rx="${f(L * .16)}" ry="${f(hw * .3)}" fill="${dk}" ${st}/>`;
+  else s += `<ellipse cx="${f(hl * .12)}" cy="0" rx="${f(L * .17)}" ry="${f(hw * .3)}" fill="${col}" ${st}/><ellipse cx="${f(-hl * .22)}" cy="0" rx="${f(L * .17)}" ry="${f(hw * .22)}" fill="${dk}" ${st}/>`;
+  const bar = v == "mtrail" ? 1 : v == "mcust" ? .95 : .85, bx = v == "msport" ? hl * .3 : v == "mscoot" ? hl * .42 : hl * .32;
+  s += `<line x1="${f(bx)}" y1="${f(-hw * bar)}" x2="${f(bx)}" y2="${f(hw * bar)}" stroke="#111" stroke-width="${f(u * 2.5)}" stroke-linecap="round"/><line x1="${f(bx)}" y1="${f(-hw * bar)}" x2="${f(-hl * .02)}" y2="${f(-hw * .32)}" stroke="#3b4452" stroke-width="${f(u * 3)}"/><line x1="${f(bx)}" y1="${f(hw * bar)}" x2="${f(-hl * .02)}" y2="${f(hw * .32)}" stroke="#3b4452" stroke-width="${f(u * 3)}"/>`;
+  s += `<ellipse cx="${f(-hl * .05)}" cy="0" rx="${f(L * .08)}" ry="${f(hw * .42)}" fill="#3b4452" ${st}/><circle cx="${f(hl * .02)}" cy="0" r="${f(hw * .22)}" fill="#e8e8e8" ${st}/>`;
+  return s;
+}
+function vehDraw(body, L, W, col, u) {
+  const hl = L / 2, hw = W / 2, f = r1, st = `stroke="#111" stroke-width="${f(u * 1.2)}"`;
+  if (body == "peaton") return `<ellipse rx="${f(hw * .55)}" ry="${f(hw * 1.0)}" fill="${col}" ${st}/><circle cx="${f(hw * .1)}" r="${f(hw * .42)}" fill="#e2b48c" ${st}/>`;
+  if (body == "bici") return `<ellipse cx="${f(-hl * .6)}" rx="${f(hl * .34)}" ry="${f(hw * .12)}" fill="#222"/><ellipse cx="${f(hl * .6)}" rx="${f(hl * .34)}" ry="${f(hw * .12)}" fill="#222"/><line x1="${f(-hl * .6)}" y1="0" x2="${f(hl * .6)}" y2="0" stroke="#666" stroke-width="${f(u * 2.5)}"/><line x1="${f(hl * .3)}" y1="${f(-hw * .9)}" x2="${f(hl * .3)}" y2="${f(hw * .9)}" stroke="#111" stroke-width="${f(u * 2.5)}" stroke-linecap="round"/><ellipse cx="${f(-hl * .05)}" rx="${f(L * .09)}" ry="${f(hw * .45)}" fill="${col}" ${st}/><circle cx="${f(hl * .02)}" r="${f(hw * .22)}" fill="#e8e8e8" ${st}/>`;
+  if (body == "vmp") return `<rect x="${f(-hl * .9)}" y="${f(-hw * .45)}" width="${f(L * .65)}" height="${f(hw * .9)}" rx="${f(hw * .2)}" fill="#333" ${st}/><line x1="${f(hl * .6)}" y1="${f(-hw * 1.1)}" x2="${f(hl * .6)}" y2="${f(hw * 1.1)}" stroke="#111" stroke-width="${f(u * 2.5)}" stroke-linecap="round"/><ellipse cx="${f(-hl * .1)}" rx="${f(L * .1)}" ry="${f(hw * .6)}" fill="${col}" ${st}/>`;
+  if (body[0] == "m" && body != "mpv") return motoTop(body, L, W, col, u);
+  if (body == "van") return vanTop(L, W, col, u);
+  if (body == "truck") return truckTop(L, W, col, u, L > 12);
+  if (body == "bus") return busTop(L, W, col, u);
+  return carTop(body, L, W, col, u);
+}
+function croVehG(i, p, mode, u, sel, lab) {
+  const d = vdim(i), V = ACC.row.vehiculos[i] || {}, idc = VCOL[i % VCOL.length], col = colHex(V.color, mixc(idc, .1)), r = p.r || 0;
+  let body = vehDraw(d.body, d.L, d.W, col, u);
+  if (mode == "final") body = `<g>${body}</g><rect x="${r1(-d.L / 2 - u * 2)}" y="${r1(-d.W / 2 - u * 2)}" width="${r1(d.L + u * 4)}" height="${r1(d.W + u * 4)}" fill="none" stroke="#111" stroke-width="${r1(u * 1.6)}" stroke-dasharray="${r1(u * 5)},${r1(u * 3)}"/>`;
+  if (mode == "ghost") body = `<g opacity=".4">${body}</g><rect x="${r1(-d.L / 2)}" y="${r1(-d.W / 2)}" width="${d.L}" height="${d.W}" fill="none" stroke="${idc}" stroke-width="${r1(u * 1.4)}" stroke-dasharray="${r1(u * 3)},${r1(u * 3)}"/>`;
+  const hi = sel ? `<rect x="${r1(-d.L / 2 - u * 5)}" y="${r1(-d.W / 2 - u * 5)}" width="${r1(d.L + u * 10)}" height="${r1(d.W + u * 10)}" rx="${u * 4}" fill="none" stroke="#E8A33D" stroke-width="${u * 2.5}" stroke-dasharray="${u * 6},${u * 4}"/>` : "";
+  const rr = Math.max(Math.min(d.W * .32, .5), 9 * u), fs = r1(rr * (lab.length > 2 ? .7 : .95));
+  const shadow = mode == "ghost" ? "" : `<g transform="translate(${r1(p.x + .13)} ${r1(p.y + .16)}) rotate(${r})"><rect x="${r1(-d.L / 2)}" y="${r1(-d.W / 2)}" width="${d.L}" height="${d.W}" rx="${r1(Math.min(.5, d.W * .25))}" fill="#000" opacity=".2"/></g>`;
+  return `${shadow}<g transform="translate(${p.x} ${p.y}) rotate(${r})">${body}${hi}<g transform="rotate(${-r})${d.W < 1.2 ? ` translate(0 ${r1(-(d.W / 2 + rr * 1.15))})` : ""}"><circle r="${r1(rr)}" fill="${idc}" stroke="#fff" stroke-width="${r1(u * 1.6)}"/><text text-anchor="middle" dominant-baseline="central" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="${fs}" fill="#fff">${lab}</text></g></g>`;
+}
+const vehPreview = (v, i) => { const c = CLS[clsDe(v)], L = +v.largo || c[1], W = +v.ancho || c[2], u = L / 170; return `<svg viewBox="${r1(-L / 2 - .5)} ${r1(-W / 2 - .5)} ${r1(L + 1)} ${r1(W + 1)}" width="170" style="max-width:100%;display:block;margin:4px auto">${vehDraw(c[3], L, W, colHex(v.color, mixc(VCOL[i % VCOL.length], .1)), u)}</svg>`; };
+function accVehForm(v, i) {
+  const q = k => "vehiculos." + i + "." + k, c = clsDe(v);
+  return `<details class="acc" ${i < 2 ? "open" : ""} style="margin:8px 0"><summary><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${VCOL[i % VCOL.length]};margin-right:6px"></span>V${i + 1} · ${esc((VTIPOS[v.tipo] || {}).n || "")} ${esc(v.marca)} ${esc(v.modelo)} ${esc(v.mat)}</summary><div class="pad"><div id="vp_${i}">${vehPreview(v, i)}</div>
+<div class="g2">${qI(q("mat"), "Matrícula", "text", 'autocapitalize="characters"')}${qI(q("color"), "Color (blanco, negro, gris, rojo…)")}${qI(q("marca"), "Marca", "text", 'list="dl_marcas" autocomplete="off"')}${qI(q("modelo"), "Modelo", "text", `list="dl_mod_${i}" autocomplete="off"`)}
+<label class="fl">Carrocería / segmento<select data-qp="${q("clase")}">${Object.keys(CLS).map(k => `<option value="${k}" ${k == c ? "selected" : ""}>${CLS[k][0]}</option>`).join("")}</select></label>${qI(q("pais"), "País de matrícula")}${qI(q("vin"), "Bastidor (VIN)")}${qI(q("itv"), "ITV vigente hasta", "date")}${qI(q("largo"), "Largo (m) para el croquis", "number")}${qI(q("ancho"), "Ancho (m)", "number")}</div>
+<h4 style="margin:10px 0 2px">Seguro</h4><div class="g2">${qI(q("cia"), "Compañía aseguradora")}${qI(q("pol"), "Nº de póliza")}${qI(q("vig"), "Vigencia hasta", "date")}${qS(q("soa"), "Seguro obligatorio", ["Acreditado", "No acreditado", "Sin seguro", "Se consulta FIVA"])}</div>
+<h4 style="margin:10px 0 2px">Conductor</h4><div class="g2">${qI(q("cond.nombre"), "Nombre")}${qI(q("cond.apellidos"), "Apellidos")}${qI(q("cond.doc"), "DNI / NIE / pasaporte", "text", 'autocapitalize="characters"')}${qI(q("cond.nac"), "Fecha de nacimiento", "date")}${qI(q("cond.tel"), "Teléfono", "tel")}${qI(q("cond.dom"), "Domicilio")}${qI(q("cond.permiso"), "Nº de permiso de conducir")}${qI(q("cond.clase"), "Clase")}${qI(q("cond.pvig"), "Permiso válido hasta", "date")}${qS(q("cond.alc"), "Prueba de alcoholemia", ["No realizada", "Negativa", "Positiva", "Se niega"])}${qI(q("cond.alcres"), "Resultado (mg/l aire)")}</div>
+<div class="g2">${qI(q("prop"), "Propietario (si no es el conductor)")}${qI(q("ocup"), "Ocupantes (nº y datos)")}${qI(q("grua"), "Retirada por grúa (empresa / depósito)")}</div>${qT(q("danos"), "Daños del vehículo (zonas y descripción)", 3)}
+<button data-qa="veh-" data-qi="${i}" type="button" class="sec2">Quitar V${i + 1}</button></div></details>`;
+}
+const accDatalists = R => `<datalist id="dl_marcas">${[...new Set(MARCAS.map(m => m.replace(/ \(moto\)$/, "")))].map(m => `<option value="${esc(m)}">`).join("")}</datalist>` + R.vehiculos.map((v, i) => `<datalist id="dl_mod_${i}">${modelosDe(v.marca).map(m => `<option value="${esc(m)}">`).join("")}</datalist>`).join("");
+
+function croVehFields(i, R) {
+  const c = clsDe(R);
+  return `<div class="cro-row"><input data-cv="mat" value="${esc(R.mat || "")}" placeholder="Matrícula" autocapitalize="characters" style="width:112px"><input data-cv="color" value="${esc(R.color || "")}" placeholder="Color" style="width:92px"><select data-cv="clase" style="flex:1;min-width:130px">${Object.keys(CLS).map(k => `<option value="${k}" ${k == c ? "selected" : ""}>${CLS[k][0]}</option>`).join("")}</select></div>
+<div class="cro-row"><input data-cv="marca" list="cdl_m" value="${esc(R.marca || "")}" placeholder="Marca" autocomplete="off" style="flex:1;min-width:110px"><input data-cv="modelo" list="cdl_o" value="${esc(R.modelo || "")}" placeholder="Modelo" autocomplete="off" style="flex:1;min-width:110px"></div>
+<datalist id="cdl_m">${[...new Set(MARCAS.map(m => m.replace(/ \(moto\)$/, "")))].map(m => `<option value="${esc(m)}">`).join("")}</datalist><datalist id="cdl_o">${modelosDe(R.marca).map(m => `<option value="${esc(m)}">`).join("")}</datalist>`;
+}
+function croVehInput(e) {
+  const t = e.target, k = t.dataset.cv; if (!k) return false; if (!CR.sel || CR.sel[0] != "v") return true;
+  const v = ACC.row.vehiculos[+CR.sel.slice(1)]; if (!v) return true; v[k] = t.value; accSucio("vehiculos");
+  if (e.type == "change") {
+    if (k == "marca" || k == "modelo" || k == "clase") vehAuto(v, k); croRender();
+    const P = $("cro_p"), dl = P.querySelector("#cdl_o"), cl = P.querySelector('[data-cv="clase"]');
+    if (k == "marca" && dl) dl.innerHTML = modelosDe(v.marca).map(m => `<option value="${esc(m)}">`).join(""); if (cl && k != "clase") cl.value = clsDe(v);
+  } else if (k == "color") croRender();
+  return true;
 }
 
 /* ======== CROQUIZADOR ======== */
@@ -674,7 +860,7 @@ function croTilesDom(x0, y0, x1, y1, k, F) {
 }
 const nid = () => "o" + Math.random().toString(36).slice(2, 8);
 const r1 = n => Math.round(n * 100) / 100;
-const vdim = i => { const v = ACC.row.vehiculos[i] || {}, t = VTIPOS[v.tipo] || VTIPOS.turismo; return {L: +v.largo || t.l, W: +v.ancho || t.w, tipo: v.tipo || "turismo"}; };
+
 function croInit() {
   const s = $("cro_s"); s.innerHTML = '<g id="cro_tl"></g><g id="cro_wg"></g><g id="cro_hud"></g>';
   ["gesturestart", "gesturechange", "gestureend"].forEach(n => $("cro").addEventListener(n, e => e.preventDefault()));
@@ -786,22 +972,6 @@ function croBorra() {
   CR.sel = null; croSync(); croRender(); croPanel();
 }
 /* ---- dibujo (también para imprimir) ---- */
-function vehShape(tipo, L, W, col, u) {
-  const hl = L / 2, hw = W / 2, st = `stroke="#111" stroke-width="${r1(u * 1.4)}" stroke-linejoin="round"`, wh = (x, y, l, w) => `<rect x="${x - l / 2}" y="${y - w / 2}" width="${l}" height="${w}" fill="#222"/>`;
-  if (tipo == "peaton") return `<circle r="${Math.max(.28, hw)}" fill="${col}" ${st}/>`;
-  if (tipo == "bici" || tipo == "moto" || tipo == "vmp") return `${wh(hl * .66, 0, hl * .34, hw * .35)}${wh(-hl * .66, 0, hl * .34, hw * .35)}<rect x="${-hl * .8}" y="${-hw * .22}" width="${L * .8}" height="${hw * .44}" rx="${hw * .2}" fill="${col}" ${st}/><circle cx="${-hl * .1}" cy="0" r="${hw * .55}" fill="#fff" ${st}/><line x1="${hl * .45}" y1="${-hw}" x2="${hl * .45}" y2="${hw}" stroke="#111" stroke-width="${r1(u * 2)}"/>`;
-  if (tipo == "camion") return `<rect x="${-hl}" y="${-hw}" width="${L * .72}" height="${W}" rx="${r1(W * .05)}" fill="${col}" ${st}/><rect x="${hl - L * .26}" y="${-hw * .92}" width="${L * .26}" height="${W * .92}" rx="${r1(W * .12)}" fill="${col}" ${st}/><path d="M${hl - L * .09},${-hw * .72} L${hl - L * .035},${-hw * .6} L${hl - L * .035},${hw * .6} L${hl - L * .09},${hw * .72}Z" fill="#fff" opacity=".85"/>${wh(-hl * .72, hw, 1.0, .28)}${wh(-hl * .72, -hw, 1.0, .28)}${wh(-hl * .42, hw, 1.0, .28)}${wh(-hl * .42, -hw, 1.0, .28)}${wh(hl * .72, hw, 1.0, .28)}${wh(hl * .72, -hw, 1.0, .28)}`;
-  if (tipo == "bus") return `<rect x="${-hl}" y="${-hw}" width="${L}" height="${W}" rx="${r1(W * .1)}" fill="${col}" ${st}/><rect x="${-hl * .86}" y="${-hw * .7}" width="${L * .72}" height="${W * .4}" fill="#fff" opacity=".6"/><rect x="${-hl * .86}" y="${hw * .3}" width="${L * .72}" height="${W * .4}" fill="#fff" opacity=".6"/><path d="M${hl - L * .06},${-hw * .8} L${hl - L * .02},${-hw * .65} L${hl - L * .02},${hw * .65} L${hl - L * .06},${hw * .8}Z" fill="#fff" opacity=".85"/>`;
-  return `${wh(hl * .58, hw, .66, .24)}${wh(hl * .58, -hw, .66, .24)}${wh(-hl * .58, hw, .66, .24)}${wh(-hl * .58, -hw, .66, .24)}<rect x="${-hl}" y="${-hw}" width="${L}" height="${W}" rx="${r1(Math.min(.5, W * .25))}" fill="${col}" ${st}/><path d="M${hl * .18},${-hw * .8} L${hl * .42},${-hw * .62} L${hl * .42},${hw * .62} L${hl * .18},${hw * .8}Z" fill="#fff" opacity=".85"/><path d="M${-hl * .5},${-hw * .72} L${-hl * .68},${-hw * .62} L${-hl * .68},${hw * .62} L${-hl * .5},${hw * .72}Z" fill="#fff" opacity=".7"/>`;
-}
-function croVehG(i, p, mode, u, sel, lab) {
-  const d = vdim(i), col = VCOL[i % VCOL.length], op = mode == "ghost" ? .38 : 1, fs = r1(Math.max(Math.min(d.W * .5, d.L * .3), 10 * u));
-  let body = vehShape(d.tipo, d.L, d.W, col, u);
-  if (mode == "final") body = `<g opacity=".72">${body}</g><rect x="${-d.L / 2}" y="${-d.W / 2}" width="${d.L}" height="${d.W}" fill="none" stroke="#111" stroke-width="${r1(u * 1.6)}" stroke-dasharray="${r1(u * 5)},${r1(u * 3)}"/>`;
-  if (mode == "ghost") body = `<g opacity="${op}">${body}</g><rect x="${-d.L / 2}" y="${-d.W / 2}" width="${d.L}" height="${d.W}" fill="none" stroke="${col}" stroke-width="${r1(u * 1.2)}" stroke-dasharray="${r1(u * 3)},${r1(u * 3)}"/>`;
-  const hi = sel ? `<rect x="${-d.L / 2 - u * 4}" y="${-d.W / 2 - u * 4}" width="${d.L + u * 8}" height="${d.W + u * 8}" rx="${u * 4}" fill="none" stroke="#E8A33D" stroke-width="${u * 2.5}" stroke-dasharray="${u * 6},${u * 4}"/>` : "";
-  return `<g transform="translate(${p.x} ${p.y}) rotate(${p.r || 0})">${body}${hi}<text transform="rotate(${-(p.r || 0)})" text-anchor="middle" dominant-baseline="central" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="${fs}" fill="#fff" stroke="#000" stroke-width="${r1(fs * .08)}" paint-order="stroke">${lab}</text></g>`;
-}
 function croSenal(o, u) {
   const R = 0.7, k = o.k, fs = R * .55, T = (s, c = "#fff", z = fs) => `<text text-anchor="middle" dominant-baseline="central" font-family="Arial" font-weight="800" font-size="${z}" fill="${c}">${s}</text>`;
   let g = "";
@@ -877,7 +1047,7 @@ function croPanel() {
   const act = `<div class="cro-row"><button type="button" data-ca="dup" class="sec2">Duplicar</button><button type="button" data-ca="del" class="r">Borrar</button></div>`;
   if (s[0] == "v") {
     const i = +s.slice(1), v = croVeh(s), p = v && v.poses[CR.etapa], R = ACC.row.vehiculos[i] || {};
-    h = `<b>V${i + 1} ${esc(R.mat || "")}</b> <small>fase: ${ETAPAS[CR.etapa]}</small>` + (p ? rotRow(p.r) : `<div><small>No está colocado en «${ETAPAS[CR.etapa]}».</small> <button type="button" data-ca="poseaqui">Colocar aquí</button></div>`) + `<div class="cro-row">${p ? `<button type="button" data-ca="posedel" class="sec2">Quitar esta fase</button>` : ""}<button type="button" data-ca="del" class="r">Quitar del croquis</button></div>`;
+    h = `<b>V${i + 1}</b> <small>fase: ${ETAPAS[CR.etapa]}</small>` + croVehFields(i, R) + (p ? rotRow(p.r) : `<div><small>No está colocado en «${ETAPAS[CR.etapa]}».</small> <button type="button" data-ca="poseaqui">Colocar aquí</button></div>`) + `<div class="cro-row">${p ? `<button type="button" data-ca="posedel" class="sec2">Quitar esta fase</button>` : ""}<button type="button" data-ca="del" class="r">Quitar del croquis</button></div>`;
   } else {
     const o = croObj(s); if (!o) { el.hidden = true; return; }
     const nm = {via: "Calzada", acera: "Acera", cebra: "Paso de peatones", senal: "Señal", obs: "Obstáculo", txt: "Texto", cota: "Cota", imp: "Punto de impacto", fren: "Huella de frenada", flecha: "Flecha"}[o.t];
@@ -896,7 +1066,7 @@ function croPanel() {
 function croPanelClick(e) {
   const b = e.target.closest("[data-ca]"); if (!b) return; const a = b.dataset.ca;
   if (a == "placev") { croPlaceVeh(+b.dataset.i); return; }
-  if (a == "addveh") { ACC.row.vehiculos.push(vacioVeh()); accSucio("vehiculos"); croPickVeh(); return; }
+  if (a == "addveh") { const R = ACC.row; R.vehiculos.push(vacioVeh()); R.vehiculos[R.vehiculos.length - 1].clase = "C"; accSucio("vehiculos"); croPlaceVeh(R.vehiculos.length - 1); return; }
   if (a == "del") { croBorra(); return; }
   if (a == "dup") { const o = croObj(CR.sel); if (!o) return; croPush(); const c = JSON.parse(JSON.stringify(o)); c.id = nid(); if (c.pts) c.pts = c.pts.map(p => [p[0] + 2, p[1] + 2]); else if (c.a) { c.a = [c.a[0] + 2, c.a[1] + 2]; c.b = [c.b[0] + 2, c.b[1] + 2]; } else { c.x += 2; c.y += 2; } CR.objs.push(c); CR.sel = c.id; croSync(); croRender(); croPanel(); return; }
   if (a == "rot") { const c = CR.sel[0] == "v" ? croPoseSel() : croObj(CR.sel); if (!c) return; croPush(); c.r = r1(((c.r || 0) + +b.dataset.d + 540) % 360 - 180); croSync(); croRender(); croPanel(); return; }
@@ -904,6 +1074,7 @@ function croPanelClick(e) {
   if (a == "posedel") { const v = croVeh(CR.sel); croPush(); v.poses[CR.etapa] = null; if (!v.poses.some(Boolean)) CR.vehs = CR.vehs.filter(x => x != v); croSync(); croRender(); croPanel(); }
 }
 function croPanelInput(e) {
+  if (croVehInput(e)) return;
   const t = e.target, k = t.dataset.cz; if (!k) return; const s = CR.sel; if (!s) return; let c = s[0] == "v" ? croPoseSel() : croObj(s); if (!c) return;
   if (!t._p) { croPush(); t._p = 1; setTimeout(() => t._p = 0, 1500); }
   c[k] = t.type == "number" ? (t.value === "" ? 0 : parseFloat(t.value)) : t.value; if (k == "k" && c.t == "obs") { if (c.k == "poste") { c.w = .4; c.h = .4; } else if (c.k == "arbol") { c.w = 3; c.h = 3; } else if (c.k == "cont") { c.w = 2.5; c.h = 1.2; } else { c.w = 8; c.h = 5; } }

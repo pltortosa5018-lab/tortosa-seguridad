@@ -84,7 +84,7 @@ details.acc>#pe{padding:10px 12px 2px}
 .cro-top{display:flex;gap:6px;padding:8px;background:#0E5A5A;align-items:center;flex-wrap:wrap}.cro-top button{background:#ffffff22;color:#fff;border:1px solid #fff4}.cro-et{display:flex;gap:2px;margin:0 auto}.cro-et button.on{background:#fff;color:#0E5A5A;font-weight:700}
 .cro-tools{display:flex;gap:6px;overflow-x:auto;padding:8px;background:#fff;border-top:1px solid #cfd8d6;-webkit-overflow-scrolling:touch}.cro-tools button{display:flex;flex-direction:column;align-items:center;min-width:64px;background:#fff;color:#12211F;border:1px solid #cfd8d6;font-size:11px;padding:6px 4px}.cro-tools button span{font-size:20px}.cro-tools button.on{background:#0E5A5A;color:#fff}
 .cro-pn{background:#fff;border-top:1px solid #cfd8d6;padding:8px 10px;max-height:38vh;overflow:auto;font-size:14px}.cro-pn[hidden]{display:none}.cro-pn .cro-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}.cro-pn button{background:#0E5A5A;color:#fff;border:0}.cro-pn button.sec2{background:#fff;color:#12211F;border:1px solid #cfd8d6}.cro-pn button.r{background:#C93A1F}.cro-pn button:disabled{opacity:.4}.cro-pn input,.cro-pn select{padding:7px;border:1px solid #cfd8d6;border-radius:8px;background:#fff;color:#12211F}
-.cro-b{position:absolute;left:8px;right:8px;top:62px;background:#fff4d6;color:#4a3500;border:1px solid #e8c766;border-radius:12px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;z-index:2}.cro-b[hidden]{display:none}.cro-b span{flex:1;font-size:13px}.cro-b button{background:#0E5A5A;color:#fff;border:0}
+.cro-zoom{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:2}.cro-zoom button{width:46px;height:46px;border-radius:12px;background:#fff;color:#12211F;border:1px solid #9fb0ac;font-size:24px;font-weight:700;padding:0;box-shadow:0 2px 8px #0003}#cro_s{touch-action:none;-webkit-user-select:none;user-select:none}.cro-b{position:absolute;left:8px;right:8px;top:62px;background:#fff4d6;color:#4a3500;border:1px solid #e8c766;border-radius:12px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;z-index:2}.cro-b[hidden]{display:none}.cro-b span{flex:1;font-size:13px}.cro-b button{background:#0E5A5A;color:#fff;border:0}
 </style>
 </head>
 <body>
@@ -173,7 +173,7 @@ details.acc>#pe{padding:10px 12px 2px}
 </main>
 <div id="sig_m"><div class="box2"><h3 id="sig_t" style="margin:0 0 8px"></h3><canvas id="sig_c" width="900" height="330"></canvas><div style="display:flex;gap:8px;margin-top:10px"><button id="sig_ok" class="k" type="button">Aceptar firma</button><button id="sig_clr" type="button" class="sec2">Borrar</button><button id="sig_no" type="button" class="sec2">Cancelar</button></div></div></div>
 <div id="cro" hidden><div class="cro-top"><button id="cro_x" type="button">✕ Cerrar</button><button id="cro_un" type="button" aria-label="Deshacer">↶</button><button id="cro_re" type="button" aria-label="Rehacer">↷</button><span id="cro_et" class="cro-et"><button type="button" data-et="0">Antes</button><button type="button" data-et="1" class="on">Impacto</button><button type="button" data-et="2">Final</button></span><button id="cro_fit" type="button" aria-label="Encajar">⤢</button><button id="cro_fo" type="button">Fondo</button><button id="cro_pr" type="button">🖨️</button></div>
-<svg id="cro_s"></svg><div id="cro_b" class="cro-b" hidden></div><div id="cro_fm" class="cro-pn" hidden></div><div id="cro_p" class="cro-pn" hidden></div><div id="cro_t" class="cro-tools"></div><input type="file" id="cro_file" accept="image/*" hidden></div>
+<svg id="cro_s"></svg><div class="cro-zoom"><button id="cro_zi" type="button" aria-label="Acercar">＋</button><button id="cro_zo" type="button" aria-label="Alejar">−</button></div><div id="cro_b" class="cro-b" hidden></div><div id="cro_fm" class="cro-pn" hidden></div><div id="cro_p" class="cro-pn" hidden></div><div id="cro_t" class="cro-tools"></div><input type="file" id="cro_file" accept="image/*" hidden></div>
 <div id="acta-print" hidden></div>
 <div id="cfm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 id="cfm_t" style="margin:0 0 8px"></h3><p id="cfm_p" style="margin:0 0 12px"></p><div style="display:flex;gap:8px"><button class="k" id="cfm_ok">Confirmar y enviar</button><button id="cfm_no" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
 <div id="grm" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);align-items:center;justify-content:center;z-index:50"><div class="card" style="display:block;max-width:420px;width:92%"><h3 style="margin:0 0 8px">Responder a la consulta de grúa</h3><small>Información adicional para el ciudadano (dirección del depósito, horario, qué documentos llevar):</small><textarea id="grt" rows="3" style="width:100%;margin-top:6px"></textarea><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px"><button class="k" id="gr_si">Sí, está en el depósito</button><button id="gr_no">No consta en el depósito</button></div><div style="margin-top:8px"><button id="gr_cl" style="background:none;color:inherit;border:1px solid #9996">Cancelar</button></div></div></div>
@@ -648,12 +648,40 @@ const ETAPAS = ["Antes", "Impacto", "Final"];
 const SENALES = {STOP: "Stop", CEDA: "Ceda el paso", PROH: "Entrada prohibida", V30: "Límite 30", V40: "Límite 40", V50: "Límite 50", SEM: "Semáforo", PELI: "Peligro"};
 const OBST = {arbol: "Árbol", poste: "Poste / farola", edif: "Edificio / muro", cont: "Contenedor"};
 const SVGNS = "http://www.w3.org/2000/svg";
+const MAPSRC = {
+  osm: {n: "Callejero (OpenStreetMap)", max: 19, att: "© colaboradores de OpenStreetMap", url: (z, x, y) => `https://tile.openstreetmap.org/${z}/${x}/${y}.png`},
+  pnoa: {n: "Foto aérea (PNOA, IGN)", max: 20, att: "© Instituto Geográfico Nacional de España (PNOA)", url: (z, x, y) => `https://www.ign.es/wmts/pnoa-ma?request=getTile&layer=OI.OrthoimageCoverage&TileMatrixSet=GoogleMapsCompatible&TileMatrix=${z}&TileCol=${x}&TileRow=${y}&format=image/jpeg`},
+  ign: {n: "Mapa topográfico (IGN)", max: 19, att: "© Instituto Geográfico Nacional de España", url: (z, x, y) => `https://www.ign.es/wmts/maparaster?request=getTile&layer=MTN&TileMatrixSet=GoogleMapsCompatible&TileMatrix=${z}&TileCol=${x}&TileRow=${y}&format=image/jpeg`}
+};
+const croClamp = k => Math.min(250, Math.max(0.4, k));
+const r3 = n => Math.round(n * 1000) / 1000;
+// mosaico de teselas en metros respecto al punto GPS (origen del croquis); se adapta al zoom
+function croTiles(x0, y0, x1, y1, k, F) {
+  const S = MAPSRC[F.src] || MAPSRC.osm, lat = F.lat0 * Math.PI / 180, c = 156543.03392 * Math.cos(lat);
+  const z = Math.max(2, Math.min(S.max, Math.round(Math.log2(k * c)))), n = Math.pow(2, z), ts = 256 * c / n;
+  const fx = (F.lng0 + 180) / 360 * n, fy = (1 - Math.log(Math.tan(lat) + 1 / Math.cos(lat)) / Math.PI) / 2 * n;
+  const ax = Math.floor(fx + x0 / ts), bx = Math.floor(fx + x1 / ts), ay = Math.floor(fy + y0 / ts), by = Math.floor(fy + y1 / ts), list = [];
+  if ((bx - ax + 1) * (by - ay + 1) > 90) return {z, list};
+  for (let ty = ay; ty <= by; ty++) for (let tx = ax; tx <= bx; tx++) { if (tx < 0 || ty < 0 || tx >= n || ty >= n) continue; list.push({href: S.url(z, tx, ty), x: r3((tx - fx) * ts), y: r3((ty - fy) * ts), w: r3(ts * 1.003)}); }
+  return {z, list};
+}
+function croTilesHTML(a, b, c, d, k, F) { return croTiles(a, b, c, d, k, F).list.map(t => `<image href="${t.href}" x="${t.x}" y="${t.y}" width="${t.w}" height="${t.w}" preserveAspectRatio="none"/>`).join(""); }
+function croTilesDom(x0, y0, x1, y1, k, F) {
+  const g = $("cro_tl"), want = new Map(croTiles(x0, y0, x1, y1, k, F).list.map(t => [t.href, t]));
+  CR.tm = CR.tm || new Map();
+  for (const [h, el] of CR.tm) if (!want.has(h)) { el.remove(); CR.tm.delete(h); }
+  for (const [h, t] of want) if (!CR.tm.has(h)) { const im = document.createElementNS(SVGNS, "image"); im.setAttribute("href", h); im.setAttribute("x", t.x); im.setAttribute("y", t.y); im.setAttribute("width", t.w); im.setAttribute("height", t.w); im.setAttribute("preserveAspectRatio", "none"); g.appendChild(im); CR.tm.set(h, im); }
+}
 const nid = () => "o" + Math.random().toString(36).slice(2, 8);
 const r1 = n => Math.round(n * 100) / 100;
 const vdim = i => { const v = ACC.row.vehiculos[i] || {}, t = VTIPOS[v.tipo] || VTIPOS.turismo; return {L: +v.largo || t.l, W: +v.ancho || t.w, tipo: v.tipo || "turismo"}; };
 function croInit() {
-  const s = $("cro_s"); s.addEventListener("pointerdown", croDown); s.addEventListener("pointermove", croMove); s.addEventListener("pointerup", croUp); s.addEventListener("pointercancel", croUp);
-  s.addEventListener("wheel", e => { e.preventDefault(); const f = e.deltaY < 0 ? 1.15 : 1 / 1.15, r = s.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top, wx = (mx - CR.tx) / CR.k, wy = (my - CR.ty) / CR.k; CR.k = Math.min(250, Math.max(1.5, CR.k * f)); CR.tx = mx - wx * CR.k; CR.ty = my - wy * CR.k; croRender(); }, {passive: false});
+  const s = $("cro_s"); s.innerHTML = '<g id="cro_tl"></g><g id="cro_wg"></g><g id="cro_hud"></g>';
+  ["gesturestart", "gesturechange", "gestureend"].forEach(n => $("cro").addEventListener(n, e => e.preventDefault()));
+  const zoom = f => { const v = croView(), mx = v.w / 2, my = v.h / 2, wx = (mx - CR.tx) / CR.k, wy = (my - CR.ty) / CR.k; CR.k = croClamp(CR.k * f); CR.tx = mx - wx * CR.k; CR.ty = my - wy * CR.k; croRender(); };
+  $("cro_zi").onclick = () => zoom(1.5); $("cro_zo").onclick = () => zoom(1 / 1.5);
+  s.addEventListener("pointerdown", croDown); s.addEventListener("pointermove", croMove); s.addEventListener("pointerup", croUp); s.addEventListener("pointercancel", croUp);
+  s.addEventListener("wheel", e => { e.preventDefault(); const f = e.deltaY < 0 ? 1.15 : 1 / 1.15, r = s.getBoundingClientRect(), mx = e.clientX - r.left, my = e.clientY - r.top, wx = (mx - CR.tx) / CR.k, wy = (my - CR.ty) / CR.k; CR.k = croClamp(CR.k * f); CR.tx = mx - wx * CR.k; CR.ty = my - wy * CR.k; croRender(); }, {passive: false});
   $("cro_x").onclick = croCierra; $("cro_un").onclick = () => croDeshaz(CR.un, CR.re); $("cro_re").onclick = () => croDeshaz(CR.re, CR.un); $("cro_fit").onclick = croFit;
   $("cro_fo").onclick = () => { $("cro_fm").hidden = !$("cro_fm").hidden; croFondoUI(); };
   $("cro_pr").onclick = () => { croCierra(); muestraImp(croHTML()); };
@@ -693,11 +721,11 @@ function croBBox(extra) {
   let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9; const add = (x, y, m = 0) => { x0 = Math.min(x0, x - m); y0 = Math.min(y0, y - m); x1 = Math.max(x1, x + m); y1 = Math.max(y1, y + m); };
   CR.objs.forEach(o => { if (o.pts) o.pts.forEach(p => add(p[0], p[1], (o.w || 1) / 2)); else if (o.a) { add(o.a[0], o.a[1]); add(o.b[0], o.b[1]); } else add(o.x, o.y, Math.max(o.w || 1, o.l || 1, o.h || 1) / 2 + 1); });
   CR.vehs.forEach(v => { const d = vdim(v.i); v.poses.forEach(p => { if (p) add(p.x, p.y, d.L / 2 + 0.3); }); });
-  if (extra && CR.fondo && x0 > x1) { add(CR.fondo.x, CR.fondo.y); add(CR.fondo.x + CR.fondo.w, CR.fondo.y + CR.fondo.h); }
+  if (extra && CR.fondo && !CR.fondo.map && x0 > x1) { add(CR.fondo.x, CR.fondo.y); add(CR.fondo.x + CR.fondo.w, CR.fondo.y + CR.fondo.h); }
   return x0 > x1 ? null : {x0, y0, x1, y1};
 }
 function croFit() {
-  const v = croView(), b = croBBox(true); if (!b) { CR.k = Math.max(4, v.w / 40); CR.tx = v.w / 2; CR.ty = v.h / 2; croRender(); return; }
+  const v = croView(), b = croBBox(true); if (!b) { CR.k = Math.max(2, v.w / (CR.fondo && CR.fondo.map ? 80 : 40)); CR.tx = v.w / 2; CR.ty = v.h / 2; croRender(); return; }
   const bw = Math.max(b.x1 - b.x0, 6), bh = Math.max(b.y1 - b.y0, 6); CR.k = Math.min(v.w / bw, v.h / bh) * 0.85; CR.tx = v.w / 2 - (b.x0 + b.x1) / 2 * CR.k; CR.ty = v.h / 2 - (b.y0 + b.y1) / 2 * CR.k; croRender();
 }
 const sn = v => CR.grid ? Math.round(v * 2) / 2 : v;
@@ -722,7 +750,7 @@ function croDown(e) {
 function croMove(e) {
   if (!CR.ptr.has(e.pointerId)) { if (CR.draft && CR.tool != "mover") { CR.hov = croW(e); croRender(); } return; }
   CR.ptr.set(e.pointerId, {x: e.clientX, y: e.clientY});
-  if (CR.pinch && CR.ptr.size >= 2) { const [a, b] = [...CR.ptr.values()], d = Math.hypot(a.x - b.x, a.y - b.y), p = CR.pinch, k = Math.min(250, Math.max(1.5, p.k * d / p.d)), r = $("cro_s").getBoundingClientRect(), mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, wx = (p.mx - r.left - p.tx) / p.k, wy = (p.my - r.top - p.ty) / p.k; CR.k = k; CR.tx = mx - r.left - wx * k; CR.ty = my - r.top - wy * k; CR.mv = true; croRender(); return; }
+  if (CR.pinch && CR.ptr.size >= 2) { const [a, b] = [...CR.ptr.values()], d = Math.hypot(a.x - b.x, a.y - b.y), p = CR.pinch, k = croClamp(p.k * d / p.d), r = $("cro_s").getBoundingClientRect(), mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, wx = (p.mx - r.left - p.tx) / p.k, wy = (p.my - r.top - p.ty) / p.k; CR.k = k; CR.tx = mx - r.left - wx * k; CR.ty = my - r.top - wy * k; CR.mv = true; croRender(); return; }
   const dr = CR.drag; if (!dr) return; const w = croW(e); CR.mv = true;
   if (dr.m == "pan") { CR.tx = dr.tx + e.clientX - dr.sx; CR.ty = dr.ty + e.clientY - dr.sy; croRender(); return; }
   const sel = CR.sel; if (!sel) return;
@@ -791,8 +819,9 @@ function croScene(o) {
   if (o.grid) s += o.grid;
   const hit = (ob, inner, extra = "") => `<g data-oid="${ob.id}" ${extra}>${inner}</g>`, by = t => CR.objs.filter(x => x.t == t), pl = (ob, w, c, ex = "") => `<polyline points="${P(ob.pts)}" fill="none" stroke="${c}" stroke-width="${f(w)}" stroke-linejoin="round" stroke-linecap="butt" ${ex}/>`;
   const hitPl = ob => `<polyline points="${P(ob.pts)}" fill="none" stroke="#000" stroke-opacity="0" stroke-width="${f(Math.max(ob.w || 1, 22 * u))}" stroke-linejoin="round" pointer-events="stroke"/>`;
-  by("acera").forEach(ob => s += hit(ob, pl(ob, ob.w + u * 2.4, "#555") + pl(ob, ob.w, "#e6e1d6") + hitPl(ob)));
-  const vias = by("via"); s += vias.map(ob => `<g>${pl(ob, ob.w + u * 3, "#2b3432")}</g>`).join(""); s += vias.map(ob => hit(ob, pl(ob, ob.w, "#b4bcba") + hitPl(ob))).join("");
+  const mapOn = !!(F && F.map), mo = mapOn ? 'opacity="0.55"' : "";
+  by("acera").forEach(ob => s += hit(ob, pl(ob, ob.w + u * 2.4, "#555", mo) + pl(ob, ob.w, "#e6e1d6", mo) + hitPl(ob)));
+  const vias = by("via"); s += vias.map(ob => `<g>${pl(ob, ob.w + u * 3, "#2b3432", mo)}</g>`).join(""); s += vias.map(ob => hit(ob, pl(ob, ob.w, "#b4bcba", mo) + hitPl(ob))).join("");
   vias.forEach(ob => { if (ob.m == "central") s += `<g pointer-events="none">${pl(ob, u * 2.2, "#fff", `stroke-dasharray="${f(2)},${f(4)}"`)}</g>`; else if (ob.m == "doble") { const off = (sg) => ob.pts.map((p, i, a) => { const q = a[Math.min(i + 1, a.length - 1)], pr = a[Math.max(i - 1, 0)], dx = q[0] - pr[0], dy = q[1] - pr[1], l = Math.hypot(dx, dy) || 1; return [p[0] - dy / l * sg, p[1] + dx / l * sg]; }); s += `<g pointer-events="none">${[0.14, -0.14].map(sg => `<polyline points="${P(off(sg))}" fill="none" stroke="#fff" stroke-width="${f(u * 2.2)}"/>`).join("")}</g>`; } });
   by("cebra").forEach(ob => { let b = ""; for (let x = -ob.l / 2; x < ob.l / 2 - .2; x += 1) b += `<rect x="${f(x)}" y="${f(-ob.w / 2)}" width=".5" height="${ob.w}" fill="#fff"/>`; s += hit(ob, `<g transform="translate(${ob.x} ${ob.y}) rotate(${ob.r || 0})">${b}<rect x="${-ob.l / 2}" y="${-ob.w / 2}" width="${ob.l}" height="${ob.w}" fill="#000" fill-opacity="0.001"/></g>`); });
   by("fren").forEach(ob => { const off = sg => ob.pts.map((p, i, a) => { const q = a[Math.min(i + 1, a.length - 1)], pr = a[Math.max(i - 1, 0)], dx = q[0] - pr[0], dy = q[1] - pr[1], l = Math.hypot(dx, dy) || 1; return [p[0] - dy / l * sg, p[1] + dx / l * sg]; }); s += hit(ob, [.8, -.8].map(sg => `<polyline points="${P(off(sg))}" fill="none" stroke="#111" stroke-width="${f(u * 2.6)}" stroke-dasharray="${f(u * 6)},${f(u * 2)}"/>`).join("") + hitPl({pts: ob.pts, w: 1.8})); });
@@ -822,15 +851,18 @@ function croHandles(u) {
   return g;
 }
 function croGrid(u, x0, y0, x1, y1) {
-  const st = CR.k >= 14 ? 1 : CR.k >= 5 ? 5 : 10; let g = ""; const a = Math.floor(x0 / st) * st, b = Math.floor(y0 / st) * st;
+  const st = CR.k >= 14 ? 1 : CR.k >= 5 ? 5 : CR.k >= 1.5 ? 10 : CR.k >= 0.7 ? 50 : 100; let g = ""; const a = Math.floor(x0 / st) * st, b = Math.floor(y0 / st) * st;
   for (let x = a; x <= x1; x += st) g += `<line x1="${x}" y1="${y0}" x2="${x}" y2="${y1}" stroke="${x % (st * 5) == 0 ? "#9fb0ac" : "#c9d4d1"}" stroke-width="${r1(u)}"/>`;
   for (let y = b; y <= y1; y += st) g += `<line x1="${x0}" y1="${y}" x2="${x1}" y2="${y}" stroke="${y % (st * 5) == 0 ? "#9fb0ac" : "#c9d4d1"}" stroke-width="${r1(u)}"/>`;
   return `<g pointer-events="none">${g}</g>`;
 }
 function croRender() {
-  const sv = $("cro_s"), v = croView(), u = 1 / CR.k, x0 = -CR.tx / CR.k, y0 = -CR.ty / CR.k, x1 = x0 + v.w / CR.k, y1 = y0 + v.h / CR.k;
-  const hud = (() => { const L = nice(100 / CR.k); return `<g transform="translate(14 ${v.h - 18})"><rect x="0" y="-4" width="${r1(L * CR.k)}" height="6" fill="#111"/><text y="-9" font-family="Arial" font-size="12" font-weight="700" fill="#111">${L} m</text></g>`; })();
-  sv.innerHTML = `<rect width="100%" height="100%" fill="#f4f7f6"/><g transform="translate(${CR.tx} ${CR.ty}) scale(${CR.k})">${croScene({upp: u, sel: CR.sel, handles: CR.tool == "mover", draft: true, grid: croGrid(u, x0, y0, x1, y1)})}</g>${hud}<g transform="translate(${v.w - 36} 40) rotate(${CR.norte})"><polygon points="0,-20 8,10 0,4 -8,10" fill="#111"/><text y="-24" text-anchor="middle" font-family="Arial" font-size="12" font-weight="800">N</text></g>`;
+  const v = croView(), u = 1 / CR.k, x0 = -CR.tx / CR.k, y0 = -CR.ty / CR.k, x1 = x0 + v.w / CR.k, y1 = y0 + v.h / CR.k, F = CR.fondo, tf = `translate(${CR.tx} ${CR.ty}) scale(${CR.k})`;
+  const tl = $("cro_tl"), wg = $("cro_wg"), hd = $("cro_hud"); tl.setAttribute("transform", tf); wg.setAttribute("transform", tf);
+  if (F && F.map) { tl.setAttribute("opacity", F.op ?? 1); croTilesDom(x0, y0, x1, y1, CR.k, F); } else if (CR.tm && CR.tm.size) { tl.innerHTML = ""; CR.tm.clear(); }
+  wg.innerHTML = croScene({upp: u, sel: CR.sel, handles: CR.tool == "mover", draft: true, grid: F && F.map ? "" : croGrid(u, x0, y0, x1, y1)});
+  const L = nice(100 / CR.k);
+  hd.innerHTML = `<g transform="translate(14 ${v.h - 18})"><rect x="0" y="-4" width="${r1(L * CR.k)}" height="6" fill="#111" stroke="#fff" stroke-width="1.5"/><text y="-9" font-family="Arial" font-size="12" font-weight="700" fill="#111" stroke="#fff" stroke-width="3" paint-order="stroke">${L} m</text></g><g transform="translate(${v.w - 36} 40) rotate(${CR.norte})"><polygon points="0,-20 8,10 0,4 -8,10" fill="#111" stroke="#fff" stroke-width="1.5"/><text y="-24" text-anchor="middle" font-family="Arial" font-size="12" font-weight="800" stroke="#fff" stroke-width="3" paint-order="stroke">N</text></g>`;
   const b = $("cro_b"), d = CR.draft, c = CR.calib !== null && CR.tool == "calib";
   b.hidden = !(d || c); if (d) b.innerHTML = `<span>${{via: "Calzada", acera: "Acera", fren: "Frenada", cota: "Cota (2 puntos)", flecha: "Flecha"}[d.k]}: toca los puntos (${d.pts.length})</span><button data-cb="un" type="button">↩</button><button data-cb="ok" type="button" class="k">✓ Terminar</button><button data-cb="no" type="button">✕</button>`; else if (c) b.innerHTML = `<span>Calibrar: toca 2 puntos de distancia conocida (${CR.calib.length}/2)</span><button data-cb="no" type="button">✕</button>`;
   document.querySelectorAll("#cro_et [data-et]").forEach(x => x.classList.toggle("on", +x.dataset.et == CR.etapa));
@@ -883,18 +915,18 @@ function croPlaceVeh(i) {
 }
 /* ---- fondo: imagen, mapa y escala ---- */
 function croFondoUI() {
-  const F = CR.fondo, m = $("cro_fm");
-  m.innerHTML = `<b>Fondo del croquis</b><div class="cro-row"><button type="button" data-cf="img">📷 Subir captura / foto</button><button type="button" data-cf="osm">🗺️ Mapa en mi posición GPS</button></div>
-<div class="cro-row"><button type="button" data-cf="cal" class="sec2" ${F ? "" : "disabled"}>📐 Calibrar escala</button><button type="button" data-cf="r-90" class="sec2" ${F ? "" : "disabled"}>⟲90°</button><button type="button" data-cf="r-5" class="sec2" ${F ? "" : "disabled"}>⟲5°</button><button type="button" data-cf="r5" class="sec2" ${F ? "" : "disabled"}>5°⟳</button><button type="button" data-cf="r90" class="sec2" ${F ? "" : "disabled"}>90°⟳</button></div>
-<div class="cro-row"><small>Opacidad</small><input type="range" id="cro_op" min="0.2" max="1" step="0.05" value="${F ? F.op ?? .85 : .85}" style="flex:1"><label class="ck" style="margin:0"><input type="checkbox" id="cro_gr" ${CR.grid ? "checked" : ""}> Ajustar a 0,5 m</label></div>
+  const F = CR.fondo, m = $("cro_fm"), mp = F && F.map, img = F && !mp;
+  m.innerHTML = `<b>Fondo del croquis</b><div class="cro-row"><button type="button" data-cf="map:osm" class="${mp && F.src == "osm" ? "" : "sec2"}">🗺️ Callejero con edificios</button><button type="button" data-cf="map:pnoa" class="${mp && F.src == "pnoa" ? "" : "sec2"}">🛰️ Foto aérea</button><button type="button" data-cf="map:ign" class="${mp && F.src == "ign" ? "" : "sec2"}">🧭 Mapa IGN</button></div>
+<div class="cro-row"><button type="button" data-cf="img" class="sec2">📷 Subir captura / foto</button><button type="button" data-cf="cal" class="sec2" ${img ? "" : "disabled"}>📐 Calibrar escala</button><button type="button" data-cf="r-5" class="sec2" ${img ? "" : "disabled"}>⟲5°</button><button type="button" data-cf="r5" class="sec2" ${img ? "" : "disabled"}>5°⟳</button><button type="button" data-cf="r90" class="sec2" ${img ? "" : "disabled"}>90°⟳</button></div>
+<div class="cro-row"><small>Opacidad</small><input type="range" id="cro_op" min="0.2" max="1" step="0.05" value="${F ? F.op ?? (mp ? 1 : .85) : .85}" style="flex:1"><label class="ck" style="margin:0"><input type="checkbox" id="cro_gr" ${CR.grid ? "checked" : ""}> Ajustar a 0,5 m</label></div>
 <div class="cro-row"><small>Norte</small><button type="button" data-cf="n-15" class="sec2">⟲</button><button type="button" data-cf="n0" class="sec2">0°</button><button type="button" data-cf="n15" class="sec2">⟳</button><button type="button" data-cf="quita" class="r" ${F ? "" : "disabled"}>Quitar fondo</button></div>
-<small>${F ? (F.osm ? "Mapa © OpenStreetMap, escala real (zoom 19)." : F.cal ? "Imagen calibrada." : "⚠️ Imagen SIN calibrar: calibra la escala antes de dibujar.") : "Sin fondo: dibujas sobre la rejilla (cuadros de 1 m)."} Las capturas de Google Maps están sujetas a sus condiciones de uso; para uso oficial es preferible el mapa propio o una foto aérea/oficial.</small>`;
-  m.querySelector("#cro_gr") && (m.querySelector("#cro_gr").onchange = e => { CR.grid = e.target.checked; });
+<small>${mp ? "Mapa en línea a escala real, centrado en la ubicación GPS del accidente. " + esc(MAPSRC[F.src].att) + "." : img ? (F.cal ? "Imagen calibrada." : "⚠️ Imagen SIN calibrar: calibra la escala antes de dibujar.") : "Sin fondo: dibujas sobre la rejilla (cuadros de 1 m). Elige un mapa para ver calles y edificios."} Las capturas de Google Maps están sujetas a sus condiciones de uso.</small>`;
+  m.querySelector("#cro_gr").onchange = e => { CR.grid = e.target.checked; };
 }
 function croFondoClick(e) {
   const b = e.target.closest("[data-cf]"); if (!b) return; const a = b.dataset.cf, F = CR.fondo;
   if (a == "img") { $("cro_file").value = ""; $("cro_file").click(); return; }
-  if (a == "osm") { croOSM(); return; }
+  if (a.startsWith("map:")) { croMapa(a.slice(4)); return; }
   if (a == "cal") { $("cro_fm").hidden = true; croTool("calib"); CR.calib = []; croRender(); return; }
   croPush();
   if (a[0] == "r" && F) { const d = +a.slice(1); F.r = ((F.r || 0) + d) % 360; CR.norte = (CR.norte - d) % 360; }
@@ -911,16 +943,14 @@ function croCalibra() {
   const s = prompt("Distancia real entre los dos puntos (metros)"), d = parseFloat((s || "").replace(",", ".")); if (!d || d <= 0 || !F) { croTool("mover"); return; }
   croPush(); const k = d / d0, cx = a[0], cy = a[1]; F.x = r1(cx + (F.x - cx) * k); F.y = r1(cy + (F.y - cy) * k); F.w = r1(F.w * k); F.h = r1(F.h * k); F.cal = true; croTool("mover"); croSync(); croRender();
 }
-async function croOSM() {
-  const R = ACC.row; if (R.lat == null || R.lng == null) { alert("Primero pon la ubicación del accidente (botón «Mi ubicación» en la T01)."); return; }
-  const z = 19, n = Math.pow(2, z), lat = R.lat * Math.PI / 180, fx = (R.lng + 180) / 360 * n, fy = (1 - Math.log(Math.tan(lat) + 1 / Math.cos(lat)) / Math.PI) / 2 * n, tx = Math.floor(fx), ty = Math.floor(fy);
-  const mpp = 156543.03392 * Math.cos(lat) / n, cv = document.createElement("canvas"); cv.width = cv.height = 768; const cx = cv.getContext("2d"); cx.fillStyle = "#eee"; cx.fillRect(0, 0, 768, 768);
-  $("cro_fm").insertAdjacentHTML("beforeend", "<div id='cro_wait'><small>Cargando mapa…</small></div>");
-  try {
-    await Promise.all([-1, 0, 1].flatMap(dy => [-1, 0, 1].map(dx => new Promise((ok, ko) => { const im = new Image(); im.crossOrigin = "anonymous"; im.onload = () => { cx.drawImage(im, (dx + 1) * 256, (dy + 1) * 256); ok(); }; im.onerror = () => ko(new Error("sin conexión con el mapa")); im.src = `https://tile.openstreetmap.org/${z}/${tx + dx}/${ty + dy}.png`; }))));
-    const px = 256 + (fx - tx) * 256, py = 256 + (fy - ty) * 256; croPush(); CR.img = cv.toDataURL("image/jpeg", .85); ACC.row.fondo = CR.img; accSucio("fondo");
-    CR.fondo = {x: r1(-px * mpp), y: r1(-py * mpp), w: r1(768 * mpp), h: r1(768 * mpp), r: 0, op: .9, cal: true, osm: true}; CR.norte = 0; croSync(); croFit(); croFondoUI();
-  } catch (er) { alert("No se pudo cargar el mapa: " + er.message + ". Sube una captura o foto como fondo."); const w = $("cro_wait"); if (w) w.remove(); }
+async function croMapa(src) {
+  const R = ACC.row;
+  if (R.lat == null || R.lng == null) {
+    try { const p = await new Promise((ok, ko) => navigator.geolocation.getCurrentPosition(ok, ko, {enableHighAccuracy: true, timeout: 15000})); R.lat = +p.coords.latitude.toFixed(6); R.lng = +p.coords.longitude.toFixed(6); accSucio("lat"); accSucio("lng"); }
+    catch (er) { alert("Hace falta la ubicación del accidente: pulsa «Mi ubicación» en la T01 o permite el GPS."); return; }
+  }
+  croPush(); CR.img = null; R.fondo = null; accSucio("fondo"); CR.fondo = {map: true, src, lat0: R.lat, lng0: R.lng, op: 1, cal: true}; CR.norte = 0; croSync();
+  if (!croBBox(false)) croFit(); else croRender(); croFondoUI();
 }
 /* ---- croquis impreso a escala ---- */
 const ESCALAS = [20, 25, 50, 75, 100, 125, 150, 200, 250, 300, 400, 500, 750, 1000, 1500, 2000];
@@ -929,11 +959,11 @@ function croHTML() {
   const b = croBBox(false), AW = 0.19, AH = 0.165; let S = 200, bx, by;
   if (b) { const m = 2; S = ESCALAS.find(s => (b.x1 - b.x0 + 2 * m) <= AW * s && (b.y1 - b.y0 + 2 * m) <= AH * s) || 2000; bx = (b.x0 + b.x1) / 2; by = (b.y0 + b.y1) / 2; } else { bx = 0; by = 0; }
   const vw = AW * S, vh = AH * S, x0 = bx - vw / 2, y0 = by - vh / 2, upp = S * 0.2646 / 1000, L = nice(30 * S / 1000), sc = L, e = esc;
-  const scene = croScene({upp, print: true}), sx = x0 + vw * .03 / 1, sy = y0 + vh - 8 * S / 1000, nx = x0 + vw - 14 * S / 1000, ny = y0 + 16 * S / 1000, ns = S / 1000;
+  const tiles = CR.fondo && CR.fondo.map ? `<g opacity="${CR.fondo.op ?? 1}">${croTilesHTML(x0, y0, x0 + vw, y0 + vh, 1.5 / upp, CR.fondo)}</g>` : "", scene = tiles + croScene({upp, print: true}), sx = x0 + vw * .03 / 1, sy = y0 + vh - 8 * S / 1000, nx = x0 + vw - 14 * S / 1000, ny = y0 + 16 * S / 1000, ns = S / 1000;
   const svg = `<svg xmlns="${SVGNS}" width="190mm" height="165mm" viewBox="${r1(x0)} ${r1(y0)} ${r1(vw)} ${r1(vh)}" style="border:1.5px solid #000;background:#fff;display:block" preserveAspectRatio="xMidYMid meet"><defs><clipPath id="cpx"><rect x="${r1(x0)}" y="${r1(y0)}" width="${r1(vw)}" height="${r1(vh)}"/></clipPath></defs><g clip-path="url(#cpx)">${scene}</g>
 <g transform="translate(${r1(sx)} ${r1(sy)})"><rect x="0" y="${-ns * 2}" width="${sc}" height="${ns * 2}" fill="#fff" stroke="#000" stroke-width="${upp}"/><rect x="0" y="${-ns * 2}" width="${sc / 2}" height="${ns * 2}" fill="#000"/><text x="0" y="${-ns * 3}" font-family="Arial" font-size="${r1(ns * 3.2)}" font-weight="700">0</text><text x="${sc}" y="${-ns * 3}" text-anchor="middle" font-family="Arial" font-size="${r1(ns * 3.2)}" font-weight="700">${sc} m</text></g>
 <g transform="translate(${r1(nx)} ${r1(ny)}) rotate(${CR.norte})"><polygon points="0,${-ns * 7} ${ns * 3},${ns * 3} 0,${ns} ${-ns * 3},${ns * 3}" fill="#000"/><text y="${-ns * 8.5}" text-anchor="middle" font-family="Arial" font-size="${r1(ns * 4)}" font-weight="800">N</text></g></svg>`;
-  const F = CR.fondo, nota = F && CR.img ? (F.osm ? "Fondo: mapa © colaboradores de OpenStreetMap." : F.cal ? "Fondo: imagen calibrada por el agente." : "AVISO: fondo sin calibrar; las medidas del fondo no son fiables.") : "Sin imagen de fondo.";
+  const F = CR.fondo, nota = F && (CR.img || F.map) ? (F.map ? "Fondo: " + MAPSRC[F.src].att + ", a escala real." : F.osm ? "Fondo: mapa © colaboradores de OpenStreetMap." : F.cal ? "Fondo: imagen calibrada por el agente." : "AVISO: fondo sin calibrar; las medidas del fondo no son fiables.") : "Sin imagen de fondo.";
   const leg = R.vehiculos.map((v, i) => `<tr><td style="border:1px solid #000;padding:2px 5px"><span style="display:inline-block;width:10px;height:10px;background:${VCOL[i % VCOL.length]};border:1px solid #000"></span> <b>V${i + 1}</b></td><td style="border:1px solid #000;padding:2px 5px">${e((VTIPOS[v.tipo] || {}).n || "")} ${e(v.marca)} ${e(v.modelo)}</td><td style="border:1px solid #000;padding:2px 5px">${e(v.mat)}</td><td style="border:1px solid #000;padding:2px 5px">${e((((v.cond || {}).nombre || "") + " " + ((v.cond || {}).apellidos || "")).trim())}</td></tr>`).join("");
   return `<div class="apg" style="font-size:10.5px;padding:10mm 10mm"><div style="display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:3px"><b style="font-size:14px">CROQUIS DE ACCIDENTE DE TRÁFICO · T-01 #${R.ref}</b><span>Policia Local de Tortosa</span></div>
 <div style="margin:4px 0 6px"><b>Fecha:</b> ${dfh(R.fecha)} &nbsp; <b>Lugar:</b> ${e(R.lugar)} ${R.lat != null ? "(" + R.lat + ", " + R.lng + ")" : ""}<br><b>Tipo:</b> ${e((R.datos || {}).tipo)} &nbsp; <b>Agentes:</b> ${e((R.datos || {}).agentes)}</div>${svg}

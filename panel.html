@@ -74,6 +74,9 @@ details.acc>#pe{padding:10px 12px 2px}
 .brf-d{display:grid;grid-template-columns:minmax(70px,.6fr) 1.3fr 1fr 1fr;gap:8px;align-items:end;padding:8px 0;border-top:1px solid var(--line)}.brf-d:first-of-type{border-top:0}.brf-d b{padding-bottom:12px}.brf-d label{font-size:12px}.brf-d select,.brf-d input{width:100%;padding:9px;margin-top:2px;box-sizing:border-box}
 @media(max-width:560px){.brf-d{grid-template-columns:1fr 1fr}.brf-d b{grid-column:1/3;padding-bottom:0}}
 .brf-fin{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.acc-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;margin:8px 0}@media(max-width:700px){.acc-top{grid-template-columns:1fr}}#acc_map{height:300px;border-radius:14px;overflow:hidden;background:#233;z-index:0}#acc_cal{background:var(--card);border-radius:14px;padding:8px}
+.cal-h{display:flex;gap:4px;align-items:center;margin-bottom:6px}.cal-h select{flex:1;min-width:0;border-radius:8px;padding:5px}.cal-h button{padding:5px 9px}.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.cw{text-align:center;font-size:12px;opacity:.7}.cd{position:relative;padding:8px 0 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:inherit;font-weight:600}.cd.hoy{outline:2px solid #7fd4b0}.cd.sel{background:#2E9E8F;color:#fff}.cd i{position:absolute;right:2px;top:1px;font-size:10px;font-style:normal;border-radius:9px;min-width:15px;padding:0 3px;color:#fff;line-height:15px}.cd i.r,.ac-leg i.r,.cal-l i.r{background:#C93A1F}.cd i.v,.ac-leg i.v,.cal-l i.v{background:#1f8a4c}.cal-l,.ac-leg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin:6px 0}.cal-l i,.ac-leg i{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle}
+.ac-v{border-left:8px solid #1f8a4c}.ac-r{border-left:8px solid #C93A1F}.ac-f{color:#e0502f;font-weight:600}.ac-b{display:flex;flex-direction:column;gap:5px;align-items:flex-end}.det-c .bd.ve{background:#1f8a4c;color:#fff}.det-c .bd.ro2{background:#fff1ee;color:#a32a12}.pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 5px #0007}.pin.r{background:#C93A1F}.pin.v{background:#1f8a4c}.pin{font-size:13px}
 .det-c{cursor:pointer;display:flex}.det-c .bd{font-size:12px;font-weight:700;border-radius:20px;padding:3px 10px;background:var(--tint)}.det-c .bd.am{background:#fff4d6;color:#4a3500}.det-c .bd.ro{background:#C93A1F;color:#fff}
 #det_f .fl{display:block;margin:8px 0;font-size:13px}#det_f .fl input,#det_f .fl select,#det_f .fl textarea{width:100%;box-sizing:border-box;margin-top:3px;padding:10px}#det_f .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
 #det_f .it{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}#det_f .row{display:flex;gap:8px;align-items:end;flex-wrap:wrap}#det_f .ck{display:flex;gap:8px;align-items:center;margin:8px 0;font-size:14px}#det_f .ck input{width:22px;height:22px}
@@ -121,7 +124,7 @@ details.acc>#pe{padding:10px 12px 2px}
 <div id="det_est0" style="font-size:13px;opacity:.8;margin:0 0 8px"></div><div id="det_lst"></div></div>
 <div id="det_f" hidden></div></section>
 <section class="view" id="v-acc"><h2 class="vt">Accidentes · T01 y croquis</h2>
-<div id="acc_l"><div class="brf-bar"><button id="acc_new" type="button" class="k">+ Nuevo accidente</button><button class="chip on" data-qf="todos" type="button">Todos</button><button class="chip" data-qf="abierto" type="button">Abiertos</button></div><div id="acc_lst"></div></div>
+<div id="acc_l"><div class="acc-top"><div id="acc_map"></div><div id="acc_cal"></div></div><div class="brf-bar"><button id="acc_new" type="button" class="k">+ Nuevo accidente</button><button class="chip on" data-qf="todos" type="button">Mes / día</button><button class="chip" data-qf="abierto" type="button">● Pendientes (todos)</button></div><div class="ac-leg"><span><i class="r"></i> Pendiente: falta algún dato o sin cerrar</span><span><i class="v"></i> Cerrado</span><span>🚑 con heridos</span></div><div id="acc_tt" class="brf-bar" style="align-items:center"></div><div id="acc_lst"></div></div>
 <div id="acc_f" hidden></div></section>
 <section class="view" id="v-ani"><h2 class="vt">Animales</h2>
 <div id="ani_l"><div class="brf-bar" style="flex-wrap:wrap"><button data-nnew="recogida" type="button" class="k">🐕 Animal encontrado</button><button data-nnew="inf_ad" type="button" class="k">📋 Infracción ordenanza</button><button data-nnew="inf_ap" type="button" class="k">⚠️ Perro peligroso</button></div>
@@ -526,7 +529,7 @@ function detHTML() {
 }
 
 /* ---- accidentes: acta T01 + croquizador a escala ---- */
-const ACC = {row: null, filtro: "todos", sucio: new Set(), tm: null, ok: false};
+const ACC = {row: null, filtro: "todos", cm: {y: new Date().getFullYear(), m: new Date().getMonth()}, dia: null, dm: [], ab: null, map: null, sucio: new Set(), tm: null, ok: false};
 const SERV = [["amb", "Ambulancia / SEM"], ["mossos", "Mossos d'Esquadra"], ["gc", "Guardia Civil"], ["pn", "Policía Nacional"], ["bomb", "Bomberos"], ["rural", "Agents Rurals"], ["forense", "Médico forense"], ["judi", "Autoridad judicial"]];
 const ACC_TIPOS = ["Colisión frontal", "Colisión fronto-lateral", "Colisión lateral", "Alcance", "Colisión múltiple", "Atropello a peatón", "Atropello a ciclista", "Salida de la vía", "Vuelco", "Choque con obstáculo", "Caída de moto / bicicleta", "Otro"];
 const VTIPOS = {turismo: {n: "Turismo", l: 4.4, w: 1.8}, suv: {n: "Todoterreno / SUV", l: 4.6, w: 1.9}, furgoneta: {n: "Furgoneta", l: 5.3, w: 2.0}, camion: {n: "Camión", l: 9, w: 2.5}, bus: {n: "Autobús", l: 12, w: 2.55}, moto: {n: "Motocicleta", l: 2.1, w: 0.8}, bici: {n: "Bicicleta", l: 1.8, w: 0.6}, vmp: {n: "Patinete (VMP)", l: 1.1, w: 0.5}, peaton: {n: "Peatón", l: 0.6, w: 0.6}, pickup: {n: "Pick-up", l: 5.3, w: 1.9}};
@@ -543,17 +546,64 @@ function accInit() {
     $("acc_new").onclick = accNuevo;
     document.querySelectorAll("[data-qf]").forEach(b => b.onclick = () => { ACC.filtro = b.dataset.qf; document.querySelectorAll("[data-qf]").forEach(x => x.classList.toggle("on", x == b)); accLista(); });
     $("acc_lst").onclick = e => { const c = e.target.closest("[data-qid]"); if (c) accAbre(c.dataset.qid); };
+    $("acc_tt").onclick = e => { if (e.target.closest("[data-qclr]")) { ACC.dia = null; accPinta(); } };
+    $("acc_cal").onclick = e => { const d = e.target.closest("[data-cd]"), n = e.target.closest("[data-cal]"); if (d) { ACC.dia = ACC.dia == d.dataset.cd ? null : d.dataset.cd; accPinta(); } else if (n) { const v = n.dataset.cal, c = ACC.cm; if (v == "hoy") { const h = new Date(); ACC.cm = {y: h.getFullYear(), m: h.getMonth()}; ACC.dia = ldia(h); } else { const q = new Date(c.y, c.m + +v, 1); ACC.cm = {y: q.getFullYear(), m: q.getMonth()}; ACC.dia = null; } accLista(); } };
+    $("acc_cal").onchange = e => { const t = e.target.closest("[data-cals]"); if (!t) return; ACC.cm = t.dataset.cals == "m" ? {y: ACC.cm.y, m: +t.value} : {y: +t.value, m: ACC.cm.m}; ACC.dia = null; accLista(); };
     $("acc_f").addEventListener("input", accEv); $("acc_f").addEventListener("change", accEv); $("acc_f").addEventListener("click", accClick);
     croInit();
   }
   if (ACC.row) accRender(); else accLista();
 }
+/* ---- lista de accidentes: mapa + calendario + estado ---- */
+const ACC_SEL = "id,ref,estado,fecha,lugar,lat,lng,vehiculos,exp:datos->>exp,tipo:datos->>tipo,desc:datos->>desc,her:datos->heridos->>hay,hl:datos->heridos->lista,n1:datos->firmas->>n1,n2:datos->firmas->>n2,ag:datos->>agentes";
+const MESN = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
+const pd2 = n => String(n).padStart(2, "0"), ldia = f => { const d = new Date(f); return d.getFullYear() + "-" + pd2(d.getMonth() + 1) + "-" + pd2(d.getDate()); };
+function accNorm(r) {
+  const d = r.datos; if (d) { r.exp = d.exp; r.tipo = d.tipo; r.desc = d.desc; r.her = (d.heridos || {}).hay; r.hl = (d.heridos || {}).lista; r.n1 = (d.firmas || {}).n1; r.n2 = (d.firmas || {}).n2; r.ag = d.agentes; delete r.datos; }
+  r.conH = r.her === true || r.her === "true" || (Array.isArray(r.hl) && r.hl.length > 0);
+  r.cerr = r.estado == "cerrado"; r.dia = ldia(r.fecha);
+  const falta = []; if (!r.exp) falta.push("nº de expediente"); if (!r.tipo) falta.push("tipo de accidente"); if (!r.lugar) falta.push("lugar"); if (!r.desc) falta.push("descripción"); if (!(r.n1 || r.n2 || r.ag)) falta.push("TIP de los agentes");
+  (r.vehiculos || []).forEach((v, i) => { if (!v.mat) falta.push("matrícula del vehículo " + (i + 1)); });
+  r.falta = falta; return r;
+}
+async function accQ(f) {
+  let r = await f(ACC_SEL);
+  if (r.error) { r = await f("id,ref,estado,fecha,lugar,lat,lng,vehiculos,datos"); }
+  if (!r.error) r.data = (r.data || []).map(accNorm); return r;
+}
 async function accLista() {
-  let q = db.from("accidentes").select("id,ref,estado,fecha,lugar,datos,vehiculos").order("fecha", {ascending: false}).limit(100);
-  if (ACC.filtro == "abierto") q = q.eq("estado", "abierto");
-  const {data, error} = await q;
-  if (error) { $("acc_lst").innerHTML = `<div class="brf-aviso">⚠️ No se pudo cargar (${esc(error.message)}). ¿Has ejecutado 16-accidentes.sql?</div>`; return; }
-  $("acc_lst").innerHTML = (data || []).map(r => `<div class="card det-c" data-qid="${r.id}"><div><b>${(r.datos || {}).exp ? "Exp. " + esc(r.datos.exp) : "#" + r.ref} · ${esc(r.lugar || "Sin lugar")}</b><br><small>${dfh(r.fecha)} · ${esc((r.datos || {}).tipo || "sin tipo")} · ${(r.vehiculos || []).length} vehículo(s)</small></div><span class="bd">${r.estado == "cerrado" ? "Cerrado" : "Abierto"}</span></div>`).join("") || "<p>Ningún accidente.</p>";
+  const {y, m} = ACC.cm, a = new Date(y, m, 1).toISOString(), b = new Date(y, m + 1, 1).toISOString();
+  const jobs = [accQ(s => db.from("accidentes").select(s).gte("fecha", a).lt("fecha", b).order("fecha", {ascending: false}).limit(500))];
+  if (ACC.filtro == "abierto") jobs.push(accQ(s => db.from("accidentes").select(s).eq("estado", "abierto").order("fecha", {ascending: false}).limit(300)));
+  const rs = await Promise.all(jobs), bad = rs.find(x => x.error);
+  if (bad) { $("acc_lst").innerHTML = `<div class="brf-aviso">⚠️ No se pudo cargar (${esc(bad.error.message)}). ¿Has ejecutado 16-accidentes.sql?</div>`; return; }
+  ACC.dm = rs[0].data; ACC.ab = rs[1] ? rs[1].data : null; accPinta();
+}
+function accPinta() {
+  const base = ACC.filtro == "abierto" && ACC.ab ? ACC.ab : ACC.dm || [], L1 = ACC.dia ? base.filter(r => r.dia == ACC.dia) : base;
+  const tt = ACC.dia ? "Accidentes del " + ACC.dia.split("-").reverse().join("/") : ACC.filtro == "abierto" ? "Todos los accidentes pendientes" : "Accidentes de " + MESN[ACC.cm.m] + " de " + ACC.cm.y;
+  $("acc_tt").innerHTML = `<b>${tt}</b> (${L1.length}) ${ACC.dia ? '<button type="button" class="chip" data-qclr="1">Ver todo el mes</button>' : ""}`;
+  $("acc_lst").innerHTML = L1.map(r => {
+    const tip = [r.n1, r.n2].filter(Boolean).join(" · ") || r.ag || "";
+    return `<div class="card det-c ${r.cerr ? "ac-v" : "ac-r"}" data-qid="${r.id}"><div style="flex:1;min-width:0"><b>${r.exp ? "Exp. " + esc(r.exp) : "#" + r.ref} · ${esc(r.lugar || "Sin lugar")}</b><br><small>${dfh(r.fecha)} · ${esc(r.tipo || "sin tipo")}</small><br><small>🚗 ${(r.vehiculos || []).map(v => esc(v.mat || "s/m")).join(" · ") || "—"}</small><br><small>👮 TIP ${esc(tip) || "—"}</small>${!r.cerr && r.falta.length ? `<br><small class="ac-f">Falta: ${esc(r.falta.join(", "))}</small>` : ""}</div><div class="ac-b"><span class="bd ${r.cerr ? "ve" : "ro"}">${r.cerr ? "✔ Cerrado" : "● Pendiente"}</span><span class="bd ${r.conH ? "ro2" : ""}">${r.conH ? "🚑 Con heridos" : "Sin heridos"}</span></div></div>`;
+  }).join("") || "<p>Ningún accidente.</p>";
+  accCal(); accMapa(L1);
+}
+function accCal() {
+  const {y, m} = ACC.cm, off = (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate(), by = {}, hoy = ldia(Date.now());
+  (ACC.dm || []).forEach(r => (by[r.dia] = by[r.dia] || []).push(r));
+  const yr = new Date().getFullYear(); let ys = ""; for (let k = 2018; k <= yr + 1; k++) ys += `<option ${k == y ? "selected" : ""}>${k}</option>`;
+  let g = ["L", "M", "X", "J", "V", "S", "D"].map(x => `<b class="cw">${x}</b>`).join("") + '<span></span>'.repeat(off);
+  for (let d = 1; d <= dim; d++) { const k = y + "-" + pd2(m + 1) + "-" + pd2(d), a = by[k] || [], ab = a.some(r => !r.cerr); g += `<button type="button" data-cd="${k}" class="cd${k == ACC.dia ? " sel" : ""}${k == hoy ? " hoy" : ""}">${d}${a.length ? `<i class="${ab ? "r" : "v"}">${a.length}</i>` : ""}</button>`; }
+  $("acc_cal").innerHTML = `<div class="cal-h"><button type="button" data-cal="-1" class="sec2">‹</button><select data-cals="m">${MESN.map((t, k) => `<option value="${k}" ${k == m ? "selected" : ""}>${t}</option>`).join("")}</select><select data-cals="y">${ys}</select><button type="button" data-cal="1" class="sec2">›</button><button type="button" data-cal="hoy" class="sec2">Hoy</button></div><div class="cal-g">${g}</div><div class="cal-l"><span><i class="r"></i> hay pendientes</span><span><i class="v"></i> todo cerrado</span></div>`;
+}
+function accMapa(L1) {
+  const el = $("acc_map"); if (typeof L === "undefined") { el.innerHTML = '<p style="padding:14px">No se pudo cargar el mapa (sin conexión con el servidor de mapas).</p>'; return; }
+  if (!ACC.map) { ACC.map = L.map("acc_map").setView([40.8125, 0.5216], 13); L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19, attribution: "© OpenStreetMap"}).addTo(ACC.map); ACC.capa = L.layerGroup().addTo(ACC.map); el.onclick = e => { const c = e.target.closest("[data-popid]"); if (c) accAbre(c.dataset.popid); }; }
+  ACC.capa.clearLayers(); const pts = [];
+  L1.forEach(r => { if (r.lat == null || r.lng == null || isNaN(+r.lat)) return; pts.push([+r.lat, +r.lng]);
+    L.marker([+r.lat, +r.lng], {icon: L.divIcon({className: "", html: `<div class="pin ${r.cerr ? "v" : "r"}">${r.conH ? "🚑" : ""}</div>`, iconSize: [30, 30], iconAnchor: [15, 15]})}).bindPopup(`<b>${r.exp ? "Exp. " + esc(r.exp) : "#" + r.ref}</b><br>${esc(r.lugar || "")}<br>${dfh(r.fecha)} · ${esc(r.tipo || "")}<br><button type="button" data-popid="${r.id}" style="margin-top:4px">Abrir</button>`).addTo(ACC.capa); });
+  setTimeout(() => { ACC.map.invalidateSize(); if (pts.length == 1) ACC.map.setView(pts[0], 16); else if (pts.length) ACC.map.fitBounds(pts, {padding: [30, 30], maxZoom: 17}); }, 60);
 }
 async function accNuevo() {
   const {data, error} = await db.from("accidentes").insert({fecha: new Date().toISOString(), datos: vacioDatos(), vehiculos: [vacioVeh(), vacioVeh()]}).select("*").single();
@@ -624,10 +674,10 @@ ${qS("datos.tipo", "Tipo de accidente", ACC_TIPOS)}
 ${HD.lista.map((h, k) => `<div class="it"><b>Herido ${k + 1}</b> ${escBtn("ACC", `full:datos.heridos.lista.${k}.nombre;doc:datos.heridos.lista.${k}.doc;nac:datos.heridos.lista.${k}.nac;dom:datos.heridos.lista.${k}.dom`)}<div class="g2">${qI("datos.heridos.lista." + k + ".nombre", "Nombre y apellidos")}${qI("datos.heridos.lista." + k + ".doc", "DNI / NIE / pasaporte", "text", 'autocapitalize="characters"')}${qI("datos.heridos.lista." + k + ".nac", "Fecha de nacimiento", "date")}${qI("datos.heridos.lista." + k + ".tel", "Teléfono", "tel")}${qI("datos.heridos.lista." + k + ".dom", "Domicilio")}${qS("datos.heridos.lista." + k + ".rol", "Posición / vehículo", roles)}${qS("datos.heridos.lista." + k + ".lesion", "Lesiones aparentes", ["Sin lesiones aparentes", "Leves", "Graves", "Muy graves", "Fallecido"])}${qI("datos.heridos.lista." + k + ".asist", "Asistencia y traslado (SEM, centro, hora)")}</div><button data-qa="her-" data-qi="${k}" type="button" class="sec2">Quitar herido</button></div>`).join("")}
 <button data-qa="her+" type="button" class="sec2">+ Añadir herido</button>${qT("datos.heridos.desc", "Observaciones sobre los heridos (opcional)", 2)}
 <h4 style="margin:12px 0 4px">Testigos</h4>${(R.datos.testigos || []).map((t, i) => `<div class="it"><b>Testigo ${i + 1}</b> ${escBtn("ACC", `full:datos.testigos.${i}.nombre;doc:datos.testigos.${i}.doc;dom:datos.testigos.${i}.dom`)}<div class="g2">${qI("datos.testigos." + i + ".nombre", "Nombre y apellidos")}${qI("datos.testigos." + i + ".doc", "DNI / NIE")}${qI("datos.testigos." + i + ".tel", "Teléfono", "tel")}${qI("datos.testigos." + i + ".dom", "Domicilio")}</div>${qT("datos.testigos." + i + ".decl", "Qué manifiesta el testigo", 5)}<div class="row" style="align-items:center;gap:8px">${(t.firma ? `<img src="${t.firma}" style="height:46px;background:#fff;border:1px solid #bbb;border-radius:6px">` : "") + `<button data-qa="fir" data-qk="datos.testigos.${i}.firma" data-qt="Firma del testigo ${i + 1}" type="button" class="sec2">✍️ ${t.firma ? "Volver a firmar" : "Firma del testigo"}</button>`}</div><button data-qa="tes-" data-qi="${i}" type="button" class="sec2">Quitar testigo</button></div>`).join("")}<button data-qa="tes+" type="button" class="sec2">+ Añadir testigo</button></div></details>
-<details class="acc" open><summary>5. Descripción y agentes</summary><div class="pad">${qT("datos.desc", "Descripción de los hechos y circunstancias del accidente", 5)}${qT("datos.obs", "Observaciones", 3)}${qI("datos.agentes", "Agentes actuantes (nombre y TIP)")}</div></details>
+<details class="acc" open><summary>5. Descripción y agentes</summary><div class="pad">${qT("datos.desc", "Descripción de los hechos y circunstancias del accidente", 5)}${qT("datos.obs", "Observaciones", 3)}${qI("datos.agentes", "Agentes actuantes (TIP)")}</div></details>
 <details class="acc" open><summary>6. Indicativos y servicios intervinientes</summary><div class="pad">${SERV.map(([k, t]) => `<div class="row" style="align-items:flex-end"><div style="flex:0 0 210px;padding-bottom:10px">${qC("datos.servicios." + k + ".on", t)}</div><div style="flex:1;min-width:160px">${qI("datos.servicios." + k + ".txt", "Indicativo / identificación / hora")}</div></div>`).join("")}</div></details>
 <details class="acc" open><summary>7. Croquis</summary><div class="pad"><div style="margin-bottom:8px">${hayCro ? `Croquis con ${(R.croquis.vehs || []).length} vehículo(s) y ${(R.croquis.objs || []).length} elemento(s).` : "Aún no hay croquis."}</div><button data-qa="cro" type="button" class="k">✏️ Abrir croquizador</button> <button data-qa="v3d" type="button" class="sec2">🧊 Ver en 3D</button></div></details>
-<details class="acc" open><summary>8. Firma de los agentes</summary><div class="pad"><div class="g2">${qI("datos.firmas.n1", "Agente 1 (nombre y TIP)")}${qI("datos.firmas.n2", "Agente 2 (nombre y TIP)")}</div><div class="row">${[1, 2].map(k => `<div style="flex:1;min-width:200px;text-align:center"><div style="border:1px solid var(--line);border-radius:10px;min-height:76px;background:#fff;display:flex;align-items:center;justify-content:center">${FI["f" + k] ? `<img src="${FI["f" + k]}" style="max-width:100%;max-height:90px">` : '<small style="color:#777">Sin firmar</small>'}</div><button data-qa="fir" data-qk="datos.firmas.f${k}" data-qt="Firma del agente ${k}" type="button" class="k" style="margin-top:6px">✍️ Firmar agente ${k}</button>${FI["f" + k] ? `<button data-qa="fir0" data-qk="datos.firmas.f${k}" type="button" class="sec2">Borrar</button>` : ""}</div>`).join("")}</div></div></details>
+<details class="acc" open><summary>8. Firma de los agentes</summary><div class="pad"><div class="g2">${qI("datos.firmas.n1", "TIP del agente 1")}${qI("datos.firmas.n2", "TIP del agente 2")}</div><div class="row">${[1, 2].map(k => `<div style="flex:1;min-width:200px;text-align:center"><div style="border:1px solid var(--line);border-radius:10px;min-height:76px;background:#fff;display:flex;align-items:center;justify-content:center">${FI["f" + k] ? `<img src="${FI["f" + k]}" style="max-width:100%;max-height:90px">` : '<small style="color:#777">Sin firmar</small>'}</div><button data-qa="fir" data-qk="datos.firmas.f${k}" data-qt="Firma del agente ${k}" type="button" class="k" style="margin-top:6px">✍️ Firmar agente ${k}</button>${FI["f" + k] ? `<button data-qa="fir0" data-qk="datos.firmas.f${k}" type="button" class="sec2">Borrar</button>` : ""}</div>`).join("")}</div></div></details>
 <div class="brf-fin"><button data-qa="p1" type="button">Imprimir T01</button><button data-qa="p2" type="button">Imprimir croquis</button><button data-qa="cerrar" type="button" class="sec2">${R.estado == "cerrado" ? "Reabrir" : "Marcar como cerrado"}</button></div>
 ${accDatalists(R)}`;
 }

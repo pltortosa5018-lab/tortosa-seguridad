@@ -74,7 +74,8 @@ details.acc>#pe{padding:10px 12px 2px}
 .brf-d{display:grid;grid-template-columns:minmax(70px,.6fr) 1.3fr 1fr 1fr;gap:8px;align-items:end;padding:8px 0;border-top:1px solid var(--line)}.brf-d:first-of-type{border-top:0}.brf-d b{padding-bottom:12px}.brf-d label{font-size:12px}.brf-d select,.brf-d input{width:100%;padding:9px;margin-top:2px;box-sizing:border-box}
 @media(max-width:560px){.brf-d{grid-template-columns:1fr 1fr}.brf-d b{grid-column:1/3;padding-bottom:0}}
 .brf-fin{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
-.acc-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;margin:8px 0}@media(max-width:700px){.acc-top{grid-template-columns:1fr}}#acc_map{height:300px;border-radius:14px;overflow:hidden;background:#233;z-index:0}#acc_cal{background:var(--card);border-radius:14px;padding:8px}
+.acc-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;margin:8px 0}@media(max-width:700px){.acc-top{grid-template-columns:1fr}}#acc_map{min-height:340px;height:auto;border-radius:14px;overflow:hidden;background:#233;z-index:0}#acc_cal{background:var(--card);border-radius:14px;padding:8px}
+.acc-top{align-items:stretch}.acc-pn{background:var(--card);border-radius:14px;padding:10px;margin:6px 0}.st-k{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px}.st-t{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}.st-t b{display:block;font-size:24px}.st-t span{font-size:12px;opacity:.8}.st-r{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:13px}.st-n{flex:0 0 38%;min-width:0}.st-bar{flex:1;background:rgba(127,127,127,.18);border-radius:6px;height:14px;overflow:hidden}.st-bar i{display:block;height:100%;background:#2E9E8F}.st-m{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;align-items:end}.st-m>div{text-align:center}.st-c{height:110px;display:flex;align-items:flex-end;background:rgba(127,127,127,.1);border-radius:4px}.st-c i{display:block;width:100%;background:#2E9E8F;border-radius:4px 4px 0 0;position:relative;display:flex;align-items:flex-end}.st-c u{display:block;width:100%;background:#C93A1F;text-decoration:none}.st-v{font-size:11px;display:block;min-height:14px}.ph{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:10px;padding:6px}.ph img{width:100%;border-radius:6px;max-height:220px;object-fit:cover}#ph_g{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:8px}
 .cal-h{display:flex;gap:4px;align-items:center;margin-bottom:6px}.cal-h select{flex:1;min-width:0;border-radius:8px;padding:5px}.cal-h button{padding:5px 9px}.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.cw{text-align:center;font-size:12px;opacity:.7}.cd{position:relative;padding:8px 0 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:inherit;font-weight:600}.cd.hoy{outline:2px solid #7fd4b0}.cd.sel{background:#2E9E8F;color:#fff}.cd i{position:absolute;right:2px;top:1px;font-size:10px;font-style:normal;border-radius:9px;min-width:15px;padding:0 3px;color:#fff;line-height:15px}.cd i.r,.ac-leg i.r,.cal-l i.r{background:#C93A1F}.cd i.v,.ac-leg i.v,.cal-l i.v{background:#1f8a4c}.cal-l,.ac-leg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin:6px 0}.cal-l i,.ac-leg i{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle}
 .ac-v{border-left:8px solid #1f8a4c}.ac-r{border-left:8px solid #C93A1F}.ac-f{color:#e0502f;font-weight:600}.ac-b{display:flex;flex-direction:column;gap:5px;align-items:flex-end}.det-c .bd.ve{background:#1f8a4c;color:#fff}.det-c .bd.ro2{background:#fff1ee;color:#a32a12}.pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 5px #0007}.pin.r{background:#C93A1F}.pin.v{background:#1f8a4c}.pin{font-size:13px}
 .det-c{cursor:pointer;display:flex}.det-c .bd{font-size:12px;font-weight:700;border-radius:20px;padding:3px 10px;background:var(--tint)}.det-c .bd.am{background:#fff4d6;color:#4a3500}.det-c .bd.ro{background:#C93A1F;color:#fff}
@@ -124,7 +125,7 @@ details.acc>#pe{padding:10px 12px 2px}
 <div id="det_est0" style="font-size:13px;opacity:.8;margin:0 0 8px"></div><div id="det_lst"></div></div>
 <div id="det_f" hidden></div></section>
 <section class="view" id="v-acc"><h2 class="vt">Accidentes · T01 y croquis</h2>
-<div id="acc_l"><div class="acc-top"><div id="acc_map"></div><div id="acc_cal"></div></div><div class="brf-bar"><button id="acc_new" type="button" class="k">+ Nuevo accidente</button><button class="chip on" data-qf="todos" type="button">Mes / día</button><button class="chip" data-qf="abierto" type="button">● Pendientes (todos)</button></div><div class="ac-leg"><span><i class="r"></i> Pendiente: falta algún dato o sin cerrar</span><span><i class="v"></i> Cerrado</span><span>🚑 con heridos</span></div><div id="acc_tt" class="brf-bar" style="align-items:center"></div><div id="acc_lst"></div></div>
+<div id="acc_l"><div class="acc-top"><div id="acc_map"></div><div id="acc_cal"></div></div><div class="brf-bar"><button id="acc_new" type="button" class="k">+ Nuevo accidente</button><button class="chip on" data-qf="todos" type="button">Mes / día</button><button class="chip" data-qf="abierto" type="button">● Pendientes (todos)</button><button class="chip" id="acc_bf" type="button">🔎 Filtrar ▾</button><button class="chip" id="acc_bs" type="button">📊 Estadísticas ▾</button></div><div id="acc_fp" class="acc-pn" hidden></div><div id="acc_sp" class="acc-pn" hidden></div><div class="ac-leg"><span><i class="r"></i> Pendiente: falta algún dato o sin cerrar</span><span><i class="v"></i> Cerrado</span><span>🚑 con heridos</span></div><div id="acc_tt" class="brf-bar" style="align-items:center"></div><div id="acc_lst"></div></div>
 <div id="acc_f" hidden></div></section>
 <section class="view" id="v-ani"><h2 class="vt">Animales</h2>
 <div id="ani_l"><div class="brf-bar" style="flex-wrap:wrap"><button data-nnew="recogida" type="button" class="k">🐕 Animal encontrado</button><button data-nnew="inf_ad" type="button" class="k">📋 Infracción ordenanza</button><button data-nnew="inf_ap" type="button" class="k">⚠️ Perro peligroso</button></div>
@@ -455,6 +456,7 @@ function firmaPide(titulo, cb) {
   $("sig_no").onclick = () => { m.style.display = "none"; };
   $("sig_ok").onclick = () => { if (!tocado) { alert("Dibuja la firma antes de aceptar."); return; } const u = cv.toDataURL("image/png"); m.style.display = "none"; cb(u); };
 }
+const fimg = u => u ? `<img src="${u}" alt="firma" style="height:13mm;max-width:60mm;object-fit:contain;position:absolute;left:0;bottom:1px">` : "";
 const sgi = u => u ? `<img class="sg" src="${u}" alt="firma">` : "<small>Sin firmar</small>";
 function detClick(e) {
   const b = e.target.closest("[data-da]"); if (!b || !DET.row) return; const a = b.dataset.da, R = DET.row, i = +b.dataset.di;
@@ -529,8 +531,9 @@ function detHTML() {
 }
 
 /* ---- accidentes: acta T01 + croquizador a escala ---- */
-const ACC = {row: null, filtro: "todos", cm: {y: new Date().getFullYear(), m: new Date().getMonth()}, dia: null, dm: [], ab: null, map: null, sucio: new Set(), tm: null, ok: false};
+const ACC = {row: null, filtro: "todos", cm: {y: new Date().getFullYear(), m: new Date().getMonth()}, dia: null, dm: [], ab: null, fd: null, map: null, f: {y: "", m: "", tipo: "", her: "", est: "", q: ""}, sy: String(new Date().getFullYear()), sucio: new Set(), tm: null, ok: false};
 const SERV = [["amb", "Ambulancia / SEM"], ["mossos", "Mossos d'Esquadra"], ["gc", "Guardia Civil"], ["pn", "Policía Nacional"], ["bomb", "Bomberos"], ["rural", "Agents Rurals"], ["forense", "Médico forense"], ["judi", "Autoridad judicial"]];
+const vLt = i => String.fromCharCode(65 + (i % 26));
 const ACC_TIPOS = ["Colisión frontal", "Colisión fronto-lateral", "Colisión lateral", "Alcance", "Colisión múltiple", "Atropello a peatón", "Atropello a ciclista", "Salida de la vía", "Vuelco", "Choque con obstáculo", "Caída de moto / bicicleta", "Otro"];
 const VTIPOS = {turismo: {n: "Turismo", l: 4.4, w: 1.8}, suv: {n: "Todoterreno / SUV", l: 4.6, w: 1.9}, furgoneta: {n: "Furgoneta", l: 5.3, w: 2.0}, camion: {n: "Camión", l: 9, w: 2.5}, bus: {n: "Autobús", l: 12, w: 2.55}, moto: {n: "Motocicleta", l: 2.1, w: 0.8}, bici: {n: "Bicicleta", l: 1.8, w: 0.6}, vmp: {n: "Patinete (VMP)", l: 1.1, w: 0.5}, peaton: {n: "Peatón", l: 0.6, w: 0.6}, pickup: {n: "Pick-up", l: 5.3, w: 1.9}};
 // Dimensiones orientativas (largo × ancho en metros): verificar con la ficha técnica si hace falta precisión
@@ -546,6 +549,13 @@ function accInit() {
     $("acc_new").onclick = accNuevo;
     document.querySelectorAll("[data-qf]").forEach(b => b.onclick = () => { ACC.filtro = b.dataset.qf; document.querySelectorAll("[data-qf]").forEach(x => x.classList.toggle("on", x == b)); accLista(); });
     $("acc_lst").onclick = e => { const c = e.target.closest("[data-qid]"); if (c) accAbre(c.dataset.qid); };
+    $("acc_bf").onclick = () => { const p = $("acc_fp"); p.hidden = !p.hidden; if (!p.hidden) { p.innerHTML = accFiltHTML(); $("acc_sp").hidden = true; } };
+    $("acc_bs").onclick = () => { const p = $("acc_sp"); p.hidden = !p.hidden; if (!p.hidden) { $("acc_fp").hidden = true; accStats(); } };
+    $("acc_sp").onchange = e => { const t = e.target.closest("[data-sty]"); if (t) { ACC.sy = t.value; accStats(); } };
+    let ftm = null; const fch = e => { const t = e.target.closest("[data-fl]"); if (!t) return; ACC.f[t.dataset.fl] = t.value; if (["y", "m"].includes(t.dataset.fl)) ACC.dia = null; clearTimeout(ftm); ftm = setTimeout(accLista, t.dataset.fl == "q" ? 500 : 0); };
+    $("acc_fp").addEventListener("input", fch); $("acc_fp").addEventListener("change", e => { if (e.target.dataset.fl != "q") fch(e); });
+    $("acc_fp").onclick = e => { if (e.target.closest("[data-flclr]")) { ACC.f = {y: "", m: "", tipo: "", her: "", est: "", q: ""}; $("acc_fp").innerHTML = accFiltHTML(); accLista(); } };
+    $("acc_f").addEventListener("change", e => { if (e.target.id == "ph_f") { accFotos(e.target.files); e.target.value = ""; } });
     $("acc_tt").onclick = e => { if (e.target.closest("[data-qclr]")) { ACC.dia = null; accPinta(); } };
     $("acc_cal").onclick = e => { const d = e.target.closest("[data-cd]"), n = e.target.closest("[data-cal]"); if (d) { ACC.dia = ACC.dia == d.dataset.cd ? null : d.dataset.cd; accPinta(); } else if (n) { const v = n.dataset.cal, c = ACC.cm; if (v == "hoy") { const h = new Date(); ACC.cm = {y: h.getFullYear(), m: h.getMonth()}; ACC.dia = ldia(h); } else { const q = new Date(c.y, c.m + +v, 1); ACC.cm = {y: q.getFullYear(), m: q.getMonth()}; ACC.dia = null; } accLista(); } };
     $("acc_cal").onchange = e => { const t = e.target.closest("[data-cals]"); if (!t) return; ACC.cm = t.dataset.cals == "m" ? {y: ACC.cm.y, m: +t.value} : {y: +t.value, m: ACC.cm.m}; ACC.dia = null; accLista(); };
@@ -554,14 +564,70 @@ function accInit() {
   }
   if (ACC.row) accRender(); else accLista();
 }
+/* ---- capas de mapa (callejero / cartográfico IGN / foto aérea) ---- */
+function mapaCapas(map) {
+  const ign = (cap, extra) => L.tileLayer("https://www.ign.es/wmts/" + extra + "?request=getTile&layer=" + cap + "&TileMatrixSet=GoogleMapsCompatible&TileMatrix={z}&TileCol={x}&TileRow={y}&format=image/jpeg", {maxZoom: 19, attribution: "© Instituto Geográfico Nacional de España"});
+  const B = {"🗺️ Callejero": L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19, attribution: "© OpenStreetMap"}), "🧭 Cartográfico (IGN)": ign("MTN", "maparaster"), "🛰️ Foto aérea": ign("OI.OrthoimageCoverage", "pnoa-ma")};
+  let k = ""; try { k = localStorage.getItem("pa_capa") || ""; } catch (e) {}
+  (B[k] || B["🗺️ Callejero"]).addTo(map); L.control.layers(B, null, {collapsed: true}).addTo(map);
+  map.on("baselayerchange", e => { try { localStorage.setItem("pa_capa", e.name); } catch (x) {} });
+}
+/* ---- filtros y estadísticas de accidentes ---- */
+const GRAVES = /grave|fallec/i, FALL = /fallec/i, nrmT = t => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+function accFiltAct() { const f = ACC.f; return !!(f.y || f.m !== "" || f.tipo || f.her || f.est || f.q); }
+function accAplicaF(L1) {
+  const f = ACC.f, q = nrmT(f.q); return L1.filter(r => (!f.tipo || r.tipo == f.tipo) && (!f.est || (f.est == "p" ? !r.cerr : r.cerr)) && (!f.her || (f.her == "con" ? r.conH : f.her == "sin" ? !r.conH : r.graves)) && (!q || nrmT((r.lugar || "") + " " + (r.via || "")).includes(q)));
+}
+async function accCargaF() {
+  const f = ACC.f; let y = f.y == "all" ? "" : f.y, m = f.m; if (m !== "" && !y) y = String(new Date().getFullYear());
+  const rango = y ? (m !== "" ? [new Date(+y, +m, 1), new Date(+y, +m + 1, 1)] : [new Date(+y, 0, 1), new Date(+y + 1, 0, 1)]) : null;
+  const r = await accQ(s => { let q = db.from("accidentes").select(s); if (rango) q = q.gte("fecha", rango[0].toISOString()).lt("fecha", rango[1].toISOString()); return q.order("fecha", {ascending: false}).limit(2000); });
+  return r;
+}
+function accFiltHTML() {
+  const f = ACC.f, yr = new Date().getFullYear(); let ys = `<option value="">(mes del calendario)</option><option value="all" ${f.y == "all" ? "selected" : ""}>Todos los años</option>`; for (let k = yr + 1; k >= 2018; k--) ys += `<option ${String(k) == f.y ? "selected" : ""}>${k}</option>`;
+  return `<div class="g2"><label class="fl">Año<select data-fl="y">${ys}</select></label><label class="fl">Mes<select data-fl="m"><option value="">Todos</option>${MESN.map((t, k) => `<option value="${k}" ${String(k) == f.m ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+<label class="fl">Tipo de accidente<select data-fl="tipo"><option value="">Todos</option>${ACC_TIPOS.map(t => `<option ${t == f.tipo ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+<label class="fl">Lesionados<select data-fl="her"><option value="">Todos</option><option value="con" ${f.her == "con" ? "selected" : ""}>Con heridos</option><option value="sin" ${f.her == "sin" ? "selected" : ""}>Sin heridos</option><option value="gr" ${f.her == "gr" ? "selected" : ""}>Graves o fallecidos</option></select></label>
+<label class="fl">Estado<select data-fl="est"><option value="">Todos</option><option value="p" ${f.est == "p" ? "selected" : ""}>Pendientes</option><option value="c" ${f.est == "c" ? "selected" : ""}>Cerrados</option></select></label>
+<label class="fl">Calle, zona o vía<input data-fl="q" value="${esc(f.q)}" placeholder="ej. Barcelona, N-340, Ferreries"></label></div><button type="button" class="sec2" data-flclr="1">Limpiar filtros</button>`;
+}
+async function accStats() {
+  const y = ACC.sy, box = $("acc_sp"); box.innerHTML = '<p style="padding:8px">Calculando…</p>';
+  const r = await accQ(s => { let q = db.from("accidentes").select(s); if (y != "all") q = q.gte("fecha", new Date(+y, 0, 1).toISOString()).lt("fecha", new Date(+y + 1, 0, 1).toISOString()); return q.order("fecha", {ascending: false}).limit(5000); });
+  if (r.error) { box.innerHTML = `<div class="brf-aviso">⚠️ ${esc(r.error.message)}</div>`; return; }
+  const D = r.data, n = D.length, con = D.filter(x => x.conH).length, gr = D.filter(x => x.graves).length, fa = D.filter(x => x.fall).length, pe = D.filter(x => !x.cerr).length, tp = {}, ms = Array.from({length: 12}, () => [0, 0]);
+  D.forEach(x => { const t = x.tipo || "Sin tipo"; tp[t] = (tp[t] || 0) + 1; if (y != "all") { const k = new Date(x.fecha).getMonth(); ms[k][0]++; if (x.conH) ms[k][1]++; } });
+  const yr = new Date().getFullYear(); let ys = '<option value="all"' + (y == "all" ? " selected" : "") + ">Todos los años</option>"; for (let k = yr; k >= 2018; k--) ys += `<option ${String(k) == y ? "selected" : ""}>${k}</option>`;
+  const tile = (v, t, c) => `<div class="st-t"><b style="color:${c || "inherit"}">${v}</b><span>${t}</span></div>`, ord = Object.entries(tp).sort((a, b) => b[1] - a[1]), mx = Math.max(1, ...ord.map(x => x[1])), mm = Math.max(1, ...ms.map(x => x[0]));
+  box.innerHTML = `<div class="cal-h"><b>Estadísticas de</b><select data-sty="1">${ys}</select></div><div class="st-k">${tile(n, "accidentes")}${tile(con, "con lesionados", "#e0502f")}${tile(gr, "graves o muy graves", "#C93A1F")}${tile(fa, "fallecidos", "#7a1d0e")}${tile(n - con, "sin lesionados", "#1f8a4c")}${tile(pe, "pendientes de cerrar", "#d98a00")}</div>
+<h4 style="margin:10px 0 4px">Tipos de accidente</h4>${ord.map(([t, c]) => `<div class="st-r"><span class="st-n">${esc(t)}</span><div class="st-bar"><i style="width:${(c / mx * 100).toFixed(1)}%"></i></div><b>${c}</b> <small>${n ? (c / n * 100).toFixed(0) : 0}%</small></div>`).join("") || "<p>Sin datos.</p>"}
+${y != "all" ? `<h4 style="margin:12px 0 4px">Por meses (en rojo, con lesionados)</h4><div class="st-m">${ms.map((v, k) => `<div><span class="st-v">${v[0] || ""}</span><div class="st-c"><i style="height:${(v[0] / mm * 100).toFixed(1)}%"><u style="height:${v[0] ? (v[1] / v[0] * 100).toFixed(1) : 0}%"></u></i></div><small>${MESN[k].slice(0, 3)}</small></div>`).join("")}</div>` : ""}`;
+}
+/* ---- reportaje fotográfico ---- */
+async function fotoComp(file) {
+  const MAXL = 1400; let bmp; try { bmp = await createImageBitmap(file); } catch (e) { bmp = await new Promise((ok, ko) => { const im = new Image(); im.onload = () => ok(im); im.onerror = ko; im.src = URL.createObjectURL(file); }); }
+  const w = bmp.width || bmp.naturalWidth, h = bmp.height || bmp.naturalHeight, k = Math.min(1, MAXL / Math.max(w, h)), c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k);
+  c.getContext("2d").drawImage(bmp, 0, 0, c.width, c.height); return c.toDataURL("image/jpeg", .72);
+}
+function fotosHTML() {
+  const F = ACC.row.fotos || [];
+  return F.map((f, i) => `<div class="ph"><img src="${f.u}" alt="foto ${i + 1}"><input data-qp="fotos.${i}.pie" value="${esc(f.pie || "")}" placeholder="Pie de foto (ej. daños en el frontal del vehículo A)"><button data-qa="ph-" data-qi="${i}" type="button" class="sec2">Quitar</button></div>`).join("") || '<small style="opacity:.7">Aún no hay fotos.</small>';
+}
+async function accFotos(files) {
+  const R = ACC.row; R.fotos = R.fotos || []; const fs = [...files].slice(0, Math.max(0, 30 - R.fotos.length)), g = $("ph_g"), st = $("ph_s");
+  for (let i = 0; i < fs.length; i++) { if (st) st.textContent = "Procesando foto " + (i + 1) + " de " + fs.length + "…"; try { R.fotos.push({u: await fotoComp(fs[i]), pie: ""}); } catch (e) { if (st) st.textContent = "No se pudo leer una de las fotos."; } }
+  if (st) st.textContent = R.fotos.length + " foto(s)" + (R.fotos.length >= 30 ? " (máximo alcanzado)" : ""); if (g) g.innerHTML = fotosHTML(); accSucio("fotos");
+}
+
 /* ---- lista de accidentes: mapa + calendario + estado ---- */
-const ACC_SEL = "id,ref,estado,fecha,lugar,lat,lng,vehiculos,exp:datos->>exp,tipo:datos->>tipo,desc:datos->>desc,her:datos->heridos->>hay,hl:datos->heridos->lista,n1:datos->firmas->>n1,n2:datos->firmas->>n2,ag:datos->>agentes";
+const ACC_SEL = "id,ref,estado,fecha,lugar,lat,lng,vehiculos,via:datos->via->>nombre,exp:datos->>exp,tipo:datos->>tipo,desc:datos->>desc,her:datos->heridos->>hay,hl:datos->heridos->lista,n1:datos->firmas->>n1,n2:datos->firmas->>n2,ag:datos->>agentes";
 const MESN = ["enero", "febrero", "marzo", "abril", "mayo", "junio", "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"];
 const pd2 = n => String(n).padStart(2, "0"), ldia = f => { const d = new Date(f); return d.getFullYear() + "-" + pd2(d.getMonth() + 1) + "-" + pd2(d.getDate()); };
 function accNorm(r) {
-  const d = r.datos; if (d) { r.exp = d.exp; r.tipo = d.tipo; r.desc = d.desc; r.her = (d.heridos || {}).hay; r.hl = (d.heridos || {}).lista; r.n1 = (d.firmas || {}).n1; r.n2 = (d.firmas || {}).n2; r.ag = d.agentes; delete r.datos; }
+  const d = r.datos; if (d) { r.via = (d.via || {}).nombre; r.exp = d.exp; r.tipo = d.tipo; r.desc = d.desc; r.her = (d.heridos || {}).hay; r.hl = (d.heridos || {}).lista; r.n1 = (d.firmas || {}).n1; r.n2 = (d.firmas || {}).n2; r.ag = d.agentes; delete r.datos; }
   r.conH = r.her === true || r.her === "true" || (Array.isArray(r.hl) && r.hl.length > 0);
-  r.cerr = r.estado == "cerrado"; r.dia = ldia(r.fecha);
+  r.cerr = r.estado == "cerrado"; r.dia = ldia(r.fecha); const hl = Array.isArray(r.hl) ? r.hl : []; r.graves = hl.some(h => GRAVES.test(h.lesion || "")); r.fall = hl.some(h => FALL.test(h.lesion || ""));
   const falta = []; if (!r.exp) falta.push("nº de expediente"); if (!r.tipo) falta.push("tipo de accidente"); if (!r.lugar) falta.push("lugar"); if (!r.desc) falta.push("descripción"); if (!(r.n1 || r.n2 || r.ag)) falta.push("TIP de los agentes");
   (r.vehiculos || []).forEach((v, i) => { if (!v.mat) falta.push("matrícula del vehículo " + (i + 1)); });
   r.falta = falta; return r;
@@ -574,14 +640,14 @@ async function accQ(f) {
 async function accLista() {
   const {y, m} = ACC.cm, a = new Date(y, m, 1).toISOString(), b = new Date(y, m + 1, 1).toISOString();
   const jobs = [accQ(s => db.from("accidentes").select(s).gte("fecha", a).lt("fecha", b).order("fecha", {ascending: false}).limit(500))];
-  if (ACC.filtro == "abierto") jobs.push(accQ(s => db.from("accidentes").select(s).eq("estado", "abierto").order("fecha", {ascending: false}).limit(300)));
+  const fa = accFiltAct(), ia = ACC.filtro == "abierto"; if (ia) jobs.push(accQ(s => db.from("accidentes").select(s).eq("estado", "abierto").order("fecha", {ascending: false}).limit(300))); if (fa) jobs.push(accCargaF());
   const rs = await Promise.all(jobs), bad = rs.find(x => x.error);
   if (bad) { $("acc_lst").innerHTML = `<div class="brf-aviso">⚠️ No se pudo cargar (${esc(bad.error.message)}). ¿Has ejecutado 16-accidentes.sql?</div>`; return; }
-  ACC.dm = rs[0].data; ACC.ab = rs[1] ? rs[1].data : null; accPinta();
+  ACC.dm = rs[0].data; ACC.ab = ia ? rs[1].data : null; ACC.fd = fa ? rs[rs.length - 1].data : null; accPinta();
 }
 function accPinta() {
-  const base = ACC.filtro == "abierto" && ACC.ab ? ACC.ab : ACC.dm || [], L1 = ACC.dia ? base.filter(r => r.dia == ACC.dia) : base;
-  const tt = ACC.dia ? "Accidentes del " + ACC.dia.split("-").reverse().join("/") : ACC.filtro == "abierto" ? "Todos los accidentes pendientes" : "Accidentes de " + MESN[ACC.cm.m] + " de " + ACC.cm.y;
+  const fa = accFiltAct() && ACC.fd, base = fa ? accAplicaF(ACC.fd) : ACC.filtro == "abierto" && ACC.ab ? ACC.ab : ACC.dm || [], L1 = ACC.dia ? base.filter(r => r.dia == ACC.dia) : base;
+  const tt = ACC.dia ? "Accidentes del " + ACC.dia.split("-").reverse().join("/") : fa ? "Resultado del filtro" : ACC.filtro == "abierto" ? "Todos los accidentes pendientes" : "Accidentes de " + MESN[ACC.cm.m] + " de " + ACC.cm.y;
   $("acc_tt").innerHTML = `<b>${tt}</b> (${L1.length}) ${ACC.dia ? '<button type="button" class="chip" data-qclr="1">Ver todo el mes</button>' : ""}`;
   $("acc_lst").innerHTML = L1.map(r => {
     const tip = [r.n1, r.n2].filter(Boolean).join(" · ") || r.ag || "";
@@ -599,7 +665,7 @@ function accCal() {
 }
 function accMapa(L1) {
   const el = $("acc_map"); if (typeof L === "undefined") { el.innerHTML = '<p style="padding:14px">No se pudo cargar el mapa (sin conexión con el servidor de mapas).</p>'; return; }
-  if (!ACC.map) { ACC.map = L.map("acc_map").setView([40.8125, 0.5216], 13); L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19, attribution: "© OpenStreetMap"}).addTo(ACC.map); ACC.capa = L.layerGroup().addTo(ACC.map); el.onclick = e => { const c = e.target.closest("[data-popid]"); if (c) accAbre(c.dataset.popid); }; }
+  if (!ACC.map) { ACC.map = L.map("acc_map").setView([40.8125, 0.5216], 13); mapaCapas(ACC.map); ACC.capa = L.layerGroup().addTo(ACC.map); el.onclick = e => { const c = e.target.closest("[data-popid]"); if (c) accAbre(c.dataset.popid); }; }
   ACC.capa.clearLayers(); const pts = [];
   L1.forEach(r => { if (r.lat == null || r.lng == null || isNaN(+r.lat)) return; pts.push([+r.lat, +r.lng]);
     L.marker([+r.lat, +r.lng], {icon: L.divIcon({className: "", html: `<div class="pin ${r.cerr ? "v" : "r"}">${r.conH ? "🚑" : ""}</div>`, iconSize: [30, 30], iconAnchor: [15, 15]})}).bindPopup(`<b>${r.exp ? "Exp. " + esc(r.exp) : "#" + r.ref}</b><br>${esc(r.lugar || "")}<br>${dfh(r.fecha)} · ${esc(r.tipo || "")}<br><button type="button" data-popid="${r.id}" style="margin-top:4px">Abrir</button>`).addTo(ACC.capa); });
@@ -635,8 +701,10 @@ function accClick(e) {
   const b = e.target.closest("[data-qa]"); if (!b || !ACC.row) return; const a = b.dataset.qa, R = ACC.row, i = +b.dataset.qi;
   if (a == "back") { accGuarda().then(() => { ACC.row = null; $("acc_f").hidden = true; $("acc_l").hidden = false; accLista(); }); return; }
   if (a == "veh+") { R.vehiculos.push(vacioVeh()); accSucio("vehiculos"); }
-  else if (a == "veh-") { if (!confirm("¿Quitar el vehículo V" + (i + 1) + " de la T01 y del croquis?")) return; R.vehiculos.splice(i, 1); const c = R.croquis || {}; if (c.vehs) { c.vehs = c.vehs.filter(x => x.i != i).map(x => ({...x, i: x.i > i ? x.i - 1 : x.i})); accSucio("croquis"); } accSucio("vehiculos"); }
+  else if (a == "veh-") { if (!confirm("¿Quitar el vehículo " + vLt(i) + " de la T01 y del croquis?")) return; R.vehiculos.splice(i, 1); const c = R.croquis || {}; if (c.vehs) { c.vehs = c.vehs.filter(x => x.i != i).map(x => ({...x, i: x.i > i ? x.i - 1 : x.i})); accSucio("croquis"); } accSucio("vehiculos"); }
   else if (a == "tes+") { R.datos.testigos = R.datos.testigos || []; R.datos.testigos.push({nombre: "", doc: "", tel: "", dom: "", decl: "", firma: null}); accSucio("datos"); }
+  else if (a == "ph+") { $("ph_f").click(); return; }
+  else if (a == "ph-") { R.fotos.splice(i, 1); accSucio("fotos"); }
   else if (a == "her+") { const H = R.datos.heridos = R.datos.heridos || {hay: false, desc: ""}; H.lista = H.lista || []; H.lista.push({nombre: "", doc: "", nac: "", tel: "", dom: "", rol: "", lesion: "", asist: ""}); H.hay = true; accSucio("datos"); }
   else if (a == "her-") { R.datos.heridos.lista.splice(i, 1); accSucio("datos"); }
   else if (a == "dm0") { R.vehiculos[i].danos_pts = []; accSucio("vehiculos"); }
@@ -659,8 +727,8 @@ const qC = (p, lbl) => `<label class="ck"><input type="checkbox" data-qp="${p}" 
 const qT = (p, lbl, rows = 3) => `<label class="fl">${lbl}<textarea rows="${rows}" data-qp="${p}">${esc(gP(ACC.row, p) || "")}</textarea></label>`;
 function accRender() {
   const R = ACC.row; $("acc_l").hidden = true; const F = $("acc_f"); F.hidden = false;
-  const HD = R.datos.heridos = R.datos.heridos || {hay: false, desc: ""}; HD.lista = HD.lista || []; const FI = R.datos.firmas = R.datos.firmas || {n1: "", n2: "", f1: null, f2: null};
-  const roles = ["", ...R.vehiculos.flatMap((v, k) => /peaton|bici|vmp/.test(CLS[clsDe(v)][3]) ? ["Vehículo " + (k + 1) + " " + (VTIPOS[v.tipo] || {}).n] : ["Conductor del vehículo " + (k + 1), "Ocupante del vehículo " + (k + 1)]), "Peatón", "Otro"].filter((x, k, a) => a.indexOf(x) == k).slice(1);
+  R.fotos = R.fotos || []; const HD = R.datos.heridos = R.datos.heridos || {hay: false, desc: ""}; HD.lista = HD.lista || []; const FI = R.datos.firmas = R.datos.firmas || {n1: "", n2: "", f1: null, f2: null};
+  const roles = ["", ...R.vehiculos.flatMap((v, k) => /peaton|bici|vmp/.test(CLS[clsDe(v)][3]) ? ["Vehículo " + vLt(k) + " " + (VTIPOS[v.tipo] || {}).n] : ["Conductor del vehículo " + vLt(k), "Ocupante del vehículo " + vLt(k)]), "Peatón", "Otro"].filter((x, k, a) => a.indexOf(x) == k).slice(1);
   const nv = R.vehiculos.length, hayCro = R.croquis && ((R.croquis.objs || []).length || (R.croquis.vehs || []).length);
   F.innerHTML = `<div class="det-bar"><button data-qa="back" type="button" class="sec2">← Lista</button><b>T01 · #${R.ref}</b><span id="acc_est" style="font-size:13px;opacity:.8"></span></div>
 <details class="acc" open><summary>1. Accidente</summary><div class="pad"><div style="max-width:260px">${qI("datos.exp", "Nº de expediente (ej. 134/2026)", "text", 'inputmode="text" style="font-weight:700"')}</div><div class="row"><label class="fl" style="flex:1;min-width:190px">Fecha y hora<input type="datetime-local" data-qp="fecha" value="${dtl(R.fecha)}"></label><button data-qa="now" type="button" class="sec2">Ahora</button></div>
@@ -677,7 +745,8 @@ ${HD.lista.map((h, k) => `<div class="it"><b>Herido ${k + 1}</b> ${escBtn("ACC",
 <details class="acc" open><summary>5. Descripción y agentes</summary><div class="pad">${qT("datos.desc", "Descripción de los hechos y circunstancias del accidente", 5)}${qT("datos.obs", "Observaciones", 3)}${qI("datos.agentes", "Agentes actuantes (TIP)")}</div></details>
 <details class="acc" open><summary>6. Indicativos y servicios intervinientes</summary><div class="pad">${SERV.map(([k, t]) => `<div class="row" style="align-items:flex-end"><div style="flex:0 0 210px;padding-bottom:10px">${qC("datos.servicios." + k + ".on", t)}</div><div style="flex:1;min-width:160px">${qI("datos.servicios." + k + ".txt", "Indicativo / identificación / hora")}</div></div>`).join("")}</div></details>
 <details class="acc" open><summary>7. Croquis</summary><div class="pad"><div style="margin-bottom:8px">${hayCro ? `Croquis con ${(R.croquis.vehs || []).length} vehículo(s) y ${(R.croquis.objs || []).length} elemento(s).` : "Aún no hay croquis."}</div><button data-qa="cro" type="button" class="k">✏️ Abrir croquizador</button> <button data-qa="v3d" type="button" class="sec2">🧊 Ver en 3D</button></div></details>
-<details class="acc" open><summary>8. Firma de los agentes</summary><div class="pad"><div class="g2">${qI("datos.firmas.n1", "TIP del agente 1")}${qI("datos.firmas.n2", "TIP del agente 2")}</div><div class="row">${[1, 2].map(k => `<div style="flex:1;min-width:200px;text-align:center"><div style="border:1px solid var(--line);border-radius:10px;min-height:76px;background:#fff;display:flex;align-items:center;justify-content:center">${FI["f" + k] ? `<img src="${FI["f" + k]}" style="max-width:100%;max-height:90px">` : '<small style="color:#777">Sin firmar</small>'}</div><button data-qa="fir" data-qk="datos.firmas.f${k}" data-qt="Firma del agente ${k}" type="button" class="k" style="margin-top:6px">✍️ Firmar agente ${k}</button>${FI["f" + k] ? `<button data-qa="fir0" data-qk="datos.firmas.f${k}" type="button" class="sec2">Borrar</button>` : ""}</div>`).join("")}</div></div></details>
+<details class="acc" open><summary>8. Reportaje fotográfico (${(R.fotos || []).length})</summary><div class="pad"><small>Fotos de los vehículos dañados, del lugar y de lo que haga falta. Se reducen de tamaño al añadirlas y salen en la T01 impresa.</small><br><input id="ph_f" type="file" accept="image/*" multiple hidden><button data-qa="ph+" type="button" class="k">📷 Añadir fotos</button> <small id="ph_s"></small><div id="ph_g">${fotosHTML()}</div></div></details>
+<details class="acc" open><summary>9. Firma de los agentes</summary><div class="pad"><div class="g2">${qI("datos.firmas.n1", "TIP del agente 1")}${qI("datos.firmas.n2", "TIP del agente 2")}</div><div class="row">${[1, 2].map(k => `<div style="flex:1;min-width:200px;text-align:center"><div style="border:1px solid var(--line);border-radius:10px;min-height:76px;background:#fff;display:flex;align-items:center;justify-content:center">${FI["f" + k] ? `<img src="${FI["f" + k]}" style="max-width:100%;max-height:90px">` : '<small style="color:#777">Sin firmar</small>'}</div><button data-qa="fir" data-qk="datos.firmas.f${k}" data-qt="Firma del agente ${k}" type="button" class="k" style="margin-top:6px">✍️ Firmar agente ${k}</button>${FI["f" + k] ? `<button data-qa="fir0" data-qk="datos.firmas.f${k}" type="button" class="sec2">Borrar</button>` : ""}</div>`).join("")}</div></div></details>
 <div class="brf-fin"><button data-qa="p1" type="button">Imprimir T01</button><button data-qa="p2" type="button">Imprimir croquis</button><button data-qa="cerrar" type="button" class="sec2">${R.estado == "cerrado" ? "Reabrir" : "Marcar como cerrado"}</button></div>
 ${accDatalists(R)}`;
 }
@@ -685,14 +754,15 @@ ${accDatalists(R)}`;
 function accHTML() {
   const R = ACC.row, D = R.datos, c = D.cond || {}, e = esc, pg = (n, N, body) => `<div class="apg" style="font-size:10.5px;padding:10mm 12mm;height:auto;min-height:296mm;overflow:visible"><div style="display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:3px"><b style="font-size:14px">T-01 · INFORME DE ACCIDENTE DE TRÁFICO · #${R.ref}</b><span>Policia Local de Tortosa · Pág. ${n}/${N}</span></div>${body}</div>`;
   const row = (a, b) => `<tr><td style="border:1px solid #000;padding:3px 6px;width:26%;background:#eee"><b>${a}</b></td><td style="border:1px solid #000;padding:3px 6px">${b || "&nbsp;"}</td></tr>`, tb = r => `<table style="width:100%;border-collapse:collapse;margin:3px 0 8px">${r}</table>`, bx = v => `<span class="box">${v ? "✕" : ""}</span>`;
-  const vb = (v, i) => { const x = v.cond || {}; return `<h4>Vehículo ${i + 1} · ${e((VTIPOS[v.tipo] || {}).n || "")}</h4>` + tb(row("Vehículo", e((v.marca + " " + v.modelo).trim()) + (v.color ? " · " + e(v.color) : "")) + row("Matrícula / país", e(v.mat) + " · " + e(v.pais)) + row("Bastidor (VIN) · ITV", e(v.vin) + (v.itv ? " · ITV hasta " + e(v.itv) : "")) + row("Seguro", e(v.cia) + " · póliza " + e(v.pol) + (v.vig ? " · vigencia " + e(v.vig) : "") + " · " + e(v.soa)) + row("Propietario", e(v.prop)) + row("Conductor", e((x.nombre + " " + x.apellidos).trim()) + " · " + e(x.doc) + (x.nac ? " · nac. " + e(x.nac) : "")) + row("Domicilio · teléfono", e(x.dom) + " · " + e(x.tel)) + row("Permiso de conducir", e(x.permiso) + " " + e(x.clase) + (x.pvig ? " · hasta " + e(x.pvig) : "")) + row("Alcoholemia", e(x.alc) + (x.alcres ? " · " + e(x.alcres) + " mg/l" : "")) + row("Ocupantes", e(v.ocup)) + row("Daños", `<div style="display:flex;gap:8px;align-items:flex-start"><div style="flex:0 0 62mm">${dmgSvg(v, i, 60)}</div><span style="white-space:pre-wrap">${e(v.danos)}</span></div>`) + row("Grúa", e(v.grua))); };
-  const p1 = `<h4>Accidente</h4>` + tb(row("Nº de expediente", "<b>" + e(D.exp) + "</b>") + row("Fecha y hora", dfull(R.fecha)) + row("Lugar", e(R.lugar)) + row("Coordenadas", R.lat != null ? R.lat + ", " + R.lng : "") + row("Vía", e((D.via || {}).nombre) + ((D.via || {}).pk ? " p.k. " + e(D.via.pk) : "") + " · " + e((D.via || {}).tipo) + ((D.via || {}).limite ? " · límite " + e(D.via.limite) + " km/h" : "")) + row("Tipo de accidente", e(D.tipo)) + row("Condiciones", e(c.clima) + " · " + e(c.luz) + " · calzada " + e(c.calzada).toLowerCase() + " · visibilidad " + e(c.visib).toLowerCase()) + row("Vehículos implicados", R.vehiculos.map((v, i) => "Vehículo " + (i + 1) + " " + e(v.mat)).join(" · ")))
+  const vb = (v, i) => { const x = v.cond || {}; return `<h4>Vehículo ${vLt(i)} · ${e((VTIPOS[v.tipo] || {}).n || "")}</h4>` + tb(row("Vehículo", e((v.marca + " " + v.modelo).trim()) + (v.color ? " · " + e(v.color) : "")) + row("Matrícula / país", e(v.mat) + " · " + e(v.pais)) + row("Bastidor (VIN) · ITV", e(v.vin) + (v.itv ? " · ITV hasta " + e(v.itv) : "")) + row("Seguro", e(v.cia) + " · póliza " + e(v.pol) + (v.vig ? " · vigencia " + e(v.vig) : "") + " · " + e(v.soa)) + row("Propietario", e(v.prop)) + row("Conductor", e((x.nombre + " " + x.apellidos).trim()) + " · " + e(x.doc) + (x.nac ? " · nac. " + e(x.nac) : "")) + row("Domicilio · teléfono", e(x.dom) + " · " + e(x.tel)) + row("Permiso de conducir", e(x.permiso) + " " + e(x.clase) + (x.pvig ? " · hasta " + e(x.pvig) : "")) + row("Alcoholemia", e(x.alc) + (x.alcres ? " · " + e(x.alcres) + " mg/l" : "")) + row("Ocupantes", e(v.ocup)) + row("Daños", `<div style="display:flex;gap:8px;align-items:flex-start"><div style="flex:0 0 62mm">${dmgSvg(v, i, 60)}</div><span style="white-space:pre-wrap">${e(v.danos)}</span></div>`) + row("Grúa", e(v.grua))); };
+  const p1 = `<h4>Accidente</h4>` + tb(row("Nº de expediente", "<b>" + e(D.exp) + "</b>") + row("Fecha y hora", dfull(R.fecha)) + row("Lugar", e(R.lugar)) + row("Coordenadas", R.lat != null ? R.lat + ", " + R.lng : "") + row("Vía", e((D.via || {}).nombre) + ((D.via || {}).pk ? " p.k. " + e(D.via.pk) : "") + " · " + e((D.via || {}).tipo) + ((D.via || {}).limite ? " · límite " + e(D.via.limite) + " km/h" : "")) + row("Tipo de accidente", e(D.tipo)) + row("Condiciones", e(c.clima) + " · " + e(c.luz) + " · calzada " + e(c.calzada).toLowerCase() + " · visibilidad " + e(c.visib).toLowerCase()) + row("Vehículos implicados", R.vehiculos.map((v, i) => "Vehículo " + vLt(i) + " " + e(v.mat)).join(" · ")))
     + `<h4>Heridos</h4><div>${bx((D.heridos || {}).hay)}Hay heridos &nbsp; ${bx(!(D.heridos || {}).hay)}Sin heridos</div>` + (((D.heridos || {}).lista || []).map((h, k) => tb(row("H" + (k + 1) + " · " + e(h.nombre), [e(h.doc), h.nac ? "nac. " + dfd(h.nac) : "", h.tel ? "tel. " + e(h.tel) : ""].filter(Boolean).join(" · ") + (h.dom ? "<br>" + e(h.dom) : "") + "<br>" + [e(h.rol), h.lesion ? "<b>" + e(h.lesion) + "</b>" : ""].filter(Boolean).join(" · ") + (h.asist ? "<br>Asistencia: " + e(h.asist) : "")))).join("")) + ((D.heridos || {}).desc ? `<div style="white-space:pre-wrap">${e(D.heridos.desc)}</div>` : "")
     + `<h4>Testigos</h4>` + ((D.testigos || []).map((t, k) => tb(row("T" + (k + 1) + " · " + e(t.nombre) + "<br>" + e(t.doc) + (t.tel ? " · " + e(t.tel) : "") + (t.dom ? "<br>" + e(t.dom) : ""), `<span style="white-space:pre-wrap">${e(t.decl)}</span>` + (t.firma ? `<div style="text-align:right"><img src="${t.firma}" style="height:34px"></div>` : "")))).join("") || "<div>Sin testigos.</div>") + (() => { const S = D.servicios || {}, f = SERV.filter(([k]) => (S[k] || {}).on); return `<h4>Indicativos y servicios intervinientes</h4>` + (f.length ? tb(f.map(([k, t]) => row(t, e(S[k].txt))).join("")) : "<div>Ninguno.</div>"); })();
   const p2 = `<h4>Descripción de los hechos</h4><div style="white-space:pre-wrap;min-height:150mm;border-bottom:1px dotted #000">${e(D.desc)}</div><h4>Observaciones</h4><div style="white-space:pre-wrap;min-height:30mm;border-bottom:1px dotted #000">${e(D.obs)}</div>`
-    + `<h4>Agentes actuantes</h4><div>${e(D.agentes)}</div><div class="sig" style="margin-top:8px"><div>${sgi((D.firmas || {}).f1).replace("<small>Sin firmar</small>", "")}<span>Firma agente 1 · ${e((D.firmas || {}).n1)}</span></div><div>${sgi((D.firmas || {}).f2).replace("<small>Sin firmar</small>", "")}<span>Firma agente 2 · ${e((D.firmas || {}).n2)}</span></div></div>`;
+    + `<h4>Agentes actuantes</h4><div>${e(D.agentes)}</div><div class="sig" style="margin-top:8px"><div>${fimg((D.firmas || {}).f1)}<span>Firma agente 1 · TIP ${e((D.firmas || {}).n1)}</span></div><div>${fimg((D.firmas || {}).f2)}<span>Firma agente 2 · TIP ${e((D.firmas || {}).n2)}</span></div></div>`;
   const vp = []; for (let i = 0; i < R.vehiculos.length; i += 2) vp.push(R.vehiculos.slice(i, i + 2).map((v, j) => vb(v, i + j)).join(""));
-  const N = 2 + vp.length; return pg(1, N, p1) + pg(2, N, p2) + vp.map((b, k) => pg(k + 3, N, b)).join("");
+  const FO = R.fotos || [], fp = []; for (let i = 0; i < FO.length; i += 6) fp.push(`<h4>Reportaje fotográfico</h4><div style="display:grid;grid-template-columns:1fr 1fr;gap:4mm">${FO.slice(i, i + 6).map((f, j) => `<div style="border:1px solid #000;padding:1.5mm"><img src="${f.u}" style="width:100%;height:66mm;object-fit:contain;background:#f1f1f1;display:block"><div style="font-size:9.5px;margin-top:1mm"><b>Foto ${i + j + 1}.</b> ${e(f.pie)}</div></div>`).join("")}</div>`);
+  const N = 2 + vp.length + fp.length; return pg(1, N, p1) + pg(2, N, p2) + vp.map((b, k) => pg(k + 3, N, b)).join("") + fp.map((b, k) => pg(k + 3 + vp.length, N, b)).join("");
 }
 
 /* ---- escanear DNI (reutilizable en cualquier ficha con datos personales) ---- */
@@ -843,7 +913,7 @@ function v3Escena(cam, pk, skip) {
   CR.vehs.forEach(v => { if (v.i === skip) return; const p = v3Pose(v, pk); if (p) vol.push([dist(p.x, p.y), v3Veh(cam, v.i, p, p.r || 0), v.i, p]); });
   vol.sort((a, b) => b[0] - a[0]); let lab = "";
   vol.forEach(x => { g += x[1]; });
-  CR.vehs.forEach(v => { if (v.i === skip) return; const p = v3Pose(v, pk); if (!p) return; const d = vdim(v.i), z = d.body == "truck" || d.body == "bus" ? 4.4 : d.body == "van" ? 3.2 : d.body == "peaton" ? 2.2 : d.body[0] == "m" && d.body != "mpv" ? 2.4 : 2.5, P = [p.x, -p.y, z].map((c, k) => c - cam.C[k]), zc = v3Dot(P, cam.f); if (zc < .5) return; const sx = cam.W / 2 + cam.F * v3Dot(P, cam.r) / zc, sy = cam.H / 2 - cam.F * v3Dot(P, cam.u) / zc, rr = Math.max(9, Math.min(26, cam.F * .55 / zc)); lab += `<g><circle cx="${r1(sx)}" cy="${r1(sy)}" r="${r1(rr)}" fill="${VCOL[v.i % VCOL.length]}" stroke="#fff" stroke-width="2"/><text x="${r1(sx)}" y="${r1(sy)}" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-weight="800" font-size="${r1(rr * 1.0)}" fill="#fff">V${v.i + 1}</text></g>`; });
+  CR.vehs.forEach(v => { if (v.i === skip) return; const p = v3Pose(v, pk); if (!p) return; const d = vdim(v.i), z = d.body == "truck" || d.body == "bus" ? 4.4 : d.body == "van" ? 3.2 : d.body == "peaton" ? 2.2 : d.body[0] == "m" && d.body != "mpv" ? 2.4 : 2.5, P = [p.x, -p.y, z].map((c, k) => c - cam.C[k]), zc = v3Dot(P, cam.f); if (zc < .5) return; const sx = cam.W / 2 + cam.F * v3Dot(P, cam.r) / zc, sy = cam.H / 2 - cam.F * v3Dot(P, cam.u) / zc, rr = Math.max(9, Math.min(26, cam.F * .55 / zc)); lab += `<g><circle cx="${r1(sx)}" cy="${r1(sy)}" r="${r1(rr)}" fill="${VCOL[v.i % VCOL.length]}" stroke="#fff" stroke-width="2"/><text x="${r1(sx)}" y="${r1(sy)}" text-anchor="middle" dominant-baseline="central" font-family="Arial" font-weight="800" font-size="${r1(rr * 1.0)}" fill="#fff">${vLt(v.i)}</text></g>`; });
   return g + lab;
 }
 let V3U = 0;
@@ -855,7 +925,7 @@ function v3Svg(view, o = {}) {
     cam = v3Cam([cx - Math.cos(yaw) * Math.cos(pitch) * dist, -cy - Math.sin(yaw) * Math.cos(pitch) * dist, -Math.sin(pitch) * dist], yaw, pitch, W, H, fov); titulo = "Vista aérea oblicua";
   } else {
     const v = CR.vehs.find(x => x.i == view), p = v && v3Pose(v, pk); if (!p) return ""; const d = vdim(view), a = (p.r || 0) * Math.PI / 180, ca = Math.cos(a), sa = Math.sin(a), ex = d.L * .12, ey = d.body[0] == "m" && d.body != "mpv" ? 0 : -d.W * .22, hz = {truck: 2.4, bus: 2.4, van: 1.6, peaton: 1.6, bici: 1.3, vmp: 1.3}[d.body] || (d.body[0] == "m" && d.body != "mpv" ? 1.35 : d.body == "suv" ? 1.3 : 1.15);
-    cam = v3Cam([p.x + ex * ca - ey * sa, -(p.y + ex * sa + ey * ca), hz], -a, -.04, W, H, 78 * Math.PI / 180); skip = view; titulo = "Vista en primera persona desde el vehículo " + (view + 1) + " (puesto del conductor)";
+    cam = v3Cam([p.x + ex * ca - ey * sa, -(p.y + ex * sa + ey * ca), hz], -a, -.04, W, H, 78 * Math.PI / 180); skip = view; titulo = "Vista en primera persona desde el vehículo " + vLt(view) + " (puesto del conductor)";
   }
   const hy = r1(H / 2 + cam.F * Math.tan(cam.pitch)), top = view == "aer" ? "#c9dbe8" : "#9cc3e4";
   return `<svg xmlns="${SVGNS}" viewBox="0 0 ${W} ${H}" width="100%" style="display:block;border:1.5px solid #000;background:#8a9a86" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="${id}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${top}"/><stop offset="1" stop-color="#eaf2f8"/></linearGradient><clipPath id="${id}c"><rect width="${W}" height="${H}"/></clipPath></defs><g clip-path="url(#${id}c)"><rect width="${W}" height="${H}" fill="#97a68f"/><rect width="${W}" height="${Math.max(0, Math.min(H, hy))}" fill="url(#${id})"/>${v3Escena(cam, pk, skip)}</g><text x="10" y="22" font-family="Arial" font-weight="700" font-size="16" fill="#fff" stroke="#000" stroke-width="3" paint-order="stroke">${titulo}</text></svg>`;
@@ -870,7 +940,7 @@ function v3Page() {
 /* visor 3D en pantalla */
 function v3Abre() {
   v3Load(); const m = $("v3"); m.hidden = false; const vs = CR.vehs.filter(v => v3Pose(v, 1));
-  $("v3_v").innerHTML = `<option value="aer">Vista aérea</option>` + vs.map(v => `<option value="${v.i}">Desde el vehículo ${v.i + 1} (conductor)</option>`).join("");
+  $("v3_v").innerHTML = `<option value="aer">Vista aérea</option>` + vs.map(v => `<option value="${v.i}">Desde el vehículo ${vLt(v.i)} (conductor)</option>`).join("");
   $("v3_pk").innerHTML = ["Antes (A)", "Impacto (I)", "Posición final (F)"].map((t, k) => `<option value="${k}" ${k == 1 ? "selected" : ""}>${t}</option>`).join("");
   const dib = () => { const w = $("v3_c"); w.innerHTML = v3Svg($("v3_v").value == "aer" ? "aer" : +$("v3_v").value, {W: Math.max(600, w.clientWidth), H: Math.max(360, w.clientHeight), pk: +$("v3_pk").value, rot: +$("v3_r").value, pitch: +$("v3_p").value}) || "<p style='padding:20px'>Coloca vehículos o elementos en el croquis para ver la vista 3D.</p>"; };
   ["v3_v", "v3_pk"].forEach(k => $(k).onchange = dib); ["v3_r", "v3_p"].forEach(k => $(k).oninput = dib); $("v3_x").onclick = () => { m.hidden = true; }; dib();
@@ -1050,13 +1120,13 @@ function croVehG(i, p, mode, u, sel, lab) {
 const vehPreview = (v, i) => { const c = CLS[clsDe(v)], L = +v.largo || c[1], W = +v.ancho || c[2], u = L / 170; return `<svg viewBox="${r1(-L / 2 - .5)} ${r1(-W / 2 - .5)} ${r1(L + 1)} ${r1(W + 1)}" width="170" style="max-width:100%;display:block;margin:4px auto">${vehDraw(c[3], L, W, colHex(v.color, mixc(VCOL[i % VCOL.length], .1)), u)}</svg>`; };
 function accVehForm(v, i) {
   const q = k => "vehiculos." + i + "." + k, c = clsDe(v);
-  return `<details class="acc" ${i < 2 ? "open" : ""} style="margin:8px 0"><summary><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${VCOL[i % VCOL.length]};margin-right:6px"></span>Vehículo ${i + 1} · ${esc((VTIPOS[v.tipo] || {}).n || "")} ${esc(v.marca)} ${esc(v.modelo)} ${esc(v.mat)}</summary><div class="pad"><div id="vp_${i}">${vehPreview(v, i)}</div>
+  return `<details class="acc" ${i < 2 ? "open" : ""} style="margin:8px 0"><summary><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${VCOL[i % VCOL.length]};margin-right:6px"></span>Vehículo ${vLt(i)} · ${esc((VTIPOS[v.tipo] || {}).n || "")} ${esc(v.marca)} ${esc(v.modelo)} ${esc(v.mat)}</summary><div class="pad"><div id="vp_${i}">${vehPreview(v, i)}</div>
 <div class="g2">${qI(q("mat"), "Matrícula", "text", 'autocapitalize="characters"')}${qI(q("color"), "Color (blanco, negro, gris, rojo…)")}${qI(q("marca"), "Marca", "text", 'list="dl_marcas" autocomplete="off"')}${qI(q("modelo"), "Modelo", "text", `list="dl_mod_${i}" autocomplete="off"`)}
 <label class="fl">Carrocería / segmento<select data-qp="${q("clase")}">${Object.keys(CLS).map(k => `<option value="${k}" ${k == c ? "selected" : ""}>${CLS[k][0]}</option>`).join("")}</select></label>${qI(q("pais"), "País de matrícula")}${qI(q("vin"), "Bastidor (VIN)")}${qI(q("itv"), "ITV vigente hasta", "date")}${qI(q("largo"), "Largo (m) para el croquis", "number")}${qI(q("ancho"), "Ancho (m)", "number")}</div>
 <h4 style="margin:10px 0 2px">Seguro</h4><div class="g2">${qI(q("cia"), "Compañía aseguradora")}${qI(q("pol"), "Nº de póliza")}${qI(q("vig"), "Vigencia hasta", "date")}${qS(q("soa"), "Seguro obligatorio", ["Acreditado", "No acreditado", "Sin seguro", "Se consulta FIVA"])}</div>
 <h4 style="margin:10px 0 2px">Conductor</h4>${escBtn("ACC", `nom:${q("cond.nombre")};ape:${q("cond.apellidos")};doc:${q("cond.doc")};nac:${q("cond.nac")};dom:${q("cond.dom")}`)}<div class="g2">${qI(q("cond.nombre"), "Nombre")}${qI(q("cond.apellidos"), "Apellidos")}${qI(q("cond.doc"), "DNI / NIE / pasaporte", "text", 'autocapitalize="characters"')}${qI(q("cond.nac"), "Fecha de nacimiento", "date")}${qI(q("cond.tel"), "Teléfono", "tel")}${qI(q("cond.dom"), "Domicilio")}${qI(q("cond.permiso"), "Nº de permiso de conducir")}${qI(q("cond.clase"), "Clase")}${qI(q("cond.pvig"), "Permiso válido hasta", "date")}${qS(q("cond.alc"), "Prueba de alcoholemia", ["No realizada", "Negativa", "Positiva", "Se niega"])}${qI(q("cond.alcres"), "Resultado (mg/l aire)")}</div>
 <div class="g2">${qI(q("prop"), "Propietario (si no es el conductor)")}${qI(q("ocup"), "Ocupantes (nº y datos)")}${qI(q("grua"), "Retirada por grúa (empresa / depósito)")}</div><h4 style="margin:10px 0 2px">Daños del vehículo</h4><div class="row" style="align-items:flex-start;gap:10px"><div style="flex:1 1 240px;min-width:210px"><div id="dm_${i}">${dmgSvg(v, i)}</div><small>Toca el dibujo donde están los daños para poner una ✕; toca una ✕ para quitarla.</small><br><button data-qa="dm0" data-qi="${i}" type="button" class="sec2">Borrar marcas</button></div><div style="flex:1 1 200px">${qT(q("danos"), "Descripción de los daños", 7)}</div></div>
-<button data-qa="veh-" data-qi="${i}" type="button" class="sec2">Quitar vehículo ${i + 1}</button></div></details>`;
+<button data-qa="veh-" data-qi="${i}" type="button" class="sec2">Quitar vehículo ${vLt(i)}</button></div></details>`;
 }
 const accDatalists = R => `<datalist id="dl_marcas">${[...new Set(MARCAS.map(m => m.replace(/ \(moto\)$/, "")))].map(m => `<option value="${esc(m)}">`).join("")}</datalist>` + R.vehiculos.map((v, i) => `<datalist id="dl_mod_${i}">${modelosDe(v.marca).map(m => `<option value="${esc(m)}">`).join("")}</datalist>`).join("");
 
@@ -1148,7 +1218,7 @@ function croTool(t) {
 function croPickVeh() {
   const R = ACC.row, libres = R.vehiculos.map((v, i) => i).filter(i => !CR.vehs.find(x => x.i == i && x.poses[CR.etapa]));
   const p = $("cro_p"); p.hidden = false;
-  p.innerHTML = `<b>Colocar en «${ETAPAS[CR.etapa]}»:</b><div class="cro-row">${libres.map(i => `<button type="button" data-ca="placev" data-i="${i}" style="border-left:8px solid ${VCOL[i % VCOL.length]}">V${i + 1} ${esc(R.vehiculos[i].mat || (VTIPOS[R.vehiculos[i].tipo] || {}).n || "")}</button>`).join("") || "<small>Todos colocados en esta fase.</small>"}<button type="button" data-ca="addveh" class="sec2">+ Nuevo vehículo</button></div>`;
+  p.innerHTML = `<b>Colocar en «${ETAPAS[CR.etapa]}»:</b><div class="cro-row">${libres.map(i => `<button type="button" data-ca="placev" data-i="${i}" style="border-left:8px solid ${VCOL[i % VCOL.length]}">Vehículo ${vLt(i)} ${esc(R.vehiculos[i].mat || (VTIPOS[R.vehiculos[i].tipo] || {}).n || "")}</button>`).join("") || "<small>Todos colocados en esta fase.</small>"}<button type="button" data-ca="addveh" class="sec2">+ Nuevo vehículo</button></div>`;
 }
 function croView() { const r = $("cro_s").getBoundingClientRect(); return {w: r.width, h: r.height}; }
 function croCentro() { const v = croView(); return [(v.w / 2 - CR.tx) / CR.k, (v.h / 2 - CR.ty) / CR.k]; }
@@ -1250,7 +1320,7 @@ function croScene(o) {
   // vehículos
   const vs = CR.vehs.slice().sort((a, b) => (sel == "v" + a.i) - (sel == "v" + b.i));
   vs.forEach(v => { const pp = v.poses.filter(Boolean); if (pp.length > 1) { const pts = v.poses.map((p, k) => p ? [p.x, p.y, k] : null).filter(Boolean); s += `<polyline points="${P(pts)}" fill="none" stroke="${VCOL[v.i % VCOL.length]}" stroke-width="${f(u * 2)}" stroke-dasharray="${f(u * 7)},${f(u * 4)}" pointer-events="none"/>`; } });
-  vs.forEach(v => v.poses.forEach((p, k) => { if (!p) return; const has1 = !!v.poses[1], cur = o.print ? true : k == CR.etapa, mode = o.print ? (has1 ? (k == 0 ? "ghost" : k == 1 ? "solid" : "final") : (k == 0 && v.poses[2] ? "ghost" : "solid")) : (k == CR.etapa ? "solid" : "ghost"), lab = "V" + (v.i + 1) + (mode == "solid" ? "" : "·" + "AIF"[k]), g = croVehG(v.i, p, mode, u, sel == "v" + v.i && !o.print && k == CR.etapa, lab); s += (o.print || k != CR.etapa ? g : `<g data-oid="v${v.i}">${g}</g>`); }));
+  vs.forEach(v => v.poses.forEach((p, k) => { if (!p) return; const has1 = !!v.poses[1], cur = o.print ? true : k == CR.etapa, mode = o.print ? (has1 ? (k == 0 ? "ghost" : k == 1 ? "solid" : "final") : (k == 0 && v.poses[2] ? "ghost" : "solid")) : (k == CR.etapa ? "solid" : "ghost"), lab = vLt(v.i) + (mode == "solid" ? "" : "·" + ["ant.", "imp.", "fin."][k]), g = croVehG(v.i, p, mode, u, sel == "v" + v.i && !o.print && k == CR.etapa, lab); s += (o.print || k != CR.etapa ? g : `<g data-oid="v${v.i}">${g}</g>`); }));
   by("senal").forEach(ob => s += hit(ob, croSenal(ob, u) + `<circle cx="${ob.x}" cy="${ob.y}" r="${f(Math.max(.9, 14 * u))}" fill="#000" fill-opacity="0.001"/>`));
   by("imp").forEach(ob => { const z = Math.max(.7, 10 * u); s += hit(ob, `<g transform="translate(${ob.x} ${ob.y})"><circle r="${f(z)}" fill="#fff" fill-opacity=".85" stroke="#C93A1F" stroke-width="${f(u * 2.2)}"/><line x1="${-z * .6}" y1="${-z * .6}" x2="${z * .6}" y2="${z * .6}" stroke="#C93A1F" stroke-width="${f(u * 2.6)}"/><line x1="${-z * .6}" y1="${z * .6}" x2="${z * .6}" y2="${-z * .6}" stroke="#C93A1F" stroke-width="${f(u * 2.6)}"/></g>`); });
   by("txt").forEach(ob => { const fs = (ob.size || 14) * u; s += hit(ob, `<text x="${ob.x}" y="${ob.y}" text-anchor="middle" dominant-baseline="central" font-family="Inter,Arial,sans-serif" font-weight="700" font-size="${f(fs)}" fill="#111" stroke="#fff" stroke-width="${f(fs * .22)}" paint-order="stroke">${esc(ob.s)}</text>`); });
@@ -1296,7 +1366,7 @@ function croPanel() {
   const act = `<div class="cro-row"><button type="button" data-ca="dup" class="sec2">Duplicar</button><button type="button" data-ca="del" class="r">Borrar</button></div>`;
   if (s[0] == "v") {
     const i = +s.slice(1), v = croVeh(s), p = v && v.poses[CR.etapa], R = ACC.row.vehiculos[i] || {};
-    h = `<b>Vehículo ${i + 1}</b> <small>fase: ${ETAPAS[CR.etapa]}</small>` + croVehFields(i, R) + (p ? rotRow(p.r) : `<div><small>No está colocado en «${ETAPAS[CR.etapa]}».</small> <button type="button" data-ca="poseaqui">Colocar aquí</button></div>`) + `<div class="cro-row">${p ? `<button type="button" data-ca="posedel" class="sec2">Quitar esta fase</button>` : ""}<button type="button" data-ca="del" class="r">Quitar del croquis</button></div>`;
+    h = `<b>Vehículo ${vLt(i)}</b> <small>fase: ${ETAPAS[CR.etapa]}</small>` + croVehFields(i, R) + (p ? rotRow(p.r) : `<div><small>No está colocado en «${ETAPAS[CR.etapa]}».</small> <button type="button" data-ca="poseaqui">Colocar aquí</button></div>`) + `<div class="cro-row">${p ? `<button type="button" data-ca="posedel" class="sec2">Quitar esta fase</button>` : ""}<button type="button" data-ca="del" class="r">Quitar del croquis</button></div>`;
   } else {
     const o = croObj(s); if (!o) { el.hidden = true; return; }
     const nm = {via: "Calzada", acera: "Acera", cebra: "Paso de peatones", senal: "Señal", obs: "Obstáculo", txt: "Texto", cota: "Cota", imp: "Punto de impacto", fren: "Huella de frenada", flecha: "Flecha"}[o.t];
@@ -1384,13 +1454,13 @@ function croHTML() {
 <g transform="translate(${r1(sx)} ${r1(sy)})"><rect x="0" y="${-ns * 2}" width="${sc}" height="${ns * 2}" fill="#fff" stroke="#000" stroke-width="${upp}"/><rect x="0" y="${-ns * 2}" width="${sc / 2}" height="${ns * 2}" fill="#000"/><text x="0" y="${-ns * 3}" font-family="Arial" font-size="${r1(ns * 3.2)}" font-weight="700">0</text><text x="${sc}" y="${-ns * 3}" text-anchor="middle" font-family="Arial" font-size="${r1(ns * 3.2)}" font-weight="700">${sc} m</text></g>
 <g transform="translate(${r1(nx)} ${r1(ny)}) rotate(${CR.norte})"><polygon points="0,${-ns * 7} ${ns * 3},${ns * 3} 0,${ns} ${-ns * 3},${ns * 3}" fill="#000"/><text y="${-ns * 8.5}" text-anchor="middle" font-family="Arial" font-size="${r1(ns * 4)}" font-weight="800">N</text></g></svg>`;
   const F = CR.fondo, nota = F && (CR.img || F.map) ? (F.map ? "Fondo: " + MAPSRC[F.src].att + ", a escala real." : F.osm ? "Fondo: mapa © colaboradores de OpenStreetMap." : F.cal ? "Fondo: imagen calibrada por el agente." : "AVISO: fondo sin calibrar; las medidas del fondo no son fiables.") : "Sin imagen de fondo.";
-  const leg = R.vehiculos.map((v, i) => `<tr><td style="border:1px solid #000;padding:2px 5px"><span style="display:inline-block;width:10px;height:10px;background:${VCOL[i % VCOL.length]};border:1px solid #000"></span> <b>Vehículo ${i + 1}</b></td><td style="border:1px solid #000;padding:2px 5px">${e((VTIPOS[v.tipo] || {}).n || "")} ${e(v.marca)} ${e(v.modelo)}</td><td style="border:1px solid #000;padding:2px 5px">${e(v.mat)}</td><td style="border:1px solid #000;padding:2px 5px">${e((((v.cond || {}).nombre || "") + " " + ((v.cond || {}).apellidos || "")).trim())}</td></tr>`).join("");
+  const leg = R.vehiculos.map((v, i) => `<tr><td style="border:1px solid #000;padding:2px 5px"><span style="display:inline-block;width:10px;height:10px;background:${VCOL[i % VCOL.length]};border:1px solid #000"></span> <b>Vehículo ${vLt(i)}</b></td><td style="border:1px solid #000;padding:2px 5px">${e((VTIPOS[v.tipo] || {}).n || "")} ${e(v.marca)} ${e(v.modelo)}</td><td style="border:1px solid #000;padding:2px 5px">${e(v.mat)}</td><td style="border:1px solid #000;padding:2px 5px">${e((((v.cond || {}).nombre || "") + " " + ((v.cond || {}).apellidos || "")).trim())}</td></tr>`).join("");
   return `<div class="apg" style="font-size:10.5px;padding:8mm 9mm;display:flex;flex-direction:column"><div style="display:flex;justify-content:space-between;border-bottom:2px solid #000;padding-bottom:3px"><b style="font-size:14px">CROQUIS DE ACCIDENTE DE TRÁFICO · T-01 #${R.ref}${(R.datos || {}).exp ? " · Exp. " + esc(R.datos.exp) : ""}</b><span>Policia Local de Tortosa</span></div>
 <div style="margin:4px 0 6px"><b>Fecha:</b> ${dfull(R.fecha)} &nbsp; <b>Lugar:</b> ${e(R.lugar)} ${R.lat != null ? "(" + R.lat + ", " + R.lng + ")" : ""}<br><b>Tipo:</b> ${e((R.datos || {}).tipo)} &nbsp; <b>Agentes:</b> ${e((R.datos || {}).agentes)}</div>${svg}
 <div style="margin:5px 0;display:flex;justify-content:space-between"><b>Escala 1:${S}</b><span>Impreso en A4 al 100 % (sin «ajustar a página»)</span></div>
 <table style="width:100%;border-collapse:collapse;margin:4px 0">${leg}</table>
 <div style="font-size:9.5px;line-height:1.35">Leyenda: vehículo sólido = posición en el impacto; discontinuo = posición final (·F); tenue = posición previa (·A); línea discontinua = trayectoria; ✕ = punto de impacto; el dibujo muestra los vehículos a su tamaño real. ${e(nota)}</div>
-<div class="sig" style="margin-top:auto;padding-top:8px"><div><span>Firma del agente</span></div><div><span>Visto bueno</span></div></div><div style="font-size:8px;margin-top:16px;color:#333">Generado con PolAssist el ${new Date().toLocaleString("es-ES")}</div></div>` + v3Page();
+<div class="sig" style="margin-top:auto;padding-top:8px;height:auto"><div>${fimg((R.datos.firmas || {}).f1)}<span>Firma agente 1 · TIP ${esc((R.datos.firmas || {}).n1)}</span></div><div>${fimg((R.datos.firmas || {}).f2)}<span>Firma agente 2 · TIP ${esc((R.datos.firmas || {}).n2)}</span></div></div><div style="font-size:8px;margin-top:16px;color:#333">Generado con PolAssist el ${new Date().toLocaleString("es-ES")}</div></div>` + v3Page();
 }
 
 /* ---- animales: recogida (entrega a protectora) + actas de infracción ---- */
@@ -2126,7 +2196,7 @@ async function traeAlertas(desde, soloActivas, max) {
 function iniMapa() {
   if (MAP || typeof L === "undefined") return;
   MAP = L.map("mapa").setView([40.8125, 0.5216], 14);
-  L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom: 19, attribution: "© OpenStreetMap"}).addTo(MAP);
+  mapaCapas(MAP);
   CAPA = L.layerGroup().addTo(MAP);
 }
 async function cargaMapa(auto) {

@@ -42,6 +42,7 @@ header{position:sticky;top:0;z-index:30;display:block;padding:12px 16px 0;box-sh
 .tab.on{background:#fff;color:var(--navy)}
 .tb{position:absolute;top:-5px;right:-4px;min-width:20px;padding:0 6px;border-radius:10px;background:var(--red);color:#fff;font-size:12px;font-style:normal;font-weight:700;line-height:20px;text-align:center}.tb[hidden]{display:none}
 .view{display:none}.view.on{display:block}.vt{margin:6px 0 12px}
+.rec{background:#C93A1F!important;color:#fff!important}.a1s{flex:1;min-width:150px;text-align:center}.a1i{border:1px solid var(--line);border-radius:8px;min-height:56px;background:#fff;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:4px 0 14px}.chip{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:8px 16px;font-weight:600}.chip.on{background:var(--navy);color:#fff;border-color:var(--navy)}
 #al[data-f="nueva"] .card:not(.nueva),#al[data-f="curso"] .card:not(.asignada):not(.en_camino),#al[data-f="atendida"] .card:not(.atendida){display:none}
 #al:empty::before{content:"Aún no hay avisos.";opacity:.6}
@@ -143,11 +144,16 @@ details.acc>#pe{padding:10px 12px 2px}
 <label class="fl">Agente 1: nombre y apellidos<input id="sv_n1"></label><label class="fl">N.º profesional<input id="sv_p1"></label>
 <label class="fl">Agente 2: nombre y apellidos<input id="sv_n2"></label><label class="fl">N.º profesional<input id="sv_p2"></label></div>
 <button id="sv_go">Iniciar servicio</button> <button id="sv_fin" style="background:none;color:inherit;border:1px solid #9996">Fin de servicio</button><div id="sv_res" style="margin-top:8px"></div></div></details>
-<div class="card" style="display:block"><b>Acta D-03: denuncia por infracción a la Ordenanza del buen uso de la vía pública</b>
+<div class="chips" id="act_tipo"><button type="button" class="chip on" data-at="d03">D-03 · Ordenanza</button><button type="button" class="chip" data-at="a01">A-01 · Inspección</button></div>
+<div class="card" id="act_d03" style="display:block"><b>Acta D-03: denuncia por infracción a la Ordenanza del buen uso de la vía pública</b>
 <p style="margin:6px 0"><small><b>Prototipo.</b> Úsalo solo con datos ficticios. Lo que escribes no se guarda en ningún servidor: vive en esta pantalla y se borra al pulsar «Nueva acta» o al recargar.</small></p>
 <div id="actaf"></div>
 <label class="fl" style="max-width:260px">Idioma de impresión<select id="act_lang"><option value="ca">Català</option><option value="es">Castellano</option><option value="en">English</option><option value="fr">Français</option></select></label>
-<button id="act_prev">Vista previa e imprimir</button> <button id="act_new" style="background:none;color:inherit;border:1px solid #9996">Nueva acta</button></div></section>
+<button id="act_prev">Vista previa e imprimir</button> <button id="act_new" style="background:none;color:inherit;border:1px solid #9996">Nueva acta</button></div>
+<div class="card" id="act_a01" style="display:block" hidden><b>Acta A-01: acta de inspección</b>
+<p style="margin:6px 0"><small><b>Prototipo.</b> Igual que la D-03: úsalo solo con datos ficticios. Lo que escribes no se guarda en ningún servidor y se borra al pulsar «Nueva acta» o al recargar.</small></p>
+<div id="a1f"></div><label class="fl" style="max-width:260px">Idioma de impresión<select id="a1_lang"><option value="ca">Català</option><option value="es">Castellano</option></select></label>
+<button id="a1_prev">Vista previa e imprimir</button> <button id="a1_new" style="background:none;color:inherit;border:1px solid #9996">Nueva acta</button></div></section>
 <section class="view" id="v-mapa"><h2 class="vt">Mapa de avisos</h2><div class="card" style="display:block"><div><button class="mp on" data-mm="act">Activos ahora</button><button class="mp" data-mm="h1">Últimas 24 h</button><button class="mp" data-mm="h7">7 días</button><button class="mp" data-mm="h30">30 días</button></div>
 <div id="mapa"></div><small id="mapn"></small></div></section>
 <section class="view" id="v-stats"><h2 class="vt">Estadísticas</h2><div class="card" style="display:block"><div><button class="mp" data-sp="7">7 días</button><button class="mp on" data-sp="30">30 días</button><button class="mp" data-sp="365">12 meses</button><button class="mp" data-sp="0">Todo</button></div>
@@ -2077,6 +2083,9 @@ function actaInit() {
   $("act_desc").onclick = () => { descAuto = true; sf("desc", genDesc($("act_lang").value)); };
   $("act_nom").onclick = () => sf("alegs", "—");
   escanerInit();
+  $("act_tipo").onclick = e => { const b = e.target.closest("[data-at]"); if (!b) return; document.querySelectorAll("#act_tipo .chip").forEach(c => c.classList.toggle("on", c == b)); $("act_d03").hidden = b.dataset.at != "d03"; $("act_a01").hidden = b.dataset.at != "a01"; if (b.dataset.at == "a01") a1Init(); };
+  $("a1_new").onclick = () => { A1.ok = false; $("a1f").innerHTML = ""; a1Init(); };
+  $("a1_prev").onclick = () => { if (!A1.ok) a1Init(); muestraImp(a1HTML($("a1_lang").value)); };
   $("act_gps").onclick = () => {
     if (!navigator.geolocation) { $("act_gps_n").textContent = "Este dispositivo no permite ubicación."; return; }
     $("act_gps_n").textContent = "Buscando ubicación…";
@@ -2122,6 +2131,73 @@ function actaHTML(lg) {
     <h4>${l("adj")}</h4><div>${bx(gv("a_fot"))}${l("fot")} &nbsp; ${bx(gv("a_inf"))}${l("inf")} &nbsp; ${bx(gv("a_alt"))}${l("altre")}: ${v("a_alt_t")}</div>${firmas}${trad}</div>`;
   return p1 + p2;
 }
+/* ---- acta A-01: acta d'inspecció (dictado por voz, escaneo de DNI, GPS y firmas) ---- */
+const A1 = {ok: false, f: {a1: null, a2: null, p: null}};
+const A1L = {
+  ca: {acta: "Dades de l'acta", num: "Número de l'acta", dia: "Dia", hora: "Hora", ag: "Agents actuants", t: "Acta d'inspecció", req: "A requeriment d'OFICI", intro: "els agents de la Policia Local de Tortosa es presenten al local especificat a continuació i en fan la inspecció.", lloc: "Dades del lloc inspeccionat", nom: "Nom", adr: "Adreça (tipus de via, nom i número)", mun: "Municipi", tel: "Telèfon", resp: "Nom i cognoms de la persona responsable del local", nif: "NIF", pers: "Dades de la persona responsable", pn: "Nom i cognoms", dni: "DNI", lnaix: "Lloc de naixement", dnaix: "Data de naixement", pares: "Nom dels pares", res: "Resultat de la inspecció", fi1: "La inspecció acaba a les", fi2: "hores del dia", fi3: "i els / les funcionaris/àries actuants i la persona responsable del local, que ha estat present en la inspecció, signen aquesta acta en prova de conformitat.", sig: "Signatures", func: "Funcionaris / àries actuants", pi: "Persona interessada", dil: "Diligències"},
+  es: {acta: "Datos del acta", num: "Número del acta", dia: "Día", hora: "Hora", ag: "Agentes actuantes", t: "Acta de inspección", req: "A requerimiento de OFICIO", intro: "los agentes de la Policía Local de Tortosa se presentan en el local especificado a continuación y realizan la inspección.", lloc: "Datos del lugar inspeccionado", nom: "Nombre", adr: "Dirección (tipo de vía, nombre y número)", mun: "Municipio", tel: "Teléfono", resp: "Nombre y apellidos de la persona responsable del local", nif: "NIF", pers: "Datos de la persona responsable", pn: "Nombre y apellidos", dni: "DNI", lnaix: "Lugar de nacimiento", dnaix: "Fecha de nacimiento", pares: "Nombre de los padres", res: "Resultado de la inspección", fi1: "La inspección acaba a las", fi2: "horas del día", fi3: "y los/las funcionarios/as actuantes y la persona responsable del local, que ha estado presente en la inspección, firman esta acta en prueba de conformidad.", sig: "Firmas", func: "Funcionarios / as actuantes", pi: "Persona interesada", dil: "Diligencias"}
+};
+const ax = k => { const e = document.querySelector('#a1f [data-ax="' + k + '"]'); return e ? e.value.trim() : ""; };
+const axs = (k, v) => { const e = document.querySelector('#a1f [data-ax="' + k + '"]'); if (e && v) { e.value = v; } };
+const AXI = (l, k, t = "text", x = "") => `<label class="fl">${l}<input data-ax="${k}" type="${t}" ${x}></label>`;
+const AXT = (l, k, r = 3) => `<label class="fl">${l}<textarea id="a1_ta_${k}" data-ax="${k}" rows="${r}"></textarea></label>`;
+function dictaInit(btn, ta, selLang, nota) {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition, B = $(btn), T = $(ta), N = $(nota); let rec = null, on = false, base = "", fin = "";
+  if (!SR) { B.disabled = true; N.textContent = "Este navegador no permite dictar desde la página. Usa el micrófono 🎤 del teclado del móvil."; return; }
+  const puntua = t => t.replace(/\s+(punto y aparte|punt i a part)\b/gi, ".\n").replace(/\s+(nueva línea|línia nova|nova línia)\b/gi, "\n").replace(/\s+(dos puntos|dos punts)\b/gi, ":").replace(/\s+(punto|punt)\b/gi, ".").replace(/\s+(coma)\b/gi, ",").replace(/\s+(punto y coma|punt i coma)\b/gi, ";");
+  const ui = () => { B.textContent = on ? "⏹️ Parar dictado" : "🎙️ Dictar"; B.classList.toggle("rec", on); };
+  const ini = () => {
+    rec = new SR(); rec.lang = $(selLang).value; rec.continuous = true; rec.interimResults = true; base = T.value ? T.value.replace(/\s+$/, "") + " " : ""; fin = "";
+    rec.onresult = e => { let it = ""; for (let i = e.resultIndex; i < e.results.length; i++) { const t = e.results[i][0].transcript; if (e.results[i].isFinal) { const sg = puntua(" " + t.trim()).replace(/^ +/, ""), cmd = /^[.,:;\n]/.test(sg); fin = (cmd ? fin.replace(/ +$/, "") : fin) + (cmd ? sg : sg.trim()) + (sg.endsWith("\n") ? "" : " "); } else it += t; } T.value = (base + fin + it).replace(/(^|[.\n]\s*)([a-zà-ú])/g, (m, a, b) => a + b.toUpperCase()); T.dispatchEvent(new Event("input", {bubbles: true})); };
+    rec.onerror = e => { if (e.error == "not-allowed" || e.error == "service-not-allowed") { on = false; N.textContent = "No hay permiso para el micrófono. Actívalo en los ajustes del navegador."; } else if (e.error != "no-speech" && e.error != "aborted") N.textContent = "Error de dictado: " + e.error; };
+    rec.onend = () => { if (on) { try { ini(); } catch (x) { on = false; } } ui(); };
+    rec.start();
+  };
+  B.onclick = () => { if (on) { on = false; try { rec.stop(); } catch (e) {} ui(); N.textContent = "Dictado parado. Revisa el texto: se puede corregir a mano."; return; } on = true; N.textContent = "Escuchando… habla con normalidad. Di «punto», «coma» o «nueva línea» para la puntuación."; try { ini(); } catch (e) { on = false; } ui(); };
+}
+function a1Init() {
+  if (A1.ok) return; A1.ok = true; A1.f = {a1: null, a2: null, p: null};
+  const sg = (k, t) => `<div class="a1s"><div id="a1_i_${k}" class="a1i"><small>Sin firmar</small></div><button type="button" data-a1f="${k}" class="sec2">✍️ ${t}</button></div>`;
+  $("a1f").innerHTML =
+    AC("1. Datos del acta", `<div class="g2">${AXI("Número del acta (a mano)", "num")}${AXI("Fecha", "fecha", "date")}${AXI("Hora de inicio", "hora", "time")}</div>${AXI("A requerimiento de OFICIO (número u origen)", "req")}<small>Los agentes actuantes salen del inicio de servicio.</small>`, true)
+  + AC("2. Lugar inspeccionado", `<button type="button" id="a1_gps" class="sec2">📍 Usar mi ubicación y la hora actual</button> <small id="a1_gps_n"></small><div class="g2">${AXI("Nombre del local", "lnom")}${AXI("Dirección (tipo de vía, nombre y número)", "ladr")}${AXI("Municipio", "lmun")}${AXI("Teléfono", "ltel", "tel")}${AXI("Nombre y apellidos de la persona responsable del local", "lresp")}${AXI("NIF", "lnif")}</div>`, true)
+  + AC("3. Persona responsable", `<button type="button" id="a1_esc" class="sec2">📷 Escanear DNI</button> <small>Rellena nombre, DNI, nacimiento y domicilio. Revisa siempre lo leído.</small><div class="g2">${AXI("Nombre y apellidos", "pnom")}${AXI("DNI / NIE / pasaporte", "pdoc", "text", 'autocapitalize="characters"')}${AXI("Lugar de nacimiento", "plnaix")}${AXI("Fecha de nacimiento", "pdnaix", "date")}${AXI("Nombre de los padres", "ppares")}${AXI("Dirección (tipo de vía, nombre y número)", "padr")}${AXI("Municipio", "pmun")}${AXI("Teléfono", "ptel", "tel")}</div>`, true)
+  + AC("4. Resultado de la inspección", `<div class="row" style="align-items:center;gap:8px"><button type="button" id="a1_dic" class="k">🎙️ Dictar</button><select id="a1_dl"><option value="es-ES">Castellano</option><option value="ca-ES">Català</option></select></div><small id="a1_dn">Pulsa «Dictar», habla y el texto se escribe solo. Puedes corregirlo a mano.</small>${AXT("Resultado de la inspección", "res", 10)}`, true)
+  + AC("5. Finalización, firmas y diligencias", `<div class="g2">${AXI("Hora de fin", "fhora", "time")}${AXI("Fecha de fin", "ffecha", "date")}</div><button type="button" id="a1_ahora" class="sec2">Poner ahora</button>
+<div class="row">${sg("a1", "Firma agente 1")}${sg("a2", "Firma agente 2")}${sg("p", "Firma persona interesada")}</div><div class="row" style="align-items:center;gap:8px"><button type="button" id="a1_dic2" class="k">🎙️ Dictar diligencias</button></div><small id="a1_dn2"></small>${AXT("Diligencias", "dil", 4)}`, true);
+  const n = ahora(); axs("fecha", n.f); axs("hora", n.h);
+  dictaInit("a1_dic", "a1_ta_res", "a1_dl", "a1_dn"); dictaInit("a1_dic2", "a1_ta_dil", "a1_dl", "a1_dn2");
+  $("a1_ahora").onclick = () => { const t = ahora(); axs("ffecha", t.f); axs("fhora", t.h); };
+  $("a1_esc").onclick = () => escanUI(r => {
+    axs("pnom", escNombre(r)); axs("pdoc", r.doc); axs("plnaix", r.lnaix); axs("pdnaix", r.nac); axs("padr", r.adr); axs("pmun", r.mun);
+    if (!ax("lresp")) axs("lresp", escNombre(r)); if (!ax("lnif")) axs("lnif", r.doc);
+  });
+  $("a1_gps").onclick = () => {
+    const nt = $("a1_gps_n"); if (!navigator.geolocation) { nt.textContent = "Este dispositivo no permite ubicación."; return; } nt.textContent = "Buscando ubicación…";
+    navigator.geolocation.getCurrentPosition(async p => {
+      const la = p.coords.latitude, lo = p.coords.longitude, t = ahora(); const f = $("a1f").querySelector('[data-ax="fecha"]'); f.value = t.f; $("a1f").querySelector('[data-ax="hora"]').value = t.h;
+      axs("ladr", la.toFixed(5) + ", " + lo.toFixed(5)); nt.textContent = "Ubicación obtenida. Buscando la dirección…";
+      try { const r = await (await fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&accept-language=ca&lat=" + la + "&lon=" + lo)).json(), ad = r.address || {};
+        $("a1f").querySelector('[data-ax="ladr"]').value = [ad.road, ad.house_number].filter(Boolean).join(", ") || la.toFixed(5) + ", " + lo.toFixed(5); axs("lmun", ad.city || ad.town || ad.village || ad.municipality || ""); nt.textContent = "Dirección rellenada: revísala."; }
+      catch (e) { nt.textContent = "Sin conexión para la dirección: se han puesto las coordenadas."; }
+    }, err => { nt.textContent = "No se pudo obtener la ubicación: " + err.message; }, {enableHighAccuracy: true, timeout: 15000});
+  };
+  $("a1f").addEventListener("click", e => { const b = e.target.closest("[data-a1f]"); if (!b) return; const k = b.dataset.a1f; firmaPide("Firma: " + ({a1: "agente 1", a2: "agente 2", p: "persona interesada"})[k], url => { A1.f[k] = url; $("a1_i_" + k).innerHTML = `<img src="${url}" alt="firma" style="height:46px">`; }); });
+}
+function a1HTML(lg) {
+  const L = A1L[lg], e = esc, ce = (k, v, fl = 1) => `<div class="cell" style="flex:${fl}"><small>${L[k]}</small><b>${e(v)}</b></div>`, F = A1.f, fi = u => u ? `<img src="${u}" alt="firma" style="height:13mm;max-width:50mm;object-fit:contain;position:absolute;left:0;bottom:1px">` : "";
+  const fin = ax("fhora") || ahora().h, ffe = ax("ffecha") || ahora().f;
+  return `<div class="apg" style="font-size:10.5px;padding:10mm 12mm;height:auto;min-height:296mm;overflow:visible;position:relative"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div><b style="font-size:15px">Ajuntament de Tortosa</b><br><b>Policia Local</b></div><div style="text-align:right;font-size:9px">Plaça Immaculada, 16 · 43500 Tortosa<br>T 977 44 86 22 · F 977 44 19 83</div></div>
+<div class="top" style="margin-top:4px"><h4>${L.acta} <span style="float:right;font-weight:400">A-01</span></h4><div class="row">${ce("num", ax("num"))}</div><div class="row">${ce("dia", fmtD(ax("fecha")))}${ce("hora", ax("hora"))}</div><div class="row">${ce("ag", agentes(lg))}</div></div>
+<h4 style="font-size:14px;margin-top:8px">${L.t}</h4><div>${L.req}: <b>${e(ax("req")) || "……………………"}</b>, ${L.intro}</div>
+<h4>${L.lloc}</h4><div class="row">${ce("nom", ax("lnom"))}${ce("adr", ax("ladr"), 1)}</div><div class="row">${ce("mun", ax("lmun"))}${ce("tel", ax("ltel"))}</div><div class="row">${ce("resp", ax("lresp"), 2)}${ce("nif", ax("lnif"))}</div>
+<h4>${L.pers}</h4><div class="row">${ce("pn", ax("pnom"), 2)}${ce("dni", ax("pdoc"))}</div><div class="row">${ce("lnaix", ax("plnaix"))}${ce("dnaix", fmtD(ax("pdnaix")))}${ce("pares", ax("ppares"))}</div><div class="row">${ce("adr", ax("padr"), 2)}${ce("mun", ax("pmun"))}${ce("tel", ax("ptel"))}</div>
+<h4>${L.res}</h4><div class="desc" style="min-height:105mm">${e(ax("res"))}</div>
+<div style="margin-top:6px">${L.fi1} <b>${e(fin)}</b> ${L.fi2} <b>${e(fmtD(ffe))}</b> ${L.fi3}</div>
+<h4>${L.sig}</h4><div class="sig" style="height:auto"><div style="height:16mm">${fi(F.a1)}${fi(F.a2) ? "" : ""}<span>${L.func} 1</span></div><div style="height:16mm">${fi(F.a2)}<span>${L.func} 2</span></div><div style="height:16mm">${fi(F.p)}<span>${L.pi}</span></div></div>
+<h4 style="margin-top:20px">${L.dil}</h4><div class="desc" style="min-height:30mm">${e(ax("dil"))}</div><div style="text-align:right;font-size:8px;margin-top:4px">Gener 2007 · A-01</div></div>`;
+}
+
 /* ---- pestañas del panel ---- */
 function ver(id) {
   document.querySelectorAll(".view").forEach(v => v.classList.toggle("on", v.id == "v-" + id));

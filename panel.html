@@ -92,6 +92,10 @@ details.acc>#pe{padding:10px 12px 2px}
 .cro-tools{display:flex;gap:6px;overflow-x:auto;padding:8px;background:#fff;border-top:1px solid #cfd8d6;-webkit-overflow-scrolling:touch}.cro-tools button{display:flex;flex-direction:column;align-items:center;min-width:64px;background:#fff;color:#12211F;border:1px solid #cfd8d6;font-size:11px;padding:6px 4px}.cro-tools button span{font-size:20px}.cro-tools button.on{background:#0E5A5A;color:#fff}
 .cro-pn{background:#fff;border-top:1px solid #cfd8d6;padding:8px 10px;max-height:38vh;overflow:auto;font-size:14px}.cro-pn[hidden]{display:none}.cro-pn .cro-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin:6px 0}.cro-pn button{background:#0E5A5A;color:#fff;border:0}.cro-pn button.sec2{background:#fff;color:#12211F;border:1px solid #cfd8d6}.cro-pn button.r{background:#C93A1F}.cro-pn button:disabled{opacity:.4}.cro-pn input,.cro-pn select{padding:7px;border:1px solid #cfd8d6;border-radius:8px;background:#fff;color:#12211F}
 .cro-zoom{position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:8px;z-index:2}.cro-zoom button{width:46px;height:46px;border-radius:12px;background:#fff;color:#12211F;border:1px solid #9fb0ac;font-size:24px;font-weight:700;padding:0;box-shadow:0 2px 8px #0003}#cro_s{touch-action:none;-webkit-user-select:none;user-select:none}.cro-b{position:absolute;left:8px;right:8px;top:62px;background:#fff4d6;color:#4a3500;border:1px solid #e8c766;border-radius:12px;padding:8px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;z-index:2}.cro-b[hidden]{display:none}.cro-b span{flex:1;font-size:13px}.cro-b button{background:#0E5A5A;color:#fff;border:0}
+.avc{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:20px;padding:8px 14px;font-weight:600;margin:3px 3px 3px 0}.avc.on{background:var(--navy);color:#fff;border-color:var(--navy)}.avc i{font-style:normal;font-weight:400;font-size:11px;opacity:.8;margin-left:4px}.avc b{background:#C93A1F;color:#fff;border-radius:10px;padding:0 7px;margin-left:4px;font-size:12px}
+.av-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;margin:8px 0;align-items:stretch}@media(max-width:700px){.av-top{grid-template-columns:1fr}}#av_map{min-height:430px;border-radius:14px;overflow:hidden;background:#233;z-index:0}.av-side{display:flex;flex-direction:column;gap:8px}#av_cal{background:var(--card);border-radius:14px;padding:8px}#av_btns{background:var(--card);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:6px}.av-big{padding:14px;font-size:17px}.av-grp small{display:block;opacity:.7;font-size:12px;margin-bottom:2px}.av-sala{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--card);border-radius:12px;padding:8px 12px;margin:0 0 8px}.av-sala input{padding:8px}
+.pt-h{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0}.pt-h input{padding:8px}.pt-sub{font-size:13px;opacity:.75}.pt-g{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:6px}.pt-c{border-radius:12px;padding:8px;border:2px solid;color:#10241b}.pt-c.li{background:#d9f5c9;border-color:#4caf50}.pt-c.oc{background:#ffd5cf;border-color:#C93A1F}.pt-t{display:flex;justify-content:space-between;gap:6px;align-items:baseline}.pt-t b{font-size:20px}.pt-t span{font-size:12px;font-weight:600;text-align:right}.pt-a{margin-top:4px;font-size:13px}.pt-ag{display:flex;gap:4px;align-items:center;flex-wrap:wrap;margin:2px 0}.pt-ag span{flex:1;min-width:0}.pt-ag select{max-width:120px;padding:3px;font-size:12px}.pt-ag button{padding:2px 8px}.pt-f{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}.pt-f input{flex:1;min-width:60px;padding:6px}
+#av_f .fl{display:block;margin:8px 0;font-size:13px}#av_f .fl input,#av_f .fl select,#av_f .fl textarea{width:100%;box-sizing:border-box;margin-top:3px;padding:10px}#av_f .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}#av_f .it{border:1px solid var(--line);border-radius:12px;padding:10px;margin:8px 0}#av_f .row{display:flex;gap:8px;align-items:end;flex-wrap:wrap}#av_f .ck{display:flex;gap:8px;align-items:center;margin:8px 0;font-size:14px}#av_f .ck input{width:22px;height:22px}#av_fm{height:260px;border-radius:12px;overflow:hidden;margin:8px 0;z-index:0}@media(max-width:560px){#av_f .g2{grid-template-columns:1fr}}.st-h{grid-template-columns:repeat(24,1fr)}.st-h small,.st-h .st-v{font-size:9px}
 </style>
 </head>
 <body>
@@ -107,7 +111,18 @@ details.acc>#pe{padding:10px 12px 2px}
 <div id="alarm"></div>
 <div class="bar"><b>Esta unidad:</b><input id="unit" placeholder="Ej. Comisaría, Patrulla 1" size="22"><small>Se guarda en este dispositivo. Los avisos que asignes aquí llevarán este nombre.</small></div>
 
-<section class="view on" id="v-avisos"><div class="chips"><button class="chip on" data-f="todos">Todos</button><button class="chip" data-f="nueva">Nuevos <b id="c_n">0</b></button><button class="chip" data-f="curso">En curso <b id="c_c">0</b></button><button class="chip" data-f="atendida">Atendidos <b id="c_a">0</b></button></div><div id="al" data-f="todos"></div></section>
+<section class="view on" id="v-avisos"><h2 class="vt">Avisos · Sala</h2>
+<div id="av_l">
+<div class="av-sala"><b>🎧 Agente de sala:</b><input id="av_stip" placeholder="TIP" size="6" inputmode="numeric"><input id="av_snom" placeholder="Nombre y apellidos" size="26"><small>Es quien aparece como receptor de cada aviso nuevo.</small></div>
+<div class="av-top"><div id="av_map"></div><div class="av-side"><div id="av_cal"></div><div id="av_btns"><button id="av_new" type="button" class="k av-big">+ Nuevo aviso</button>
+<div class="av-grp"><small>Turnos de 8 horas</small><div><button class="avc" type="button" data-avt="M">Mañana <i>06–14</i></button><button class="avc" type="button" data-avt="T">Tarde <i>14–22</i></button><button class="avc" type="button" data-avt="N">Noche <i>22–06</i></button></div></div>
+<div class="av-grp"><small>Turnos de 12 horas</small><div><button class="avc" type="button" data-avt="MT">Mañana-tarde <i>06–18</i></button><button class="avc" type="button" data-avt="TN">Tarde-noche <i>18–06</i></button></div></div>
+<div><button class="avc" type="button" data-avm="pend">● Pendientes <b id="av_pn">0</b></button><button class="avc" type="button" id="av_bf">🔎 Filtrar ▾</button><button class="avc" type="button" id="av_bs">📊 Estadísticas ▾</button></div></div></div></div>
+<div id="av_fp" class="acc-pn" hidden></div><div id="av_sp" class="acc-pn" hidden></div>
+<div id="av_pt" class="acc-pn"></div>
+<div class="ac-leg"><span><i class="r"></i> En curso</span><span><i class="v"></i> Finalizado</span><span>⭐ relevante</span><span>📱 viene de la app ciudadana</span></div><div id="av_tt" class="brf-bar" style="align-items:center"></div><div id="av_lst"></div>
+<details class="acc" id="av_app" open><summary>📱 Avisos que llegan de la app ciudadana</summary><div class="pad"><div class="chips"><button class="chip on" data-f="todos">Todos</button><button class="chip" data-f="nueva">Nuevos <b id="c_n">0</b></button><button class="chip" data-f="curso">En curso <b id="c_c">0</b></button><button class="chip" data-f="atendida">Atendidos <b id="c_a">0</b></button></div><div id="al" data-f="todos"></div></div></details>
+</div><div id="av_f" hidden></div></section>
 <section class="view" id="v-brf"><h2 class="vt">Briefing</h2>
 <div class="brf-bar"><label>Fecha<input type="date" id="brf_f"></label><label>Turno<select id="brf_t"><option value="manana">Mañana</option><option value="tarde">Tarde</option><option value="noche">Noche</option></select></label><button id="brf_hoy" type="button" style="background:none;color:inherit;border:1px solid var(--line)">Turno actual</button></div>
 <div id="brf_est"></div><div id="brf_av"></div>
@@ -241,12 +256,13 @@ async function start() {
   const {data:{user}} = await db.auth.getUser(); if (!user) return;
   const {data:p} = await db.from("profiles").select("rol").eq("id", user.id).single();
   if (!p || p.rol !== "agente") { await db.auth.signOut(); return $("err").textContent = "Esta cuenta no es de agente."; }
-  $("login").hidden = true; $("panel").hidden = false; $("out").hidden = false; $("tabs").hidden = false; unlock(); lock(); load();
+  $("login").hidden = true; $("panel").hidden = false; $("out").hidden = false; $("tabs").hidden = false; unlock(); lock(); load(); avInit();
   const ses = (await db.auth.getSession()).data.session; if (ses) db.realtime.setAuth(ses.access_token);
   db.auth.onAuthStateChange((ev, s2) => { if (s2) db.realtime.setAuth(s2.access_token); });
   db.channel("rt").on("postgres_changes", {event:"*", schema:"public", table:"alertas"}, load)
     .on("postgres_changes", {event:"*", schema:"public", table:"profiles"}, load)
-    .on("postgres_changes", {event:"*", schema:"public", table:"ocupaciones"}, load).subscribe();
+    .on("postgres_changes", {event:"*", schema:"public", table:"ocupaciones"}, load)
+    .on("postgres_changes", {event:"*", schema:"public", table:"intervenciones"}, avRt).on("postgres_changes", {event:"*", schema:"public", table:"indicativos"}, avRt).subscribe();
   setInterval(vigila, 5000);   // respaldo: si el tiempo real falla, se refresca solo cada 5 s
 }
 
@@ -845,7 +861,7 @@ const escNombre = r => [r.nom, r.ape1, r.ape2].filter(Boolean).join(" ");
 
 const escBtn = (mod, mapa) => `<button type="button" class="sec2" data-escm="${mod}" data-esck="${mapa}" style="margin:2px 0 6px">📷 Escanear DNI</button>`;
 document.addEventListener("click", e => {
-  const b = e.target.closest("[data-escm]"); if (!b) return; const M = {ACC: [ACC, accSucio, accRender], DET: [DET, detSucio, detRender], ANI: [ANI, aniSucio, aniRender]}[b.dataset.escm]; if (!M || !M[0].row) return;
+  const b = e.target.closest("[data-escm]"); if (!b) return; const M = {ACC: [ACC, accSucio, accRender], DET: [DET, detSucio, detRender], ANI: [ANI, aniSucio, aniRender], AV: [AV, avSucio, avRender]}[b.dataset.escm]; if (!M || !M[0].row) return;
   const mp = b.dataset.esck.split(";").map(x => x.split(":"));
   escanUI(r => {
     const V = {full: escNombre(r), nom: r.nom, ape: [r.ape1, r.ape2].filter(Boolean).join(" "), doc: r.doc, nac: r.nac, dom: r.dom, adr: r.adr, mun: r.mun, lnaix: r.lnaix};
@@ -2240,6 +2256,7 @@ function ver(id) {
   if (id == "brf") brfInit();
   if (id == "det") detInit();
   if (id == "acc") accInit();
+  if (id == "avisos") { avInit(); if (AV.map) setTimeout(() => AV.map.invalidateSize(), 80); }
   if (id == "ani") aniInit();
   if (id == "pat") { ptFit = true; $("pt_nom").textContent = $("unit").value.trim() || "—"; setTimeout(() => { iniMapaP(); if (MAPP) MAPP.invalidateSize(); cargaUnidades(); }, 60); }
   window.scrollTo(0, 0);
@@ -2253,6 +2270,300 @@ function badges() {
   $("c_n").textContent = nu; $("c_c").textContent = q("#al .card.asignada,#al .card.en_camino"); $("c_a").textContent = q("#al .card.atendida");
 }
 [["al", {childList: true, subtree: true}], ["pe", {childList: true}], ["ocn", {childList: true, characterData: true, subtree: true}]].forEach(([i, o]) => new MutationObserver(badges).observe($(i), o));
+/* ================= AVISOS DE SALA (estilo GenPol) ================= */
+const AV_REQ = [["112", "112"], ["AA", "Altra Administració (excepte serveis d'emergència)"], ["AL", "Central d'Alarmes"], ["CIU", "Ciutadà"], ["CME", "Mossos d'Esquadra"], ["EME", "Altre servei d'emergència (CNP, GC, bombers)"], ["PC", "Protecció Civil"], ["POL", "Agent PL Tortosa"], ["SMU", "Servei Municipal"], ["APP", "App PolAssist (ciudadanía)"]];
+const AV_MOT = [["PAD", "Pol. Administrativa"], ["PAS", "Pol. Assistencial"], ["PSC", "Pol. de Seguretat"], ["PTR", "Pol. de Trànsit"]];
+const AV_RES = [["A", "Servei anul·lat pel requerent"], ["SC", "Servei complert"], ["NL", "Servei no localitzat pels agents"], ["P", "Servei pendent"], ["ME", "Servei no realitzat per manca d'efectius"], ["CME", "Traspàs a CME"]];
+const AV_CAN = [["tel", "Teléfono"], ["app", "App ciudadana"], ["pres", "Presencial en comisaría"], ["radio", "Radio / patrulla"], ["otro", "Otro"]];
+// Catálogo copiado de las capturas de GenPol. Los códigos 1.00 (accident amb ferits) y el de «Llei d'Estrangeria» no se veían bien: revisar. Faltan filas que no salían en las fotos.
+const AV_TIPOS = [["", "Infracció a la Llei d'Estrangeria"], ["1.00", "Accident de trànsit amb ferits"], ["1.01", "Accident de trànsit sense ferits"], ["1.12", "Regulació trànsit; punt fix (pròpia iniciativa)"], ["1.18", "Regulació trànsit, actes esportius, culturals i d'altres"], ["1.19", "Regulació trànsit, protecció escolar"], ["1.24", "Revisió senyalització"], ["1.25", "Posar i recollir senyalització"], ["1.26", "Pujar i baixar pilones"], ["1.27", "Objecte / residu / animal a la via pública"], ["1.28", "Vehicle avariat"], ["1.31", "Immobilització vehicles"], ["1.32", "Ingrés de grua a dipòsit o canvi de lloc"], ["1.35", "Disciplina viària"], ["1.37", "Vehicle mal estacionat"], ["1.38", "Col·locació/revisió avisos senyalització trànsit"], ["1.39", "Control DEC"], ["1.40", "Control DEC UOS"], ["1.55", "Infracció dinàmica (conducció negligent, semàfor, casc, soroll...)"], ["1.56", "Localitzar conductor - propietari vehicle"], ["1.57", "Trànsit: proposta via pública"], ["2.01", "Complimentació d'atestats o informes interns"], ["2.02", "Reunió amb entitats i xerrades"], ["2.04", "Actes guals (seguiment)"], ["2.05", "Formació (interna)"], ["2.13", "Venda ambulant"], ["2.16", "Objectes perduts"], ["2.17", "Desperfecte/avaria en via pública"], ["2.21", "Edificis/façanes ruïnoses amb perill"], ["2.22", "Problemes de convivència i altres conflictes privats"], ["2.34", "Obres i ocupacions de la via pública"], ["2.37", "Infracció OM Convivència (excepte sorolls)"], ["2.38", "Inspecció local pública concurrència"], ["2.39", "Altres disposicions Policia Administrativa"], ["2.40", "Intervenció amb animals"], ["2.41", "Molèsties habitatges / via pública per sorolls"], ["2.48", "Mesura nivell riu / Mostres d'aigua"], ["2.50", "Punt Atenció Ciutadana mòbil (PAC)"], ["3.01", "Robatori de vehicles"], ["3.02", "Robatori a l'interior de vehicle"], ["3.04", "Robatori amb força"], ["3.05", "Furt"], ["3.12", "Robatori en violència o intimidació"], ["3.20", "Estafa i falsificació"], ["3.21", "Altres delictes"], ["3.23", "Danys"], ["3.26", "Delicte contra la seguretat vial"], ["3.31", "Fer-se escàpol en accident"], ["3.33", "Consum i tinença de substàncies estupefaents"], ["3.42", "Assassinat - homicidi"], ["3.43", "Lesions"], ["3.45", "Amenaça de bomba"], ["3.46", "Tinença d'armes prohibides"], ["3.48", "Manifestació sense autorització"], ["3.49", "Baralles, alteració de l'ordre i aldarulls (v.p., domicili, establiment)"], ["3.52", "Agressió/Resistència agent de l'autoritat"], ["3.57", "Recuperació vehicles"], ["3.62", "Identificació de persones i vehicles"], ["3.63", "Persones sospitoses"], ["3.64", "Detenció de persones"], ["3.65", "Formalització dels drets de la persona detinguda"], ["3.66", "Custòdia i trasllat detingut"], ["3.67", "Conducció de persones a comissaria"], ["3.79", "Seguiment problemàtica"], ["3.80", "Vigilància UOS"], ["3.81", "Vigilància llocs - zones d'interès policial"], ["3.82", "Servei mercat setmanal (vigilància)"], ["3.88", "Violència domèstica"], ["3.89", "Intervenció d'objectes"], ["4.01", "Intervenció amb menors"], ["4.02", "Recolzament a Cos de Mossos d'Esquadra"], ["4.09", "Intervenció amb indigents / captaires"], ["4.10", "Intervenció / auxili gent gran"], ["4.11", "Intervenció EMD Jesús \"no esteu sols\""], ["4.12", "Intervenció / auxili a malalts o ferits"], ["4.13", "Intervenció / auxili a persones amb estat etílic"], ["4.16", "Intervenció per mort natural"], ["4.17", "Intervenció per autòlisi"], ["4.22", "Localització persona / vehicle / objecte"], ["4.23", "Obrir vehicle per oblit claus / avaria"], ["4.24", "Acompanyar vehicles o autoritats"], ["4.25", "Sol·licitud servei de taxi"], ["4.26", "Acompanyament / protecció víctimes"], ["4.33", "Incendi / inundació o d'altre requeriment de bombers"]];
+const avTL = t => t[0] ? t[0] + " · " + t[1] : t[1];
+// Turnos: [nombre, horario, hora inicio, hora fin (30 = 06:00 del día siguiente)]. Ajustar si los horarios de Tortosa son otros.
+const AV_T = {M: ["Mañana", "06–14", 6, 14], T: ["Tarde", "14–22", 14, 22], N: ["Noche", "22–06", 22, 30], MT: ["Mañana-tarde (12 h)", "06–18", 6, 18], TN: ["Tarde-noche (12 h)", "18–06", 18, 30]};
+const avRango = (dia, t) => { const [y, m, d] = dia.split("-").map(Number), z = AV_T[t]; return [new Date(y, m - 1, d, z[2]), new Date(y, m - 1, d, z[3])]; };
+const avTurnoDe = iso => { const h = new Date(iso).getHours(); return h >= 6 && h < 14 ? "M" : h >= 14 && h < 22 ? "T" : "N"; };
+const AV = {ok: false, cm: {y: new Date().getFullYear(), m: new Date().getMonth()}, dia: ldia(Date.now()), turno: "", modo: "dia", dm: [], pend: [], ind: [], fd: null, map: null, row: null, edit: false, f: {y: "", m: "", mot: "", req: "", res: "", est: "", ind: "", q: ""}, sy: String(new Date().getFullYear()), sucio: new Set(), tm: null, sala: {tip: "", nombre: ""}, errInd: false};
+const ldt = iso => { if (!iso) return ""; const d = new Date(iso); return d.getFullYear() + "-" + pd2(d.getMonth() + 1) + "-" + pd2(d.getDate()) + "T" + pd2(d.getHours()) + ":" + pd2(d.getMinutes()); };
+const avHora = iso => new Date(iso).toLocaleTimeString("es-ES", {hour: "2-digit", minute: "2-digit"});
+const avNom = (L, c) => (L.find(x => x[0] == c) || [c, c])[1];
+function avNorm(r) { r.dia = ldia(r.fecha); r.cerr = !!r.finalizada; r.equipos = r.equipos || []; r.personas = r.personas || []; r.requirent = r.requirent || {}; return r; }
+async function avInit() {
+  if (!AV.ok) {
+    AV.ok = true;
+    try { const s = JSON.parse(localStorage.getItem("pa_sala") || "null"); if (s) AV.sala = s; } catch (e) {}
+    if (!AV.sala.nombre) { try { const {data: {user}} = await db.auth.getUser(); const {data: p} = await db.from("profiles").select("nombre,apellidos").eq("id", user.id).single(); if (p) AV.sala.nombre = [p.nombre, p.apellidos].filter(Boolean).join(" "); } catch (e) {} }
+    $("av_stip").value = AV.sala.tip || ""; $("av_snom").value = AV.sala.nombre || "";
+    const sv = () => { AV.sala = {tip: $("av_stip").value.trim(), nombre: $("av_snom").value.trim()}; try { localStorage.setItem("pa_sala", JSON.stringify(AV.sala)); } catch (e) {} };
+    $("av_stip").oninput = sv; $("av_snom").oninput = sv;
+    $("av_l").addEventListener("click", avClick); $("av_l").addEventListener("change", avChange);
+    $("av_fp").addEventListener("input", avFiltEv); $("av_fp").addEventListener("change", e => { if (e.target.dataset.avfl != "q") avFiltEv(e); });
+    $("av_sp").addEventListener("change", e => { const t = e.target.closest("[data-avsty]"); if (t) { AV.sy = t.value; avStats(); } });
+    $("av_f").addEventListener("input", avEv); $("av_f").addEventListener("change", avEv); $("av_f").addEventListener("click", avFClick);
+    setInterval(() => { if (!AV.row && $("v-avisos").classList.contains("on") && !document.activeElement.closest("#av_l input,#av_l select")) avRefresh(); }, 20000);
+  }
+  if (AV.row) avRender(); else avRefresh();
+}
+function avRt() { clearTimeout(AV.rt); AV.rt = setTimeout(() => { if ($("v-avisos").classList.contains("on") && !AV.row && AV.ok) avRefresh(); }, 600); }
+async function avRefresh() { await Promise.all([avLista(), avCargaInd()]); avPatrullas(); }
+async function avCargaInd() { const r = await db.from("indicativos").select("*").order("codigo"); AV.errInd = !!r.error; if (!r.error) AV.ind = (r.data || []).map(x => (x.agentes = x.agentes || [], x)); }
+async function avLista() {
+  const {y, m} = AV.cm, a = new Date(y, m, 1).toISOString(), b = new Date(y, m + 1, 2).toISOString();
+  const jobs = [db.from("intervenciones").select("*").gte("fecha", a).lt("fecha", b).order("fecha", {ascending: false}).limit(1000), db.from("intervenciones").select("*").eq("finalizada", false).order("fecha", {ascending: false}).limit(300)];
+  const fa = avFiltAct(); if (fa) jobs.push(avCargaF());
+  const rs = await Promise.all(jobs), bad = rs.find(x => x.error);
+  if (bad) { $("av_lst").innerHTML = `<div class="brf-aviso">⚠️ No se pudo cargar (${esc(bad.error.message)}). ¿Has ejecutado 19-avisos-sala.sql?</div>`; return; }
+  AV.dm = rs[0].data.map(avNorm); AV.pend = rs[1].data.map(avNorm); AV.fd = fa ? rs[2].data.map(avNorm) : null; avPinta();
+}
+const avFiltAct = () => { const f = AV.f; return !!(f.y || f.m || f.mot || f.req || f.res || f.est || f.ind || f.q); };
+function avCargaF() {
+  const f = AV.f; let q = db.from("intervenciones").select("*");
+  if (f.y && f.y != "all") q = q.gte("fecha", new Date(+f.y, 0, 1).toISOString()).lt("fecha", new Date(+f.y + 1, 0, 1).toISOString());
+  else if (!f.y) q = q.gte("fecha", new Date(AV.cm.y, AV.cm.m, 1).toISOString()).lt("fecha", new Date(AV.cm.y, AV.cm.m + 1, 1).toISOString());
+  return q.order("fecha", {ascending: false}).limit(5000);
+}
+function avAplicaF(L) {
+  const f = AV.f, q = f.q.trim().toLowerCase();
+  return L.filter(r => (f.m === "" || new Date(r.fecha).getMonth() == +f.m) && (!f.mot || r.motivo == f.mot) && (!f.req || r.requeridor == f.req) && (!f.res || r.resultado == f.res) && (f.est != "p" || !r.cerr) && (f.est != "c" || r.cerr)
+    && (!f.ind || r.equipos.some(e => e.ind == f.ind)) && (!q || [r.calle, r.barrio, r.tipo_txt, r.tipo_cod, r.exp, r.descripcion, (r.requirent || {}).nom, (r.requirent || {}).ape].join(" ").toLowerCase().includes(q)));
+}
+function avBase() {
+  if (avFiltAct() && AV.fd) return avAplicaF(AV.fd);
+  if (AV.modo == "pend") return AV.pend;
+  let L = AV.dm || [];
+  if (AV.dia) { if (AV.turno) { const [a, b] = avRango(AV.dia, AV.turno); L = L.filter(r => { const t = +new Date(r.fecha); return t >= a && t < b; }); } else L = L.filter(r => r.dia == AV.dia); }
+  return L;
+}
+function avPinta() {
+  const L1 = avBase(), fa = avFiltAct() && AV.fd, pd = AV.dia ? AV.dia.split("-").reverse().join("/") : "";
+  const tt = fa ? "Resultado del filtro" : AV.modo == "pend" ? "Todos los avisos pendientes de cerrar" : AV.dia ? (AV.turno ? "Turno " + AV_T[AV.turno][0].toLowerCase() + " (" + AV_T[AV.turno][1] + ") del " + pd + (AV_T[AV.turno][3] > 24 ? " (acaba a las 06:00 del día siguiente)" : "") : "Avisos del " + pd) : "Avisos de " + MESN[AV.cm.m] + " de " + AV.cm.y;
+  $("av_tt").innerHTML = `<b>${tt}</b> (${L1.length}) ${AV.dia && !fa && AV.modo != "pend" ? '<button type="button" class="avc" data-avm="mes">Ver todo el mes</button>' : ""}`;
+  document.querySelectorAll("[data-avt]").forEach(b => b.classList.toggle("on", b.dataset.avt == AV.turno && AV.modo != "pend"));
+  document.querySelectorAll("[data-avm]").forEach(b => { if (b.dataset.avm == "pend") b.classList.toggle("on", AV.modo == "pend"); });
+  $("av_pn").textContent = AV.pend.length;
+  $("av_lst").innerHTML = L1.map(r => {
+    const eq = r.equipos.map(e => esc(e.ind)).join(" + "), rq = r.requeridor ? avNom(AV_REQ, r.requeridor) : "";
+    return `<div class="card det-c ${r.cerr ? "ac-v" : "ac-r"}" data-avid="${r.id}"><div style="flex:1;min-width:0"><b>${esc(r.exp || "#" + r.ref)} · ${avHora(r.fecha)} · ${esc(r.tipo_txt ? (r.tipo_cod ? r.tipo_cod + " · " : "") + r.tipo_txt : "Sin tipo")}</b><br><small>📍 ${esc([r.calle, r.num].filter(Boolean).join(", ") || "Sin lugar")}${r.barrio ? " · " + esc(r.barrio) : ""}</small><br><small>🚓 ${eq || "sin unidad asignada"} · ☎ ${esc(rq || "—")} · 🎧 sala ${esc(r.receptor_tip || "—")}</small>${r.resultado ? `<br><small>Resultado: ${esc(avNom(AV_RES, r.resultado))}</small>` : ""}${!r.cerr && !r.equipos.length ? '<br><small class="ac-f">Falta asignar patrulla</small>' : ""}</div><div class="ac-b"><span class="bd ${r.cerr ? "ve" : "ro"}">${r.cerr ? "✔ Finalizado" : "● En curso"}</span>${r.relevante ? '<span class="bd am">⭐ Relevante</span>' : ""}${r.canal == "app" ? '<span class="bd">📱 App</span>' : ""}</div></div>`;
+  }).join("") || "<p>Ningún aviso.</p>";
+  avCal(); avMapa(L1); avPatrullas();
+}
+function avCal() {
+  const {y, m} = AV.cm, off = (new Date(y, m, 1).getDay() + 6) % 7, dim = new Date(y, m + 1, 0).getDate(), by = {}, hoy = ldia(Date.now());
+  (AV.dm || []).forEach(r => (by[r.dia] = by[r.dia] || []).push(r));
+  const yr = new Date().getFullYear(); let ys = ""; for (let k = 2018; k <= yr + 1; k++) ys += `<option ${k == y ? "selected" : ""}>${k}</option>`;
+  let g = ["L", "M", "X", "J", "V", "S", "D"].map(x => `<b class="cw">${x}</b>`).join("") + '<span></span>'.repeat(off);
+  for (let d = 1; d <= dim; d++) { const k = y + "-" + pd2(m + 1) + "-" + pd2(d), a = by[k] || [], ab = a.some(r => !r.cerr); g += `<button type="button" data-avcd="${k}" class="cd${k == AV.dia ? " sel" : ""}${k == hoy ? " hoy" : ""}">${d}${a.length ? `<i class="${ab ? "r" : "v"}">${a.length}</i>` : ""}</button>`; }
+  $("av_cal").innerHTML = `<div class="cal-h"><button type="button" data-avcal="-1" class="sec2">‹</button><select data-avcals="m">${MESN.map((t, k) => `<option value="${k}" ${k == m ? "selected" : ""}>${t}</option>`).join("")}</select><select data-avcals="y">${ys}</select><button type="button" data-avcal="1" class="sec2">›</button><button type="button" data-avcal="hoy" class="sec2">Hoy</button></div><div class="cal-g">${g}</div><div class="cal-l"><span><i class="r"></i> hay pendientes</span><span><i class="v"></i> todo cerrado</span></div>`;
+}
+function avMapa(L1) {
+  const el = $("av_map"); if (typeof L === "undefined") { el.innerHTML = '<p style="padding:14px">No se pudo cargar el mapa (sin conexión con el servidor de mapas).</p>'; return; }
+  if (!AV.map) { AV.map = L.map("av_map").setView([40.8125, 0.5216], 13); mapaCapas(AV.map); AV.capa = L.layerGroup().addTo(AV.map); el.onclick = e => { const c = e.target.closest("[data-avpop]"); if (c) avAbre(c.dataset.avpop); }; }
+  AV.capa.clearLayers(); const pts = [];
+  L1.forEach(r => { if (r.lat == null || r.lng == null || isNaN(+r.lat)) return; pts.push([+r.lat, +r.lng]);
+    L.marker([+r.lat, +r.lng], {icon: L.divIcon({className: "", html: `<div class="pin ${r.cerr ? "v" : "r"}">${r.relevante ? "⭐" : ""}</div>`, iconSize: [30, 30], iconAnchor: [15, 15]})}).bindPopup(`<b>${esc(r.exp || "#" + r.ref)}</b><br>${avHora(r.fecha)} · ${esc(r.tipo_txt || "")}<br>${esc([r.calle, r.num].filter(Boolean).join(", "))}<br><button type="button" data-avpop="${r.id}" style="margin-top:4px">Abrir</button>`).addTo(AV.capa); });
+  setTimeout(() => { AV.map.invalidateSize(); if (pts.length == 1) AV.map.setView(pts[0], 16); else if (pts.length) AV.map.fitBounds(pts, {padding: [30, 30], maxZoom: 17}); }, 60);
+}
+/* ---- patrullas: indicativos y agentes que van en cada uno (editable) ---- */
+function avPatrullas() {
+  const box = $("av_pt"); if (AV.errInd) { box.innerHTML = '<div class="brf-aviso">⚠️ No se pudieron cargar los indicativos. ¿Has ejecutado 19-avisos-sala.sql?</div>'; return; }
+  const busy = {}; AV.pend.forEach(r => r.equipos.forEach(e => { if (e.ind) (busy[e.ind] = busy[e.ind] || []).push(r); }));
+  const oc = AV.ind.filter(i => busy[i.codigo]).length, ed = AV.edit;
+  const cards = AV.ind.map(i => {
+    const b = busy[i.codigo], otros = AV.ind.filter(x => x.codigo != i.codigo);
+    return `<div class="pt-c ${b ? "oc" : "li"}"><div class="pt-t"><b>${esc(i.codigo)}</b><span>${b ? "En servicio: " + esc(b[0].tipo_txt || b[0].exp || "") + (b.length > 1 ? " (+" + (b.length - 1) + ")" : "") : "Libre"}</span></div>
+<div class="pt-a">${i.agentes.map((a, k) => `<div class="pt-ag"><span>👮 ${a.tip ? "<b>" + esc(a.tip) + "</b> " : ""}${esc(a.nombre || "")}</span>${ed ? `<select data-avmv="${esc(i.codigo)}|${k}"><option value="">↪ pasar a…</option>${otros.map(o => `<option value="${esc(o.codigo)}">${esc(o.codigo)}</option>`).join("")}<option value="__fuera">Fuera de servicio</option></select><button type="button" class="sec2" data-avrm="${esc(i.codigo)}|${k}" title="Quitar">✕</button>` : ""}</div>`).join("") || '<small style="opacity:.7">Sin agentes</small>'}</div>
+${ed ? `<div class="pt-f"><input data-avnt="${esc(i.codigo)}" placeholder="TIP" size="5" inputmode="numeric"><input data-avnn="${esc(i.codigo)}" placeholder="Nombre y apellidos"><button type="button" data-avad="${esc(i.codigo)}">+ Agente</button><button type="button" class="sec2" data-avdi="${esc(i.codigo)}">Quitar indicativo</button></div>` : ""}</div>`;
+  }).join("");
+  box.innerHTML = `<div class="pt-h"><b>🚓 Patrullas en la calle</b><span class="pt-sub">${AV.ind.length - oc} libres · ${oc} en servicio</span><span style="flex:1"></span><button type="button" class="avc${ed ? " on" : ""}" data-avpa="edit">✎ ${ed ? "Terminar edición" : "Editar patrullas y agentes"}</button></div>${ed ? `<div class="pt-h"><input id="av_ni" placeholder="Nuevo indicativo (ej. C22)" size="16" autocapitalize="characters"><button type="button" data-avpa="new">+ Añadir indicativo</button><button type="button" class="sec2" data-avpa="brf">⬇ Cargar del briefing de este turno</button></div>` : ""}<div class="pt-g">${cards || "<p><small>Todavía no hay indicativos. Pulsa «Editar patrullas y agentes» para añadirlos.</small></p>"}</div>`;
+}
+async function avIndSave(code) { const r = AV.ind.find(x => x.codigo == code); if (!r) return; const {error} = await db.from("indicativos").update({agentes: r.agentes}).eq("codigo", code); if (error) alert("No se pudo guardar: " + error.message); }
+async function avPaAcc(a) {
+  if (a == "edit") { AV.edit = !AV.edit; avPatrullas(); return; }
+  if (a == "new") { const c = $("av_ni").value.trim().toUpperCase(); if (!c) return; if (AV.ind.some(x => x.codigo == c)) { alert("Ese indicativo ya existe."); return; } const {error} = await db.from("indicativos").insert({codigo: c, agentes: []}); if (error) { alert("No se pudo crear: " + error.message); return; } await avCargaInd(); avPatrullas(); return; }
+  if (a == "brf") {
+    const h = new Date(), f = ldia(h.getHours() < 6 ? new Date(+h - 864e5) : h), t = h.getHours() >= 6 && h.getHours() < 14 ? "manana" : h.getHours() >= 14 && h.getHours() < 22 ? "tarde" : "noche";
+    const {data, error} = await db.from("briefings").select("agentes").eq("fecha", f).eq("turno", t).maybeSingle();
+    if (error || !data || !(data.agentes || []).length) { alert("No hay briefing con agentes e indicativos para este turno (" + t + ", " + f + "). Rellénalo primero en la pestaña Briefing."); return; }
+    const g = {}; data.agentes.forEach(x => { const c = (x.ind || "").trim().toUpperCase(); if (c) (g[c] = g[c] || []).push({tip: x.prof || "", nombre: x.nombre || ""}); });
+    const cs = Object.keys(g); if (!cs.length) { alert("Los agentes del briefing no tienen indicativo."); return; }
+    if (!confirm("Se pondrán en las patrullas los agentes del briefing (" + cs.join(", ") + "). Los agentes que hubiera ahora en esos indicativos se sustituirán. ¿Seguir?")) return;
+    const {error: e2} = await db.from("indicativos").upsert(cs.map(c => ({codigo: c, agentes: g[c]})), {onConflict: "codigo"}); if (e2) { alert("No se pudo cargar: " + e2.message); return; }
+    await avCargaInd(); avPatrullas();
+  }
+}
+async function avIndCambio(t) {
+  const [c, k] = t.dataset.avmv.split("|"), dest = t.value; if (!dest) return; const o = AV.ind.find(x => x.codigo == c), a = o.agentes[+k]; if (!a) return;
+  o.agentes.splice(+k, 1); await avIndSave(c);
+  if (dest != "__fuera") { const d = AV.ind.find(x => x.codigo == dest); d.agentes.push(a); await avIndSave(dest); }
+  avPatrullas();
+}
+/* ---- clics y cambios de la pantalla principal ---- */
+function avClick(e) {
+  const g = s => e.target.closest(s);
+  let b;
+  if (g("#av_new")) { avNuevo(); return; }
+  if ((b = g("[data-avt]"))) { const t = b.dataset.avt; AV.modo = "dia"; AV.turno = AV.turno == t ? "" : t; if (!AV.dia) AV.dia = ldia(Date.now()); const [y, m] = AV.dia.split("-"); if (+y != AV.cm.y || +m - 1 != AV.cm.m) { AV.cm = {y: +y, m: +m - 1}; avLista(); } else avPinta(); return; }
+  if ((b = g("[data-avm]"))) { const v = b.dataset.avm; if (v == "pend") AV.modo = AV.modo == "pend" ? "dia" : "pend"; else { AV.modo = "dia"; AV.dia = null; AV.turno = ""; } avPinta(); return; }
+  if ((b = g("[data-avcd]"))) { AV.modo = "dia"; AV.dia = AV.dia == b.dataset.avcd && !AV.turno ? null : b.dataset.avcd; avPinta(); return; }
+  if ((b = g("[data-avcal]"))) { const v = b.dataset.avcal, c = AV.cm; AV.modo = "dia"; if (v == "hoy") { const h = new Date(); AV.cm = {y: h.getFullYear(), m: h.getMonth()}; AV.dia = ldia(h); } else { const q = new Date(c.y, c.m + +v, 1); AV.cm = {y: q.getFullYear(), m: q.getMonth()}; AV.dia = null; AV.turno = ""; } avLista(); return; }
+  if ((b = g("[data-avid]"))) { avAbre(b.dataset.avid); return; }
+  if (g("#av_bf")) { const p = $("av_fp"); p.hidden = !p.hidden; if (!p.hidden) { p.innerHTML = avFiltHTML(); $("av_sp").hidden = true; } return; }
+  if (g("#av_bs")) { const p = $("av_sp"); p.hidden = !p.hidden; if (!p.hidden) { $("av_fp").hidden = true; avStats(); } return; }
+  if (g("[data-avflclr]")) { AV.f = {y: "", m: "", mot: "", req: "", res: "", est: "", ind: "", q: ""}; $("av_fp").innerHTML = avFiltHTML(); avLista(); return; }
+  if ((b = g("[data-avpa]"))) { avPaAcc(b.dataset.avpa); return; }
+  if ((b = g("[data-avrm]"))) { const [c, k] = b.dataset.avrm.split("|"), o = AV.ind.find(x => x.codigo == c); o.agentes.splice(+k, 1); avIndSave(c); avPatrullas(); return; }
+  if ((b = g("[data-avad]"))) { const c = b.dataset.avad, tip = document.querySelector(`[data-avnt="${c}"]`).value.trim(), nom = document.querySelector(`[data-avnn="${c}"]`).value.trim(); if (!tip && !nom) return; AV.ind.find(x => x.codigo == c).agentes.push({tip, nombre: nom}); avIndSave(c); avPatrullas(); return; }
+  if ((b = g("[data-avdi]"))) { const c = b.dataset.avdi; if (!confirm("¿Quitar el indicativo " + c + " de la lista? (los avisos antiguos conservan sus datos)")) return; db.from("indicativos").delete().eq("codigo", c).then(async r => { if (r.error) alert("No se pudo quitar: " + r.error.message); await avCargaInd(); avPatrullas(); }); return; }
+}
+function avChange(e) {
+  const t = e.target.closest("[data-avcals]"); if (t) { AV.cm = t.dataset.avcals == "m" ? {y: AV.cm.y, m: +t.value} : {y: +t.value, m: AV.cm.m}; AV.dia = null; AV.turno = ""; AV.modo = "dia"; avLista(); return; }
+  const m = e.target.closest("[data-avmv]"); if (m) avIndCambio(m);
+}
+function avFiltHTML() {
+  const f = AV.f, yr = new Date().getFullYear(); let ys = `<option value="">(mes del calendario)</option><option value="all" ${f.y == "all" ? "selected" : ""}>Todos los años</option>`; for (let k = yr + 1; k >= 2018; k--) ys += `<option ${String(k) == f.y ? "selected" : ""}>${k}</option>`;
+  const op = (L, v) => L.map(x => `<option value="${x[0]}" ${x[0] == v ? "selected" : ""}>${esc(x[0] + " · " + x[1])}</option>`).join("");
+  return `<div class="g2"><label class="fl">Año<select data-avfl="y">${ys}</select></label><label class="fl">Mes<select data-avfl="m"><option value="">Todos</option>${MESN.map((t, k) => `<option value="${k}" ${String(k) == f.m ? "selected" : ""}>${t}</option>`).join("")}</select></label>
+<label class="fl">Motivo<select data-avfl="mot"><option value="">Todos</option>${op(AV_MOT, f.mot)}</select></label>
+<label class="fl">Requeridor<select data-avfl="req"><option value="">Todos</option>${op(AV_REQ, f.req)}</select></label>
+<label class="fl">Resultado<select data-avfl="res"><option value="">Todos</option>${op(AV_RES, f.res)}</select></label>
+<label class="fl">Estado<select data-avfl="est"><option value="">Todos</option><option value="p" ${f.est == "p" ? "selected" : ""}>En curso</option><option value="c" ${f.est == "c" ? "selected" : ""}>Finalizados</option></select></label>
+<label class="fl">Indicativo<select data-avfl="ind"><option value="">Todos</option>${AV.ind.map(i => `<option ${i.codigo == f.ind ? "selected" : ""}>${esc(i.codigo)}</option>`).join("")}</select></label>
+<label class="fl">Calle, barrio, tipo o persona<input data-avfl="q" value="${esc(f.q)}" placeholder="ej. Alcanar, soroll, Ferreries"></label></div><button type="button" class="sec2" data-avflclr="1">Limpiar filtros</button>`;
+}
+function avFiltEv(e) { const t = e.target.closest("[data-avfl]"); if (!t) return; AV.f[t.dataset.avfl] = t.value; if (["y", "m"].includes(t.dataset.avfl)) { AV.dia = null; AV.turno = ""; } clearTimeout(AV.ft); AV.ft = setTimeout(avLista, t.dataset.avfl == "q" ? 500 : 0); }
+async function avStats() {
+  const y = AV.sy, box = $("av_sp"); box.innerHTML = '<p style="padding:8px">Calculando…</p>';
+  let q = db.from("intervenciones").select("fecha,motivo,requeridor,tipo_txt,tipo_cod,finalizada,relevante,resultado"); if (y != "all") q = q.gte("fecha", new Date(+y, 0, 1).toISOString()).lt("fecha", new Date(+y + 1, 0, 1).toISOString());
+  const r = await q.order("fecha", {ascending: false}).limit(10000);
+  if (r.error) { box.innerHTML = `<div class="brf-aviso">⚠️ ${esc(r.error.message)}</div>`; return; }
+  const D = r.data, n = D.length, fin = D.filter(x => x.finalizada).length, rel = D.filter(x => x.relevante).length, tp = {}, mo = {}, rq = {}, hs = Array(24).fill(0), ms = Array(12).fill(0);
+  D.forEach(x => { const t = x.tipo_txt ? (x.tipo_cod ? x.tipo_cod + " · " : "") + x.tipo_txt : "Sin tipo"; tp[t] = (tp[t] || 0) + 1; mo[x.motivo || "—"] = (mo[x.motivo || "—"] || 0) + 1; rq[x.requeridor || "—"] = (rq[x.requeridor || "—"] || 0) + 1; const d = new Date(x.fecha); hs[d.getHours()]++; ms[d.getMonth()]++; });
+  const yr = new Date().getFullYear(); let ys = '<option value="all"' + (y == "all" ? " selected" : "") + ">Todos los años</option>"; for (let k = yr; k >= 2018; k--) ys += `<option ${String(k) == y ? "selected" : ""}>${k}</option>`;
+  const tile = (v, t, c) => `<div class="st-t"><b style="color:${c || "inherit"}">${v}</b><span>${t}</span></div>`, top = (o, nm, k) => Object.entries(o).sort((a, b) => b[1] - a[1]).slice(0, k), bars = (L, nm) => { const mx = Math.max(1, ...L.map(x => x[1])); return L.map(([t, c]) => `<div class="st-r"><span class="st-n">${esc(nm ? nm(t) : t)}</span><div class="st-bar"><i style="width:${(c / mx * 100).toFixed(1)}%"></i></div><b>${c}</b> <small>${n ? (c / n * 100).toFixed(0) : 0}%</small></div>`).join("") || "<p>Sin datos.</p>"; };
+  const mh = Math.max(1, ...hs), mm = Math.max(1, ...ms);
+  box.innerHTML = `<div class="cal-h"><b>Estadísticas de</b><select data-avsty="1">${ys}</select></div><div class="st-k">${tile(n, "avisos")}${tile(fin, "finalizados", "#1f8a4c")}${tile(n - fin, "en curso", "#d98a00")}${tile(rel, "relevantes", "#C93A1F")}</div>
+<h4 style="margin:10px 0 4px">Tipos de intervención (los 12 más frecuentes)</h4>${bars(top(tp, 0, 12))}
+<h4 style="margin:10px 0 4px">Por motivo</h4>${bars(top(mo, 0, 6), c => c == "—" ? "Sin motivo" : c + " · " + avNom(AV_MOT, c))}
+<h4 style="margin:10px 0 4px">Por requeridor (quién avisa)</h4>${bars(top(rq, 0, 10), c => c == "—" ? "Sin indicar" : c + " · " + avNom(AV_REQ, c))}
+<h4 style="margin:12px 0 4px">Por hora del día</h4><div class="st-m st-h">${hs.map((v, k) => `<div><span class="st-v">${v || ""}</span><div class="st-c"><i style="height:${(v / mh * 100).toFixed(1)}%"></i></div><small>${k}</small></div>`).join("")}</div>
+${y != "all" ? `<h4 style="margin:12px 0 4px">Por meses</h4><div class="st-m">${ms.map((v, k) => `<div><span class="st-v">${v || ""}</span><div class="st-c"><i style="height:${(v / mm * 100).toFixed(1)}%"></i></div><small>${MESN[k].slice(0, 3)}</small></div>`).join("")}</div>` : ""}`;
+}
+/* ---- ficha de un aviso ---- */
+async function avNuevo(pre) {
+  const base = Object.assign({fecha: new Date().toISOString(), inicio: new Date().toISOString(), turno: avTurnoDe(Date.now()), canal: "tel", requeridor: "CIU", receptor_tip: AV.sala.tip, receptor_nombre: AV.sala.nombre, requirent: {tipo_doc: "NIF"}, equipos: [], personas: []}, pre || {});
+  const {data, error} = await db.from("intervenciones").insert(base).select("*").single();
+  if (error) { alert("No se pudo crear el aviso: " + error.message + "\n(¿Has ejecutado 19-avisos-sala.sql?)"); return; }
+  AV.row = avNorm(data); AV.sucio.clear(); avRender();
+}
+async function avAbre(id) {
+  const {data, error} = await db.from("intervenciones").select("*").eq("id", id).single();
+  if (error) { alert("No se pudo abrir: " + error.message); return; }
+  AV.row = avNorm(data); AV.sucio.clear(); avRender();
+}
+function avSucio(c) { AV.sucio.add(c); const e = $("av_est"); if (e) e.textContent = "Editando…"; clearTimeout(AV.tm); AV.tm = setTimeout(avGuarda, 900); }
+async function avGuarda() {
+  clearTimeout(AV.tm); const cols = [...AV.sucio]; if (!cols.length || !AV.row) return true;
+  const pl = {}; cols.forEach(c => { pl[c] = AV.row[c]; }); AV.sucio.clear();
+  const {error} = await db.from("intervenciones").update(pl).eq("id", AV.row.id);
+  const e = $("av_est");
+  if (error) { cols.forEach(c => AV.sucio.add(c)); if (e) e.textContent = "⚠️ No se pudo guardar (" + error.message + ")"; return false; }
+  if (e) e.textContent = "Guardado ✓ " + new Date().toLocaleTimeString("es-ES", {hour: "2-digit", minute: "2-digit"}); return true;
+}
+const avI = (p, l, ty = "text", ex = "") => `<label class="fl">${l}<input type="${ty}" data-avp="${p}" value="${esc(ty == "datetime-local" ? ldt(gP(AV.row, p)) : gP(AV.row, p) ?? "")}" ${ex}></label>`;
+const avS = (p, l, ops, vac = "—") => { const v = gP(AV.row, p); return `<label class="fl">${l}<select data-avp="${p}"><option value="">${vac}</option>${ops.map(o => `<option value="${esc(o[0])}" ${o[0] == v ? "selected" : ""}>${esc(o.length > 2 ? o[1] : o[0] + " · " + o[1])}</option>`).join("")}</select></label>`; };
+const avC = (p, l) => `<label class="ck"><input type="checkbox" data-avp="${p}" ${gP(AV.row, p) ? "checked" : ""}> ${l}</label>`;
+const avT = (p, l, rows = 3, ex = "") => `<label class="fl">${l}<textarea rows="${rows}" data-avp="${p}" ${ex}>${esc(gP(AV.row, p) || "")}</textarea></label>`;
+function avRender() {
+  const R = AV.row; $("av_l").hidden = true; const F = $("av_f"); F.hidden = false;
+  const tipoV = R.tipo_txt ? (R.tipo_cod ? R.tipo_cod + " · " : "") + R.tipo_txt : "";
+  const libres = AV.ind.filter(i => !AV.pend.some(r => r.id != R.id && r.equipos.some(e => e.ind == i.codigo)));
+  const eq = R.equipos.map((e, k) => `<div class="it"><div class="row"><label class="fl" style="flex:1">Unidad ${k + 1}<select data-avq="${k}"><option value="">—</option>${AV.ind.map(i => `<option value="${esc(i.codigo)}" ${i.codigo == e.ind ? "selected" : ""}>${libres.includes(i) ? "🟢" : "🔴"} ${esc(i.codigo)}</option>`).join("")}${e.ind && !AV.ind.some(i => i.codigo == e.ind) ? `<option selected>${esc(e.ind)}</option>` : ""}</select></label><button type="button" class="sec2" data-avqx="${k}">Quitar</button></div><small>${(e.agentes || []).map(a => "👮 " + (a.tip ? "<b>" + esc(a.tip) + "</b> " : "") + esc(a.nombre || "")).join(" · ") || "Sin agentes anotados en este indicativo"}</small></div>`).join("");
+  const pe = R.personas.map((p, k) => `<div class="it"><b>Persona ${k + 1}</b> ${escBtn("AV", `doc:personas.${k}.doc;ape:personas.${k}.ape;nom:personas.${k}.nom`)}<div class="g2">${avI(`personas.${k}.doc`, "NIF / NIE / pasaporte", "text", 'autocapitalize="characters"')}${avI(`personas.${k}.ape`, "Apellidos")}${avI(`personas.${k}.nom`, "Nombre")}</div><button type="button" class="sec2" data-avpx="${k}">Quitar persona</button></div>`).join("");
+  F.innerHTML = `<div class="det-bar"><button data-avb="back" type="button" class="sec2">← Lista</button><b>${esc(R.exp || "#" + R.ref)}</b><span id="av_est" style="font-size:13px;opacity:.8"></span></div>
+<details class="acc" open><summary>1. Datos del aviso</summary><div class="pad"><div class="g2">${avI("exp", "Expediente (automático)", "text", "readonly")}${avI("fecha", "Fecha y hora del aviso", "datetime-local")}</div>
+<h4 style="margin:6px 0 0">Agente de sala que recibe el aviso</h4><div class="g2">${avI("receptor_tip", "TIP", "text", 'inputmode="numeric"')}${avI("receptor_nombre", "Nombre y apellidos")}</div>
+<div class="g2">${avS("canal", "Canal por el que entra", AV_CAN.map(x => [x[0], x[1], 1]), "—")}${avS("requeridor", "Requeridor", AV_REQ)}${avS("motivo", "Motivo de la llamada", AV_MOT)}<label class="fl">Tipo de intervención<input list="av_tl" data-avtipo="1" value="${esc(tipoV)}" placeholder="Escribe código o palabra (ej. 2.41, soroll, accident)"></label></div><datalist id="av_tl">${AV_TIPOS.map(t => `<option value="${esc(avTL(t))}">`).join("")}</datalist>
+<div class="g2">${avS("resultado", "Resultado", AV_RES)}<div>${avC("relevante", "⭐ Aviso relevante")}${avC("finalizada", "✔ Intervención finalizada")}</div></div></div></details>
+<details class="acc" open><summary>2. Lugar y horas</summary><div class="pad"><div class="g2">${avI("calle", "Calle / vía")}${avI("num", "Número")}${avI("barrio", "Barrio")}${avI("demarcacion", "Demarcación")}</div>
+<div class="row" style="gap:8px;align-items:center"><button type="button" class="sec2" data-avb="gps">📍 Usar mi ubicación</button><button type="button" class="sec2" data-avb="geo">🔎 Situar la dirección en el mapa</button><small id="av_gn">${R.lat != null ? "Ubicación: " + (+R.lat).toFixed(5) + ", " + (+R.lng).toFixed(5) : "Sin ubicación en el mapa. Toca el mapa para marcarla."}</small></div><div id="av_fm"></div>
+<div class="g2">${avI("inicio", "Inicio de la intervención", "datetime-local")}${avI("fin", "Fin de la intervención", "datetime-local")}</div></div></details>
+<details class="acc" open><summary>3. Quién avisa</summary><div class="pad">${escBtn("AV", "nom:requirent.nom;ape:requirent.ape;doc:requirent.doc;adr:requirent.adr;mun:requirent.ciu")}<div class="g2">${avS("requirent.tipo_doc", "Documento", [["NIF", "NIF / NIE", 1], ["OTROS", "Otros", 1]], "—")}${avI("requirent.doc", "NIF / NIE / pasaporte", "text", 'autocapitalize="characters"')}${avI("requirent.nom", "Nombre")}${avI("requirent.ape", "Apellidos")}${avI("requirent.adr", "Dirección")}${avI("requirent.num", "Número")}${avI("requirent.ciu", "Ciudad")}${avI("requirent.tel1", "Teléfono 1", "tel")}${avI("requirent.tel2", "Teléfono 2", "tel")}</div></div></details>
+<details class="acc" open><summary>4. Unidades asignadas</summary><div class="pad">${eq || "<small>Todavía no hay ninguna patrulla asignada. 🟢 = libre, 🔴 = en otro servicio.</small>"}<button type="button" class="sec2" data-avb="addq">+ Asignar unidad</button></div></details>
+<details class="acc" ${R.personas.length ? "open" : ""}><summary>5. Personas identificadas (${R.personas.length})</summary><div class="pad">${pe}<button type="button" class="sec2" data-avb="addp">+ Añadir persona</button></div></details>
+<details class="acc" open><summary>6. Descripción del aviso</summary><div class="pad"><div class="row" style="align-items:center;gap:8px"><button type="button" id="av_dic" class="k">🎙️ Dictar</button><select id="av_dl"><option value="es-ES">Castellano</option><option value="ca-ES">Català</option></select></div><small id="av_dn">Pulsa «Dictar», habla y el texto se escribe solo. Puedes corregirlo a mano.</small>${avT("descripcion", "Qué ocurre / qué se informa", 6, 'id="av_ta"')}${avT("procedimiento", "Procedimiento a seguir sobre la intervención", 3)}</div></details>
+<div class="row" style="gap:8px;margin:12px 0;flex-wrap:wrap"><button type="button" class="k" data-avb="fin">✔ Finalizar aviso</button><button type="button" class="sec2" data-avb="print">🖨️ Imprimir hoja del aviso</button><button type="button" class="sec2" data-avb="back">← Volver a la lista</button></div>`;
+  dictaInit("av_dic", "av_ta", "av_dl", "av_dn"); avMiniMapa(); window.scrollTo(0, 0);
+}
+function avMiniMapa() {
+  const el = $("av_fm"); if (!el || typeof L === "undefined") return; const R = AV.row;
+  if (AV.fm) { try { AV.fm.remove(); } catch (e) {} AV.fm = null; }
+  AV.fm = L.map("av_fm").setView(R.lat != null ? [+R.lat, +R.lng] : [40.8125, 0.5216], R.lat != null ? 17 : 13); mapaCapas(AV.fm);
+  AV.fk = null; const pon = (la, lo) => { if (AV.fk) AV.fk.setLatLng([la, lo]); else { AV.fk = L.marker([la, lo], {draggable: true}).addTo(AV.fm); AV.fk.on("dragend", () => { const p = AV.fk.getLatLng(); avPonUbi(p.lat, p.lng, true); }); } };
+  AV.fPon = pon; if (R.lat != null) pon(+R.lat, +R.lng);
+  AV.fm.on("click", e => { pon(e.latlng.lat, e.latlng.lng); avPonUbi(e.latlng.lat, e.latlng.lng, true); });
+  setTimeout(() => AV.fm && AV.fm.invalidateSize(), 120);
+}
+async function avPonUbi(la, lo, rev) {
+  const R = AV.row; R.lat = la; R.lng = lo; avSucio("lat"); avSucio("lng"); $("av_gn").textContent = "Ubicación: " + la.toFixed(5) + ", " + lo.toFixed(5);
+  if (!rev) return;
+  try { const r = await (await fetch("https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&accept-language=ca&lat=" + la + "&lon=" + lo)).json(), a = r.address || {};
+    const calle = a.road || a.pedestrian || a.path || "", num = a.house_number || "", barrio = a.suburb || a.neighbourhood || a.quarter || "";
+    if (calle) { R.calle = calle; avSucio("calle"); } if (num) { R.num = num; avSucio("num"); } if (barrio && !R.barrio) { R.barrio = barrio; avSucio("barrio"); }
+    document.querySelectorAll('[data-avp="calle"]').forEach(i => i.value = R.calle); document.querySelectorAll('[data-avp="num"]').forEach(i => i.value = R.num); document.querySelectorAll('[data-avp="barrio"]').forEach(i => i.value = R.barrio);
+  } catch (e) { $("av_gn").textContent += " (no se pudo leer el nombre de la calle; escríbelo a mano)"; }
+}
+function avEv(e) {
+  const R = AV.row; if (!R) return; const tp = e.target.closest("[data-avtipo]");
+  if (tp) { if (e.type != "change") return; const v = tp.value.trim(), m = AV_TIPOS.find(t => avTL(t) == v); R.tipo_cod = m ? m[0] : ""; R.tipo_txt = m ? m[1] : v; avSucio("tipo_cod"); avSucio("tipo_txt"); return; }
+  const q = e.target.closest("[data-avq]");
+  if (q) { if (e.type != "change") return; const c = q.value, k = +q.dataset.avq; if (!c) R.equipos[k] = {ind: "", agentes: []}; else { const i = AV.ind.find(x => x.codigo == c); R.equipos[k] = {ind: c, agentes: JSON.parse(JSON.stringify(i ? i.agentes : []))}; } avSucio("equipos"); avGuarda().then(() => avCargaPend()); avRender(); return; }
+  const t = e.target.closest("[data-avp]"); if (!t) return;
+  if (t.type == "datetime-local" && e.type != "change") return;
+  let v = t.type == "checkbox" ? t.checked : t.value; if (t.type == "datetime-local") v = v ? new Date(v).toISOString() : null;
+  sP(R, t.dataset.avp, v); const col = t.dataset.avp.split(".")[0]; avSucio(col);
+  if (/^receptor_(tip|nombre)$/.test(col)) { AV.sala[col == "receptor_tip" ? "tip" : "nombre"] = v; try { localStorage.setItem("pa_sala", JSON.stringify(AV.sala)); } catch (x) {} $("av_stip").value = AV.sala.tip || ""; $("av_snom").value = AV.sala.nombre || ""; }
+  if (col == "fecha" && v) { R.turno = avTurnoDe(v); avSucio("turno"); }
+  if (t.dataset.avp == "finalizada" && e.type == "change") { if (v) { if (!R.fin) { R.fin = new Date().toISOString(); avSucio("fin"); } if (!R.resultado) { R.resultado = "SC"; avSucio("resultado"); } } avRender(); }
+}
+async function avCargaPend() { const r = await db.from("intervenciones").select("*").eq("finalizada", false).limit(300); if (!r.error) AV.pend = r.data.map(avNorm); }
+async function avFClick(e) {
+  const R = AV.row; if (!R) return; const b = e.target.closest("[data-avb],[data-avqx],[data-avpx]"); if (!b) return;
+  if (b.dataset.avqx != null) { R.equipos.splice(+b.dataset.avqx, 1); avSucio("equipos"); avRender(); return; }
+  if (b.dataset.avpx != null) { R.personas.splice(+b.dataset.avpx, 1); avSucio("personas"); avRender(); return; }
+  const a = b.dataset.avb;
+  if (a == "addq") { R.equipos.push({ind: "", agentes: []}); avSucio("equipos"); avRender(); }
+  else if (a == "addp") { R.personas.push({doc: "", ape: "", nom: ""}); avSucio("personas"); avRender(); }
+  else if (a == "back") { await avGuarda(); AV.row = null; $("av_f").hidden = true; $("av_l").hidden = false; avRefresh(); }
+  else if (a == "fin") { R.finalizada = true; avSucio("finalizada"); if (!R.fin) { R.fin = new Date().toISOString(); avSucio("fin"); } if (!R.resultado) { R.resultado = "SC"; avSucio("resultado"); } await avGuarda(); avRender(); $("av_est").textContent = "Aviso finalizado ✓"; }
+  else if (a == "gps") {
+    if (!navigator.geolocation) { $("av_gn").textContent = "Este dispositivo no da la ubicación."; return; } $("av_gn").textContent = "Buscando ubicación…";
+    navigator.geolocation.getCurrentPosition(p => { const la = p.coords.latitude, lo = p.coords.longitude; if (AV.fm) { AV.fm.setView([la, lo], 17); AV.fPon(la, lo); } avPonUbi(la, lo, true); }, () => { $("av_gn").textContent = "No se pudo obtener la ubicación (revisa el permiso)."; }, {enableHighAccuracy: true, timeout: 12000});
+  }
+  else if (a == "geo") {
+    const q = [R.calle, R.num, R.barrio, "Tortosa"].filter(Boolean).join(", "); if (!R.calle) { $("av_gn").textContent = "Escribe primero la calle."; return; } $("av_gn").textContent = "Buscando " + q + "…";
+    try { const r = await (await fetch("https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&countrycodes=es&q=" + encodeURIComponent(q))).json(); if (!r.length) { $("av_gn").textContent = "No he encontrado esa dirección. Toca el mapa para marcarla."; return; } const la = +r[0].lat, lo = +r[0].lon; if (AV.fm) { AV.fm.setView([la, lo], 17); AV.fPon(la, lo); } avPonUbi(la, lo, false); } catch (x) { $("av_gn").textContent = "No se pudo buscar (sin conexión con el servicio de mapas)."; }
+  }
+  else if (a == "print") { await avGuarda(); muestraImp(avHoja()); }
+}
+function avHoja() {
+  const R = AV.row, e = esc, q = R.requirent || {}, f = (l, v, fl = 1) => `<div style="flex:${fl};border-bottom:1.5px solid #000;min-height:9mm;padding-top:1mm"><small style="display:block;font-size:8px">${l}</small><b style="font-size:11px">${e(v || "")}</b></div>`;
+  return `<div class="apg" style="font-size:11px;padding:10mm 12mm;height:auto;min-height:296mm;overflow:visible"><div style="display:flex;gap:6mm;align-items:flex-start"><div style="flex:1;font-size:17px;font-weight:800;line-height:1.1">POLICIA<br>LOCAL DE<br>TORTOSA</div><div style="flex:1.6"><b style="font-size:15px">Full d'intervenció (gestió d'avisos)</b>${f("Expedient", R.exp)}<div style="display:flex;gap:4mm">${f("Data", dfd(R.fecha))}${f("Hora", avHora(R.fecha))}</div></div></div>
+<div style="display:flex;gap:4mm;margin-top:3mm">${f("Agent de sala (TIP)", R.receptor_tip)}${f("Nom de l'agent de sala", R.receptor_nombre, 2)}</div>
+<div style="display:flex;gap:4mm">${f("Requeridor", R.requeridor ? R.requeridor + " · " + avNom(AV_REQ, R.requeridor) : "", 2)}${f("Motiu de la trucada", R.motivo ? R.motivo + " · " + avNom(AV_MOT, R.motivo) : "")}</div>
+${f("Tipus d'intervenció", (R.tipo_cod ? R.tipo_cod + " · " : "") + R.tipo_txt)}
+<div style="display:flex;gap:4mm">${f("Carrer", R.calle, 3)}${f("Núm.", R.num)}${f("Barri", R.barrio, 2)}</div>
+<div style="display:flex;gap:4mm">${f("Inici", R.inicio ? dfull(R.inicio) : "")}${f("Fi", R.fin ? dfull(R.fin) : "")}${f("Resultat", R.resultado ? R.resultado + " · " + avNom(AV_RES, R.resultado) : "", 2)}</div>
+<h4 style="margin:4mm 0 1mm">Requerent</h4><div style="display:flex;gap:4mm">${f("Nom i cognoms", [q.nom, q.ape].filter(Boolean).join(" "), 2)}${f("DNI / NIE", q.doc)}${f("Telèfon", [q.tel1, q.tel2].filter(Boolean).join(" / "))}</div>${f("Adreça", [q.adr, q.num, q.ciu].filter(Boolean).join(", "))}
+<h4 style="margin:4mm 0 1mm">Unitats i agents intervinents</h4>${R.equipos.map(x => f("Indicatiu " + (x.ind || ""), (x.agentes || []).map(a => (a.tip ? "TIP " + a.tip + " " : "") + (a.nombre || "")).join(" · "))).join("") || f("", "—")}
+<h4 style="margin:4mm 0 1mm">Persones identificades</h4>${R.personas.map(p => f("", [p.doc, p.ape, p.nom].filter(Boolean).join(" · "))).join("") || f("", "—")}
+<h4 style="margin:4mm 0 1mm">Descripció</h4><div style="border:1.5px solid #000;min-height:55mm;padding:2mm;white-space:pre-wrap">${e(R.descripcion)}</div><h4 style="margin:4mm 0 1mm">Procediment a seguir</h4><div style="border:1.5px solid #000;min-height:20mm;padding:2mm;white-space:pre-wrap">${e(R.procedimiento)}</div></div>`;
+}
+/* ---- de un aviso de la app ciudadana a un aviso de sala ---- */
+async function avDesdeAlerta(id) {
+  const x = (window.ALMAP || {})[id]; if (!x) return; const p = x.profiles || {};
+  if (!confirm("¿Crear un aviso de sala con los datos de este aviso de la app?")) return;
+  ver("avisos"); await avNuevo({canal: "app", requeridor: "APP", alerta_id: x.id, lat: x.lat ?? null, lng: x.lng ?? null, tipo_txt: String(x.tipo || "").split(" · ")[0], descripcion: [x.tipo, x.detalle].filter(Boolean).join(" — "), requirent: {tipo_doc: "NIF", nom: p.nombre || "", ape: p.apellidos || "", adr: p.direccion || "", tel1: p.telefono || ""}});
+}
+document.addEventListener("click", e => { const b = e.target.closest("[data-avx]"); if (b) avDesdeAlerta(b.dataset.avx); });
 /* ---- avisos a los vecinos (con notificación al móvil) ---- */
 $("mv_d").onchange = () => { $("mv_z").hidden = $("mv_d").value != "zona"; };
 let CFM = null;
@@ -2355,7 +2666,7 @@ const tipoHtml = t => { const [a, ...r] = String(t || "").split(" · "); return 
 /* ---- datos ---- */
 async function load() { cargaCodigos(); cargaOcupaciones();
   const a = await db.from("alertas").select("*, profiles(nombre,apellidos,telefono,direccion,grupo,matricula,aseguradora,comercios(*))").order("created_at", {ascending:false}).limit(50);
-  const lista = a.data || [];
+  const lista = a.data || []; window.ALMAP = Object.fromEntries(lista.map(x => [x.id, x]));
   const urls = {}, rutas = lista.filter(x => x.foto).map(x => x.foto);
   if (rutas.length) { const s = await db.storage.from("fotos").createSignedUrls(rutas, 3600); (s.data || []).forEach(u => { if (u.signedUrl) urls[u.path] = u.signedUrl; }); }
   setAlarm(lista.filter(x => x.estado == "nueva").length);
@@ -2371,7 +2682,7 @@ async function load() { cargaCodigos(); cargaOcupaciones();
     const btns = x.estado == "nueva" ? `<button class="r" data-m="${x.id}">Voy yo (${esc(unidad())})</button> <button class="a" data-o="${x.id}">Asignar a…</button> ` : "";
     const cam = x.estado == "asignada" ? `<button class="a" data-c="${x.id}">En camino</button> ` : (x.estado == "en_camino" ? `<button class="a" data-e="${x.id}">Cambiar tiempo</button> ` : "");
     const gru = String(x.tipo).includes("Busca su coche");
-    const fin = x.estado != "atendida" ? `<button class="k" data-a="${x.id}">Atendida</button>` : "";
+    const fin = x.estado != "atendida" ? `<button class="k" data-a="${x.id}">Atendida</button> <button class="a" data-avx="${x.id}">📋 Crear aviso de sala</button>` : "";
     return `<div class="card ${esc(x.estado)}"><div>${tipoHtml(x.tipo)} <small>${new Date(x.created_at).toLocaleString("es-ES")}</small><br>${esc(p.nombre)} ${esc(p.apellidos)} · ${esc(p.telefono)} · ${esc(p.grupo)}<br><small>${esc(p.direccion)}</small>${mat}${com}${asig}${x.estado == "en_camino" ? "<br><b>En camino" + (x.eta_llegada ? " · llegada hacia las " + new Date(x.eta_llegada).toLocaleTimeString("es-ES", {hour:"2-digit", minute:"2-digit"}) : "") + "</b>" : ""}${det}</div><div>${map} ${gru ? (x.estado != "atendida" ? `<button class="r" data-r="${x.id}">Responder</button>` : "") : btns + cam + fin}</div></div>`; }).join("") || "<p>Sin avisos.</p>";
   const v = await db.from("profiles").select("id,nombre,apellidos,telefono,direccion,grupo,comercios(nombre,actividad,direccion)").eq("validado", false).eq("rol", "ciudadano");
   $("pe").innerHTML = (v.data || []).map(u => `<div class="card"><div><b>${esc(u.nombre)} ${esc(u.apellidos)}</b><br><small>${esc(u.telefono)} · ${esc(u.direccion)}</small>${(() => { const cm = Array.isArray(u.comercios) ? u.comercios[0] : u.comercios; return cm ? `<br>🏪 <b>${esc(cm.nombre)}</b> <small>${esc(cm.actividad || "")} · ${esc(cm.direccion || "")}</small>` : (u.grupo == "Establecimiento" ? "<br>🏪 Comerciante" : ""); })()}</div><button data-v="${u.id}">Validar</button></div>`).join("") || "<p>Ninguno.</p>";

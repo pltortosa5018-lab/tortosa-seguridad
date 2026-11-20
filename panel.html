@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png"><meta name="apple-mobile-web-app-title" content="PolAssist Panel"><meta name="application-name" content="PolAssist Panel">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>PolAssist · Panel</title>
@@ -78,7 +79,9 @@ details.acc>#pe{padding:10px 12px 2px}
 .acc-top{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:10px;margin:8px 0}@media(max-width:700px){.acc-top{grid-template-columns:1fr}}#acc_map{min-height:340px;height:auto;border-radius:14px;overflow:hidden;background:#233;z-index:0}#acc_cal{background:var(--card);border-radius:14px;padding:8px}
 .acc-top{align-items:stretch}.acc-pn{background:var(--card);border-radius:14px;padding:10px;margin:6px 0}.st-k{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px}.st-t{border:1px solid var(--line);border-radius:10px;padding:8px;text-align:center}.st-t b{display:block;font-size:24px}.st-t span{font-size:12px;opacity:.8}.st-r{display:flex;align-items:center;gap:6px;margin:3px 0;font-size:13px}.st-n{flex:0 0 38%;min-width:0}.st-bar{flex:1;background:rgba(127,127,127,.18);border-radius:6px;height:14px;overflow:hidden}.st-bar i{display:block;height:100%;background:#2E9E8F}.st-m{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;align-items:end}.st-m>div{text-align:center}.st-c{height:110px;display:flex;align-items:flex-end;background:rgba(127,127,127,.1);border-radius:4px}.st-c i{display:block;width:100%;background:#2E9E8F;border-radius:4px 4px 0 0;position:relative;display:flex;align-items:flex-end}.st-c u{display:block;width:100%;background:#C93A1F;text-decoration:none}.st-v{font-size:11px;display:block;min-height:14px}.ph{display:flex;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:10px;padding:6px}.ph img{width:100%;border-radius:6px;max-height:220px;object-fit:cover}.phg,#ph_g{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px;margin-top:8px}
 .cal-h{display:flex;gap:4px;align-items:center;margin-bottom:6px}.cal-h select{flex:1;min-width:0;border-radius:8px;padding:5px}.cal-h button{padding:5px 9px}.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.cw{text-align:center;font-size:12px;opacity:.7}.cd{position:relative;padding:8px 0 10px;border-radius:8px;border:1px solid var(--line);background:transparent;color:inherit;font-weight:600}.cd.hoy{outline:2px solid #7fd4b0}.cd.sel{background:#2E9E8F;color:#fff}.cd i{position:absolute;right:2px;top:1px;font-size:10px;font-style:normal;border-radius:9px;min-width:15px;padding:0 3px;color:#fff;line-height:15px}.cd i.r,.ac-leg i.r,.cal-l i.r{background:#C93A1F}.cd i.v,.ac-leg i.v,.cal-l i.v{background:#1f8a4c}.cal-l,.ac-leg{display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin:6px 0}.cal-l i,.ac-leg i{display:inline-block;width:11px;height:11px;border-radius:50%;vertical-align:middle}
-.ac-v{border-left:8px solid #1f8a4c}.ac-r{border-left:8px solid #C93A1F}.ac-f{color:#e0502f;font-weight:600}.ac-b{display:flex;flex-direction:column;gap:5px;align-items:flex-end}.det-c .bd.ve{background:#1f8a4c;color:#fff}.det-c .bd.ro2{background:#fff1ee;color:#a32a12}.pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 5px #0007}.pin.r{background:#C93A1F}.pin.v{background:#1f8a4c}.av-sg{position:absolute;left:0;right:0;top:100%;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:8px;max-height:230px;overflow:auto;box-shadow:0 4px 14px #0005}.av-sg div{padding:10px;border-bottom:1px solid var(--line);cursor:pointer}.av-sg div:active,.av-sg div:hover{background:var(--navy);color:#fff}
+.ac-v{border-left:8px solid #1f8a4c}.ac-r{border-left:8px solid #C93A1F}.ac-f{color:#e0502f;font-weight:600}.ac-b{display:flex;flex-direction:column;gap:5px;align-items:flex-end}.det-c .bd.ve{background:#1f8a4c;color:#fff}.det-c .bd.ro2{background:#fff1ee;color:#a32a12}.pin{width:28px;height:28px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:2px solid #fff;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 5px #0007}.pin.r{background:#C93A1F}.pin.v{background:#1f8a4c}
+.fl-b{position:fixed;z-index:900}.fl-b button.fl-p{border-radius:24px;padding:10px 14px;background:var(--navy);color:#fff;border:2px solid #fff;box-shadow:0 2px 8px #0006;font-weight:700;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}#rd_fl #rd_pn{position:fixed;left:50%;transform:translateX(-50%);max-height:78vh;overflow:auto;margin:0;z-index:901}#rd_fl.fl-top #rd_pn{bottom:10px;top:auto}#rd_fl:not(.fl-top) #rd_pn{top:10px;bottom:auto}
+#dp_ov{position:fixed;inset:0;z-index:950;background:var(--bg);overflow:auto;padding:12px}#dp_ov .dp-in{max-width:900px;margin:0 auto}.dp-c{border-left:10px solid #888}.dp-v{border-color:#1f8a4c}.dp-a{border-color:#d9a400}.dp-n{border-color:#e07a1f}.dp-r{border-color:#C93A1F}.dp-m{font-size:20px;font-weight:800;letter-spacing:1px}.dp-bd{display:inline-block;border-radius:20px;padding:2px 10px;font-size:12px;font-weight:700;color:#fff}.dp-bd.v{background:#1f8a4c}.dp-bd.a{background:#b88a00}.dp-bd.n{background:#e07a1f}.dp-bd.r{background:#C93A1F}.av-sg{position:absolute;left:0;right:0;top:100%;z-index:60;background:var(--card);border:1px solid var(--line);border-radius:8px;max-height:230px;overflow:auto;box-shadow:0 4px 14px #0005}.av-sg div{padding:10px;border-bottom:1px solid var(--line);cursor:pointer}.av-sg div:active,.av-sg div:hover{background:var(--navy);color:#fff}
 #rd_fl{position:fixed;right:10px;bottom:10px;z-index:900;font-size:14px}#rd_pill{border-radius:24px;padding:10px 14px;background:var(--navy);color:#fff;border:2px solid #fff;box-shadow:0 2px 8px #0006;font-weight:700}#rd_pill.on{background:#1f8a4c}#rd_pill.rx{background:#C93A1F}#rd_pn{background:var(--card);color:var(--ink);border:1px solid var(--line);border-radius:14px;padding:10px;width:min(330px,92vw);box-shadow:0 4px 16px #0006;margin-bottom:8px}#rd_pn select{width:100%;margin:3px 0 6px}.rd-ptt{width:100%;height:96px;font-size:20px;font-weight:800;border-radius:16px;background:#C93A1F;color:#fff;border:3px solid #fff;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}.rd-ptt.tx{background:#1f8a4c;box-shadow:0 0 0 4px #1f8a4c55}[data-rdptt]{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}#rd_lg div{padding:4px 0;border-bottom:1px solid var(--line);font-size:12px}.pin.ap{border-radius:7px;transform:none;font-size:15px}.pin.tl{font-size:14px;color:#fff}.pin.tl span{transform:rotate(45deg);display:block}.hp-l{max-height:46vh;overflow:auto;margin:6px 0}.hp-l label{display:flex;gap:8px;align-items:flex-start;padding:6px;border-bottom:1px solid var(--line)}.pin{font-size:13px}
 .det-c{cursor:pointer;display:flex}.det-c .bd{font-size:12px;font-weight:700;border-radius:20px;padding:3px 10px;background:var(--tint)}.det-c .bd.am{background:#fff4d6;color:#4a3500}.det-c .bd.ro{background:#C93A1F;color:#fff}
 #det_f .fl{display:block;margin:8px 0;font-size:13px}#det_f .fl input,#det_f .fl select,#det_f .fl textarea{width:100%;box-sizing:border-box;margin-top:3px;padding:10px}#det_f .g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
@@ -2392,14 +2395,14 @@ function rdOpts() {
 }
 function rdUi(msg) {
   const pill = $("rd_pill"), tx = !!RD.rec, rx = RD.play;
-  pill.className = rx ? "rx" : RD.on ? "on" : ""; pill.textContent = rx ? "📻 Recibiendo " + (RD.from || "") : tx ? "📻 Hablando…" : RD.on ? "📻 " + RD.st + " · activa" : "📻 Radio";
+  pill.className = "fl-p" + (rx ? " rx" : RD.on ? " on" : ""); pill.textContent = rx ? "📻 Recibiendo " + (RD.from || "") : tx ? "📻 Hablando…" : RD.on ? "📻 " + RD.st + " · activa" : "📻 Radio";
   $("rd_ptt").disabled = !RD.on; $("rd_ptt").classList.toggle("tx", tx); $("rd_on").textContent = RD.on ? "Desactivar radio" : "Activar radio (micrófono y altavoz)";
   $("rd_s").textContent = msg || (RD.on ? (tx ? "🔴 Transmitiendo a " + rdNom(RD.rto) + "…" : "Escuchando como " + RD.st + ". Mantén pulsado el botón rojo para hablar.") : "La radio está apagada.");
   $("rd_lg").innerHTML = RD.log.slice(0, 8).map((l, k) => `<div>${l.h} · <b>${esc(l.de)}</b> → ${esc(rdNom(l.a))} <small>${l.dur}s</small> <button type="button" class="sec2" data-rdx="${k}">▶</button></div>`).join("");
 }
 function rdInit() {
-  if (RD.ok) return; RD.ok = true; $("rd_fl").hidden = false; RD.st = rdLs("pa_rd_st") || "SALA"; avCargaInd().then(rdOpts).catch(() => {}); rdOpts(); rdUi();
-  $("rd_pill").onclick = () => { $("rd_pn").hidden = !$("rd_pn").hidden; };
+  if (RD.ok) return; RD.ok = true; $("rd_fl").hidden = false; $("dp_fl").hidden = false; flArrastra($("rd_fl"), $("rd_pill"), "pa_pos_rd", () => [innerWidth - 130, innerHeight - 64]); flArrastra($("dp_fl"), $("dp_pill"), "pa_pos_dp", () => [innerWidth - 150, innerHeight - 118]); dpEnlaza(); $("dp_pill").onclick = () => { if (Date.now() - ($("dp_pill")._dr || 0) < 400) return; dpAbre(); }; RD.st = rdLs("pa_rd_st") || "SALA"; avCargaInd().then(rdOpts).catch(() => {}); rdOpts(); rdUi();
+  $("rd_pill").onclick = () => { if (Date.now() - ($("rd_pill")._dr || 0) < 400) return; $("rd_pn").hidden = !$("rd_pn").hidden; };
   $("rd_st").onchange = e => { RD.st = e.target.value; rdLs("pa_rd_st", RD.st); rdUi(); };
   $("rd_to").onchange = e => { RD.to = e.target.value; };
   $("rd_on").onclick = () => RD.on ? rdOff() : rdOn();
@@ -2463,7 +2466,7 @@ async function avCargaCalles(forzar) {
   AVC.cargando = false; const n = $("av_cn"); if (n) n.textContent = AVC.calles.length ? AVC.calles.length + " calles cargadas del callejero." : "No se pudo cargar el callejero (sin conexión): puedes escribir la calle a mano.";
 }
 function avSug(inp) {
-  const R = AV.row, f = inp.dataset.avsug, box = $("av_sg_" + f), q = avNorm2(inp.value), qs = avSinTipo(inp.value);
+  const f = inp.dataset.avsug, box = $("av_sg_" + f), q = avNorm2(inp.value), qs = avSinTipo(inp.value);
   const base = f == "calle" ? AVC.calles : [...new Set([...AV_BARRIOS, ...AVC.barrios])].sort((a, b) => a.localeCompare(b, "ca"));
   if (f == "calle" && !q) { box.hidden = true; return; }
   let L = base.filter(n => !q || avSinTipo(n).startsWith(qs) || avNorm2(n).startsWith(q)); if (L.length < 8 && q) L = L.concat(base.filter(n => !L.includes(n) && (avNorm2(n).includes(q)))).slice(0, 40);
@@ -2472,11 +2475,102 @@ function avSug(inp) {
 document.addEventListener("mousedown", e => { if (e.target.closest("[data-avsg]")) e.preventDefault(); });
 document.addEventListener("click", e => {
   const b = e.target.closest("[data-avsg]"), R = AV.row;
-  if (b && R) { const f = b.dataset.avsg, v = b.dataset.v; R[f] = v; avSucio(f); const i = document.querySelector(`[data-avp="${f}"]`); if (i) i.value = v; $("av_sg_" + f).hidden = true; const nx = document.querySelector('[data-avp="num"]'); if (f == "calle" && nx) nx.focus(); return; }
+  const dpOn = !$("dp_ov").hidden && DP.row;
+  if (b && (R || dpOn)) { const f = b.dataset.avsg, v = b.dataset.v; if (dpOn) DP.row[f] = v; else { R[f] = v; avSucio(f); } const i = document.querySelector(dpOn ? `[data-dpp="${f}"]` : `[data-avp="${f}"]`); if (i) i.value = v; $("av_sg_" + f).hidden = true; const nx = document.querySelector(dpOn ? '[data-dpp="num"]' : '[data-avp="num"]'); if (f == "calle" && nx) nx.focus(); return; }
   if (!e.target.closest("[data-avsug]")) document.querySelectorAll(".av-sg").forEach(x => { x.hidden = true; });
 });
-document.addEventListener("input", e => { const t = e.target.closest("[data-avsug]"); if (t && AV.row) avSug(t); });
-document.addEventListener("focusin", e => { const t = e.target.closest("[data-avsug='barrio']"); if (t && AV.row) avSug(t); else if (e.target.closest("[data-avsug='calle']")) avCargaCalles(); });
+document.addEventListener("input", e => { const t = e.target.closest("[data-avsug]"); if (t && (AV.row || !$("dp_ov").hidden)) avSug(t); });
+document.addEventListener("focusin", e => { const t = e.target.closest("[data-avsug='barrio']"); if (t && (AV.row || !$("dp_ov").hidden)) avSug(t); else if (e.target.closest("[data-avsug='calle']")) avCargaCalles(); });
+/* ---- botones flotantes que se arrastran por la pantalla ---- */
+function flArrastra(box, h, key, def) {
+  const pon = (x, y) => { x = Math.max(0, Math.min(innerWidth - box.offsetWidth, x)); y = Math.max(0, Math.min(innerHeight - box.offsetHeight, y)); box.style.left = x + "px"; box.style.top = y + "px"; box.style.right = "auto"; box.style.bottom = "auto"; box.classList.toggle("fl-top", y < innerHeight / 2); return [x, y]; };
+  let sv = null; try { sv = JSON.parse(localStorage.getItem(key) || "null"); } catch (e) {}
+  const ini = () => { const d = sv || def(); pon(d[0], d[1]); }; ini(); window.addEventListener("resize", () => pon(box.offsetLeft, box.offsetTop));
+  let st = null;
+  h.addEventListener("pointerdown", e => { st = {x: e.clientX, y: e.clientY, l: box.offsetLeft, t: box.offsetTop, mov: false}; try { h.setPointerCapture(e.pointerId); } catch (x) {} });
+  h.addEventListener("pointermove", e => { if (!st) return; const dx = e.clientX - st.x, dy = e.clientY - st.y; if (!st.mov && Math.hypot(dx, dy) < 8) return; st.mov = true; pon(st.l + dx, st.t + dy); });
+  const fin = () => { if (!st) return; if (st.mov) { h._dr = Date.now(); try { localStorage.setItem(key, JSON.stringify([box.offsetLeft, box.offsetTop])); } catch (e) {} } st = null; };
+  h.addEventListener("pointerup", fin); h.addEventListener("pointercancel", fin);
+}
+/* ---- depósito de vehículos retirados con la grúa ---- */
+const DP_T = {ret: 90.70, dia: 11.30};
+const DP = {rows: [], ent: [], row: null, ver: "dep", tm: null, turno: "", err: ""};
+const dpEur = n => (Math.round(n * 100) / 100).toFixed(2).replace(".", ",") + " €";
+function dpCalc(r) {
+  const fin = r.entregado_en ? +new Date(r.entregado_en) : Date.now(), ms = Math.max(0, fin - +new Date(r.retirada)), d = ms / 864e5, pag = Math.floor(ms / 864e5), h = Math.floor(ms / 36e5);
+  const col = d > 10 ? ["r", "Más de 10 días"] : d > 5 ? ["n", "Más de 5 días"] : d > 3 ? ["a", "Más de 3 días"] : ["v", d < 1 ? "Primer día" : "Hasta 3 días"];
+  return {dias: pag, importe: DP_T.ret + DP_T.dia * pag, txt: Math.floor(h / 24) + " d " + (h % 24) + " h", cls: col[0], etq: col[1]};
+}
+function dpAbre() { $("dp_ov").hidden = false; DP.row = null; DP.ver = "dep"; dpCarga(); clearInterval(DP.tm); DP.tm = setInterval(() => { if (!$("dp_ov").hidden && !DP.row) dpCarga(); }, 30000); avCargaCalles(); }
+function dpCierra() { $("dp_ov").hidden = true; clearInterval(DP.tm); }
+async function dpCarga() {
+  const [a, b] = await Promise.all([db.from("deposito").select("*").eq("estado", "depositado").order("retirada", {ascending: true}).limit(500), db.from("deposito").select("*").eq("estado", "entregado").order("entregado_en", {ascending: false}).limit(60)]);
+  DP.err = a.error ? a.error.message : ""; DP.rows = a.data || []; DP.ent = b.data || []; if (!DP.row) dpLista();
+}
+function dpLista() {
+  const I = $("dp_in"), L = DP.ver == "dep" ? DP.rows : DP.ent, cuenta = {v: 0, a: 0, n: 0, r: 0}; DP.rows.forEach(r => cuenta[dpCalc(r).cls]++);
+  I.innerHTML = `<div class="row" style="gap:8px;flex-wrap:wrap;align-items:center"><h2 style="margin:0;flex:1">🚗 Depósito de vehículos <small>(${DP.rows.length})</small></h2><button type="button" class="sec2" data-dpa="x">✕ Cerrar</button></div>
+${DP.err ? `<div class="brf-aviso">⚠️ ${esc(DP.err)} ¿Has ejecutado 23-deposito.sql?</div>` : ""}
+<div class="row" style="gap:6px;flex-wrap:wrap;margin:8px 0"><button type="button" class="k" data-dpa="new">+ Registrar entrada</button><button type="button" class="avc${DP.ver == "dep" ? " on" : ""}" data-dpa="ver-dep">En depósito</button><button type="button" class="avc${DP.ver == "ent" ? " on" : ""}" data-dpa="ver-ent">Entregados</button><span style="flex:1"></span><select id="dp_tn">${Object.keys(AV_T).map(k => `<option value="${k}" ${k == (DP.turno || avTurnoDe(Date.now())) ? "selected" : ""}>${AV_T[k][0]} ${AV_T[k][1]}</option>`).join("")}</select><button type="button" class="sec2" data-dpa="print">🖨️ Imprimir fin de turno</button></div>
+<div class="row" style="gap:6px;flex-wrap:wrap;margin-bottom:8px"><span class="dp-bd v">${cuenta.v} hasta 3 días</span><span class="dp-bd a">${cuenta.a} más de 3</span><span class="dp-bd n">${cuenta.n} más de 5</span><span class="dp-bd r">${cuenta.r} más de 10</span></div>
+${L.map(r => { const c = dpCalc(r); return `<div class="card det-c dp-c ${DP.ver == "dep" ? "dp-" + c.cls : ""}" data-dpid="${r.id}" style="margin:6px 0"><div style="flex:1;min-width:0"><span class="dp-m">${esc(r.matricula)}</span> <small>${esc([r.vehiculo, r.color].filter(Boolean).join(" · "))}</small><br><small>📍 ${esc([r.calle, r.num].filter(Boolean).join(", ") || "sin lugar")}${r.barrio ? " · " + esc(r.barrio) : ""}</small><br><small>Retirado el ${dfd(r.retirada)} ${avHora(r.retirada)}${r.estado == "entregado" ? " · entregado el " + dfd(r.entregado_en) + " " + avHora(r.entregado_en) + " a " + esc(r.entregado_nom || "—") : ""}</small></div><div class="ac-b">${r.estado == "entregado" ? `<span class="dp-bd v">✔ Entregado</span><b>${dpEur(+r.importe_cobrado || 0)}</b>` : `<span class="dp-bd ${c.cls}">${c.txt}</span><b>${dpEur(c.importe)}</b>`}</div></div>`; }).join("") || `<p>${DP.ver == "dep" ? "No hay vehículos en el depósito." : "Todavía no hay vehículos entregados."}</p>`}`;
+}
+function dpFila(p, l, ty = "text", ex = "") { const v = DP.row[p]; return `<label class="fl">${l}<input type="${ty}" data-dpp="${p}" value="${esc(ty == "datetime-local" ? ldt(v) : v ?? "")}" ${ex}></label>`; }
+function dpForm(r) {
+  DP.row = r || {matricula: "", vehiculo: "", color: "", retirada: new Date().toISOString(), calle: "", num: "", barrio: "", motivo: "", grua: "", obs: "", estado: "depositado"}; const R = DP.row, nuevo = !R.id, c = nuevo ? null : dpCalc(R), ent = R.estado == "entregado";
+  $("dp_in").innerHTML = `<div class="row" style="gap:8px;align-items:center"><h2 style="margin:0;flex:1">${nuevo ? "Nueva entrada en el depósito" : esc(R.matricula)}</h2><button type="button" class="sec2" data-dpa="back">← Volver</button></div>
+${c ? `<div class="card dp-c dp-${c.cls}" style="margin:8px 0;display:block"><b>${ent ? "Entregado" : "En el depósito desde hace " + c.txt}</b> <span class="dp-bd ${c.cls}">${c.etq}</span><br>Retirada de la grúa: ${dpEur(DP_T.ret)}<br>Depósito: ${c.dias} día(s) completo(s) de 24 h × ${dpEur(DP_T.dia)} = ${dpEur(DP_T.dia * c.dias)}<br><b style="font-size:18px">${ent ? "Cobrado" : "A pagar si lo recogen ahora"}: ${dpEur(ent ? +R.importe_cobrado || 0 : c.importe)}</b></div>` : ""}
+<div class="g2">${dpFila("matricula", "Matrícula", "text", 'autocapitalize="characters" style="text-transform:uppercase;font-weight:700"')}${dpFila("vehiculo", "Marca y modelo")}${dpFila("color", "Color")}${dpFila("retirada", "Retirado el (fecha y hora)", "datetime-local")}</div>
+<h4>De dónde se ha retirado</h4><div class="g2"><div style="position:relative">${dpFila("calle", "Calle / vía", "text", 'autocomplete="off" data-avsug="calle"')}<div class="av-sg" id="av_sg_calle" hidden></div></div>${dpFila("num", "Número")}<div style="position:relative">${dpFila("barrio", "Barrio", "text", 'autocomplete="off" data-avsug="barrio"')}<div class="av-sg" id="av_sg_barrio" hidden></div></div>${dpFila("motivo", "Motivo de la retirada", "text", 'list="dp_mot"')}${dpFila("grua", "Grúa / agente que lo ordena")}</div>
+<datalist id="dp_mot"><option value="Estacionamiento prohibido"><option value="Vado"><option value="Obstaculiza la circulación"><option value="Zona de carga y descarga"><option value="Evento / obras"><option value="Abandono"><option value="Orden judicial / atestado"></datalist>
+<label class="fl">Observaciones<textarea rows="3" data-dpp="obs">${esc(R.obs || "")}</textarea></label><div id="dp_msg" style="margin:6px 0"></div>
+<div class="row" style="gap:8px;flex-wrap:wrap"><button type="button" class="k" data-dpa="save">${nuevo ? "Registrar entrada" : "Guardar cambios"}</button>${!nuevo && !ent ? '<button type="button" class="k" style="background:#1f8a4c" data-dpa="ent">✔ Marcar como entregado…</button>' : ""}</div><div id="dp_en"></div>
+${ent ? `<div class="card" style="display:block;margin-top:10px"><b>Entregado</b> el ${dfd(R.entregado_en)} ${avHora(R.entregado_en)}<br>A: ${esc(R.entregado_nom || "—")} ${esc(R.entregado_doc || "")}<br>Por: ${esc(R.entregado_por || "—")}</div>` : ""}`;
+}
+function dpEntFormulario() {
+  const c = dpCalc(DP.row), nom = [AV.sala.tip, AV.sala.nombre].filter(Boolean).join(" ");
+  $("dp_en").innerHTML = `<div class="card" style="display:block;margin-top:10px"><b>Entrega del vehículo ${esc(DP.row.matricula)}</b><div class="g2"><label class="fl">Quien lo recoge (nombre)<input id="dp_en_n"></label><label class="fl">DNI / NIE<input id="dp_en_d" autocapitalize="characters"></label><label class="fl">Importe cobrado (€)<input id="dp_en_i" inputmode="decimal" value="${c.importe.toFixed(2).replace(".", ",")}"></label><label class="fl">Lo entrega (agente)<input id="dp_en_p" value="${esc(nom)}"></label></div><button type="button" class="k" data-dpa="ent-ok">Confirmar entrega</button> <button type="button" class="sec2" data-dpa="ent-no">Cancelar</button></div>`;
+  $("dp_en").scrollIntoView({block: "nearest"});
+}
+async function dpGuarda() {
+  const R = DP.row, m = $("dp_msg"); R.matricula = (R.matricula || "").toUpperCase().replace(/\s|-/g, ""); if (!R.matricula) { m.textContent = "Escribe la matrícula."; return; }
+  const pl = {matricula: R.matricula, vehiculo: R.vehiculo || "", color: R.color || "", retirada: R.retirada || new Date().toISOString(), calle: R.calle || "", num: R.num || "", barrio: R.barrio || "", motivo: R.motivo || "", grua: R.grua || "", obs: R.obs || ""};
+  const q = R.id ? await db.from("deposito").update(pl).eq("id", R.id).select("*").single() : await db.from("deposito").insert(pl).select("*").single();
+  if (q.error) { m.textContent = "⚠️ No se pudo guardar: " + q.error.message; return; }
+  DP.row = null; await dpCarga(); dpLista();
+}
+async function dpEntrega() {
+  const R = DP.row, nom = $("dp_en_n").value.trim(), imp = parseFloat(($("dp_en_i").value || "").replace(",", ".")); if (!nom) { $("dp_msg").textContent = "Escribe quién lo recoge."; return; } if (isNaN(imp)) { $("dp_msg").textContent = "Importe no válido."; return; }
+  const {error} = await db.from("deposito").update({estado: "entregado", entregado_en: new Date().toISOString(), entregado_nom: nom, entregado_doc: $("dp_en_d").value.trim().toUpperCase(), importe_cobrado: imp, entregado_por: $("dp_en_p").value.trim()}).eq("id", R.id);
+  if (error) { $("dp_msg").textContent = "⚠️ No se pudo guardar: " + error.message; return; }
+  DP.row = null; await dpCarga(); dpLista();
+}
+async function dpImprime() {
+  const t = $("dp_tn").value; DP.turno = t; const h = new Date(), dia = ldia(t == "N" || t == "TN" ? (h.getHours() < 12 ? +h - 864e5 : +h) : +h), [a, b] = avRango(dia, t), A = a.toISOString(), B = new Date(Math.min(+b, Date.now())).toISOString();
+  const [ent, sal] = await Promise.all([db.from("deposito").select("*").gte("retirada", A).lt("retirada", B).order("retirada", {ascending: true}), db.from("deposito").select("*").eq("estado", "entregado").gte("entregado_en", A).lt("entregado_en", B).order("entregado_en", {ascending: true})]);
+  const ini = DP.rows.filter(r => +new Date(r.retirada) < +a).length + (sal.data || []).filter(r => +new Date(r.retirada) < +a).length;
+  muestraImp(dpHoja(dia, t, ent.data || [], sal.data || [], ini));
+}
+function dpHoja(dia, t, ent, sal, ini) {
+  const e = esc, z = AV_T[t], L = DP.rows, tr = r => { const c = dpCalc(r); return `<tr style="page-break-inside:avoid"><td><b>${e(r.matricula)}</b></td><td>${e([r.vehiculo, r.color].filter(Boolean).join(" · "))}</td><td>${dfd(r.retirada)} ${avHora(r.retirada)}</td><td>${e([r.calle, r.num].filter(Boolean).join(", "))}${r.barrio ? " (" + e(r.barrio) + ")" : ""}<br><small>${e(r.motivo)}</small></td><td><b>${c.txt}</b><br><small>${c.etq}</small></td><td style="text-align:right;white-space:nowrap"><b>${dpEur(c.importe)}</b></td><td>${e(r.obs)}</td></tr>`; };
+  const th = "<thead><tr style=\"background:#ddd\"><th>Matrícula</th><th>Vehicle</th><th>Retirat</th><th>Lloc de retirada</th><th>Temps</th><th>Import avui</th><th>Observacions</th></tr></thead>";
+  return `<div class="apg" style="font-size:10px;padding:10mm;height:auto;min-height:296mm;overflow:visible"><div style="display:flex;gap:6mm;align-items:flex-start"><div style="font-size:17px;font-weight:800;line-height:1.1">POLICIA<br>LOCAL DE<br>TORTOSA</div><div style="flex:1"><b style="font-size:15px">Estat del dipòsit de vehicles</b><br>Torn ${e(z[0].toLowerCase())} (${z[1]}) · ${dia.split("-").reverse().join("/")} · impres a les ${avHora(Date.now())}<br><small>Agent: ${e([AV.sala.tip, AV.sala.nombre].filter(Boolean).join(" "))}</small></div></div>
+<p style="margin:3mm 0">Vehicles a l'inici del torn: <b>${ini}</b> · Entrades durant el torn: <b>${ent.length}</b> · Lliurats: <b>${sal.length}</b> · <b>Queden al dipòsit: ${L.length}</b></p>
+<h4 style="margin:3mm 0 1mm">Vehicles que queden al dipòsit (${L.length})</h4><table style="width:100%;border-collapse:collapse" border="1" cellpadding="3">${th}<tbody>${L.map(tr).join("") || '<tr><td colspan="7">Cap vehicle al dipòsit.</td></tr>'}</tbody></table>
+<p style="font-size:9px;margin:1mm 0">Tarifa: retirada ${dpEur(DP_T.ret)} + ${dpEur(DP_T.dia)} per cada 24 h al dipòsit.</p>
+<h4 style="margin:4mm 0 1mm">Lliuraments del torn (${sal.length})</h4><table style="width:100%;border-collapse:collapse" border="1" cellpadding="3"><thead><tr style="background:#ddd"><th>Matrícula</th><th>Hora</th><th>Recollit per</th><th>DNI</th><th>Import cobrat</th><th>Agent</th></tr></thead><tbody>${sal.map(r => `<tr><td><b>${e(r.matricula)}</b></td><td>${avHora(r.entregado_en)}</td><td>${e(r.entregado_nom)}</td><td>${e(r.entregado_doc)}</td><td style="text-align:right">${dpEur(+r.importe_cobrado || 0)}</td><td>${e(r.entregado_por)}</td></tr>`).join("") || '<tr><td colspan="6">Cap lliurament.</td></tr>'}</tbody></table>
+<h4 style="margin:4mm 0 1mm">Entrades del torn (${ent.length})</h4><table style="width:100%;border-collapse:collapse" border="1" cellpadding="3"><thead><tr style="background:#ddd"><th>Matrícula</th><th>Vehicle</th><th>Hora</th><th>Lloc</th><th>Motiu</th></tr></thead><tbody>${ent.map(r => `<tr><td><b>${e(r.matricula)}</b></td><td>${e([r.vehiculo, r.color].filter(Boolean).join(" · "))}</td><td>${avHora(r.retirada)}</td><td>${e([r.calle, r.num].filter(Boolean).join(", "))}</td><td>${e(r.motivo)}</td></tr>`).join("") || '<tr><td colspan="5">Cap entrada.</td></tr>'}</tbody></table>
+<div style="display:flex;gap:10mm;margin-top:14mm"><div style="flex:1;border-top:1.5px solid #000;padding-top:1mm">Agent que lliura el dipòsit</div><div style="flex:1;border-top:1.5px solid #000;padding-top:1mm">Agent que el rep</div></div></div>`;
+}
+function dpEnlaza() {
+$("dp_ov").addEventListener("click", e => {
+  const a = e.target.closest("[data-dpa]"), c = e.target.closest("[data-dpid]");
+  if (c && !a) { const r = DP.rows.concat(DP.ent).find(x => x.id == c.dataset.dpid); if (r) dpForm(r); return; } if (!a) return; const v = a.dataset.dpa;
+  if (v == "x") dpCierra(); else if (v == "new") dpForm(null); else if (v == "back") { DP.row = null; dpCarga().then(dpLista); } else if (v == "ver-dep" || v == "ver-ent") { DP.ver = v.slice(4); dpLista(); }
+  else if (v == "save") dpGuarda(); else if (v == "ent") dpEntFormulario(); else if (v == "ent-no") $("dp_en").innerHTML = ""; else if (v == "ent-ok") dpEntrega(); else if (v == "print") dpImprime();
+});
+$("dp_ov").addEventListener("input", e => { const t = e.target.closest("[data-dpp]"); if (!t || !DP.row) return; let v = t.value; if (t.type == "datetime-local") v = v ? new Date(v).toISOString() : DP.row.retirada; DP.row[t.dataset.dpp] = v; });
+}
 /* ---- patrullas: indicativos y agentes que van en cada uno (editable) ---- */
 function avPatrullas() {
   const box = $("av_pt"); if (AV.errInd) { box.innerHTML = '<div class="brf-aviso">⚠️ No se pudieron cargar los indicativos. ¿Has ejecutado 19-avisos-sala.sql?</div>'; return; }
@@ -2957,6 +3051,8 @@ function imprimeOcupacion(o) {
 }
 db.auth.getSession().then(({data}) => { if (data.session) start(); });
 </script>
-<div id="rd_fl" hidden><div id="rd_pn" hidden><b>📻 Radio</b><label class="fl">Esta estación es<select id="rd_st"></select></label><button type="button" id="rd_on" class="k" style="width:100%">Activar radio (micrófono y altavoz)</button><label class="fl">Hablar con<select id="rd_to"></select></label><button type="button" id="rd_ptt" class="rd-ptt" data-rdptt="*" disabled>🎙️ Mantén pulsado para hablar</button><div id="rd_s" style="margin:6px 0;font-size:13px"></div><div id="rd_lg"></div></div><button type="button" id="rd_pill">📻 Radio</button></div>
+<div id="rd_fl" class="fl-b" hidden><div id="rd_pn" hidden><b>📻 Radio</b><label class="fl">Esta estación es<select id="rd_st"></select></label><button type="button" id="rd_on" class="k" style="width:100%">Activar radio (micrófono y altavoz)</button><label class="fl">Hablar con<select id="rd_to"></select></label><button type="button" id="rd_ptt" class="rd-ptt" data-rdptt="*" disabled>🎙️ Mantén pulsado para hablar</button><div id="rd_s" style="margin:6px 0;font-size:13px"></div><div id="rd_lg"></div></div><button type="button" id="rd_pill" class="fl-p">📻 Radio</button></div>
+<div id="dp_fl" class="fl-b" hidden><button type="button" id="dp_pill" class="fl-p">🚗 Depósito</button></div>
+<div id="dp_ov" hidden><div class="dp-in" id="dp_in"></div></div>
 </body>
 </html>

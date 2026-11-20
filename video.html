@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Policía Local de Tortosa · Enviar vídeo</title>
+<link rel="icon" type="image/png" href="icon-192.png"><link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>:root{--bg:#F3F6F5;--ink:#12211F;--card:#fff;--acc:#0E5A5A;--red:#C93A1F;--line:#D3DEDC;--ok:#2E7D5B}@media(prefers-color-scheme:dark){:root{--bg:#0E1A19;--ink:#E6EEEC;--card:#16282A;--acc:#6FC3BE;--line:#2A4144}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 system-ui,-apple-system,sans-serif}main{max-width:520px;margin:0 auto;padding:16px 16px 60px}
+h1{font-size:22px;margin:8px 0}.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}.warn{background:#FFF1D6;color:#4a3500;border-radius:12px;padding:12px;font-weight:600}
+.btn{display:block;width:100%;border:0;border-radius:14px;padding:16px;margin:8px 0;font:inherit;font-weight:700;background:var(--acc);color:#fff;text-align:center}.btn.s{background:none;border:2px solid var(--acc);color:var(--acc)}.btn[aria-disabled=true]{opacity:.4;pointer-events:none}
+.lg{display:flex;gap:8px;justify-content:flex-end}.lg button{border:1px solid var(--acc);background:none;color:var(--acc);border-radius:20px;padding:4px 14px;font:inherit}.lg button.on{background:var(--acc);color:var(--bg)}
+label.ck{display:flex;gap:10px;align-items:flex-start;font-size:15px}label.ck input{width:24px;height:24px;flex:none}ul{list-style:none;padding:0;margin:0}li{padding:8px 0;border-bottom:1px solid var(--line);font-size:15px}.ko{color:var(--red)}.ok{color:var(--ok)}small{opacity:.75}input[type=file]{display:none}</style></head><body><main>
+<div class="lg"><button data-l="ca">Català</button><button data-l="es">Castellano</button></div>
+<h1>🚓 Policia Local de Tortosa</h1>
+<div id="cargando" class="card">…</div>
+<div id="caducado" class="card" hidden><b id="t_cad"></b></div>
+<div id="ok" hidden>
+<div class="warn" id="t_av"></div>
+<div class="card"><label class="ck"><input type="checkbox" id="acepto"><span id="t_ac"></span></label></div>
+<label class="btn" id="b_vid" aria-disabled="true"><span id="t_vid"></span><input type="file" accept="video/*" capture="environment" data-f></label>
+<label class="btn" id="b_foto" aria-disabled="true"><span id="t_foto"></span><input type="file" accept="image/*" capture="environment" data-f></label>
+<label class="btn s" id="b_gal" aria-disabled="true"><span id="t_gal"></span><input type="file" accept="video/*,image/*" multiple data-f></label>
+<button class="btn s" id="b_ubi" type="button" aria-disabled="true"></button>
+<div class="card" id="lst_c" hidden><ul id="lst"></ul></div>
+<p><small id="t_pie"></small></p>
+</div></main>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL = "https://gaaaxoccsewsqghiutrq.supabase.co", SUPABASE_KEY = "sb_publishable_HkxGy62A8XhCUr04YoPeGA_RBQY2xaF";
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY), $ = i => document.getElementById(i), TOK = new URLSearchParams(location.search).get("t") || "", MAX = 50 * 1024 * 1024;
+const TX = {
+  ca: {cad: "Aquest enllaç ha caducat o no és vàlid. Si us cal, torni a trucar a la Policia Local.", av: "Si hi ha perill, no gravi: truqui al 112. No s'acosti ni s'exposi per fer el vídeo.", ac: "Accepto que la Policia Local de Tortosa utilitzi aquestes imatges per atendre el meu avís. Només les veuran agents autoritzats. Més informació: política de privacitat.", vid: "🎥 Gravar un vídeo", foto: "📷 Fer una foto", gal: "📁 Triar de la galeria", ubi: "📍 Enviar la meva ubicació", pie: "Els vídeos curts (menys de 30 segons) s'envien més ràpid. Màxim 50 MB per arxiu. L'enllaç caduca aviat.", env: "Enviant…", fet: "Enviat", err: "No s'ha pogut enviar", gran: "Arxiu massa gran (màx. 50 MB): gravi un vídeo més curt", ubiok: "Ubicació enviada", ubiko: "No s'ha pogut obtenir la ubicació"},
+  es: {cad: "Este enlace ha caducado o no es válido. Si lo necesita, vuelva a llamar a la Policía Local.", av: "Si hay peligro, no grabe: llame al 112. No se acerque ni se exponga para hacer el vídeo.", ac: "Acepto que la Policía Local de Tortosa utilice estas imágenes para atender mi aviso. Solo las verán agentes autorizados. Más información: política de privacidad.", vid: "🎥 Grabar un vídeo", foto: "📷 Hacer una foto", gal: "📁 Elegir de la galería", ubi: "📍 Enviar mi ubicación", pie: "Los vídeos cortos (menos de 30 segundos) se envían más rápido. Máximo 50 MB por archivo. El enlace caduca pronto.", env: "Enviando…", fet: "Enviado", err: "No se pudo enviar", gran: "Archivo demasiado grande (máx. 50 MB): grabe un vídeo más corto", ubiok: "Ubicación enviada", ubiko: "No se pudo obtener la ubicación"}
+};
+let L = (navigator.language || "ca").toLowerCase().startsWith("es") ? "es" : "ca";
+function pinta() {
+  const t = TX[L]; document.documentElement.lang = L; document.querySelectorAll(".lg button").forEach(b => b.classList.toggle("on", b.dataset.l == L));
+  $("t_cad").textContent = t.cad; $("t_av").textContent = t.av; $("t_vid").textContent = t.vid; $("t_foto").textContent = t.foto; $("t_gal").textContent = t.gal; $("b_ubi").textContent = t.ubi; $("t_pie").textContent = t.pie;
+  $("t_ac").innerHTML = t.ac.replace(/(política de privacitat|política de privacidad)/, '<a href="privacidad.html" target="_blank">$1</a>');
+}
+document.querySelector(".lg").onclick = e => { const b = e.target.closest("[data-l]"); if (b) { L = b.dataset.l; pinta(); } };
+const lock = () => { const on = $("acepto").checked; ["b_vid", "b_foto", "b_gal", "b_ubi"].forEach(i => $(i).setAttribute("aria-disabled", on ? "false" : "true")); };
+function fila(txt, cls) { const li = document.createElement("li"); li.innerHTML = txt; if (cls) li.className = cls; $("lst").prepend(li); $("lst_c").hidden = false; return li; }
+async function sube(f) {
+  const t = TX[L]; if (f.size > MAX) { fila("⚠️ " + f.name + " — " + t.gran, "ko"); return; }
+  const li = fila("⏳ " + f.name + " — " + t.env), a = new Uint8Array(6); crypto.getRandomValues(a);
+  const ext = (f.name.split(".").pop() || "bin").toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 5) || "bin", path = TOK + "/" + Date.now() + "-" + [...a].map(x => x.toString(16).padStart(2, "0")).join("") + "." + ext, mime = f.type || "application/octet-stream";
+  try {
+    const u = await db.storage.from("evidencias").upload(path, f, {contentType: mime, upsert: false}); if (u.error) throw u.error;
+    const r = await db.rpc("video_registra", {p_token: TOK, p_path: path, p_tipo: mime.startsWith("video") ? "video" : mime.startsWith("image") ? "foto" : "otro", p_mime: mime, p_size: f.size}); if (r.error || r.data !== true) throw (r.error || new Error("registro"));
+    li.className = "ok"; li.textContent = "✅ " + f.name + " — " + t.fet;
+  } catch (e) { li.className = "ko"; li.textContent = "⚠️ " + f.name + " — " + t.err; }
+}
+document.querySelectorAll("input[data-f]").forEach(i => i.onchange = async () => { const fs = [...i.files]; i.value = ""; for (const f of fs) await sube(f); });
+$("acepto").onchange = lock;
+$("b_ubi").onclick = () => { const t = TX[L]; if (!navigator.geolocation) { fila("⚠️ " + t.ubiko, "ko"); return; } navigator.geolocation.getCurrentPosition(async p => { const r = await db.rpc("video_ubicacion", {p_token: TOK, p_lat: p.coords.latitude, p_lng: p.coords.longitude}); fila(r.data === true ? "✅ " + t.ubiok : "⚠️ " + t.ubiko, r.data === true ? "ok" : "ko"); }, () => fila("⚠️ " + t.ubiko, "ko"), {enableHighAccuracy: true, timeout: 12000}); };
+(async () => {
+  pinta(); let ok = false; try { const r = await db.rpc("video_enlace_info", {p_token: TOK}); ok = !!(r.data && r.data.ok); } catch (e) {}
+  $("cargando").hidden = true; $(ok ? "ok" : "caducado").hidden = false;
+})();
+</script></body></html>

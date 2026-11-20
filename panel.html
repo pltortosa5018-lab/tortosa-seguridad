@@ -2702,9 +2702,10 @@ function avRender(top) {
 <details class="acc" open><summary>4. Unidades asignadas</summary><div class="pad">${eq || "<small>Todavía no hay ninguna patrulla asignada. 🟢 = libre, 🔴 = en otro servicio.</small>"}<button type="button" class="sec2" data-avb="addq">+ Asignar unidad</button></div></details>
 <details class="acc" ${R.personas.length ? "open" : ""}><summary>5. Personas identificadas (${R.personas.length})</summary><div class="pad">${pe}<div class="row" style="gap:6px;flex-wrap:wrap"><button type="button" class="sec2" data-avb="addp">+ Añadir persona</button><button type="button" class="sec2" data-avb="padA">🏛️ Padrón ayuntamiento</button><button type="button" class="sec2" data-avb="padP">👮 Padrón policía</button></div><div id="av_pdn"></div></div></details>
 <details class="acc" open><summary>6. Descripción del aviso</summary><div class="pad"><div class="row" style="align-items:center;gap:8px"><button type="button" id="av_dic" class="k">🎙️ Dictar</button><select id="av_dl"><option value="es-ES">Castellano</option><option value="ca-ES">Català</option></select></div><small id="av_dn">Pulsa «Dictar», habla y el texto se escribe solo. Puedes corregirlo a mano.</small>${avT("descripcion", "Qué ocurre / qué se informa", 6, 'id="av_ta"')}${avT("procedimiento", "Actas realizadas (tipo y número)", 4, 'placeholder="Ej.: Acta de denuncia n.º …, Acta de intervención n.º …"')}${avT("solucion", "Cómo se ha resuelto / actuación realizada", 4)}</div></details>
-<details class="acc" ${R.fotos.length ? "open" : ""}><summary>7. Reportaje fotográfico (${R.fotos.length})</summary><div class="pad"><small>Fotos del lugar, de los daños, etc. Se reducen de tamaño al añadirlas (máximo 12) y salen impresas con la hoja del aviso.</small><br><input id="av_phf" type="file" accept="image/*" multiple hidden><button type="button" class="k" data-avb="ph+">📷 Añadir fotos</button> <small id="av_phs"></small><div id="av_pg">${avFotosHTML()}</div></div></details>
+<details class="acc" open><summary>7. Vídeo y fotos del ciudadano</summary><div class="pad"><div id="av_vid"><small>Cargando…</small></div></div></details>
+<details class="acc" ${R.fotos.length ? "open" : ""}><summary>8. Reportaje fotográfico (${R.fotos.length})</summary><div class="pad"><small>Fotos del lugar, de los daños, etc. Se reducen de tamaño al añadirlas (máximo 12) y salen impresas con la hoja del aviso.</small><br><input id="av_phf" type="file" accept="image/*" multiple hidden><button type="button" class="k" data-avb="ph+">📷 Añadir fotos</button> <small id="av_phs"></small><div id="av_pg">${avFotosHTML()}</div></div></details>
 <div class="row" style="gap:8px;margin:12px 0;flex-wrap:wrap"><button type="button" class="k" data-avb="fin">✔ Finalizar aviso</button><button type="button" class="sec2" data-avb="print">🖨️ Imprimir hoja del aviso</button><button type="button" class="sec2" data-avb="back">← Volver a la lista</button></div>`;
-  dictaInit("av_dic", "av_ta", "av_dl", "av_dn"); avMiniMapa(); const ds = [...document.querySelectorAll("#av_f details.acc")]; if (!top && ds.length == op.length) ds.forEach((d, k) => { d.open = op[k]; }); window.scrollTo(0, top ? 0 : y0); if (top) AV.pad = ""; avPadPinta();
+  dictaInit("av_dic", "av_ta", "av_dl", "av_dn"); avMiniMapa(); avVidCarga(true); const ds = [...document.querySelectorAll("#av_f details.acc")]; if (!top && ds.length == op.length) ds.forEach((d, k) => { d.open = op[k]; }); window.scrollTo(0, top ? 0 : y0); if (top) AV.pad = ""; avPadPinta();
 }
 function avMiniMapa() {
   const el = $("av_fm"); if (!el || typeof L === "undefined") return; const R = AV.row;
@@ -2740,6 +2741,7 @@ function avEv(e) {
 async function avCargaPend() { const r = await db.from("intervenciones").select(AV_COLS).eq("finalizada", false).limit(300); if (!r.error) AV.pend = r.data.map(avNorm); }
 async function avFClick(e) {
   const R = AV.row; if (!R) return; const b = e.target.closest("[data-avb],[data-avqx],[data-avpx],[data-avph],[data-avpadd]"); if (!b) return;
+  if (b.dataset.avb && b.dataset.avb.startsWith("vid")) { avVidAcc(b.dataset.avb); return; }
   if (b.dataset.avph != null) { R.fotos.splice(+b.dataset.avph, 1); avSucio("fotos"); avFotosPinta(); return; }
   if (b.dataset.avpadd != null) { const x = AV.padRes[+b.dataset.avpadd]; if (x) { R.personas.push({doc: x.doc, ape: x.ape, nom: x.nom}); avSucio("personas"); avRender(); } return; }
   if (b.dataset.avqx != null) { R.equipos.splice(+b.dataset.avqx, 1); avSucio("equipos"); avRender(); return; }
@@ -2751,7 +2753,7 @@ async function avFClick(e) {
   else if (a == "padP") { AV.pad = AV.pad == "P" ? "" : "P"; avPadPinta(); if (AV.pad) { const q = $("av_pq"); if (q) q.focus({preventScroll: true}); } }
   else if (a == "padq") avPadBusca();
   else if (a == "ph+") $("av_phf").click();
-  else if (a == "back") { await avGuarda(); AV.row = null; $("av_f").hidden = true; $("av_l").hidden = false; avRefresh(); }
+  else if (a == "back") { clearInterval(AVV.tm); await avGuarda(); AV.row = null; $("av_f").hidden = true; $("av_l").hidden = false; avRefresh(); }
   else if (a == "fin") { R.finalizada = true; avSucio("finalizada"); if (!R.fin) { R.fin = new Date().toISOString(); avSucio("fin"); } if (!R.resultado) { R.resultado = "SC"; avSucio("resultado"); } await avGuarda(); avRender(); $("av_est").textContent = "Aviso finalizado ✓"; }
   else if (a == "gps") {
     if (!navigator.geolocation) { $("av_gn").textContent = "Este dispositivo no da la ubicación."; return; } $("av_gn").textContent = "Buscando ubicación…";
@@ -2774,7 +2776,7 @@ ${f("Tipus d'intervenció", (R.tipo_cod ? R.tipo_cod + " · " : "") + R.tipo_txt
 <h4 style="margin:4mm 0 1mm">Requerent</h4><div style="display:flex;gap:4mm">${f("Nom i cognoms", [q.nom, q.ape].filter(Boolean).join(" "), 2)}${f("DNI / NIE", q.doc)}${f("Telèfon", [q.tel1, q.tel2].filter(Boolean).join(" / "))}</div>${f("Adreça", [q.adr, q.num, q.ciu].filter(Boolean).join(", "))}
 <h4 style="margin:4mm 0 1mm">Unitats i agents intervinents</h4>${R.equipos.map(x => f("Indicatiu " + (x.ind || ""), (x.agentes || []).map(a => (a.tip ? "TIP " + a.tip + " " : "") + (a.nombre || "")).join(" · "))).join("") || f("", "—")}
 <h4 style="margin:4mm 0 1mm">Persones identificades</h4>${R.personas.map(p => f("", [p.doc, p.ape, p.nom].filter(Boolean).join(" · "))).join("") || f("", "—")}
-<h4 style="margin:4mm 0 1mm">Descripció</h4><div style="border:1.5px solid #000;min-height:55mm;padding:2mm;white-space:pre-wrap">${e(R.descripcion)}</div><h4 style="margin:4mm 0 1mm">Actes realitzades</h4><div style="border:1.5px solid #000;min-height:20mm;padding:2mm;white-space:pre-wrap">${e(R.procedimiento)}</div><h4 style="margin:4mm 0 1mm">Com s'ha resolt</h4><div style="border:1.5px solid #000;min-height:20mm;padding:2mm;white-space:pre-wrap">${e(R.solucion)}</div></div>${fp}`;
+<h4 style="margin:4mm 0 1mm">Descripció</h4><div style="border:1.5px solid #000;min-height:55mm;padding:2mm;white-space:pre-wrap">${e(R.descripcion)}</div><h4 style="margin:4mm 0 1mm">Actes realitzades</h4><div style="border:1.5px solid #000;min-height:20mm;padding:2mm;white-space:pre-wrap">${e(R.procedimiento)}</div><h4 style="margin:4mm 0 1mm">Com s'ha resolt</h4><div style="border:1.5px solid #000;min-height:20mm;padding:2mm;white-space:pre-wrap">${e(R.solucion)}</div>${AVV.ev.length ? `<p style="margin-top:3mm"><b>Material rebut del ciutadà:</b> ${AVV.ev.filter(x => x.tipo == "video").length} vídeo(s) i ${AVV.ev.filter(x => x.tipo != "video").length} foto(s) (consultables al sistema).</p>` : ""}</div>${fp}`;
 }
 /* ---- padrón policía / padrón ayuntamiento / fotos / foco ---- */
 function avFoco(sel) { const el = document.querySelector(sel); if (el) { el.focus({preventScroll: true}); el.scrollIntoView({block: "nearest"}); } }
@@ -2801,11 +2803,55 @@ function avFotosHTML() {
   const F = (AV.row && AV.row.fotos) || [];
   return F.map((f, i) => `<div class="ph"><img src="${f.u}" alt="foto ${i + 1}"><input data-avp="fotos.${i}.pie" value="${esc(f.pie || "")}" placeholder="Pie de foto"><button type="button" data-avph="${i}" class="sec2">Quitar</button></div>`).join("") || '<small style="opacity:.7">Aún no hay fotos.</small>';
 }
-function avFotosPinta() { const g = $("av_pg"); if (g) g.innerHTML = avFotosHTML(); const d = document.querySelector("#av_pg") && document.querySelector("#av_pg").closest("details"); if (d) d.querySelector("summary").textContent = "7. Reportaje fotográfico (" + AV.row.fotos.length + ")"; }
+function avFotosPinta() { const g = $("av_pg"); if (g) g.innerHTML = avFotosHTML(); const d = document.querySelector("#av_pg") && document.querySelector("#av_pg").closest("details"); if (d) d.querySelector("summary").textContent = "8. Reportaje fotográfico (" + AV.row.fotos.length + ")"; }
 async function avFotos(files) {
   const R = AV.row; if (!R) return; R.fotos = R.fotos || []; const fs = [...files].slice(0, Math.max(0, 12 - R.fotos.length)), st = $("av_phs");
   for (let i = 0; i < fs.length; i++) { if (st) st.textContent = "Procesando foto " + (i + 1) + " de " + fs.length + "…"; try { R.fotos.push({u: await fotoComp(fs[i]), pie: ""}); } catch (e) { if (st) st.textContent = "No se pudo leer una de las fotos."; } }
   if (st) st.textContent = R.fotos.length + " foto(s)" + (R.fotos.length >= 12 ? " (máximo alcanzado)" : ""); avFotosPinta(); avSucio("fotos");
+}
+/* ---- vídeo y fotos del ciudadano (enlace de un solo aviso, caduca) ---- */
+const AVV = {en: [], ev: [], urls: {}, tm: null, sig: ""};
+const avVidTok = () => { const a = new Uint8Array(24); crypto.getRandomValues(a); return btoa(String.fromCharCode(...a)).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+const avVidUrl = t => new URL("video.html?t=" + t, location.href).href;
+const avVidAct = () => AVV.en.find(x => x.activo && +new Date(x.caduca) > Date.now());
+function avVidTel() { const t = String((AV.row.requirent || {}).tel1 || "").replace(/\D/g, ""); return t.length == 9 ? "34" + t : t.length >= 11 ? t : ""; }
+function avVidMsg(url, min, l) { return l == "es" ? `Policía Local de Tortosa: para ayudarnos con su aviso, suba aquí un vídeo o foto: ${url} (el enlace caduca en ${min} min). No se acerque ni se ponga en peligro.` : `Policia Local de Tortosa: per ajudar-nos amb el seu avís, pugi aquí un vídeo o foto: ${url} (l'enllaç caduca en ${min} min). No s'hi acosti ni es posi en perill.`; }
+async function avVidCarga(forzar) {
+  const R = AV.row; if (!R || !$("av_vid")) { clearInterval(AVV.tm); return; }
+  const [a, b] = await Promise.all([db.from("enlaces_video").select("*").eq("aviso_id", R.id).order("creado", {ascending: false}), db.from("evidencias").select("*").eq("aviso_id", R.id).order("creado", {ascending: true})]);
+  if (a.error || b.error) { $("av_vid").innerHTML = `<div class="brf-aviso">⚠️ No se pudo cargar (${esc((a.error || b.error).message)}). ¿Has ejecutado 24-video-ciudadano.sql?</div>`; return; }
+  AVV.en = a.data || []; AVV.ev = b.data || [];
+  const falta = AVV.ev.map(x => x.path).filter(x => !AVV.urls[x]); if (falta.length) { try { const u = await db.storage.from("evidencias").createSignedUrls(falta, 3600); (u.data || []).forEach(x => { if (x.signedUrl) AVV.urls[x.path] = x.signedUrl; }); } catch (e) {} }
+  const act = avVidAct(), sig = JSON.stringify([AVV.ev.map(x => x.id), act ? act.token : "", AVV.en.map(x => x.lat), !!act]);
+  if (forzar || sig != AVV.sig) { const nuevos = AVV.sig && AVV.ev.length > JSON.parse(AVV.sig)[0].length; AVV.sig = sig; avVidPinta(); if (nuevos) { try { rdBeep(1000, 80); } catch (e) {} } }
+  clearInterval(AVV.tm); AVV.tm = setInterval(() => { if (!AV.row || !$("av_vid")) { clearInterval(AVV.tm); return; } const t = $("av_vidt"); if (t && avVidAct()) t.textContent = avVidMin(); if (avVidAct()) avVidCarga(); else if (t) avVidCarga(); }, 6000);
+}
+const avVidMin = () => { const x = avVidAct(); if (!x) return ""; const m = Math.max(0, Math.ceil((+new Date(x.caduca) - Date.now()) / 60000)); return "Caduca a las " + avHora(x.caduca) + " (" + m + " min)"; };
+function avVidPinta() {
+  const box = $("av_vid"); if (!box) return; const act = avVidAct(), url = act ? avVidUrl(act.token) : "", ub = AVV.en.find(x => x.lat != null);
+  const evs = AVV.ev.map(x => { const u = AVV.urls[x.path]; return `<div class="ph">${!u ? "<small>(cargando…)</small>" : x.tipo == "video" ? `<video controls preload="metadata" playsinline src="${esc(u)}" style="max-width:100%"></video>` : `<img src="${esc(u)}" alt="foto del ciudadano">`}<small>${x.tipo == "video" ? "🎥" : "📷"} recibido a las ${avHora(x.creado)} · ${Math.round((x.size || 0) / 1024 / 1024 * 10) / 10} MB</small>${u ? ` <a href="${esc(u)}" target="_blank" download>⬇ Descargar</a>` : ""}</div>`; }).join("");
+  box.innerHTML = `<small>Manda un enlace al ciudadano que ha llamado. Abre la página en su móvil (sin instalar nada), graba o sube vídeo y fotos, y llegan aquí al momento.</small>
+<div class="row" style="gap:6px;flex-wrap:wrap;align-items:center;margin:8px 0"><select id="av_vm"><option value="15">Caduca en 15 min</option><option value="30" selected>Caduca en 30 min</option><option value="60">Caduca en 1 hora</option></select><button type="button" class="k" data-avb="vidnew">📲 ${act ? "Crear otro enlace" : "Pedir vídeo/fotos al ciudadano"}</button></div>
+${act ? `<div class="card" style="display:block"><b>Enlace activo</b> · <small id="av_vidt">${avVidMin()}</small><input id="av_vidu" readonly value="${esc(url)}" style="width:100%;margin:6px 0" onfocus="this.select()"><div class="row" style="gap:6px;flex-wrap:wrap"><select id="av_vl"><option value="ca">Català</option><option value="es">Castellano</option></select><button type="button" class="sec2" data-avb="vidcopy">📋 Copiar mensaje</button><button type="button" class="sec2" data-avb="vidwa" ${avVidTel() ? "" : "disabled title='Falta el teléfono en «Quién avisa»'"}>💬 WhatsApp</button><button type="button" class="sec2" data-avb="vidsms" ${avVidTel() ? "" : "disabled title='Falta el teléfono en «Quién avisa»'"}>✉️ SMS (desde el móvil)</button><button type="button" class="sec2" data-avb="vidoff">⛔ Cerrar enlace</button></div><small>${avVidTel() ? "Teléfono: +" + avVidTel() : "Añade el teléfono del ciudadano en «Quién avisa» para enviarlo directamente."}</small></div>` : ""}
+${ub ? `<div class="card" style="display:block">📍 El ciudadano ha enviado su ubicación (${avHora(ub.ubic_en)}) · <a href="https://www.openstreetmap.org/?mlat=${ub.lat}&mlon=${ub.lng}#map=18/${ub.lat}/${ub.lng}" target="_blank">Ver en el mapa</a> <button type="button" class="sec2" data-avb="vidubi">Usar como ubicación del aviso</button></div>` : ""}
+<div>${evs || '<small style="opacity:.7">Todavía no ha llegado nada.</small>'}</div>`;
+  const d = box.closest("details"); if (d) d.querySelector("summary").textContent = "7. Vídeo y fotos del ciudadano (" + AVV.ev.length + ")";
+}
+async function avVidAcc(a) {
+  const R = AV.row, act = avVidAct(); if (!R) return;
+  if (a == "vidnew") {
+    await avGuarda(); const min = +($("av_vm") || {value: 30}).value, tok = avVidTok();
+    await db.from("enlaces_video").update({activo: false}).eq("aviso_id", R.id).eq("activo", true);
+    const r = await db.from("enlaces_video").insert({token: tok, aviso_id: R.id, activo: true, creado: new Date().toISOString(), caduca: new Date(Date.now() + min * 60000).toISOString()});
+    if (r.error) { alert("No se pudo crear el enlace: " + r.error.message + "\n(¿Has ejecutado 24-video-ciudadano.sql?)"); return; }
+    await avVidCarga(true); return;
+  }
+  if (!act && a != "vidubi") return; const l = ($("av_vl") || {value: "ca"}).value, min = Math.max(1, Math.ceil((+new Date(act ? act.caduca : 0) - Date.now()) / 60000)), msg = act ? avVidMsg(avVidUrl(act.token), min, l) : "";
+  if (a == "vidcopy") { try { await navigator.clipboard.writeText(msg); } catch (e) { const u = $("av_vidu"); if (u) u.select(); document.execCommand && document.execCommand("copy"); } const t = $("av_vidt"); if (t) { t.textContent = "✓ Mensaje copiado"; setTimeout(() => { t.textContent = avVidMin(); }, 2500); } }
+  else if (a == "vidwa") window.open("https://wa.me/" + avVidTel() + "?text=" + encodeURIComponent(msg), "_blank");
+  else if (a == "vidsms") window.open("sms:+" + avVidTel() + "?&body=" + encodeURIComponent(msg), "_self");
+  else if (a == "vidoff") { await db.from("enlaces_video").update({activo: false}).eq("token", act.token); await avVidCarga(true); }
+  else if (a == "vidubi") { const u = AVV.en.find(x => x.lat != null); if (!u) return; R.lat = u.lat; R.lng = u.lng; avSucio("lat"); avSucio("lng"); if (AV.fm) { AV.fm.setView([u.lat, u.lng], 17); AV.fPon(u.lat, u.lng); } avPonUbi(u.lat, u.lng, true); }
 }
 /* ---- hoja de fin de servicio: todos los avisos del turno (sala + app) ---- */
 async function avHp() {
